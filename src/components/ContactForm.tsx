@@ -103,7 +103,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
             {/* Name Field */}
             <div className="transition-all duration-300 transform hover:translate-y-[-2px] focus-within:translate-y-[-2px]">
               <label htmlFor="name" className="block text-base font-medium text-gray-700 mb-2">
-                {t.name} <span className="text-lumora-green-500">*</span>
+                {t.name} <span className="text-lumora-gold">*</span>
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
@@ -150,7 +150,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
             {/* Email Field */}
             <div className="transition-all duration-300 transform hover:translate-y-[-2px] focus-within:translate-y-[-2px]">
               <label htmlFor="email" className="block text-base font-medium text-gray-700 mb-2">
-                {t.email} <span className="text-lumora-green-500">*</span>
+                {t.email} <span className="text-lumora-gold">*</span>
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
@@ -198,7 +198,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
           {/* Message Field */}
           <div className="transition-all duration-300 transform hover:translate-y-[-2px] focus-within:translate-y-[-2px]">
             <label htmlFor="message" className="block text-base font-medium text-gray-700 mb-2">
-              {t.message} <span className="text-lumora-green-500">*</span>
+              {t.message} <span className="text-lumora-gold">*</span>
             </label>
             <div className="relative">
               <textarea
@@ -219,7 +219,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`btn-primary w-full justify-center py-4 px-6 text-base relative overflow-hidden group ${
+              className={`bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream w-full justify-center py-4 px-6 text-base relative overflow-hidden group rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ${
                 isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >
@@ -247,8 +247,8 @@ export default function ContactForm({ translations }: ContactFormProps) {
           {/* Success/Error Messages */}
           <div className="transition-all duration-500 ease-in-out">
             {submitSuccess === true && (
-              <div className="glass bg-lumora-green-50/90 text-lumora-green-800 px-6 py-4 rounded-xl shadow-soft flex items-start">
-                <svg className="h-6 w-6 mr-3 flex-shrink-0 text-lumora-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="glass bg-lumora-cream/90 text-lumora-dark px-6 py-4 rounded-xl shadow-soft flex items-start">
+                <svg className="h-6 w-6 mr-3 flex-shrink-0 text-lumora-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>

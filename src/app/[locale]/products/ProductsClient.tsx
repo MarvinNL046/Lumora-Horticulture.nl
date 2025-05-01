@@ -31,12 +31,12 @@ const staggerContainer = {
 export default function ProductsClient({ t, locale }: { t: any, locale: string }) {
   return (
     <div className="relative min-h-screen">
-      {/* Background elements - adjusted for better mobile display */}
+      {/* Background elements - adjusted for better mobile display with new brand colors */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-lumora-green-50/30 to-transparent"></div>
-        <div className="absolute -top-20 right-0 md:-right-40 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-green-100/20 mix-blend-multiply blur-3xl"></div>
-        <div className="absolute top-1/3 left-0 md:-left-40 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-gold-100/20 mix-blend-multiply blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-full h-[20vh] bg-gradient-to-t from-lumora-gold-50/30 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>
+        <div className="absolute -top-20 right-0 md:-right-40 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-dark/10 mix-blend-multiply blur-3xl"></div>
+        <div className="absolute top-1/3 left-0 md:-left-40 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-gold/10 mix-blend-multiply blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-full h-[20vh] bg-gradient-to-t from-lumora-dark/5 to-transparent"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
@@ -138,14 +138,14 @@ function ProductsHeader({ t }: { t: any }) {
       className="max-w-4xl mx-auto text-center"
     >
       <motion.span 
-        className="inline-block text-lumora-green-600 mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-green-50 border border-lumora-green-100"
+        className="inline-block text-lumora-dark mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream"
       >
         {t.title?.tag}
       </motion.span>
-      <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight">
+      <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-lumora-dark mb-4 md:mb-6 tracking-tight">
         {t.title?.main}
       </h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-lg md:text-xl text-lumora-dark/80 max-w-3xl mx-auto leading-relaxed">
         {t.title?.subtitle}
       </p>
     </motion.div>
@@ -244,18 +244,18 @@ function ProductDetail({
             className="space-y-4 md:space-y-6"
           >
             <motion.div variants={fadeIn} className="space-y-2 md:space-y-3">
-              <div className="inline-block text-lumora-green-600 font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-lumora-green-50 border border-lumora-green-100 text-sm">
+              <div className="inline-block text-lumora-dark font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream text-sm">
                 {t.detail?.qualityTag}
               </div>
-              <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
+              <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-lumora-dark tracking-tight">
                 {title}
               </h2>
-              <p className="text-lg md:text-xl font-medium text-lumora-gold-700">
+              <p className="text-lg md:text-xl font-medium text-lumora-gold">
                 {subtitle}
               </p>
             </motion.div>
             
-            <motion.p variants={fadeIn} className="text-gray-600 leading-relaxed text-sm md:text-base">
+            <motion.p variants={fadeIn} className="text-lumora-dark/80 leading-relaxed text-sm md:text-base">
               {description}
             </motion.p>
             
@@ -361,7 +361,7 @@ function ProductDetail({
             <motion.div variants={fadeIn} className="pt-4 md:pt-6">
               <Link
                 href={`/${locale}/contact?product=${encodeURIComponent(title)}`}
-                className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
+              className="inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base"
               >
                 <span>{t.detail?.requestQuote}</span>
                 <svg 
@@ -399,10 +399,10 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
     >
       {/* Background with radial gradient */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-lumora-green-600 to-lumora-green-800"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-lumora-dark to-lumora-dark-800"></div>
         <div className="absolute inset-0 bg-grain opacity-5 mix-blend-overlay"></div>
-        <div className="absolute -top-20 -right-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-green-500/30 mix-blend-overlay blur-3xl"></div>
-        <div className="absolute -bottom-20 -left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-green-400/20 mix-blend-overlay blur-3xl"></div>
+        <div className="absolute -top-20 -right-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-dark/30 mix-blend-overlay blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-3xl"></div>
       </div>
       
       <div className="glass-dark rounded-3xl p-6 sm:p-8 md:p-16 shadow-soft-lg backdrop-blur-md relative">
@@ -421,8 +421,8 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
           <motion.div variants={fadeIn}>
             <Link 
               href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center bg-white text-lumora-green-700 
-                      hover:bg-lumora-green-50 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
+              className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
+                      hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
                       hover:shadow-soft-md transition-all duration-300 
                       font-medium text-base sm:text-lg group"
             >
