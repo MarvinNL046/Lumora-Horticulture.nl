@@ -50,7 +50,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-84st: PAPER PLUG TRAY 84"
             subtitle="Perfect voor professionele zaailingenkweek"
             description="Onze TRANSPLANT 84 tray is ontworpen voor professionele tuinbouwapplicaties, met 84 cellen voor efficiënte kweek van zaailingen. De precieze afstand en afmetingen zorgen voor optimale groeiomstandigheden."
-            imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+            imageSrc="/public/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
               { label: "Afmetingen", value: "52.5 x 30.5 cm" },
@@ -72,7 +72,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-104st: PAPER PLUG TRAY 104"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
             description="De PAPER PLUG TRAY 104 biedt uitstekende groeiomstandigheden met 104 cellen voor zaailingen. De speciaal ontworpen paper plug-technologie verbetert de wortelontwikkeling en het succes bij het overplanten."
-            imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+            imageSrc="/public/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
             imagePosition="right"
             specs={[
               { label: "Plug diameter", value: "3 cm" },
@@ -94,7 +94,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Transportdoos (Vouwdoos)"
             subtitle="Duurzame en efficiënte oplossing voor transport"
             description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden."
-            imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
+            imageSrc="/public/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
             specs={[
               { label: "Afmetingen", value: "557 x 322 x 180mm" }
             ]}
@@ -108,7 +108,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Inlegvellen"
             subtitle="Extra bescherming voor uw producten"
             description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport."
-            imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
+            imageSrc="/public/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             imagePosition="right"
             showSpecs={false}
             badges={["Transparant", "Lichtgewicht", "Compatibel"]}

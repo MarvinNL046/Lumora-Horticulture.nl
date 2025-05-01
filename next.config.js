@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true, // Important for static image serving with Netlify
+    domains: ['lumorahorticulture.netlify.app'], // Add Netlify domain
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,10 +20,25 @@ const nextConfig = {
         hostname: 'lumorahorticulture.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'lumorahorticulture.netlify.app',
+        pathname: '/**',
+      },
     ],
   },
-  // Voeg trailing slashes toe voor betere compatibiliteit
-  trailingSlash: true
+  // Ensure trailing slashes for better compatibility
+  trailingSlash: true,
+  
+  // Make sure static assets are properly handled
+  async rewrites() {
+    return [
+      {
+        source: '/productAfbeeldingen/:path*',
+        destination: '/productAfbeeldingen/:path*',
+      },
+    ]
+  }
 }
 
 module.exports = nextConfig

@@ -8,6 +8,37 @@
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
+# Handle image files
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Redirects for the main routes
 [[redirects]]
   from = "/contact"
@@ -19,7 +50,13 @@
   to = "/nl/products"
   status = 301
 
-# SPA fallback
+# Make sure static assets are properly served first
+[[redirects]]
+  from = "/productAfbeeldingen/*"
+  to = "/productAfbeeldingen/:splat"
+  status = 200
+
+# SPA fallback - should come after all other redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"
