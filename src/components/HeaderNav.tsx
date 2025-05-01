@@ -96,13 +96,13 @@ export default function HeaderNav() {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center group relative">
-              <div className={`relative overflow-hidden transition-all duration-300 
-                ${scrolled ? 'h-10 w-auto' : 'h-12 w-auto'}`}>
+              <div className={`relative transition-all duration-300 
+                ${scrolled ? 'h-12 w-auto' : 'h-16 w-auto'}`}>
                 <Image 
                   src="/logo/lumura-horticulture-logo.jpeg" 
                   alt="Lumora Horticulture Logo"
-                  width={120} 
-                  height={48}
+                  width={160} 
+                  height={64}
                   className="object-contain"
                   priority
                 />
