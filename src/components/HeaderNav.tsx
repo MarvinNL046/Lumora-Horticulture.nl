@@ -1,7 +1,9 @@
+
 'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
 
 // Define the locales we support directly in this file and their corresponding domains
@@ -88,22 +90,23 @@ export default function HeaderNav() {
   
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'glass py-3' : 'bg-transparent py-5'
+      scrolled ? 'bg-lumora-dark/95 py-3 shadow-md' : 'bg-lumora-dark/90 py-5'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center group">
-              <span className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r 
-                from-lumora-green-500 to-lumora-green-700 transition-all duration-300
-                ${scrolled ? 'scale-90' : 'scale-100'}`}>
-                Lumora
-              </span>
-              <span className={`text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-r 
-                from-lumora-gold-500 to-lumora-gold-700 transition-all duration-300
-                ${scrolled ? 'scale-90' : 'scale-100'}`}>
-                Horticulture
-              </span>
+            <Link href="/" className="flex-shrink-0 flex items-center group relative">
+              <div className={`relative overflow-hidden transition-all duration-300 
+                ${scrolled ? 'h-10 w-auto' : 'h-12 w-auto'}`}>
+                <Image 
+                  src="/logo/lumura-horticulture-logo.jpeg" 
+                  alt="Lumora Horticulture Logo"
+                  width={120} 
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
+              </div>
               <span className="absolute inset-0 rounded-xl scale-75 opacity-0 group-hover:opacity-100 
                 transition-opacity duration-700 bg-gradient-to-r from-lumora-green-500/20 to-lumora-gold-500/20 
                 blur-xl -z-10"></span>
@@ -112,12 +115,12 @@ export default function HeaderNav() {
           
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:items-center md:space-x-1">
-            <NavLink href="/" label="Home" />
-            <NavLink href="/products" label="Producten" />
-            <NavLink href="/contact" label="Contact" />
+            <NavLink href="/" label="Home" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
+            <NavLink href="/products" label="Producten" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
+            <NavLink href="/contact" label="Contact" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
             
             {/* Language switcher - with domain switching */}
-            <div className="relative ml-6 border-l border-gray-200/30 pl-6">
+            <div className="relative ml-6 border-l border-lumora-cream/20 pl-6">
               <div className="flex space-x-3">
                 {Object.keys(localeMap).map((locale) => (
                   <a
@@ -125,8 +128,8 @@ export default function HeaderNav() {
                     href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-2 py-1 rounded-md transition-all duration-300 ${
                       locale === currentLocale
-                        ? 'bg-lumora-green-50 text-lumora-green-700 font-semibold shadow-soft-sm'
-                        : 'text-gray-500 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
+                        ? 'bg-lumora-dark-700/80 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'
+                        : 'text-lumora-cream/70 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
                     }`}
                   >
                     {locale}
@@ -141,10 +144,8 @@ export default function HeaderNav() {
             <button
               type="button"
               className={`inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300 
-                ${scrolled 
-                  ? 'bg-white/10 text-gray-700 hover:bg-lumora-green-50 hover:text-lumora-green-700'
-                  : 'bg-white/20 backdrop-blur-sm text-gray-700 hover:bg-white/30'
-                } focus:outline-none`}
+                bg-lumora-dark-700/50 text-lumora-cream hover:bg-lumora-dark-700 hover:text-lumora-cream
+                focus:outline-none border border-lumora-cream/20`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -181,14 +182,14 @@ export default function HeaderNav() {
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${
         mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
       }`}>
-        <div className="glass mt-2 mx-4 rounded-2xl overflow-hidden">
+        <div className="bg-lumora-dark-800/95 mt-2 mx-4 rounded-2xl overflow-hidden border border-lumora-cream/10 shadow-lg">
           <div className="pt-2 pb-3 space-y-1 p-4">
             <MobileNavLink href="/" label="Home" onClick={() => setMobileMenuOpen(false)} />
             <MobileNavLink href="/products" label="Producten" onClick={() => setMobileMenuOpen(false)} />
             <MobileNavLink href="/contact" label="Contact" onClick={() => setMobileMenuOpen(false)} />
             
             {/* Language switcher (mobile) - with domain switching */}
-            <div className="border-t border-gray-200/30 pt-4 pb-2">
+            <div className="border-t border-lumora-cream/10 pt-4 pb-2">
               <div className="flex justify-center space-x-4">
                 {Object.keys(localeMap).map((locale) => (
                   <a
@@ -196,8 +197,8 @@ export default function HeaderNav() {
                     href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-3 py-2 rounded-xl transition-all duration-300 ${
                       locale === currentLocale
-                        ? 'bg-lumora-green-50 text-lumora-green-700 font-semibold shadow-soft-sm'
-                        : 'text-gray-500 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
+                        ? 'bg-lumora-dark-700 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'
+                        : 'text-lumora-cream/70 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -217,6 +218,9 @@ export default function HeaderNav() {
 interface NavLinkProps {
   href: string;
   label: string;
+  color?: string;
+  activeColor?: string;
+  hoverColor?: string;
 }
 
 interface MobileNavLinkProps extends NavLinkProps {
@@ -224,25 +228,29 @@ interface MobileNavLinkProps extends NavLinkProps {
 }
 
 // Desktop navigation link component
-function NavLink({ href, label }: NavLinkProps) {
+function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) {
   const pathname = usePathname()
   const isActive = pathname === href
+  
+  // Default styling if custom colors are not provided
+  const defaultActiveStyle = 'text-lumora-cream bg-lumora-dark-700/80 shadow-soft-sm'
+  const defaultInactiveStyle = 'text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
   
   return (
     <Link
       href={href}
       className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group
         ${isActive 
-          ? 'text-lumora-green-700 bg-lumora-green-50/80 shadow-soft-sm' 
-          : 'text-gray-700 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
+          ? activeColor || defaultActiveStyle
+          : hoverColor || defaultInactiveStyle
         }`}
     >
       {label}
       {isActive && (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-1/2 bg-lumora-green-500 rounded-full"></span>
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-1/2 bg-lumora-cream rounded-full"></span>
       )}
       <span className="absolute inset-0 rounded-xl scale-90 opacity-0 group-hover:opacity-100 
-        transition-opacity duration-500 bg-gradient-to-r from-lumora-green-100/30 to-lumora-green-50/30 
+        transition-opacity duration-500 bg-lumora-dark-700/40 
         blur-sm -z-10"></span>
     </Link>
   )
@@ -258,8 +266,8 @@ function MobileNavLink({ href, label, onClick }: MobileNavLinkProps) {
       href={href}
       className={`block px-4 py-3 text-base font-medium rounded-xl transition-all duration-300
         ${isActive 
-          ? 'text-lumora-green-700 bg-lumora-green-50/80 shadow-inner-soft' 
-          : 'text-gray-700 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
+          ? 'text-lumora-cream bg-lumora-dark-700/90 border border-lumora-cream/20 shadow-inner-soft' 
+          : 'text-lumora-cream/70 hover:text-lumora-cream hover:bg-lumora-dark-700/70'
         }`}
       onClick={onClick}
     >
@@ -268,7 +276,7 @@ function MobileNavLink({ href, label, onClick }: MobileNavLinkProps) {
         {isActive && (
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-5 w-5 ml-2 text-lumora-green-500" 
+            className="h-5 w-5 ml-2 text-lumora-cream" 
             viewBox="0 0 20 20" 
             fill="currentColor"
           >

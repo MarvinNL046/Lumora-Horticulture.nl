@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
 
 // Define the locales we support directly in this file and their corresponding domains
@@ -77,32 +78,33 @@ export default function Footer() {
   const pathWithoutLocale = getPathWithoutLocale()
 
   return (
-    <footer className="relative bg-gray-50 border-t border-gray-200/60 pt-16 pb-10 mt-16 overflow-hidden">
+    <footer className="relative bg-lumora-dark text-lumora-cream border-t border-lumora-cream/10 pt-16 pb-10 mt-16 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-50 mix-blend-overlay">
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-grain opacity-30" />
         <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-grain opacity-30" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full backdrop-glow-green opacity-20" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full backdrop-glow-gold opacity-20" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-lumora-cream/5 opacity-20" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-lumora-cream/5 opacity-20" />
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center group relative">
-              <div className="relative z-10">
-                <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-lumora-green-500 to-lumora-green-700">
-                  Lumora
-                </span>
-                <span className="text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-lumora-gold-500 to-lumora-gold-700">
-                  Horticulture
-                </span>
+              <div className="relative overflow-hidden w-32 h-auto">
+                <Image 
+                  src="/logo/lumura-horticulture-logo.jpeg" 
+                  alt="Lumora Horticulture Logo"
+                  width={120} 
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <span className="absolute inset-0 rounded-xl scale-75 opacity-0 group-hover:opacity-100 
                 transition-opacity duration-700 bg-gradient-to-r from-lumora-green-500/20 to-lumora-gold-500/20 
                 blur-xl -z-10"></span>
             </Link>
-            <p className="mt-4 text-base text-gray-600 max-w-md leading-relaxed">
+            <p className="mt-4 text-base text-lumora-cream/80 max-w-md leading-relaxed">
               Professionele tuinbouw oplossingen voor de moderne teler. Duurzaam en innovatief sinds de oprichting.
             </p>
             
@@ -115,7 +117,7 @@ export default function Footer() {
           
           <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
                 Navigation
               </h3>
               <ul className="space-y-3">
@@ -126,23 +128,23 @@ export default function Footer() {
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
                 Contact
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start text-gray-600 group">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <li className="flex items-start text-lumora-cream/80 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <a href="mailto:info@lumorahorticulture.com" className="transition-colors duration-300 group-hover:text-lumora-green-600">
+                  <a href="mailto:info@lumorahorticulture.com" className="transition-colors duration-300 group-hover:text-lumora-cream">
                     info@lumorahorticulture.com
                   </a>
                 </li>
-                <li className="flex items-start text-gray-600 group">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <li className="flex items-start text-lumora-cream/80 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                   </svg>
-                  <a href="https://lumorahorticulture.nl" className="transition-colors duration-300 group-hover:text-lumora-green-600">
+                  <a href="https://lumorahorticulture.nl" className="transition-colors duration-300 group-hover:text-lumora-cream">
                     lumorahorticulture.nl
                   </a>
                 </li>
@@ -150,7 +152,7 @@ export default function Footer() {
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
                 Taal / Language
               </h3>
               <ul className="space-y-3">
@@ -177,10 +179,10 @@ export default function Footer() {
           </div>
           
           <div className="lg:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
               Nieuwsbrief
             </h3>
-            <p className="text-gray-600 mb-4">Blijf op de hoogte van onze producten en diensten.</p>
+            <p className="text-lumora-cream/80 mb-4">Blijf op de hoogte van onze producten en diensten.</p>
             <form className="space-y-2">
               <div>
                 <label htmlFor="email-address" className="sr-only">Email address</label>
@@ -190,14 +192,14 @@ export default function Footer() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="input w-full"
+                  className="w-full bg-lumora-dark-700 border border-lumora-cream/20 text-lumora-cream px-4 py-2 rounded-lg focus:ring-1 focus:ring-lumora-cream/30 focus:outline-none"
                   placeholder="Email adres"
                 />
               </div>
               <div>
                 <button
                   type="submit"
-                  className="btn-primary w-full py-2 justify-center"
+                  className="w-full bg-lumora-cream text-lumora-dark font-medium py-2 px-4 rounded-lg hover:bg-lumora-cream/90 transition-all duration-300 flex items-center justify-center"
                 >
                   Aanmelden
                 </button>
@@ -206,19 +208,19 @@ export default function Footer() {
           </div>
         </div>
         
-        <hr className="my-10 border-gray-200/60" />
+        <hr className="my-10 border-lumora-cream/10" />
         
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-lumora-cream/70">
             © {currentYear} Lumora Horticulture. Alle rechten voorbehouden.
           </p>
           
           <div className="mt-4 sm:mt-0">
             <div className="flex space-x-6">
-              <a href="#" className="text-sm text-gray-500 hover:text-lumora-green-600 transition-colors duration-300">
+              <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
                 Privacy Policy
               </a>
-              <a href="#" className="text-sm text-gray-500 hover:text-lumora-green-600 transition-colors duration-300">
+              <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
                 Terms & Conditions
               </a>
             </div>
@@ -235,9 +237,9 @@ function FooterLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link 
         href={href} 
-        className="text-gray-600 transition-colors duration-300 hover:text-lumora-green-600 group flex items-center"
+        className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center"
       >
-        <span className="absolute w-0 h-0.5 bg-lumora-green-500/70 group-hover:w-4 transition-all duration-300"></span>
+        <span className="absolute w-0 h-0.5 bg-lumora-cream/60 group-hover:w-4 transition-all duration-300"></span>
         <span className="group-hover:pl-5 transition-all duration-300">{label}</span>
       </Link>
     </li>
@@ -251,13 +253,13 @@ function FooterLangLink({ locale, label, active, path }: { locale: string; label
       <a 
         href={createLocalizedUrl(locale, path)} 
         className={`transition-colors duration-300 group flex items-center ${
-          active ? 'text-lumora-green-600 font-medium' : 'text-gray-600 hover:text-lumora-green-600'
+          active ? 'text-lumora-cream font-medium' : 'text-lumora-cream/70 hover:text-lumora-cream'
         }`}
       >
         {active && (
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-4 w-4 mr-1.5 text-lumora-green-500" 
+            className="h-4 w-4 mr-1.5 text-lumora-cream" 
             viewBox="0 0 20 20" 
             fill="currentColor"
           >
@@ -291,7 +293,7 @@ function SocialIcon({ type }: { type: 'facebook' | 'linkedin' | 'instagram' }) {
   }
 
   return (
-    <a href="#" className="rounded-full bg-gray-100 p-2 text-gray-600 hover:text-lumora-green-600 hover:bg-gray-50 transition-all duration-300">
+    <a href="#" className="rounded-full bg-lumora-dark-700 p-2 text-lumora-cream/70 hover:text-lumora-cream hover:bg-lumora-dark-800 transition-all duration-300 border border-lumora-cream/10">
       {icons[type]}
     </a>
   )

@@ -8,6 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'lumora-cream': '#FAF3C3', // New brand color - light cream
+        'lumora-dark': {
+          DEFAULT: '#283032', // New brand color - dark gray
+          '700': '#1E2527',   // Darker variant
+          '800': '#161B1C',   // Even darker variant
+        },
         'lumora-green': {
           50: '#E6F5EB',
           100: '#C1E5CD',
