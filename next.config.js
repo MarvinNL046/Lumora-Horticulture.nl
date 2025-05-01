@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // Voor statische site generatie
   images: {
     remotePatterns: [
       {
@@ -20,7 +19,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    unoptimized: true, // Nodig voor statische exports
   },
   // Voeg trailing slashes toe voor betere compatibiliteit
   trailingSlash: true
