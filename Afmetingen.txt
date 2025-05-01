@@ -1,0 +1,48 @@
+Afmetingen
+
+Tray-84st: TRANSPLANT 84
+
+Plug 3.5 cm
+diameter
+52.5 x 30.5 cm
+height
+3.4 cm
+CC
+48 cc
+cells-per-m
+525
+Pallet quantity
+1680
+bottom-holes
+1 x 9
+l-x-b
+7x12
+Material type
+PS
+Hengelslot
+Straight 25
+
+
+
+
+Tray-104st: PAPER PLUG TRAY 104
+
+Plug 3 cm
+diameter
+52.5 x 30.5 cm
+height
+3.5 cm
+CC
+34 cc
+cells-per-m
+649
+Pallet quantity
+1400
+bottom-holes
+1 x 11
+l-x-b
+8x13
+Material type
+PS
+
+Transportdoos(Vouwdoos): 557 x 322 x 180mm 

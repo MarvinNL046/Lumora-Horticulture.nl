@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+:root {
+  --lumora-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply text-gray-800 bg-white antialiased selection:bg-lumora-green-100 selection:text-lumora-green-900;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
+
+/* Glass morphism effect */
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-soft;
+}
+
+.glass-dark {
+  @apply bg-gray-900/70 backdrop-blur-md border border-gray-800/30 shadow-soft;
+}
+
+/* Modern scrollbar */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Custom component classes */
+@layer components {
+  .container {
+    @apply px-4 sm:px-6 lg:px-8 mx-auto;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-lumora-green-500 hover:bg-lumora-green-600 text-white 
+           font-medium rounded-xl px-6 py-3 shadow-soft hover:shadow-soft-md
+           transition-all duration-300 relative overflow-hidden;
+  }
+  
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+  }
+  
+  .btn-primary:active::after {
+    @apply opacity-10;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center bg-lumora-gold-500 hover:bg-lumora-gold-600 text-white 
+           font-medium rounded-xl px-6 py-3 shadow-soft hover:shadow-soft-md
+           transition-all duration-300 relative overflow-hidden;
+  }
+  
+  .btn-secondary::after {
+    content: '';
+    @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+  }
+  
+  .btn-secondary:active::after {
+    @apply opacity-10;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center bg-transparent border-2 border-lumora-green-500 
+           text-lumora-green-500 hover:bg-lumora-green-50 font-medium rounded-xl px-6 py-3
+           transition-all duration-300;
+  }
+  
+  .section {
+    @apply py-16 md:py-24;
+  }
+  
+  .heading-1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-balance;
+  }
+  
+  .heading-2 {
+    @apply text-3xl md:text-4xl font-bold text-balance;
+  }
+  
+  .heading-3 {
+    @apply text-2xl md:text-3xl font-bold text-balance;
+  }
+  
+  .input {
+    @apply mt-1 block w-full rounded-xl border-gray-200 bg-white/50
+           shadow-soft focus:border-lumora-green-400 focus:ring focus:ring-lumora-green-200 focus:ring-opacity-50
+           sm:text-sm transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-soft hover:shadow-soft-md transition-all duration-300 overflow-hidden;
+  }
+
+  .card-hover {
+    @apply hover:scale-[1.02] hover:shadow-soft-md;
+  }
+}
+
+/* Animated gradient text */
+.animated-gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-lumora-green-500 to-lumora-gold-500 
+         animate-pulse-slow;
+  background-size: 200% 200%;
+}
+
+/* Aspect ratio utilities */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
+  --tw-aspect-w: 16;
+}
+
+.aspect-h-9 {
+  --tw-aspect-h: 9;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Image spotlight hover effect */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Backdrop glow effect */
+.backdrop-glow-green {
+  position: relative;
+}
+
+.backdrop-glow-green::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 125, 70, 0.25) 0%, rgba(45, 125, 70, 0) 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+.backdrop-glow-gold {
+  position: relative;
+}
+
+.backdrop-glow-gold::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0) 70%);
+  filter: blur(30px);
+  z-index: -1;
+}

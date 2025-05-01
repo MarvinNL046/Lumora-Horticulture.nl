@@ -1,0 +1,91 @@
+{
+  "site": {
+    "title": "Lumora Horticulture",
+    "description": "Professionelle Gartenbaulösungen",
+    "copyright": "© {year} Lumora Horticulture. Alle Rechte vorbehalten."
+  },
+  "nav": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "contact": "Kontakt"
+  },
+  "cta": {
+    "learnMore": "Mehr erfahren",
+    "contactUs": "Kontaktieren Sie uns",
+    "viewProducts": "Unsere Produkte ansehen"
+  },
+  "contact": {
+    "title": {
+      "tag": "Kontakt",
+      "main": "Kontakt aufnehmen",
+      "subtitle": "Wir sind für Sie da"
+    },
+    "info": {
+      "email": {
+        "title": "E-Mail"
+      },
+      "web": {
+        "title": "Web"
+      },
+      "collaboration": {
+        "title": "Zusammenarbeit",
+        "description": "Zögern Sie nicht, uns bei Fragen zu unseren Produkten zu kontaktieren. Wir geben Ihnen gerne weitere Informationen und helfen Ihnen, die richtigen Lösungen für Ihre Gartenbaubedürfnisse zu finden."
+      }
+    },
+    "form": {
+      "name": "Name",
+      "company": "Unternehmen",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "message": "Nachricht",
+      "submit": "Absenden",
+      "success": "Vielen Dank für Ihre Nachricht. Wir werden uns so schnell wie möglich bei Ihnen melden.",
+      "error": "Beim Absenden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut."
+    }
+  },
+  "products": {
+    "title": {
+      "tag": "Produkte",
+      "main": "Unsere Professionellen Gartenbau-Produkte",
+      "subtitle": "Hochwertige, nachhaltige Lösungen für den modernen professionellen Gartenbau"
+    },
+    "detail": {
+      "qualityTag": "Premium Qualität",
+      "tabs": {
+        "specs": "Spezifikationen",
+        "benefits": "Vorteile"
+      },
+      "benefits": {
+        "durable": "Langlebiges und widerstandsfähiges Material",
+        "optimal": "Optimal für Wachstum und Wurzelentwicklung",
+        "efficient": "Effizient zu verwenden und zu transportieren",
+        "compatible": "Kompatibel mit automatisierten Systemen"
+      },
+      "requestQuote": "Angebot anfordern"
+    },
+    "cta": {
+      "title": "Kontaktieren Sie uns",
+      "description": "Haben Sie Fragen zu unseren Produkten oder möchten Sie eine Bestellung aufgeben? Wir beraten Sie gerne persönlich.",
+      "button": "Kontakt aufnehmen"
+    },
+    "locale": "de"
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Nachhaltige und professionelle Gartenbaulösungen für den modernen Anbauer",
+      "viewProducts": "Unsere Produkte ansehen",
+      "contactUs": "Kontakt aufnehmen"
+    },
+    "products": {
+      "title": "Unsere Produkte",
+      "subtitle": "Hochwertige, nachhaltige Lösungen für den modernen professionellen Gartenbau",
+      "moreInfo": "Mehr Informationen",
+      "viewAll": "Alle Produkte ansehen"
+    },
+    "cta": {
+      "title": "Kontaktieren Sie uns",
+      "description": "Haben Sie Fragen zu unseren Produkten oder möchten Sie eine Bestellung aufgeben? Wir beraten Sie gerne persönlich.",
+      "button": "Kontakt aufnehmen"
+    }
+  }
+}

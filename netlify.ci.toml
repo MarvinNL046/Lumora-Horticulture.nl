@@ -1,0 +1,24 @@
+# Netlify CI Configuration
+[build]
+  # The directory to change to before starting a build
+  base = "/"
+
+  # Directory with the deploy-ready files
+  publish = "out"
+  
+  # Build command
+  command = "npm run build"
+
+[build.environment]
+  # Set Next.js to use static export
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+# Use the Next.js plugin for optimal handling
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirects for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

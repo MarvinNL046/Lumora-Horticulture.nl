@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirects for the main routes
+[[redirects]]
+  from = "/contact"
+  to = "/nl/contact"
+  status = 301
+
+[[redirects]]
+  from = "/products"
+  to = "/nl/products"
+  status = 301
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
