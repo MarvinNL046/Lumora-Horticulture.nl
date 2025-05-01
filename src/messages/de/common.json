@@ -72,9 +72,18 @@
   },
   "home": {
     "hero": {
-      "subtitle": "Nachhaltige und professionelle Gartenbaulösungen für den modernen Anbauer",
-      "viewProducts": "Unsere Produkte ansehen",
-      "contactUs": "Kontakt aufnehmen"
+        "subtitle": "Nachhaltige und professionelle Lösungen für den modernen Gartenbau",
+        "viewProducts": "Unsere Produkte anzeigen",
+        "contactUs": "Kontakt aufnehmen"
+    },
+    "contactForm": {
+        "name": "Name",
+        "email": "E-Mail",
+        "message": "Nachricht",
+        "submit": "Senden",
+        "success": "Nachricht gesendet!",
+        "error": "Fehler beim Senden",
+        "quickContact": "Schnellkontakt"
     },
     "products": {
       "title": "Unsere Produkte",

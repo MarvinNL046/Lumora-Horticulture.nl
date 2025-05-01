@@ -72,9 +72,18 @@
   },
   "home": {
     "hero": {
-      "subtitle": "Duurzame en professionele tuinbouw oplossingen voor de moderne teler",
-      "viewProducts": "Bekijk onze producten",
-      "contactUs": "Neem contact op"
+        "subtitle": "Duurzame en professionele tuinbouw oplossingen voor de moderne teler",
+        "viewProducts": "Bekijk onze producten",
+        "contactUs": "Neem contact op"
+    },
+    "contactForm": {
+        "name": "Naam",
+        "email": "E-mail",
+        "message": "Bericht",
+        "submit": "Versturen",
+        "success": "Bericht verzonden!",
+        "error": "Fout bij verzenden",
+        "quickContact": "Snel contact"
     },
     "products": {
       "title": "Onze Producten",

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import HeroContactForm from '@/components/HeroContactForm'
 
 // Define TypeScript interface for ProductCard props
 interface ProductCardProps {
@@ -168,20 +169,20 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 </div>
 
                 {/* Main image */}
-                <div className="relative rounded-3xl overflow-hidden shadow-soft-lg backdrop-glow-green animate-float max-w-[500px]">
-                  <div className="aspect-w-16 aspect-h-9 w-full relative spotlight">
-                    <Image
-                      src="/images/greenhouse-1.jpg" 
-                      alt="Lumora Horticulture Professional Solutions"
-                      width={600}
-                      height={400}
-                      className="object-cover rounded-3xl transition-transform duration-700 hover:scale-105"
-                      style={{ width: '100%', height: '100%' }}
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl"></div>
-                  </div>
-                </div>
+              {/* Glassy contact form - full width of the right column */}
+              <div className="relative z-10 w-full transform animate-float">
+                <HeroContactForm 
+                  translations={{
+                    name: t.contactForm?.name || "Name",
+                    email: t.contactForm?.email || "Email",
+                    message: t.contactForm?.message || "Message",
+                    submit: t.contactForm?.submit || "Send",
+                    success: t.contactForm?.success || "Message sent!",
+                    error: t.contactForm?.error || "Error sending message",
+                    quickContact: t.contactForm?.quickContact || "Quick Contact"
+                  }}
+                />
+              </div>
               </div>
             </div>
           </div>

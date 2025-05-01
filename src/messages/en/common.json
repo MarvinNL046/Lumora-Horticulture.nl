@@ -72,9 +72,18 @@
   },
   "home": {
     "hero": {
-      "subtitle": "Sustainable and professional horticulture solutions for the modern grower",
-      "viewProducts": "View our products",
-      "contactUs": "Contact us"
+        "subtitle": "Sustainable and professional horticulture solutions for the modern grower",
+        "viewProducts": "View our products",
+        "contactUs": "Contact us"
+    },
+    "contactForm": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "Send",
+        "success": "Message sent!",
+        "error": "Error sending message",
+        "quickContact": "Quick Contact"
     },
     "products": {
       "title": "Our Products",

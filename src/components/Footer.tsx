@@ -1,10 +1,80 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname, useParams } from 'next/navigation'
+
+// Define the locales we support directly in this file and their corresponding domains
+const localeMap = {
+  nl: 'lumorahorticulture.nl',
+  en: 'lumorahorticulture.com',
+  de: 'lumorahorticulture.de'
+}
+
+const defaultLocale = 'nl'
+
+// Helper function to get current locale from domain
+const getLocaleFromDomain = (domain?: string): string => {
+  if (!domain) return defaultLocale;
+  
+  // Check which domain matches
+  for (const [locale, domainValue] of Object.entries(localeMap)) {
+    if (domain.includes(domainValue)) {
+      return locale;
+    }
+  }
+  
+  // Default to nl if no match found
+  return defaultLocale;
+}
+
+// Helper function to create a link for a different locale
+const createLocalizedUrl = (locale: string, pathname: string): string => {
+  // Get the domain for this locale
+  const domain = localeMap[locale as keyof typeof localeMap];
+  
+  // For local development, use locale in path
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return `/${locale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  }
+  
+  // For production, use full domain
+  return `https://${domain}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+}
 
 export default function Footer() {
   // Get current year for copyright
   const currentYear = new Date().getFullYear()
+  
+  const pathname = usePathname() || ''
+  const params = useParams()
+  
+  // Get current locale from URL or domain
+  const getCurrentLocale = (): string => {
+    // If we have a locale in the URL params, use that
+    if (params?.locale) {
+      return params.locale as string;
+    }
+    
+    // Otherwise try to determine from domain
+    if (typeof window !== 'undefined') {
+      return getLocaleFromDomain(window.location.hostname);
+    }
+    
+    return defaultLocale;
+  }
+  
+  // Get the current locale
+  const currentLocale = getCurrentLocale()
+  
+  // Get the path without the locale prefix
+  const getPathWithoutLocale = (): string => {
+    if (pathname.startsWith('/' + currentLocale + '/')) {
+      return pathname.substring(('/' + currentLocale).length);
+    }
+    return pathname;
+  }
+  
+  const pathWithoutLocale = getPathWithoutLocale()
 
   return (
     <footer className="relative bg-gray-50 border-t border-gray-200/60 pt-16 pb-10 mt-16 overflow-hidden">
@@ -84,9 +154,24 @@ export default function Footer() {
                 Taal / Language
               </h3>
               <ul className="space-y-3">
-                <FooterLangLink label="Nederlands" active={true} />
-                <FooterLangLink label="English" active={false} />
-                <FooterLangLink label="Deutsch" active={false} />
+                <FooterLangLink 
+                  locale="nl" 
+                  label="Nederlands" 
+                  active={currentLocale === 'nl'} 
+                  path={pathWithoutLocale} 
+                />
+                <FooterLangLink 
+                  locale="en" 
+                  label="English" 
+                  active={currentLocale === 'en'} 
+                  path={pathWithoutLocale} 
+                />
+                <FooterLangLink 
+                  locale="de" 
+                  label="Deutsch" 
+                  active={currentLocale === 'de'} 
+                  path={pathWithoutLocale} 
+                />
               </ul>
             </div>
           </div>
@@ -160,11 +245,11 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 }
 
 // Footer language link component
-function FooterLangLink({ label, active }: { label: string; active: boolean }) {
+function FooterLangLink({ locale, label, active, path }: { locale: string; label: string; active: boolean; path: string }) {
   return (
     <li>
       <a 
-        href="#" 
+        href={createLocalizedUrl(locale, path)} 
         className={`transition-colors duration-300 group flex items-center ${
           active ? 'text-lumora-green-600 font-medium' : 'text-gray-600 hover:text-lumora-green-600'
         }`}

@@ -2,14 +2,77 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 
-// Define the locales we support directly in this file
-const locales = ['nl', 'en', 'de']
+// Define the locales we support directly in this file and their corresponding domains
+const localeMap = {
+  nl: 'lumorahorticulture.nl',
+  en: 'lumorahorticulture.com',
+  de: 'lumorahorticulture.de'
+}
+
 const defaultLocale = 'nl'
 
+// Helper function to get current locale from domain
+const getLocaleFromDomain = (domain?: string): string => {
+  if (!domain) return defaultLocale;
+  
+  // Check which domain matches
+  for (const [locale, domainValue] of Object.entries(localeMap)) {
+    if (domain.includes(domainValue)) {
+      return locale;
+    }
+  }
+  
+  // Default to nl if no match found
+  return defaultLocale;
+}
+
+// Helper function to create a link for a different locale
+const createLocalizedUrl = (locale: string, pathname: string): string => {
+  // Get the domain for this locale
+  const domain = localeMap[locale as keyof typeof localeMap];
+  
+  // For local development, use locale in path
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return `/${locale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  }
+  
+  // For production, use full domain
+  return `https://${domain}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+}
+
 export default function HeaderNav() {
-  const pathname = usePathname()
+  const pathname = usePathname() || ''
+  const params = useParams()
+  
+  // Get current locale from URL or domain
+  const getCurrentLocale = (): string => {
+    // If we have a locale in the URL params, use that
+    if (params?.locale) {
+      return params.locale as string;
+    }
+    
+    // Otherwise try to determine from domain
+    if (typeof window !== 'undefined') {
+      return getLocaleFromDomain(window.location.hostname);
+    }
+    
+    return defaultLocale;
+  }
+  
+  // Get the current locale
+  const currentLocale = getCurrentLocale()
+  
+  // Get the path without the locale prefix
+  const getPathWithoutLocale = (): string => {
+    if (pathname.startsWith('/' + currentLocale + '/')) {
+      return pathname.substring(('/' + currentLocale).length);
+    }
+    return pathname;
+  }
+  
+  const pathWithoutLocale = getPathWithoutLocale()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   
@@ -53,15 +116,15 @@ export default function HeaderNav() {
             <NavLink href="/products" label="Producten" />
             <NavLink href="/contact" label="Contact" />
             
-            {/* Language switcher - enhanced version */}
+            {/* Language switcher - with domain switching */}
             <div className="relative ml-6 border-l border-gray-200/30 pl-6">
               <div className="flex space-x-3">
-                {locales.map((locale) => (
+                {Object.keys(localeMap).map((locale) => (
                   <a
                     key={locale}
-                    href="#"
+                    href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-2 py-1 rounded-md transition-all duration-300 ${
-                      locale === defaultLocale
+                      locale === currentLocale
                         ? 'bg-lumora-green-50 text-lumora-green-700 font-semibold shadow-soft-sm'
                         : 'text-gray-500 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
                     }`}
@@ -124,15 +187,15 @@ export default function HeaderNav() {
             <MobileNavLink href="/products" label="Producten" onClick={() => setMobileMenuOpen(false)} />
             <MobileNavLink href="/contact" label="Contact" onClick={() => setMobileMenuOpen(false)} />
             
-            {/* Language switcher (mobile) */}
+            {/* Language switcher (mobile) - with domain switching */}
             <div className="border-t border-gray-200/30 pt-4 pb-2">
               <div className="flex justify-center space-x-4">
-                {locales.map((locale) => (
+                {Object.keys(localeMap).map((locale) => (
                   <a
                     key={locale}
-                    href="#"
+                    href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-3 py-2 rounded-xl transition-all duration-300 ${
-                      locale === defaultLocale
+                      locale === currentLocale
                         ? 'bg-lumora-green-50 text-lumora-green-700 font-semibold shadow-soft-sm'
                         : 'text-gray-500 hover:text-lumora-green-600 hover:bg-lumora-green-50/50'
                     }`}

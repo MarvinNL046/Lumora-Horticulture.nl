@@ -1,5 +1,5 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
-import HomeClient from './HomeClient'
+import HomeClient from '@/app/[locale]/HomeClient'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -23,6 +23,15 @@ export default async function Home({ params }: { params: { locale: string } }) {
       subtitle: "Duurzame en professionele tuinbouw oplossingen voor de moderne teler.",
       viewProducts: "Bekijk onze producten",
       contactUs: "Neem contact op"
+    },
+    contactForm: {
+      name: "Naam",
+      email: "E-mail",
+      message: "Bericht",
+      submit: "Versturen",
+      success: "Bericht verzonden!",
+      error: "Fout bij verzenden",
+      quickContact: "Snel contact"
     },
     products: {
       title: "Onze Producten",
