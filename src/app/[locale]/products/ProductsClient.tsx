@@ -62,6 +62,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               { label: "Materiaal type", value: "PS" },
               { label: "Hengelslot", value: "Straight 25" }
             ]}
+            locale={locale}
           />
           
           <ProductDetail
@@ -83,6 +84,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               { label: "l x b", value: "8 x 13" },
               { label: "Materiaal type", value: "PS" }
             ]}
+            locale={locale}
           />
           
           <ProductDetail
@@ -96,6 +98,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               { label: "Afmetingen", value: "557 x 322 x 180mm" }
             ]}
             badges={["Duurzaam", "Efficiënt", "Stapelbaar"]}
+            locale={locale}
           />
           
           <ProductDetail
@@ -108,6 +111,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             imagePosition="right"
             showSpecs={false}
             badges={["Transparant", "Lichtgewicht", "Compatibel"]}
+            locale={locale}
           />
         </section>
         
@@ -135,13 +139,13 @@ function ProductsHeader({ t }: { t: any }) {
       <motion.span 
         className="inline-block text-lumora-green-600 mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-green-50 border border-lumora-green-100"
       >
-        {t('title.tag')}
+        {t.title?.tag}
       </motion.span>
       <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-        {t('title.main')}
+        {t.title?.main}
       </h1>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        {t('title.subtitle')}
+        {t.title?.subtitle}
       </p>
     </motion.div>
   )
@@ -164,6 +168,7 @@ interface ProductDetailProps {
   specs?: ProductSpec[];
   showSpecs?: boolean;
   badges?: string[];
+  locale?: string;
 }
 
 // Product detail component with animations
@@ -177,7 +182,8 @@ function ProductDetail({
   imagePosition = "left",
   specs = [],
   showSpecs = true,
-  badges = []
+  badges = [],
+  locale
 }: ProductDetailProps) {
   const { ref, inView } = useInView({
     threshold: 0.15,
@@ -238,7 +244,7 @@ function ProductDetail({
           >
             <motion.div variants={fadeIn} className="space-y-3">
               <div className="inline-block text-lumora-green-600 font-medium px-4 py-1.5 rounded-full bg-lumora-green-50 border border-lumora-green-100">
-                {t('detail.qualityTag')}
+                {t.detail?.qualityTag}
               </div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
                 {title}
@@ -263,7 +269,7 @@ function ProductDetail({
                         : 'text-gray-600 hover:bg-white/30 hover:text-lumora-green-600'
                       }`
                     }>
-                      {t('detail.tabs.specs')}
+                      {t.detail?.tabs?.specs}
                     </Tab>
                     <Tab className={({ selected }) =>
                       `w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-300
@@ -272,7 +278,7 @@ function ProductDetail({
                         : 'text-gray-600 hover:bg-white/30 hover:text-lumora-green-600'
                       }`
                     }>
-                      {t('detail.tabs.benefits')}
+                      {t.detail?.tabs?.benefits}
                     </Tab>
                   </Tab.List>
                   <Tab.Panels>
@@ -317,7 +323,7 @@ function ProductDetail({
                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                               </svg>
                             </span>
-                            <span>{t('detail.benefits.durable')}</span>
+                            <span>{t.detail?.benefits?.durable}</span>
                           </motion.li>
                           <motion.li variants={fadeIn} className="flex items-start">
                             <span className="flex-shrink-0 h-6 w-6 rounded-full bg-lumora-green-100 flex items-center justify-center text-lumora-green-600 mr-3 mt-0.5">
@@ -325,7 +331,7 @@ function ProductDetail({
                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                               </svg>
                             </span>
-                            <span>{t('detail.benefits.optimal')}</span>
+                            <span>{t.detail?.benefits?.optimal}</span>
                           </motion.li>
                           <motion.li variants={fadeIn} className="flex items-start">
                             <span className="flex-shrink-0 h-6 w-6 rounded-full bg-lumora-green-100 flex items-center justify-center text-lumora-green-600 mr-3 mt-0.5">
@@ -333,7 +339,7 @@ function ProductDetail({
                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                               </svg>
                             </span>
-                            <span>{t('detail.benefits.efficient')}</span>
+                            <span>{t.detail?.benefits?.efficient}</span>
                           </motion.li>
                           <motion.li variants={fadeIn} className="flex items-start">
                             <span className="flex-shrink-0 h-6 w-6 rounded-full bg-lumora-green-100 flex items-center justify-center text-lumora-green-600 mr-3 mt-0.5">
@@ -341,7 +347,7 @@ function ProductDetail({
                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                               </svg>
                             </span>
-                            <span>{t('detail.benefits.compatible')}</span>
+                            <span>{t.detail?.benefits?.compatible}</span>
                           </motion.li>
                         </motion.ul>
                       </div>
@@ -353,10 +359,10 @@ function ProductDetail({
             
             <motion.div variants={fadeIn} className="pt-6">
               <Link
-                href={`/${t('locale')}/contact?product=${encodeURIComponent(title)}`}
+                href={`/${locale}/contact?product=${encodeURIComponent(title)}`}
                 className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group"
               >
-                <span>{t('detail.requestQuote')}</span>
+                <span>{t.detail?.requestQuote}</span>
                 <svg 
                   className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                   xmlns="http://www.w3.org/2000/svg" 
@@ -406,10 +412,10 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
           animate={inView ? "visible" : "hidden"}
         >
           <motion.h3 variants={fadeIn} className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
-            {t('cta.title')}
+            {t.cta?.title}
           </motion.h3>
           <motion.p variants={fadeIn} className="text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {t('cta.description')}
+            {t.cta?.description}
           </motion.p>
           <motion.div variants={fadeIn}>
             <Link 
@@ -419,7 +425,7 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
                       hover:shadow-soft-md transition-all duration-300 
                       font-medium text-lg group"
             >
-              <span>{t('cta.button')}</span>
+              <span>{t.cta?.button}</span>
               <svg className="ml-2 -mr-1 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
