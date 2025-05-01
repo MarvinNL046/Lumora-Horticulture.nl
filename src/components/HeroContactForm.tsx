@@ -64,8 +64,8 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
   }
   
   return (
-    <div className="glass-contact backdrop-blur-lg bg-gradient-to-br from-lumora-green-700/70 to-lumora-green-900/80 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border border-white/20 transform hover:-translate-y-1">
-      <div className="bg-gradient-to-r from-lumora-green-500/20 to-transparent px-4 py-3 border-b border-white/10">
+    <div className="glass-contact backdrop-blur-lg bg-gradient-to-br from-lumora-dark/80 to-lumora-dark-800/90 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border border-lumora-cream/10 transform hover:-translate-y-1">
+      <div className="bg-gradient-to-r from-lumora-dark-700/30 to-transparent px-4 py-3 border-b border-lumora-cream/10">
         <h3 className="text-lg font-semibold text-white flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -82,7 +82,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-lumora-gold-400/50 focus:bg-white/25 transition-all duration-300"
+              className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300"
               placeholder={t.name}
               required
             />
@@ -94,7 +94,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-lumora-gold-400/50 focus:bg-white/25 transition-all duration-300"
+              className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300"
               placeholder={t.email}
               required
             />
@@ -106,7 +106,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               value={formData.message}
               onChange={handleChange}
               rows={3}
-              className="w-full px-4 py-2.5 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-lumora-gold-400/50 focus:bg-white/25 transition-all duration-300 resize-none"
+              className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300 resize-none"
               placeholder={t.message}
               required
             ></textarea>
@@ -116,7 +116,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-lumora-gold-500 to-lumora-gold-600 hover:from-lumora-gold-400 hover:to-lumora-gold-500 text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center group shadow-lg shadow-lumora-gold-500/20"
+              className="w-full bg-lumora-cream hover:bg-lumora-cream/90 text-lumora-dark py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center group shadow-lg shadow-lumora-cream/20"
             >
               {isSubmitting ? (
                 <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

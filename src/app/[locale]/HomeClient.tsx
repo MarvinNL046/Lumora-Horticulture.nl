@@ -20,7 +20,7 @@ interface ProductCardProps {
 function ProductCard({ visible, delay, imageSrc, altText, title, description, href, moreInfoText }: ProductCardProps) {
   return (
     <div 
-      className={`card card-hover spotlight transition-all duration-1000 transform ${
+      className={`bg-white rounded-2xl shadow-md hover:shadow-lg overflow-hidden transition-all duration-1000 transform ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{ transitionDelay: `${delay * 150}ms` }}
@@ -33,14 +33,14 @@ function ProductCard({ visible, delay, imageSrc, altText, title, description, hr
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-700 hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-lumora-dark/40 to-transparent"></div>
       </div>
       <div className="p-8">
-        <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
-        <p className="text-gray-600 mb-5">{description}</p>
+        <h3 className="text-xl font-semibold text-lumora-dark mb-3">{title}</h3>
+        <p className="text-lumora-dark/80 mb-5">{description}</p>
         <Link 
           href={href} 
-          className="group inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300"
+          className="group inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300"
         >
           <span>{moreInfoText}</span>
           <svg 
@@ -108,12 +108,12 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
     <div className="flex flex-col">
       {/* Hero Section with enhanced visuals */}
       <section className="relative min-h-[95vh] flex items-center pt-24 pb-16 md:py-32 overflow-hidden">
-        {/* Background Elements */}
+        {/* Background Elements with updated brand colors */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-lumora-green-50 to-lumora-gold-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-lumora-cream/40 to-white" />
           <div className="absolute top-0 right-0 w-full h-full bg-grain opacity-10" />
-          <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full backdrop-glow-green opacity-30 mix-blend-multiply" />
-          <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full backdrop-glow-gold opacity-30 mix-blend-multiply" />
+          <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full bg-lumora-dark/5 opacity-40 mix-blend-multiply" />
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-lumora-gold/10 opacity-40 mix-blend-multiply" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -124,20 +124,20 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               }`}
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-lumora-green-500 to-lumora-green-700">
+                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-lumora-dark to-lumora-dark-700">
                   Lumora
                 </span> 
-                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-lumora-gold-500 to-lumora-gold-700">
+                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-lumora-gold/90 to-lumora-gold">
                   Horticulture
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl font-light text-gray-700 mb-8 leading-relaxed">
+              <p className="text-xl md:text-2xl font-light text-lumora-dark/90 mb-8 leading-relaxed">
                 {t.hero.subtitle}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
                   href={`/${locale}/products`} 
-                  className="btn-primary group"
+                  className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.viewProducts}</span>
                   <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -146,7 +146,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 </Link>
                 <Link 
                   href={`/${locale}/contact`}
-                  className="btn-secondary group"
+                  className="bg-lumora-cream hover:bg-lumora-cream/90 text-lumora-dark border border-lumora-dark/10 font-medium px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.contactUs}</span>
                   <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -190,11 +190,11 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
       </section>
       
       {/* Featured Products Section */}
-      <section id="products-section" className="py-24 bg-white relative">
+      <section id="products-section" className="py-24 bg-lumora-cream/5 relative">
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-lumora-green-50/70 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-lumora-gold-50/50 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-lumora-dark/5 to-transparent"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -203,10 +203,13 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               isVisible.products ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <h2 className="heading-2 text-gray-900 mb-4">
-              <span className="animated-gradient-text">{t.products.title}</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-lumora-dark mb-4">
+              <span className="relative">
+                {t.products.title}
+                <span className="absolute bottom-1 left-0 w-full h-1 bg-lumora-gold/30 rounded-full transform -translate-y-1"></span>
+              </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-lumora-dark/80 max-w-3xl mx-auto leading-relaxed">
               {t.products.subtitle}
             </p>
           </div>
@@ -256,7 +259,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
           >
             <Link 
               href={`/${locale}/products`}
-              className="btn-primary group"
+              className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
             >
               <span>{t.products.viewAll}</span>
               <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -271,10 +274,10 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
       <section id="cta-section" className="relative py-24 overflow-hidden">
         {/* Background with gradient overlay */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-lumora-green-600 to-lumora-green-800"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-lumora-dark to-lumora-dark-800"></div>
           <div className="absolute inset-0 bg-grain opacity-5 mix-blend-overlay"></div>
-          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-lumora-green-500/30 mix-blend-overlay blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-lumora-green-400/20 mix-blend-overlay blur-3xl"></div>
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-lumora-dark/20 mix-blend-overlay blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-3xl"></div>
         </div>
 
         <div 
@@ -290,8 +293,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               </p>
               <Link 
                 href={`/${locale}/contact`}
-                className="inline-flex items-center justify-center bg-white text-lumora-green-700 
-                         hover:bg-lumora-green-50 px-8 py-4 rounded-xl shadow-soft 
+                className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
+                         hover:bg-lumora-cream/90 px-8 py-4 rounded-xl shadow-soft 
                          hover:shadow-soft-md transition-all duration-300 
                          font-medium text-lg group"
               >
