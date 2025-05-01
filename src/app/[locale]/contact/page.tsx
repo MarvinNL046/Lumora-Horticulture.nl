@@ -30,21 +30,9 @@ export default async function ContactPage({ params }: { params: { locale: string
   }
   
   return (
-    <>
-      <ContactPageClient t={t} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-            {/* Push form to right side, taking up 2/3 of space */}
-            <div className="lg:w-1/3"></div>
-            
-            {/* Contact Form with direct translations */}
-            <div className="lg:w-2/3">
-              <ContactForm translations={formTranslations} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <ContactPageClient 
+      t={t} 
+      form={<ContactForm translations={formTranslations} />} 
+    />
   )
 }

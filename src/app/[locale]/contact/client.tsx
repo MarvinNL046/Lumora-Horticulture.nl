@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { ReactNode } from 'react'
 
 // Animation variants
 const fadeIn = {
@@ -25,9 +26,10 @@ const staggerContainer = {
 
 interface ClientComponentProps {
   t: Record<string, any>;
+  form?: ReactNode;
 }
 
-export default function ContactPageClient({ t }: ClientComponentProps) {
+export default function ContactPageClient({ t, form }: ClientComponentProps) {
   return (
     <div className="relative min-h-screen py-16 md:py-24">
       {/* Background elements */}
@@ -47,9 +49,9 @@ export default function ContactPageClient({ t }: ClientComponentProps) {
             {/* Contact Information */}
             <ContactInfo t={t} />
             
-            {/* Form container - actual form is provided by parent */}
+            {/* Form container */}
             <div className="lg:w-2/3">
-              {/* Form is injected here from the parent */}
+              {form}
             </div>
           </div>
         </div>
