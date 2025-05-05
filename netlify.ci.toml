@@ -4,10 +4,10 @@
   base = "/"
 
   # Directory with the deploy-ready files
-  publish = "out"
+  publish = ".next"
   
   # Build command
-  command = "npm run build"
+  command = "npm ci && npm run build"
 
 [build.environment]
   # Set Next.js to use static export

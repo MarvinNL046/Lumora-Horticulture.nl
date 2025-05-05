@@ -41,33 +41,48 @@ This document provides instructions for deploying the Lumora Horticulture websit
 2. Click "New site from Git" or "Import an existing project"
 3. Connect to your Git provider and select your repository
 4. Configure build settings:
-   - Build command: `npm run build`
-   - Publish directory: `out`
+   - Build command: `npm ci && npm run build` (ensures dependencies are properly installed)
+   - Publish directory: `.next`
 5. Click "Deploy site"
 
 ## Configuration Files
 
 This project includes two Netlify configuration files:
 
-- `netlify.toml` - Local development configuration
+- `netlify.toml` - Main configuration for deployment settings
 - `netlify.ci.toml` - CI/CD configuration for deployment
 
 ## Environment Variables
 
+### Basic Environment Variables
 The following environment variables are set in the `.env.production` file:
 - `NEXT_PUBLIC_DEFAULT_LOCALE`: Sets the default locale for the site
 - `NEXT_PUBLIC_SITE_NAME`: Sets the site name
 - `NEXT_PUBLIC_SITE_URL`: Sets the production URL
 
-For sensitive variables like API keys, add them through the Netlify dashboard:
+### EmailJS Environment Variables
+For the contact forms to work correctly, you need to set up EmailJS environment variables:
+- See the `NETLIFY-ENV-SETUP.md` file for detailed instructions on setting up these variables
+
+For all environment variables, add them through the Netlify dashboard:
 1. Go to Site settings > Build & deploy > Environment
 2. Add variables as needed
 
-## Troubleshooting
+## Troubleshooting Common Issues
 
+### Dependencies Not Installing
+If you see errors related to missing modules:
+- Ensure you're using `npm ci && npm run build` as the build command in Netlify
+- Check that your package-lock.json is committed to the repository
+
+### Build Process Errors
 - If you encounter build errors, check Netlify logs in the dashboard
 - For local debugging, run `npx netlify build --debug`
-- Make sure your Next.js configuration has `output: 'export'` set in `next.config.js`
+- Make sure your Next.js configuration is compatible with Netlify deployment
+
+### Contact Form Not Working
+- Verify the EmailJS environment variables are set correctly in Netlify (see NETLIFY-ENV-SETUP.md)
+- Check browser console on the deployed site for any errors
 
 ## Continuous Deployment
 
