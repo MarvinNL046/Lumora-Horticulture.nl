@@ -5,6 +5,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
+import { 
+  domainLocaleMap, 
+  localizePathForLocale,
+  basePathFromLocalizedPath
+} from '@/lib/url-localizations'
 
 // Define the locales we support directly in this file and their corresponding domains
 const localeMap = {
@@ -35,13 +40,19 @@ const createLocalizedUrl = (locale: string, pathname: string): string => {
   // Get the domain for this locale
   const domain = localeMap[locale as keyof typeof localeMap];
   
+  // First get the base path (in case this is already a localized path)
+  const basePath = basePathFromLocalizedPath(pathname, locale);
+  
+  // Then localize it for the target locale
+  const localizedPath = localizePathForLocale(basePath, locale);
+  
   // For local development, use locale in path
   if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    return `/${locale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+    return `/${locale}${localizedPath.startsWith('/') ? localizedPath : `/${localizedPath}`}`;
   }
   
   // For production, use full domain
-  return `https://${domain}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  return `https://${domain}${localizedPath.startsWith('/') ? localizedPath : `/${localizedPath}`}`;
 }
 
 export default function HeaderNav() {
@@ -113,11 +124,33 @@ export default function HeaderNav() {
             </Link>
           </div>
           
-          {/* Desktop navigation */}
+          {/* Desktop navigation with localized links */}
           <nav className="hidden md:flex md:items-center md:space-x-1">
-            <NavLink href="/" label="Home" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
-            <NavLink href="/products" label="Producten" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
-            <NavLink href="/contact" label="Contact" color="text-lumora-cream" activeColor="text-lumora-cream bg-lumora-dark-700" hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" />
+            <NavLink 
+              href="/" 
+              label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
+              color="text-lumora-cream" 
+              activeColor="text-lumora-cream bg-lumora-dark-700" 
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            />
+            <NavLink 
+              href="/products" 
+              label={
+                currentLocale === 'nl' ? 'Producten' : 
+                currentLocale === 'de' ? 'Produkte' : 
+                'Products'
+              } 
+              color="text-lumora-cream" 
+              activeColor="text-lumora-cream bg-lumora-dark-700" 
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            />
+            <NavLink 
+              href="/contact" 
+              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
+              color="text-lumora-cream" 
+              activeColor="text-lumora-cream bg-lumora-dark-700" 
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            />
             
             {/* Language switcher - with domain switching */}
             <div className="relative ml-6 border-l border-lumora-cream/20 pl-6">
@@ -184,9 +217,25 @@ export default function HeaderNav() {
       }`}>
         <div className="bg-lumora-dark-800/95 mt-2 mx-4 rounded-2xl overflow-hidden border border-lumora-cream/10 shadow-lg">
           <div className="pt-2 pb-3 space-y-1 p-4">
-            <MobileNavLink href="/" label="Home" onClick={() => setMobileMenuOpen(false)} />
-            <MobileNavLink href="/products" label="Producten" onClick={() => setMobileMenuOpen(false)} />
-            <MobileNavLink href="/contact" label="Contact" onClick={() => setMobileMenuOpen(false)} />
+            <MobileNavLink 
+              href="/" 
+              label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <MobileNavLink 
+              href="/products" 
+              label={
+                currentLocale === 'nl' ? 'Producten' : 
+                currentLocale === 'de' ? 'Produkte' : 
+                'Products'
+              }
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <MobileNavLink 
+              href="/contact" 
+              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
+              onClick={() => setMobileMenuOpen(false)} 
+            />
             
             {/* Language switcher (mobile) - with domain switching */}
             <div className="border-t border-lumora-cream/10 pt-4 pb-2">

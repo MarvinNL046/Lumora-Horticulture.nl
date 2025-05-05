@@ -1,6 +1,6 @@
 # Domain-Based Internationalization Setup
 
-This project is configured to use domain-based internationalization, where each language is served from a separate domain:
+This project is configured to use domain-based internationalization, where each language is served from a separate domain with localized URL paths:
 
 - Dutch (nl): https://lumorahorticulture.nl
 - English (en): https://lumorahorticulture.com
@@ -8,11 +8,17 @@ This project is configured to use domain-based internationalization, where each 
 
 ## How It Works
 
-The middleware (`src/middleware.ts`) is configured to detect the domain and automatically serve content in the appropriate language. This means:
+The middleware (`src/middleware.ts`) is configured to detect the domain and automatically serve content in the appropriate language with localized URL paths. This means:
 
 1. No `/nl`, `/en`, or `/de` prefixes in URLs
 2. Each domain serves content in a specific language
-3. The same URL paths work across all domains (e.g., `/products/` works on all domains)
+3. URL paths are translated to match the language of each domain:
+
+| Page      | Dutch (nl)                      | English (en)                     | German (de)                      |
+|-----------|----------------------------------|----------------------------------|----------------------------------|
+| Home      | https://lumorahorticulture.nl/   | https://lumorahorticulture.com/  | https://lumorahorticulture.de/   |
+| Products  | https://lumorahorticulture.nl/producten/ | https://lumorahorticulture.com/products/ | https://lumorahorticulture.de/produkte/ |
+| Contact   | https://lumorahorticulture.nl/contact/ | https://lumorahorticulture.com/contact/ | https://lumorahorticulture.de/kontakt/ |
 
 ## Netlify Configuration
 

@@ -17,23 +17,54 @@ const DOMAINS = {
   'de': 'https://lumorahorticulture.de'
 };
 
-// Routes to include in each sitemap (no locale prefix needed now)
-const ROUTES = [
+// Base routes to include in sitemap (English versions, will be localized)
+const BASE_ROUTES = [
   '', // Homepage
   '/products/',
   '/contact/',
 ];
+
+// Localized path mapping
+const LOCALIZED_PATHS = {
+  // Dutch paths
+  'nl': {
+    '/products/': '/producten/',
+    // contact is the same in Dutch
+  },
+  // English paths (same as base)
+  'en': {
+    // No need to transform
+  },
+  // German paths
+  'de': {
+    '/products/': '/produkte/',
+    '/contact/': '/kontakt/',
+  }
+};
+
+// Function to get localized path
+function getLocalizedPath(basePath, locale) {
+  // Home page doesn't need translation
+  if (basePath === '') return '';
+  
+  // Check if we have a localized version for this path and locale
+  const localizedPathMap = LOCALIZED_PATHS[locale] || {};
+  return localizedPathMap[basePath] || basePath;
+}
 
 // Generate sitemap content
 function generateSitemap() {
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-  // Generate URLs for each domain
+  // Generate URLs for each domain with localized paths
   for (const [locale, domain] of Object.entries(DOMAINS)) {
-    ROUTES.forEach(route => {
+    BASE_ROUTES.forEach(route => {
+      // Get the localized version of this route for this locale
+      const localizedRoute = getLocalizedPath(route, locale);
+      
       sitemap += `  <url>\n`;
-      sitemap += `    <loc>${domain}${route}</loc>\n`;
+      sitemap += `    <loc>${domain}${localizedRoute}</loc>\n`;
       sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
       sitemap += `    <changefreq>weekly</changefreq>\n`;
       sitemap += `  </url>\n`;
