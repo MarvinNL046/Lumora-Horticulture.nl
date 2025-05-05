@@ -4,6 +4,9 @@
     "description": "Professionele tuinbouw oplossingen",
     "copyright": "© {year} Lumora Horticulture. Alle rechten voorbehouden."
   },
+  "announcement": {
+    "preorderMessage": "Pre-order nu! We gaan live binnen 4 weken."
+  },
   "nav": {
     "home": "Home",
     "products": "Producten",

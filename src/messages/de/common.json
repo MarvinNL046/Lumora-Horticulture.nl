@@ -4,6 +4,9 @@
     "description": "Professionelle Gartenbaulösungen",
     "copyright": "© {year} Lumora Horticulture. Alle Rechte vorbehalten."
   },
+  "announcement": {
+    "preorderMessage": "Jetzt vorbestellen! Wir gehen in 4 Wochen live."
+  },
   "nav": {
     "home": "Startseite",
     "products": "Produkte",

@@ -4,6 +4,9 @@
     "description": "Professional Horticultural Solutions",
     "copyright": "© {year} Lumora Horticulture. All rights reserved."
   },
+  "announcement": {
+    "preorderMessage": "Pre-order now! We're going live in 4 weeks."
+  },
   "nav": {
     "home": "Home",
     "products": "Products",
