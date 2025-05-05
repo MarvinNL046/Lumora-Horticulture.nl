@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { sendEmail, EmailParams } from '@/lib/emailjs'
 
 interface HeroContactFormProps {
   translations?: {
     name: string;
     email: string;
+    phone: string;
     message: string;
     submit: string;
     success: string;
@@ -19,6 +21,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
   const t = translations || {
     name: "Name",
     email: "Email",
+    phone: "Phone",
     message: "Message",
     submit: "Send",
     success: "Message sent!",
@@ -30,6 +33,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   })
   
@@ -47,15 +51,29 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
     setIsSubmitting(true)
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', message: '' })
+      // Prepare the email parameters
+      const emailParams: EmailParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message
+      }
       
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(null)
-      }, 5000)
+      // Send the email using EmailJS
+      const result = await sendEmail(emailParams)
+      
+      if (result.success) {
+        setSubmitSuccess(true)
+        // Reset form after successful submission
+        setFormData({ name: '', email: '', phone: '', message: '' })
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitSuccess(null)
+        }, 5000)
+      } else {
+        setSubmitSuccess(false)
+      }
     } catch (error) {
       setSubmitSuccess(false)
     } finally {
@@ -83,7 +101,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300"
-              placeholder={t.name}
+              placeholder="John Doe"
               required
             />
           </div>
@@ -95,8 +113,19 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300"
-              placeholder={t.email}
+              placeholder="email@example.com"
               required
+            />
+          </div>
+          
+          <div>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300"
+              placeholder="+31 123 456 789"
             />
           </div>
           
@@ -107,7 +136,7 @@ export default function HeroContactForm({ translations }: HeroContactFormProps) 
               onChange={handleChange}
               rows={3}
               className="w-full px-4 py-2.5 rounded-lg bg-lumora-cream/10 border border-lumora-cream/20 text-lumora-cream placeholder-lumora-cream/60 focus:outline-none focus:ring-2 focus:ring-lumora-gold/40 focus:bg-lumora-cream/15 transition-all duration-300 resize-none"
-              placeholder={t.message}
+              placeholder="Hoe kunnen wij u helpen?"
               required
             ></textarea>
           </div>

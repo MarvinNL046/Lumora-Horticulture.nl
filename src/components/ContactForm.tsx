@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent, useEffect } from 'react'
+import { sendEmail, EmailParams } from '@/lib/emailjs'
 
 interface ContactFormProps {
   translations?: {
@@ -63,6 +64,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitSuccess(null)
+    setErrorMessage('')
     
     // Validate form (basic validation)
     if (!formData.name || !formData.email || !formData.message) {
@@ -72,12 +74,23 @@ export default function ContactForm({ translations }: ContactFormProps) {
     }
     
     try {
-      // In a real application, this would be an API call to a serverless function
-      // or an API route that handles the email submission
-      // For now, we'll simulate a successful submission
-      setTimeout(() => {
+      // Prepare the email parameters
+      const emailParams: EmailParams = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }
+      
+      // Add optional fields if they exist
+      if (formData.company) emailParams.company = formData.company
+      if (formData.phone) emailParams.phone = formData.phone
+      
+      // Send the email using EmailJS
+      const result = await sendEmail(emailParams)
+      
+      if (result.success) {
         setSubmitSuccess(true)
-        setIsSubmitting(false)
+        // Reset form after successful submission
         setFormData({
           name: '',
           company: '',
@@ -85,10 +98,14 @@ export default function ContactForm({ translations }: ContactFormProps) {
           phone: '',
           message: ''
         })
-      }, 1000)
+      } else {
+        setSubmitSuccess(false)
+        setErrorMessage(t.error)
+      }
     } catch (error) {
       setSubmitSuccess(false)
       setErrorMessage(t.error)
+    } finally {
       setIsSubmitting(false)
     }
   }

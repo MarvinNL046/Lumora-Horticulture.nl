@@ -79,6 +79,7 @@
     "contactForm": {
         "name": "Naam",
         "email": "E-mail",
+        "phone": "Telefoon",
         "message": "Bericht",
         "submit": "Versturen",
         "success": "Bericht verzonden!",
