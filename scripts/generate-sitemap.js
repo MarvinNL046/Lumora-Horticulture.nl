@@ -22,6 +22,11 @@ const BASE_ROUTES = [
   '', // Homepage
   '/products/',
   '/contact/',
+  // Individual product pages
+  '/products/tray84/',
+  '/products/tray104/',
+  '/products/transportbox/',
+  '/products/insertsheets/',
 ];
 
 // Localized path mapping
@@ -29,6 +34,10 @@ const LOCALIZED_PATHS = {
   // Dutch paths
   'nl': {
     '/products/': '/producten/',
+    '/products/tray84/': '/producten/tray84/',
+    '/products/tray104/': '/producten/tray104/',
+    '/products/transportbox/': '/producten/transportdoos/',
+    '/products/insertsheets/': '/producten/inlegvellen/',
     // contact is the same in Dutch
   },
   // English paths (same as base)
@@ -39,6 +48,10 @@ const LOCALIZED_PATHS = {
   'de': {
     '/products/': '/produkte/',
     '/contact/': '/kontakt/',
+    '/products/tray84/': '/produkte/tray84/',
+    '/products/tray104/': '/produkte/tray104/',
+    '/products/transportbox/': '/produkte/transportbox/',
+    '/products/insertsheets/': '/produkte/einlegebogen/',
   }
 };
 

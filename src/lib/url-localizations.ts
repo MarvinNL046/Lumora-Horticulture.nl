@@ -10,6 +10,11 @@ export const basePaths = {
   home: '',
   products: 'products',
   contact: 'contact',
+  // Individual product paths
+  tray84: 'products/tray84',
+  tray104: 'products/tray104',
+  transportbox: 'products/transportbox',
+  insertsheets: 'products/insertsheets',
 }
 
 // URL path translations for each locale
@@ -17,6 +22,11 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   // Dutch paths
   nl: {
     products: 'producten',
+    // Individual products in Dutch
+    'products/tray84': 'producten/tray84',
+    'products/tray104': 'producten/tray104',
+    'products/transportbox': 'producten/transportdoos',
+    'products/insertsheets': 'producten/inlegvellen',
     // contact is the same in Dutch, no need to translate
   },
   
@@ -29,6 +39,11 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   de: {
     products: 'produkte',
     contact: 'kontakt',
+    // Individual products in German
+    'products/tray84': 'produkte/tray84',
+    'products/tray104': 'produkte/tray104',
+    'products/transportbox': 'produkte/transportbox',
+    'products/insertsheets': 'produkte/einlegebogen',
   }
 }
 
