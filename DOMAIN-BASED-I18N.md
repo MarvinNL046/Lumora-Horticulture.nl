@@ -14,11 +14,16 @@ The middleware (`src/middleware.ts`) is configured to detect the domain and auto
 2. Each domain serves content in a specific language
 3. URL paths are translated to match the language of each domain:
 
-| Page      | Dutch (nl)                      | English (en)                     | German (de)                      |
-|-----------|----------------------------------|----------------------------------|----------------------------------|
-| Home      | https://lumorahorticulture.nl/   | https://lumorahorticulture.com/  | https://lumorahorticulture.de/   |
-| Products  | https://lumorahorticulture.nl/producten/ | https://lumorahorticulture.com/products/ | https://lumorahorticulture.de/produkte/ |
-| Contact   | https://lumorahorticulture.nl/contact/ | https://lumorahorticulture.com/contact/ | https://lumorahorticulture.de/kontakt/ |
+| Page          | Dutch (nl)                      | English (en)                     | German (de)                      |
+|---------------|----------------------------------|----------------------------------|----------------------------------|
+| Home          | https://lumorahorticulture.nl/   | https://lumorahorticulture.com/  | https://lumorahorticulture.de/   |
+| Products      | https://lumorahorticulture.nl/producten/ | https://lumorahorticulture.com/products/ | https://lumorahorticulture.de/produkte/ |
+| Contact       | https://lumorahorticulture.nl/contact/ | https://lumorahorticulture.com/contact/ | https://lumorahorticulture.de/kontakt/ |
+| **Individual Product Pages** |                   |                                  |                                  |
+| Tray84        | https://lumorahorticulture.nl/producten/tray84/ | https://lumorahorticulture.com/products/tray84/ | https://lumorahorticulture.de/produkte/tray84/ |
+| Tray104       | https://lumorahorticulture.nl/producten/tray104/ | https://lumorahorticulture.com/products/tray104/ | https://lumorahorticulture.de/produkte/tray104/ |
+| Transport Box | https://lumorahorticulture.nl/producten/transportdoos/ | https://lumorahorticulture.com/products/transportbox/ | https://lumorahorticulture.de/produkte/transportbox/ |
+| Insert Sheets | https://lumorahorticulture.nl/producten/inlegvellen/ | https://lumorahorticulture.com/products/insertsheets/ | https://lumorahorticulture.de/produkte/einlegebogen/ |
 
 ## Netlify Configuration
 
