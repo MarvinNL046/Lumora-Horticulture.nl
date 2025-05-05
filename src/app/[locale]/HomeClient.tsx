@@ -175,6 +175,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                   translations={{
                     name: t.contactForm?.name || "Name",
                     email: t.contactForm?.email || "Email",
+                    phone: t.contactForm?.phone || "Phone",
                     message: t.contactForm?.message || "Message",
                     submit: t.contactForm?.submit || "Send",
                     success: t.contactForm?.success || "Message sent!",

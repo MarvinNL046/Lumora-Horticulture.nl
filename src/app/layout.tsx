@@ -32,8 +32,8 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
-        {/* Announcement Bar */}
-        <AnnouncementBar />
+        {/* Top Announcement Bar */}
+        <AnnouncementBar position="top" />
         
         {/* Fixed header with transparent background that becomes solid on scroll */}
         <HeaderNav />
@@ -42,6 +42,9 @@ export default function RootLayout({
         <main className="flex-grow pt-24">
           {children}
         </main>
+        
+        {/* Bottom Announcement Bar above footer */}
+        <AnnouncementBar position="bottom" />
         
         {/* Enhanced footer with modern design */}
         <Footer />
