@@ -41,16 +41,10 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Redirects for the main routes
-[[redirects]]
-  from = "/contact"
-  to = "/nl/contact"
-  status = 301
+# Domain-specific configurations
 
-[[redirects]]
-  from = "/products"
-  to = "/nl/products"
-  status = 301
+# These redirects are no longer needed with domain-based localization
+# as each domain serves content in its specific language
 
 # Make sure static assets are properly served first
 [[redirects]]

@@ -1,4 +1,4 @@
-# robots.txt for lumorahorticulture.nl
+# robots.txt for Lumora Horticulture
 
 # Allow all web crawlers
 User-agent: *
@@ -9,5 +9,7 @@ Disallow: /.next/
 Disallow: /node_modules/
 Disallow: /api/
 
-# Sitemap location
+# Sitemaps for each domain - search engines will use the one matching the domain from which this file was fetched
 Sitemap: https://lumorahorticulture.nl/sitemap.xml
+Sitemap: https://lumorahorticulture.com/sitemap.xml
+Sitemap: https://lumorahorticulture.de/sitemap.xml

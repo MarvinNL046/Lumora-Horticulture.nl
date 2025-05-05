@@ -10,12 +10,14 @@
 const fs = require('fs');
 const path = require('path');
 
-// Site configuration
-const SITE_URL = 'https://lumorahorticulture.nl';
-const LOCALES = ['nl', 'en', 'de'];
-const DEFAULT_LOCALE = 'nl';
+// Domain-locale configuration
+const DOMAINS = {
+  'nl': 'https://lumorahorticulture.nl',
+  'en': 'https://lumorahorticulture.com',
+  'de': 'https://lumorahorticulture.de'
+};
 
-// Routes to include in the sitemap (without locale prefix)
+// Routes to include in each sitemap (no locale prefix needed now)
 const ROUTES = [
   '', // Homepage
   '/products/',
@@ -27,28 +29,16 @@ function generateSitemap() {
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-  // Add each route for each locale
-  LOCALES.forEach(locale => {
+  // Generate URLs for each domain
+  for (const [locale, domain] of Object.entries(DOMAINS)) {
     ROUTES.forEach(route => {
-      // For default locale, we don't need the locale prefix in the URL
-      // but we still want to include both versions (with and without prefix)
-      if (locale === DEFAULT_LOCALE) {
-        // Add route without locale prefix
-        sitemap += `  <url>\n`;
-        sitemap += `    <loc>${SITE_URL}${route}</loc>\n`;
-        sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
-        sitemap += `    <changefreq>weekly</changefreq>\n`;
-        sitemap += `  </url>\n`;
-      }
-      
-      // Add route with locale prefix
       sitemap += `  <url>\n`;
-      sitemap += `    <loc>${SITE_URL}/${locale}${route}</loc>\n`;
+      sitemap += `    <loc>${domain}${route}</loc>\n`;
       sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
       sitemap += `    <changefreq>weekly</changefreq>\n`;
       sitemap += `  </url>\n`;
     });
-  });
+  }
 
   sitemap += '</urlset>';
   return sitemap;
