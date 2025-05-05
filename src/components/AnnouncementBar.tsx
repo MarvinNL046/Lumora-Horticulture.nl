@@ -46,7 +46,7 @@ export default function AnnouncementBar({ translations }: AnnouncementBarProps) 
   
   return (
     <div 
-      className={`bg-lumora-gold-500 text-white py-4 px-4 transition-all duration-500 relative shadow-lg z-50 border-b border-lumora-gold-600 ${
+      className={`bg-lumora-gold-500 text-white py-4 px-4 transition-all duration-500 fixed top-0 left-0 right-0 w-full shadow-lg z-50 border-b border-lumora-gold-600 ${
         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
       }`}
     >
