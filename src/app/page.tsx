@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import HeroContactForm from '@/components/HeroContactForm'
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState({
@@ -114,20 +115,20 @@ export default function Home() {
                   <div className="absolute -bottom-8 -left-8 w-64 h-64 rounded-full bg-lumora-gold-200/30 mix-blend-multiply blur-2xl animate-pulse-slow"></div>
                 </div>
 
-                {/* Main image */}
-                <div className="relative rounded-3xl overflow-hidden shadow-soft-lg backdrop-glow-green animate-float max-w-[500px]">
-                  <div className="aspect-w-16 aspect-h-9 w-full relative spotlight">
-                    <Image
-                      src="/images/greenhouse-1.jpg" 
-                      alt="Lumora Horticulture Professional Solutions"
-                      width={600}
-                      height={400}
-                      className="object-cover rounded-3xl transition-transform duration-700 hover:scale-105"
-                      style={{ width: '100%', height: '100%' }}
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl"></div>
-                  </div>
+                {/* Glassy contact form - full width of the right column */}
+                <div className="relative z-10 w-full transform animate-float">
+                  <HeroContactForm 
+                    translations={{
+                      name: "Naam",
+                      email: "E-mail",
+                      phone: "Telefoon",
+                      message: "Bericht",
+                      submit: "Versturen",
+                      success: "Bericht verzonden!",
+                      error: "Fout bij verzenden",
+                      quickContact: "Snel contact"
+                    }}
+                  />
                 </div>
               </div>
             </div>
