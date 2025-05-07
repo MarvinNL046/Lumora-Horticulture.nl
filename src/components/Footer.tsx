@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 // Define the locales we support directly in this file and their corresponding domains
 const localeMap = {
@@ -77,6 +78,56 @@ export default function Footer() {
   
   const pathWithoutLocale = getPathWithoutLocale()
 
+  // Get translations for the current locale, or use fallbacks
+  const getDescription = () => {
+    try {
+      const t = useTranslations('site');
+      return t('description');
+    } catch (error) {
+      return currentLocale === 'nl' ? 'Professionele tuinbouw oplossingen voor de moderne teler' :
+             currentLocale === 'en' ? 'Professional horticulture solutions for the modern grower' :
+             'Professionelle Gartenbaulösungen für den modernen Anbauer';
+    }
+  }
+
+  const getCopyright = () => {
+    try {
+      const t = useTranslations('site');
+      return t('copyright', { year: currentYear });
+    } catch (error) {
+      return currentLocale === 'nl' ? `© ${currentYear} Lumora Horticulture. Alle rechten voorbehouden.` :
+             currentLocale === 'en' ? `© ${currentYear} Lumora Horticulture. All rights reserved.` :
+             `© ${currentYear} Lumora Horticulture. Alle Rechte vorbehalten.`;
+    }
+  }
+
+  const getNavLabels = () => {
+    try {
+      const t = useTranslations('nav');
+      return {
+        home: t('home'),
+        products: t('products'),
+        contact: t('contact')
+      };
+    } catch (error) {
+      return {
+        home: currentLocale === 'nl' ? 'Home' : 
+              currentLocale === 'en' ? 'Home' : 
+              'Home',
+        products: currentLocale === 'nl' ? 'Producten' : 
+                  currentLocale === 'en' ? 'Products' : 
+                  'Produkte',
+        contact: currentLocale === 'nl' ? 'Contact' : 
+                currentLocale === 'en' ? 'Contact' : 
+                'Kontakt'
+      };
+    }
+  }
+
+  const navLabels = getNavLabels();
+  const description = getDescription();
+  const copyright = getCopyright();
+  
   return (
     <footer className="relative bg-lumora-dark text-lumora-cream border-t border-lumora-cream/10 pt-16 pb-10 mt-16 overflow-hidden">
       {/* Decorative background elements */}
@@ -105,7 +156,7 @@ export default function Footer() {
                 blur-xl -z-10"></span>
             </Link>
             <p className="mt-4 text-base text-lumora-cream/80 max-w-md leading-relaxed">
-              Professionele tuinbouw oplossingen voor de moderne teler. Duurzaam en innovatief sinds de oprichting.
+              {description}
             </p>
             
             <div className="mt-6 flex space-x-4">
@@ -121,9 +172,9 @@ export default function Footer() {
                 Navigation
               </h3>
               <ul className="space-y-3">
-                <FooterLink href="/" label="Home" />
-                <FooterLink href="/products" label="Producten" />
-                <FooterLink href="/contact" label="Contact" />
+                <FooterLink href="/" label={navLabels.home} />
+                <FooterLink href="/products" label={navLabels.products} />
+                <FooterLink href="/contact" label={navLabels.contact} />
               </ul>
             </div>
             
@@ -180,9 +231,15 @@ export default function Footer() {
           
           <div className="lg:col-span-1">
             <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
-              Nieuwsbrief
+              {currentLocale === 'nl' ? 'Nieuwsbrief' : 
+               currentLocale === 'en' ? 'Newsletter' : 
+               'Newsletter'}
             </h3>
-            <p className="text-lumora-cream/80 mb-4">Blijf op de hoogte van onze producten en diensten.</p>
+            <p className="text-lumora-cream/80 mb-4">
+              {currentLocale === 'nl' ? 'Blijf op de hoogte van onze producten en diensten.' : 
+               currentLocale === 'en' ? 'Stay updated with our products and services.' : 
+               'Bleiben Sie über unsere Produkte und Dienstleistungen auf dem Laufenden.'}
+            </p>
             <form className="space-y-2">
               <div>
                 <label htmlFor="email-address" className="sr-only">Email address</label>
@@ -193,7 +250,9 @@ export default function Footer() {
                   autoComplete="email"
                   required
                   className="w-full bg-lumora-dark-700 border border-lumora-cream/20 text-lumora-cream px-4 py-2 rounded-lg focus:ring-1 focus:ring-lumora-cream/30 focus:outline-none"
-                  placeholder="Email adres"
+                  placeholder={currentLocale === 'nl' ? 'Email adres' : 
+                               currentLocale === 'en' ? 'Email address' : 
+                               'E-Mail-Adresse'}
                 />
               </div>
               <div>
@@ -201,7 +260,9 @@ export default function Footer() {
                   type="submit"
                   className="w-full bg-lumora-cream text-lumora-dark font-medium py-2 px-4 rounded-lg hover:bg-lumora-cream/90 transition-all duration-300 flex items-center justify-center"
                 >
-                  Aanmelden
+                  {currentLocale === 'nl' ? 'Aanmelden' : 
+                   currentLocale === 'en' ? 'Subscribe' : 
+                   'Anmelden'}
                 </button>
               </div>
             </form>
@@ -212,16 +273,20 @@ export default function Footer() {
         
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-lumora-cream/70">
-            © {currentYear} Lumora Horticulture. Alle rechten voorbehouden.
+            {copyright}
           </p>
           
           <div className="mt-4 sm:mt-0">
             <div className="flex space-x-6">
               <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
-                Privacy Policy
+                {currentLocale === 'nl' ? 'Privacybeleid' : 
+                 currentLocale === 'en' ? 'Privacy Policy' : 
+                 'Datenschutz'}
               </a>
               <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
-                Terms & Conditions
+                {currentLocale === 'nl' ? 'Algemene Voorwaarden' : 
+                 currentLocale === 'en' ? 'Terms & Conditions' : 
+                 'Allgemeine Geschäftsbedingungen'}
               </a>
             </div>
           </div>
