@@ -2,7 +2,6 @@ import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
-import AnnouncementBar from '@/components/AnnouncementBar'
 import { Inter, Playfair_Display } from 'next/font/google'
 
 // Initialize fonts
@@ -32,19 +31,13 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
-        {/* Top Announcement Bar */}
-        <AnnouncementBar position="top" />
-        
         {/* Fixed header with transparent background that becomes solid on scroll */}
         <HeaderNav />
         
-        {/* Main content with padding top to account for fixed header and announcement bar */}
+        {/* Main content with padding top to account for fixed header */}
         <main className="flex-grow pt-24">
           {children}
         </main>
-        
-        {/* Bottom Announcement Bar above footer */}
-        <AnnouncementBar position="bottom" />
         
         {/* Enhanced footer with modern design */}
         <Footer />
