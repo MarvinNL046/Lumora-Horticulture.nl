@@ -136,7 +136,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  href={`/${locale}/products`} 
+                  href="/products" 
                   className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.viewProducts}</span>
@@ -145,7 +145,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                   </svg>
                 </Link>
                 <Link 
-                  href={`/${locale}/contact`}
+                  href="/contact"
                   className="bg-lumora-cream hover:bg-lumora-cream/90 text-lumora-dark border border-lumora-dark/10 font-medium px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.contactUs}</span>
@@ -224,7 +224,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Tray 84"
               title="Tray-84st: TRANSPLANT 84"
               description="Plug 3.5 cm diameter, 52.5 x 30.5 cm"
-              href={`/${locale}/products#tray84`}
+              href="/products#tray84"
               moreInfoText={t.products.moreInfo}
             />
             
@@ -236,7 +236,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Tray 104"
               title="Tray-104st: PAPER PLUG TRAY 104"
               description="Plug 3 cm diameter, 52.5 x 30.5 cm"
-              href={`/${locale}/products#tray104`}
+              href="/products#tray104"
               moreInfoText={t.products.moreInfo}
             />
             
@@ -248,7 +248,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Transport Box"
               title="Transportdoos (Vouwdoos)"
               description="557 x 322 x 180mm"
-              href={`/${locale}/products#transportbox`}
+              href="/products#transportbox"
               moreInfoText={t.products.moreInfo}
             />
           </div>
@@ -259,7 +259,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             }`}
           >
             <Link 
-              href={`/${locale}/products`}
+              href="/products"
               className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
             >
               <span>{t.products.viewAll}</span>
@@ -293,7 +293,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 {t.cta.description}
               </p>
               <Link 
-                href={`/${locale}/contact`}
+                href="/contact"
                 className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
                          hover:bg-lumora-cream/90 px-8 py-4 rounded-xl shadow-soft 
                          hover:shadow-soft-md transition-all duration-300 

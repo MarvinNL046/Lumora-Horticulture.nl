@@ -100,7 +100,7 @@ export default function HeaderNav() {
   }, [])
   
   return (
-    <header className={`fixed top-8 left-0 right-0 z-40 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
       scrolled ? 'bg-lumora-dark/95 py-3 shadow-md' : 'bg-lumora-dark/90 py-5'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
