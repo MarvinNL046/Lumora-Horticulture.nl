@@ -10,7 +10,8 @@
   "nav": {
     "home": "Home",
     "products": "Producten",
-    "contact": "Contact"
+    "contact": "Contact",
+    "applications": "Toepassingen"
   },
   "cta": {
     "learnMore": "Meer informatie",
@@ -73,6 +74,43 @@
     },
     "locale": "nl"
   },
+  "applications": {
+    "title": {
+      "tag": "Toepassingen",
+      "main": "Toepassingen in de Glastuinbouw",
+      "subtitle": "Onze pluggen zijn perfect inzetbaar voor diverse toepassingsgebieden"
+    },
+    "section": {
+      "title": "Toepassingen in de Glastuinbouw",
+      "subtitle": "Ontdek waar onze hoogwaardige pluggen voor gebruikt kunnen worden"
+    },
+    "items": {
+      "vegetables": {
+        "title": "Groenteplanten-opkweek",
+        "description": "Perfect voor de opkweek van paprika, tomaat, aubergine en komkommer"
+      },
+      "ornamental": {
+        "title": "Sierplanten & vaste planten",
+        "description": "Ideaal voor gerbera, chrysant, lavendel en andere siergewassen"
+      },
+      "herbs": {
+        "title": "Kruiden & microgreens",
+        "description": "Uitstekend voor basilicum, peterselie, oregano en andere kruiden"
+      },
+      "grafting": {
+        "title": "Graftpluggen voor onderstammen",
+        "description": "Speciaal voor het enten van tomaat en paprika planten"
+      },
+      "vertical": {
+        "title": "Vertical farming & hydroponics",
+        "description": "Perfect voor moderne teeltsystemen en verticale landbouw"
+      }
+    },
+    "cta": {
+      "viewAll": "Bekijk alle toepassingen",
+      "contactUs": "Vraag advies"
+    }
+  },
   "home": {
     "hero": {
         "subtitle": "Duurzame en professionele tuinbouw oplossingen voor de moderne teler",
@@ -94,6 +132,12 @@
       "subtitle": "Hoogwaardige, duurzame oplossingen ontworpen voor de moderne professionele tuinder",
       "moreInfo": "Meer informatie",
       "viewAll": "Bekijk alle producten"
+    },
+    "applications": {
+      "title": "Toepassingen in de Glastuinbouw",
+      "subtitle": "Onze pluggen zijn perfect inzetbaar voor diverse toepassingsgebieden",
+      "moreInfo": "Meer informatie",
+      "viewAll": "Bekijk alle toepassingen"
     },
     "cta": {
       "title": "Neem contact met ons op",

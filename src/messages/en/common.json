@@ -10,7 +10,8 @@
   "nav": {
     "home": "Home",
     "products": "Products",
-    "contact": "Contact"
+    "contact": "Contact",
+    "applications": "Applications"
   },
   "cta": {
     "learnMore": "Learn More",
@@ -73,6 +74,43 @@
     },
     "locale": "en"
   },
+  "applications": {
+    "title": {
+      "tag": "Applications",
+      "main": "Greenhouse Horticulture Applications",
+      "subtitle": "Our plugs are perfectly suited for various application areas"
+    },
+    "section": {
+      "title": "Greenhouse Horticulture Applications",
+      "subtitle": "Discover where our high-quality plugs can be used"
+    },
+    "items": {
+      "vegetables": {
+        "title": "Vegetable Plant Cultivation",
+        "description": "Perfect for growing bell peppers, tomatoes, eggplants, and cucumbers"
+      },
+      "ornamental": {
+        "title": "Ornamental & Perennial Plants",
+        "description": "Ideal for gerbera, chrysanthemum, lavender, and other ornamental crops"
+      },
+      "herbs": {
+        "title": "Herbs & Microgreens",
+        "description": "Excellent for basil, parsley, oregano, and other herbs"
+      },
+      "grafting": {
+        "title": "Grafting Plugs for Rootstocks",
+        "description": "Specially designed for grafting tomato and pepper plants"
+      },
+      "vertical": {
+        "title": "Vertical Farming & Hydroponics",
+        "description": "Perfect for modern cultivation systems and vertical agriculture"
+      }
+    },
+    "cta": {
+      "viewAll": "View all applications",
+      "contactUs": "Request advice"
+    }
+  },
   "home": {
     "hero": {
         "subtitle": "Sustainable and professional horticulture solutions for the modern grower",
@@ -94,6 +132,12 @@
       "subtitle": "High-quality, sustainable solutions designed for modern professional growers",
       "moreInfo": "More information",
       "viewAll": "View all products"
+    },
+    "applications": {
+      "title": "Greenhouse Horticulture Applications",
+      "subtitle": "Our plugs are perfectly suited for various application areas",
+      "moreInfo": "More information",
+      "viewAll": "View all applications"
     },
     "cta": {
       "title": "Get in touch with us",

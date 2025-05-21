@@ -145,6 +145,17 @@ export default function HeaderNav() {
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
             <NavLink 
+              href="/applications" 
+              label={
+                currentLocale === 'nl' ? 'Toepassingen' : 
+                currentLocale === 'de' ? 'Anwendungen' : 
+                'Applications'
+              } 
+              color="text-lumora-cream" 
+              activeColor="text-lumora-cream bg-lumora-dark-700" 
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            />
+            <NavLink 
               href="/contact" 
               label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
               color="text-lumora-cream" 
@@ -228,6 +239,15 @@ export default function HeaderNav() {
                 currentLocale === 'nl' ? 'Producten' : 
                 currentLocale === 'de' ? 'Produkte' : 
                 'Products'
+              }
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <MobileNavLink 
+              href="/applications" 
+              label={
+                currentLocale === 'nl' ? 'Toepassingen' : 
+                currentLocale === 'de' ? 'Anwendungen' : 
+                'Applications'
               }
               onClick={() => setMobileMenuOpen(false)} 
             />

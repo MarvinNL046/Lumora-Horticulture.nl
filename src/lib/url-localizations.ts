@@ -10,6 +10,7 @@ export const basePaths = {
   home: '',
   products: 'products',
   contact: 'contact',
+  applications: 'applications',
   // Individual product paths
   tray84: 'products/tray84',
   tray104: 'products/tray104',
@@ -22,6 +23,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   // Dutch paths
   nl: {
     products: 'producten',
+    applications: 'toepassingen',
     // Individual products in Dutch
     'products/tray84': 'producten/tray84',
     'products/tray104': 'producten/tray104',
@@ -39,6 +41,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   de: {
     products: 'produkte',
     contact: 'kontakt',
+    applications: 'anwendungen',
     // Individual products in German
     'products/tray84': 'produkte/tray84',
     'products/tray104': 'produkte/tray104',

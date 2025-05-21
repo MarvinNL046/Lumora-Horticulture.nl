@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: 'Lumora Horticulture | Professionele Tuinbouw Oplossingen',
   description: 'Duurzame en professionele tuinbouw oplossingen voor de moderne teler',
   keywords: 'tuinbouw, horticulture, trays, transportdoos, duurzaam',
+  verification: {
+    google: 'SpcTizFlTiNDDn9CpPqJ6O5Xjz2ivcEWKt3QHtxQgpQ',
+  },
 }
 
 export default function RootLayout({

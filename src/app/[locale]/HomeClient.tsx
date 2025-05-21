@@ -5,6 +5,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 import HeroContactForm from '@/components/HeroContactForm'
 
+// Define TypeScript interface for ApplicationCard props
+interface ApplicationCardProps {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+function ApplicationCard({ icon, title, description }: ApplicationCardProps) {
+  return (
+    <div className="bg-white hover:bg-lumora-cream/30 rounded-2xl shadow-sm hover:shadow-md p-6 transition-all duration-300 transform hover:-translate-y-1 border border-lumora-cream/20">
+      <div className="text-3xl mb-4">
+        {icon}
+      </div>
+      <h3 className="text-lg font-semibold text-lumora-dark mb-2">{title}</h3>
+      <p className="text-lumora-dark/80 text-sm">{description}</p>
+    </div>
+  )
+}
+
 // Define TypeScript interface for ProductCard props
 interface ProductCardProps {
   visible: boolean;
@@ -62,6 +81,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
   const [isVisible, setIsVisible] = useState({
     hero: false,
     products: false,
+    applications: false,
     cta: false
   })
 
@@ -71,6 +91,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
       setIsVisible({
         hero: true,
         products: false,
+        applications: false,
         cta: false
       })
     }, 100)
@@ -82,6 +103,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
           if (entry.isIntersecting) {
             if (entry.target.id === 'products-section') {
               setIsVisible(prev => ({ ...prev, products: true }))
+            } else if (entry.target.id === 'applications-section') {
+              setIsVisible(prev => ({ ...prev, applications: true }))
             } else if (entry.target.id === 'cta-section') {
               setIsVisible(prev => ({ ...prev, cta: true }))
             }
@@ -93,13 +116,16 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
 
     // Observe elements
     const productsSection = document.getElementById('products-section')
+    const applicationsSection = document.getElementById('applications-section')
     const ctaSection = document.getElementById('cta-section')
     
     if (productsSection) observer.observe(productsSection)
+    if (applicationsSection) observer.observe(applicationsSection)
     if (ctaSection) observer.observe(ctaSection)
 
     return () => {
       if (productsSection) observer.unobserve(productsSection)
+      if (applicationsSection) observer.unobserve(applicationsSection)
       if (ctaSection) observer.unobserve(ctaSection)
     }
   }, [])
@@ -263,6 +289,84 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
             >
               <span>{t.products.viewAll}</span>
+              <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
+      {/* Applications Section */}
+      <section id="applications-section" className="py-20 bg-white relative">
+        {/* Background Elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-lumora-cream/5 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-lumora-dark/5 to-transparent"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-lumora-green-100/20 opacity-40 mix-blend-multiply blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-lumora-gold/10 opacity-30 mix-blend-multiply blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            className={`text-center mb-12 transition-all duration-1000 transform ${
+              isVisible.applications ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-lumora-dark mb-4">
+              <span className="relative">
+                {t.applications?.title || "Toepassingen in de Glastuinbouw"}
+                <span className="absolute bottom-1 left-0 w-full h-1 bg-lumora-gold/30 rounded-full transform -translate-y-1"></span>
+              </span>
+            </h2>
+            <p className="text-xl text-lumora-dark/80 max-w-3xl mx-auto leading-relaxed">
+              {t.applications?.subtitle || "Onze pluggen zijn perfect inzetbaar voor diverse toepassingsgebieden"}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {/* Application items */}
+            <ApplicationCard
+              icon="🌿"
+              title={t.applications?.items?.vegetables?.title || "Groenteplanten-opkweek"}
+              description={t.applications?.items?.vegetables?.description || "Perfect voor de opkweek van paprika, tomaat, aubergine en komkommer"}
+            />
+            
+            <ApplicationCard
+              icon="🌼"
+              title={t.applications?.items?.ornamental?.title || "Sierplanten & vaste planten"}
+              description={t.applications?.items?.ornamental?.description || "Ideaal voor gerbera, chrysant, lavendel en andere siergewassen"}
+            />
+            
+            <ApplicationCard
+              icon="🌿"
+              title={t.applications?.items?.herbs?.title || "Kruiden & microgreens"}
+              description={t.applications?.items?.herbs?.description || "Uitstekend voor basilicum, peterselie, oregano en andere kruiden"}
+            />
+            
+            <ApplicationCard
+              icon="🌱"
+              title={t.applications?.items?.grafting?.title || "Graftpluggen voor onderstammen"}
+              description={t.applications?.items?.grafting?.description || "Speciaal voor het enten van tomaat en paprika planten"}
+            />
+            
+            <ApplicationCard
+              icon="🌾"
+              title={t.applications?.items?.vertical?.title || "Vertical farming & hydroponics"}
+              description={t.applications?.items?.vertical?.description || "Perfect voor moderne teeltsystemen en verticale landbouw"}
+            />
+          </div>
+          
+          <div 
+            className={`mt-8 text-center transition-all duration-1000 delay-500 transform ${
+              isVisible.applications ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <Link 
+              href="/applications"
+              className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center inline-flex group"
+            >
+              <span>{t.applications?.viewAll || "Bekijk alle toepassingen"}</span>
               <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
