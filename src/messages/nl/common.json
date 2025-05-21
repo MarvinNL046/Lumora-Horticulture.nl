@@ -84,31 +84,102 @@
       "title": "Toepassingen in de Glastuinbouw",
       "subtitle": "Ontdek waar onze hoogwaardige pluggen voor gebruikt kunnen worden"
     },
+    "tabs": {
+      "benefits": "Voordelen",
+      "examples": "Voorbeelden"
+    },
     "items": {
       "vegetables": {
         "title": "Groenteplanten-opkweek",
-        "description": "Perfect voor de opkweek van paprika, tomaat, aubergine en komkommer"
+        "description": "Perfect voor de opkweek van paprika, tomaat, aubergine en komkommer",
+        "benefits": [
+          "Geoptimaliseerde celgrootte voor groentezaailingen",
+          "Perfecte wortelontwikkeling voor verpotten",
+          "Uniforme groei voor consistente gewasresultaten",
+          "Compatibel met geautomatiseerde verpotmachines"
+        ],
+        "examples": [
+          "Paprika's",
+          "Tomaten",
+          "Aubergines",
+          "Komkommers",
+          "Sla"
+        ]
       },
       "ornamental": {
         "title": "Sierplanten & vaste planten",
-        "description": "Ideaal voor gerbera, chrysant, lavendel en andere siergewassen"
+        "description": "Ideaal voor gerbera, chrysant, lavendel en andere siergewassen",
+        "benefits": [
+          "Consistente kwaliteit voor sierteeltproductie",
+          "Sterke wortelontwikkeling voor gezondere planten",
+          "Geschikt voor een breed scala aan siergewassen",
+          "Verminderde verplantschok"
+        ],
+        "examples": [
+          "Gerbera",
+          "Chrysant",
+          "Lavendel",
+          "Siergrassen",
+          "Vaste planten"
+        ]
       },
       "herbs": {
         "title": "Kruiden & microgreens",
-        "description": "Uitstekend voor basilicum, peterselie, oregano en andere kruiden"
+        "description": "Uitstekend voor basilicum, peterselie, oregano en andere kruiden",
+        "benefits": [
+          "Optimale vochtretentie voor delicate kruiden",
+          "Perfect voor kleinschalige en commerciële kruidenproductie",
+          "Consistente groei voor voorspelbare oogsten",
+          "Geschikt voor diverse kruidensoorten"
+        ],
+        "examples": [
+          "Basilicum",
+          "Peterselie",
+          "Oregano",
+          "Microgreens",
+          "Koriander"
+        ]
       },
       "grafting": {
         "title": "Graftpluggen voor onderstammen",
-        "description": "Speciaal voor het enten van tomaat en paprika planten"
+        "description": "Speciaal voor het enten van tomaat en paprika planten",
+        "benefits": [
+          "Perfecte afmetingen voor entdoeleinden",
+          "Zorgt voor sterke verbinding tussen onderstam en ent",
+          "Verbetert het slagingspercentage van entoperaties",
+          "Compatibel met de meeste enttechnieken"
+        ],
+        "examples": [
+          "Tomatenonderstammen",
+          "Paprikaonderstammen",
+          "Komkommeronderstammen",
+          "Meloenonderstammen",
+          "Speciale gewassen"
+        ]
       },
       "vertical": {
         "title": "Vertical farming & hydroponics",
-        "description": "Perfect voor moderne teeltsystemen en verticale landbouw"
+        "description": "Perfect voor moderne teeltsystemen en verticale landbouw",
+        "benefits": [
+          "Compatibel met moderne hydroponische systemen",
+          "Stapelbaar ontwerp voor verticale landbouwtoepassingen",
+          "Bevordert gezonde plantontwikkeling in grondloze omgevingen",
+          "Duurzaam materiaal geschikt voor hergebruik in hydroponische systemen"
+        ],
+        "examples": [
+          "LED vertical farms",
+          "NFT hydroponische systemen",
+          "DWC hydroponische systemen",
+          "Stadslandbouwtoepassingen",
+          "Containerteelt"
+        ]
       }
     },
     "cta": {
-      "viewAll": "Bekijk alle toepassingen",
-      "contactUs": "Vraag advies"
+      "title": "Neem contact met ons op",
+      "description": "Heeft u vragen over onze producten of wilt u meer informatie over specifieke toepassingen? Wij helpen u graag verder met persoonlijk advies.",
+      "contactUs": "Vraag advies",
+      "viewAll": "Bekijk alle toepassingen"
     }
   },
   "home": {

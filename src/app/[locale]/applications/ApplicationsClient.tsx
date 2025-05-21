@@ -57,19 +57,20 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
             title={t?.items?.vegetables?.title || "Vegetable Plant Cultivation"}
             description={t?.items?.vegetables?.description || "Perfect for growing bell peppers, tomatoes, eggplants, and cucumbers"}
             icon="🌿"
-            benefits={[
+            benefits={t?.items?.vegetables?.benefits || [
               "Optimized cell size for vegetable seedlings",
               "Perfect root development for transplanting",
               "Uniform growth for consistent crop results",
               "Compatible with automated transplanting systems"
             ]}
-            examples={[
+            examples={t?.items?.vegetables?.examples || [
               "Bell peppers",
               "Tomatoes",
               "Eggplants",
               "Cucumbers",
               "Lettuce"
             ]}
+            t={t}
           />
           
           <ApplicationSection
@@ -77,13 +78,13 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
             title={t?.items?.ornamental?.title || "Ornamental & Perennial Plants"}
             description={t?.items?.ornamental?.description || "Ideal for gerbera, chrysanthemum, lavender, and other ornamental crops"}
             icon="🌼"
-            benefits={[
+            benefits={t?.items?.ornamental?.benefits || [
               "Consistent quality for ornamental production",
               "Strong root development for healthier plants",
               "Suitable for a wide range of ornamental varieties",
               "Reduced transplant shock"
             ]}
-            examples={[
+            examples={t?.items?.ornamental?.examples || [
               "Gerbera",
               "Chrysanthemum",
               "Lavender",
@@ -91,6 +92,7 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
               "Perennial flowers"
             ]}
             imagePosition="right"
+            t={t}
           />
           
           <ApplicationSection
@@ -98,19 +100,20 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
             title={t?.items?.herbs?.title || "Herbs & Microgreens"}
             description={t?.items?.herbs?.description || "Excellent for basil, parsley, oregano, and other herbs"}
             icon="🌿"
-            benefits={[
+            benefits={t?.items?.herbs?.benefits || [
               "Optimal moisture retention for delicate herbs",
               "Perfect for small-scale and commercial herb production",
               "Consistent growth for predictable harvests",
               "Suitable for diverse herb varieties"
             ]}
-            examples={[
+            examples={t?.items?.herbs?.examples || [
               "Basil",
               "Parsley",
               "Oregano",
               "Microgreens",
               "Cilantro"
             ]}
+            t={t}
           />
           
           <ApplicationSection
@@ -118,13 +121,13 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
             title={t?.items?.grafting?.title || "Grafting Plugs for Rootstocks"}
             description={t?.items?.grafting?.description || "Specially designed for grafting tomato and pepper plants"}
             icon="🌱"
-            benefits={[
+            benefits={t?.items?.grafting?.benefits || [
               "Perfect dimensions for grafting applications",
               "Ensures strong union between rootstock and scion",
               "Improves success rate of grafting operations",
               "Compatible with most grafting techniques"
             ]}
-            examples={[
+            examples={t?.items?.grafting?.examples || [
               "Tomato rootstocks",
               "Pepper rootstocks",
               "Cucumber rootstocks",
@@ -132,6 +135,7 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
               "Specialty crops"
             ]}
             imagePosition="right"
+            t={t}
           />
           
           <ApplicationSection
@@ -139,19 +143,20 @@ export default function ApplicationsClient({ t, locale }: { t: any, locale: stri
             title={t?.items?.vertical?.title || "Vertical Farming & Hydroponics"}
             description={t?.items?.vertical?.description || "Perfect for modern cultivation systems and vertical agriculture"}
             icon="🌾"
-            benefits={[
+            benefits={t?.items?.vertical?.benefits || [
               "Compatible with modern hydroponics systems",
               "Stackable design for vertical farming applications",
               "Promotes healthy plant development in soilless environments",
               "Durable material suitable for reuse in hydroponic systems"
             ]}
-            examples={[
+            examples={t?.items?.vertical?.examples || [
               "LED vertical farms",
               "NFT hydroponic systems",
               "DWC hydroponic systems",
               "Urban farming applications",
               "Container farming"
             ]}
+            t={t}
           />
         </section>
         
@@ -199,8 +204,9 @@ function ApplicationSection({
   icon,
   benefits,
   examples,
-  imagePosition = "left"
-}: ApplicationSectionProps) {
+  imagePosition = "left",
+  t
+}: ApplicationSectionProps & { t: any }) {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true
@@ -259,7 +265,7 @@ function ApplicationSection({
                     }`}
                   onClick={() => setActiveTab(0)}
                 >
-                  Benefits
+                  {t?.tabs?.benefits || "Voordelen"}
                 </button>
                 <button
                   className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-300
@@ -269,7 +275,7 @@ function ApplicationSection({
                     }`}
                   onClick={() => setActiveTab(1)}
                 >
-                  Examples
+                  {t?.tabs?.examples || "Voorbeelden"}
                 </button>
               </div>
               
