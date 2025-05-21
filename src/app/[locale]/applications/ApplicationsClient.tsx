@@ -364,13 +364,13 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
             {t?.cta?.description || "Do you have questions about our products or would you like to place an order? We are happy to provide personal advice."}
           </motion.p>
           <motion.div variants={fadeIn}>
-            <Link 
-              href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
+              <Link 
+                href={`/contact`}
+                className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
                       hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
                       hover:shadow-soft-md transition-all duration-300 
                       font-medium text-base sm:text-lg group"
-            >
+              >
               <span>{t?.cta?.contactUs || "Request advice"}</span>
               <svg className="ml-2 -mr-1 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
