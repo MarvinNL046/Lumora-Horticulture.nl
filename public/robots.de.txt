@@ -1,0 +1,13 @@
+# robots.txt for Lumora Horticulture (German domain)
+
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+# Disallow certain directories that shouldn't be indexed
+Disallow: /.next/
+Disallow: /node_modules/
+Disallow: /api/
+
+# Sitemap only for German domain
+Sitemap: https://lumorahorticulture.de/sitemap-lumorahorticulture.de.xml

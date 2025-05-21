@@ -43,8 +43,62 @@
 
 # Domain-specific configurations
 
-# These redirects are no longer needed with domain-based localization
-# as each domain serves content in its specific language
+# Domain-specific robots.txt files
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.nl.txt"
+  status = 200
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl"]}
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.com.txt"
+  status = 200
+  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com"]}
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.de.txt"
+  status = 200
+  conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
+
+# Domain-specific sitemap files - make sure they're served from the right domain
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.nl.xml"
+  to = "/sitemap-lumorahorticulture.nl.xml"
+  status = 200
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.com.xml"
+  to = "/sitemap-lumorahorticulture.com.xml"
+  status = 200
+  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.de.xml"
+  to = "/sitemap-lumorahorticulture.de.xml"
+  status = 200
+  conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
+
+# Block sitemap files from wrong domains (404 for cross-domain sitemap access)
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.com.xml"
+  to = "/404.html"
+  status = 404
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl", "lumorahorticulture.de", "www.lumorahorticulture.de"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.de.xml"
+  to = "/404.html"
+  status = 404
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl", "lumorahorticulture.com", "www.lumorahorticulture.com"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.nl.xml"
+  to = "/404.html"
+  status = 404
+  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com", "lumorahorticulture.de", "www.lumorahorticulture.de"]}
 
 # Make sure static assets are properly served first
 [[redirects]]
