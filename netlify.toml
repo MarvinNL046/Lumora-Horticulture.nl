@@ -84,21 +84,45 @@
 # Block sitemap files from wrong domains (404 for cross-domain sitemap access)
 [[redirects]]
   from = "/sitemap-lumorahorticulture.com.xml"
-  to = "/404.html"
+  to = "/index.html"
   status = 404
-  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl", "lumorahorticulture.de", "www.lumorahorticulture.de"]}
+  force = true
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.com.xml"
+  to = "/index.html"
+  status = 404
+  force = true
+  conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
 
 [[redirects]]
   from = "/sitemap-lumorahorticulture.de.xml"
-  to = "/404.html"
+  to = "/index.html"
   status = 404
-  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl", "lumorahorticulture.com", "www.lumorahorticulture.com"]}
+  force = true
+  conditions = {host = ["lumorahorticulture.nl", "www.lumorahorticulture.nl"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.de.xml"
+  to = "/index.html"
+  status = 404
+  force = true
+  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com"]}
 
 [[redirects]]
   from = "/sitemap-lumorahorticulture.nl.xml"
-  to = "/404.html"
+  to = "/index.html"
   status = 404
-  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com", "lumorahorticulture.de", "www.lumorahorticulture.de"]}
+  force = true
+  conditions = {host = ["lumorahorticulture.com", "www.lumorahorticulture.com"]}
+
+[[redirects]]
+  from = "/sitemap-lumorahorticulture.nl.xml"
+  to = "/index.html"
+  status = 404
+  force = true
+  conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
 
 # Make sure static assets are properly served first
 [[redirects]]
