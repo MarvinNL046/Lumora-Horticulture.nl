@@ -49,18 +49,18 @@ export default function AnnouncementBar({ translations, position = 'top' }: Anno
     <div 
       className={`bg-lumora-gold-500 text-white py-4 px-4 transition-all duration-500 ${
         position === 'top' 
-          ? `fixed top-0 left-0 right-0 w-full shadow-lg z-50 border-b border-lumora-gold-600 ${
+          ? `fixed top-0 inset-x-0 shadow-lg z-50 border-b border-lumora-gold-600 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
             }`
-          : `relative w-full shadow-lg z-30 border-t border-lumora-gold-600 ${
+          : `relative shadow-lg z-30 border-t border-lumora-gold-600 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
             }`
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center justify-center w-full animate-pulse-subtle">
-          <span className="mr-3 text-2xl">🔔</span>
-          <span className="font-bold text-lg md:text-xl tracking-tight">{t.preorderMessage}</span>
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center relative">
+        <div className="flex items-center justify-center w-full animate-pulse-subtle pr-10">
+          <span className="mr-2 sm:mr-3 text-xl sm:text-2xl">🔔</span>
+          <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-center">{t.preorderMessage}</span>
         </div>
         
         <button 

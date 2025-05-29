@@ -370,7 +370,7 @@ function ProductDetail({
             
             <motion.div variants={fadeIn} className="pt-4 md:pt-6">
               <Link
-                href={`/${locale}/contact?product=${encodeURIComponent(title)}`}
+                href={`/contact?product=${encodeURIComponent(title)}`}
               className="inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base"
               >
                 <span>{t.detail?.requestQuote}</span>
@@ -430,7 +430,7 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
           </motion.p>
           <motion.div variants={fadeIn}>
             <Link 
-              href={`/${locale}/contact`}
+              href="/contact"
               className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
                       hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
                       hover:shadow-soft-md transition-all duration-300 

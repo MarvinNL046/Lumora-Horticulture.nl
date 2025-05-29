@@ -47,10 +47,44 @@ export function middleware(request: NextRequest) {
   const locale = domainLocaleMap[domain] || 'nl';
   console.log(`Selected locale: ${locale} for domain: ${domain}`);
   
-  // Force set locale param in the URL
-  url.pathname = `/${locale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  // Check if the path already starts with a locale
+  const localeRegex = /^\/(nl|en|de)\b/;
+  const hasLocalePrefix = localeRegex.test(pathname);
   
-  console.log(`Redirecting to: ${url.pathname}`);
+  if (hasLocalePrefix) {
+    // Path already has locale prefix, let next-intl handle it
+    console.log(`Path already has locale prefix: ${pathname}`);
+    
+    const intlMiddleware = createMiddleware({
+      locales: ['nl', 'en', 'de'],
+      defaultLocale: locale,
+      localeDetection: false,
+      localePrefix: 'as-needed',
+      domains: [
+        {
+          domain: 'lumorahorticulture.nl',
+          defaultLocale: 'nl',
+        },
+        {
+          domain: 'lumorahorticulture.com',
+          defaultLocale: 'en',
+        },
+        {
+          domain: 'lumorahorticulture.de',
+          defaultLocale: 'de',
+        },
+        {
+          domain: 'lumorahorticulture.netlify.app',
+          defaultLocale: 'nl',
+        }
+      ]
+    });
+
+    return intlMiddleware(request);
+  }
+  
+  // Path doesn't have locale prefix, add it
+  console.log(`Adding locale prefix to: ${pathname}`);
   
   // If we have a localized URL, convert it to base path for internal routing
   const basePath = basePathFromLocalizedPath(pathname, locale);
@@ -58,6 +92,7 @@ export function middleware(request: NextRequest) {
   // If we translated the path (it's different from the original), update URL
   if (basePath !== pathname) {
     url.pathname = `/${locale}${basePath}`;
+    console.log(`Redirecting translated path to: ${url.pathname}`);
     
     // Keep the original pathname in a custom header for debugging
     const response = NextResponse.rewrite(url);
@@ -69,34 +104,9 @@ export function middleware(request: NextRequest) {
   
   // Force redirecting to the localized route
   url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
+  console.log(`Redirecting to: ${url.pathname}`);
   
-  // Otherwise, delegate to the next-intl middleware
-  const intlMiddleware = createMiddleware({
-    locales: ['nl', 'en', 'de'],
-    defaultLocale: locale, // Use detected locale as default
-    localeDetection: false,
-    localePrefix: 'as-needed',
-    domains: [
-      {
-        domain: 'lumorahorticulture.nl',
-        defaultLocale: 'nl',
-      },
-      {
-        domain: 'lumorahorticulture.com',
-        defaultLocale: 'en',
-      },
-      {
-        domain: 'lumorahorticulture.de',
-        defaultLocale: 'de',
-      },
-      {
-        domain: 'lumorahorticulture.netlify.app',
-        defaultLocale: 'nl',
-      }
-    ]
-  });
-
-  return intlMiddleware(request);
+  return NextResponse.redirect(url);
 }
 
 export const config = {
