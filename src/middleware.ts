@@ -6,6 +6,32 @@ import {
   localizePathForLocale
 } from './lib/url-localizations';
 
+// Create the next-intl middleware with domain-based configuration
+const intlMiddleware = createMiddleware({
+  locales: ['nl', 'en', 'de'],
+  defaultLocale: 'nl',
+  localeDetection: false,
+  localePrefix: 'always', // Always use locale prefix internally
+  domains: [
+    {
+      domain: 'lumorahorticulture.nl',
+      defaultLocale: 'nl',
+    },
+    {
+      domain: 'lumorahorticulture.com',
+      defaultLocale: 'en',
+    },
+    {
+      domain: 'lumorahorticulture.de',
+      defaultLocale: 'de',
+    },
+    {
+      domain: 'lumorahorticulture.netlify.app',
+      defaultLocale: 'nl',
+    }
+  ]
+});
+
 /**
  * Get host from request (handling localhost with port)
  */
@@ -51,62 +77,34 @@ export function middleware(request: NextRequest) {
   const localeRegex = /^\/(nl|en|de)\b/;
   const hasLocalePrefix = localeRegex.test(pathname);
   
-  if (hasLocalePrefix) {
-    // Path already has locale prefix, let next-intl handle it
-    console.log(`Path already has locale prefix: ${pathname}`);
-    
-    const intlMiddleware = createMiddleware({
-      locales: ['nl', 'en', 'de'],
-      defaultLocale: locale,
-      localeDetection: false,
-      localePrefix: 'as-needed',
-      domains: [
-        {
-          domain: 'lumorahorticulture.nl',
-          defaultLocale: 'nl',
-        },
-        {
-          domain: 'lumorahorticulture.com',
-          defaultLocale: 'en',
-        },
-        {
-          domain: 'lumorahorticulture.de',
-          defaultLocale: 'de',
-        },
-        {
-          domain: 'lumorahorticulture.netlify.app',
-          defaultLocale: 'nl',
-        }
-      ]
-    });
-
+  // For domain-based routing, we need to handle two cases:
+  // 1. Development/localhost: Use locale prefixes in URLs
+  // 2. Production domains: No locale prefixes in URLs, but internally we need them
+  
+  if (domain === 'localhost') {
+    // In development, just use the standard next-intl middleware
     return intlMiddleware(request);
   }
   
-  // Path doesn't have locale prefix, add it
-  console.log(`Adding locale prefix to: ${pathname}`);
-  
-  // If we have a localized URL, convert it to base path for internal routing
-  const basePath = basePathFromLocalizedPath(pathname, locale);
-  
-  // If we translated the path (it's different from the original), update URL
-  if (basePath !== pathname) {
-    url.pathname = `/${locale}${basePath}`;
-    console.log(`Redirecting translated path to: ${url.pathname}`);
-    
-    // Keep the original pathname in a custom header for debugging
-    const response = NextResponse.rewrite(url);
-    response.headers.set('x-original-pathname', pathname);
-    response.headers.set('x-localized-from', locale);
-    response.headers.set('x-domain-detected', domain);
-    return response;
+  // For production domains
+  if (hasLocalePrefix) {
+    // If there's already a locale prefix, this is probably an internal redirect
+    // Just let next-intl handle it
+    return intlMiddleware(request);
   }
   
-  // Force redirecting to the localized route
-  url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
-  console.log(`Redirecting to: ${url.pathname}`);
+  // No locale prefix - this is a public URL on a domain
+  // We need to internally rewrite it to include the locale prefix
   
-  return NextResponse.redirect(url);
+  // First, translate the localized path to base path
+  const basePath = basePathFromLocalizedPath(pathname, locale);
+  
+  // Then add the locale prefix for internal routing
+  url.pathname = `/${locale}${basePath}`;
+  console.log(`Rewriting ${pathname} to ${url.pathname} for locale ${locale}`);
+  
+  // Rewrite (not redirect) to preserve the clean URL
+  return NextResponse.rewrite(url);
 }
 
 export const config = {

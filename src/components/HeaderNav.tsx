@@ -127,14 +127,14 @@ export default function HeaderNav() {
           {/* Desktop navigation with localized links */}
           <nav className="hidden md:flex md:items-center md:space-x-1">
             <NavLink 
-              href="/" 
+              href={localizePathForLocale('/', currentLocale)} 
               label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
               color="text-lumora-cream" 
               activeColor="text-lumora-cream bg-lumora-dark-700" 
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
             <NavLink 
-              href="/products" 
+              href={localizePathForLocale('/products', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Producten' : 
                 currentLocale === 'de' ? 'Produkte' : 
@@ -145,7 +145,7 @@ export default function HeaderNav() {
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
             <NavLink 
-              href="/applications" 
+              href={localizePathForLocale('/applications', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Toepassingen' : 
                 currentLocale === 'de' ? 'Anwendungen' : 
@@ -156,7 +156,7 @@ export default function HeaderNav() {
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
             <NavLink 
-              href="/contact" 
+              href={localizePathForLocale('/contact', currentLocale)} 
               label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
               color="text-lumora-cream" 
               activeColor="text-lumora-cream bg-lumora-dark-700" 
@@ -229,12 +229,12 @@ export default function HeaderNav() {
         <div className="bg-lumora-dark-800/95 mt-2 mx-4 rounded-2xl overflow-hidden border border-lumora-cream/10 shadow-lg">
           <div className="pt-2 pb-3 space-y-1 p-4">
             <MobileNavLink 
-              href="/" 
+              href={localizePathForLocale('/', currentLocale)} 
               label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
               onClick={() => setMobileMenuOpen(false)} 
             />
             <MobileNavLink 
-              href="/products" 
+              href={localizePathForLocale('/products', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Producten' : 
                 currentLocale === 'de' ? 'Produkte' : 
@@ -243,7 +243,7 @@ export default function HeaderNav() {
               onClick={() => setMobileMenuOpen(false)} 
             />
             <MobileNavLink 
-              href="/applications" 
+              href={localizePathForLocale('/applications', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Toepassingen' : 
                 currentLocale === 'de' ? 'Anwendungen' : 
@@ -252,7 +252,7 @@ export default function HeaderNav() {
               onClick={() => setMobileMenuOpen(false)} 
             />
             <MobileNavLink 
-              href="/contact" 
+              href={localizePathForLocale('/contact', currentLocale)} 
               label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
               onClick={() => setMobileMenuOpen(false)} 
             />
@@ -299,7 +299,10 @@ interface MobileNavLinkProps extends NavLinkProps {
 // Desktop navigation link component
 function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) {
   const pathname = usePathname()
-  const isActive = pathname === href
+  // Check if we're on the locale prefixed version of this path
+  const pathWithoutLocale = pathname.replace(/^\/(nl|en|de)/, '') || '/'
+  const hrefWithoutLocale = href.replace(/^\/(nl|en|de)/, '') || '/'
+  const isActive = pathWithoutLocale === hrefWithoutLocale
   
   // Default styling if custom colors are not provided
   const defaultActiveStyle = 'text-lumora-cream bg-lumora-dark-700/80 shadow-soft-sm'
@@ -328,7 +331,10 @@ function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) 
 // Mobile navigation link component
 function MobileNavLink({ href, label, onClick }: MobileNavLinkProps) {
   const pathname = usePathname()
-  const isActive = pathname === href
+  // Check if we're on the locale prefixed version of this path
+  const pathWithoutLocale = pathname.replace(/^\/(nl|en|de)/, '') || '/'
+  const hrefWithoutLocale = href.replace(/^\/(nl|en|de)/, '') || '/'
+  const isActive = pathWithoutLocale === hrefWithoutLocale
   
   return (
     <Link
