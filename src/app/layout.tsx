@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
 import { Inter, Playfair_Display } from 'next/font/google'
+import { OrganizationSchema } from '@/components/StructuredData'
 
 // Initialize fonts
 const inter = Inter({ 
@@ -18,9 +19,10 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Lumora Horticulture | Professionele Tuinbouw Oplossingen',
-  description: 'Duurzame en professionele tuinbouw oplossingen voor de moderne teler',
-  keywords: 'tuinbouw, horticulture, trays, transportdoos, duurzaam',
+  title: 'Lumora Horticulture | B2B Leverancier Steenwol Pluggen & Kweektrays',
+  description: 'Lumora Horticulture - B2B leverancier van steenwol pluggen, kweektrays en tuinbouw verpakkingen. Directe fabrikant voor groothandel en professionele kwekers. Eigen productie.',
+  keywords: 'steenwol pluggen groothandel, kweektrays B2B, tuinbouw verpakkingen, professionele kweektrays, glastuinbouw benodigdheden, paperpot trays, horticulture wholesale, rockwool plugs supplier',
+  viewport: 'width=device-width, initial-scale=1',
   verification: {
     google: 'SpcTizFlTiNDDn9CpPqJ6O5Xjz2ivcEWKt3QHtxQgpQ',
   },
@@ -34,6 +36,9 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
+        {/* Organization structured data */}
+        <OrganizationSchema locale="nl" />
+        
         {/* Fixed header with transparent background that becomes solid on scroll */}
         <HeaderNav />
         

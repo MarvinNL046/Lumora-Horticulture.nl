@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ReactNode } from 'react'
+import { LocalBusinessSchema, BreadcrumbSchema } from '@/components/StructuredData'
 
 // Animation variants
 const fadeIn = {
@@ -10,7 +11,7 @@ const fadeIn = {
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
 }
 
@@ -27,11 +28,27 @@ const staggerContainer = {
 interface ClientComponentProps {
   t: Record<string, any>;
   form?: ReactNode;
+  locale?: string;
 }
 
-export default function ContactPageClient({ t, form }: ClientComponentProps) {
+export default function ContactPageClient({ t, form, locale = 'nl' }: ClientComponentProps) {
+  // Breadcrumb data
+  const breadcrumbItems = [
+    {
+      name: locale === 'nl' ? 'Home' : locale === 'de' ? 'Startseite' : 'Home',
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+    },
+    {
+      name: locale === 'nl' ? 'Contact' : locale === 'de' ? 'Kontakt' : 'Contact',
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/contact/' : locale === 'de' ? 'https://lumorahorticulture.de/kontakt/' : 'https://lumorahorticulture.com/contact/'
+    }
+  ]
+
   return (
     <div className="relative min-h-screen py-16 md:py-24">
+      {/* Structured data */}
+      <LocalBusinessSchema locale={locale} />
+      <BreadcrumbSchema items={breadcrumbItems} />
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>

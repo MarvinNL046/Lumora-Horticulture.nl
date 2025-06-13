@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Tab } from '@headlessui/react'
+import { ProductSchema, BreadcrumbSchema } from '@/components/StructuredData'
 
 // Animation variants
 const fadeIn = {
@@ -13,7 +14,7 @@ const fadeIn = {
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
 }
 
@@ -29,8 +30,70 @@ const staggerContainer = {
 
 // Product page component with modern styling
 export default function ProductsClient({ t, locale }: { t: any, locale: string }) {
+  // Breadcrumb data
+  const breadcrumbItems = [
+    {
+      name: locale === 'nl' ? 'Home' : locale === 'de' ? 'Startseite' : 'Home',
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+    },
+    {
+      name: locale === 'nl' ? 'Producten' : locale === 'de' ? 'Produkte' : 'Products',
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/' : locale === 'de' ? 'https://lumorahorticulture.de/produkte/' : 'https://lumorahorticulture.com/products/'
+    }
+  ]
+
+  // Product data for structured data
+  const products = [
+    {
+      name: "Tray-84st: PAPER PLUG TRAY 84",
+      description: locale === 'nl' 
+        ? "Professionele TRANSPLANT 84 tray met 84 cellen voor efficiënte kweek van zaailingen. Direct van de fabrikant."
+        : locale === 'de'
+        ? "Professionelles TRANSPLANT 84 Tablett mit 84 Zellen für effiziente Sämlingsanzucht. Direkt vom Hersteller."
+        : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer.",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg",
+      sku: "TRAY-84"
+    },
+    {
+      name: "Tray-104st: PAPER PLUG TRAY 104",
+      description: locale === 'nl' 
+        ? "PAPER PLUG TRAY 104 met 104 cellen voor optimale wortelontwikkeling. Geschikt voor professionele glastuinbouw."
+        : locale === 'de'
+        ? "PAPER PLUG TRAY 104 mit 104 Zellen für optimale Wurzelentwicklung. Geeignet für professionellen Gewächshausgartenbau."
+        : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture.",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg",
+      sku: "TRAY-104"
+    },
+    {
+      name: locale === 'nl' ? "Transportdoos (Vouwdoos)" : locale === 'de' ? "Transportbox (Faltbox)" : "Transport Box (Folding Box)",
+      description: locale === 'nl' 
+        ? "Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt."
+        : locale === 'de'
+        ? "Nachhaltige faltbare Transportbox für sicheren Transport von Gartenbauprodukten. Stapelbar und effizient."
+        : "Sustainable folding transport box for safe transport of horticultural products. Stackable and efficient.",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg",
+      sku: "TRANSPORT-BOX"
+    },
+    {
+      name: locale === 'nl' ? "Inlegvellen" : locale === 'de' ? "Einlegeblätter" : "Insert Sheets",
+      description: locale === 'nl' 
+        ? "Transparante inlegvellen voor extra bescherming en organisatie in transportdozen."
+        : locale === 'de'
+        ? "Transparente Einlegeblätter für zusätzlichen Schutz und Organisation in Transportboxen."
+        : "Transparent insert sheets for extra protection and organization in transport boxes.",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg",
+      sku: "INSERT-SHEETS"
+    }
+  ]
+
   return (
     <div className="relative min-h-screen">
+      {/* Structured data */}
+      <BreadcrumbSchema items={breadcrumbItems} />
+      {products.map(product => (
+        <ProductSchema key={product.sku} product={product} locale={locale} />
+      ))}
+      
       {/* Background elements - adjusted for better mobile display with new brand colors */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>
