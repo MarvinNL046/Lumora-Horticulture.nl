@@ -9,9 +9,10 @@
   },
   "nav": {
     "home": "Home",
+    "about": "About",
     "products": "Products",
-    "contact": "Contact",
-    "applications": "Applications"
+    "applications": "Applications",
+    "contact": "Contact"
   },
   "cta": {
     "learnMore": "Learn More",
@@ -109,6 +110,61 @@
     "cta": {
       "viewAll": "View all applications",
       "contactUs": "Request advice"
+    }
+  },
+  "about": {
+    "title": {
+      "tag": "About Us",
+      "main": "Your Partner in Professional Horticulture",
+      "subtitle": "Direct manufacturer of high-quality rockwool plugs and growing trays"
+    },
+    "intro": {
+      "title": "Welcome to Lumora Horticulture",
+      "description": "As a leading manufacturer of rockwool plugs and growing trays, we serve professional growers throughout Europe. With our own production line, we guarantee consistent quality and direct delivery to wholesalers and professional gardeners."
+    },
+    "ourStory": {
+      "title": "Our Story",
+      "description": "Lumora Horticulture was founded from a passion for innovative horticultural solutions. With years of experience in the greenhouse horticulture sector, we have specialized in producing high-quality rockwool plugs that are perfectly tailored to the needs of modern growers."
+    },
+    "production": {
+      "title": "Own Production",
+      "description": "In our modern production facility, we manufacture thousands of rockwool plugs daily. Through complete control over the production process, we can flexibly respond to specific customer requirements and guarantee consistent product quality.",
+      "features": [
+        "Modern production line for rockwool plugs",
+        "Capacity: over 100,000 plugs per day",
+        "Strict quality control on every batch",
+        "Flexible production for custom orders"
+      ]
+    },
+    "whyUs": {
+      "title": "Why Lumora Horticulture?",
+      "reasons": [
+        {
+          "title": "Direct from Manufacturer",
+          "description": "No intermediaries, direct prices and personal contact"
+        },
+        {
+          "title": "B2B Specialist",
+          "description": "100% focused on professional growers and wholesalers"
+        },
+        {
+          "title": "Own Production",
+          "description": "Complete control over quality and delivery times"
+        },
+        {
+          "title": "European Quality",
+          "description": "Products meet the highest European standards"
+        }
+      ]
+    },
+    "certifications": {
+      "title": "Quality & Certifications",
+      "description": "Our products meet the strictest quality requirements for professional horticulture. We work according to the latest environmental standards and sustainability principles."
+    },
+    "cta": {
+      "title": "Ready to cooperate?",
+      "description": "Contact us for a free quote or more information about our products and possibilities.",
+      "button": "Request a quote"
     }
   },
   "home": {

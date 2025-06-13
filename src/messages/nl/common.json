@@ -9,9 +9,10 @@
   },
   "nav": {
     "home": "Home",
+    "about": "Over Ons",
     "products": "Producten",
-    "contact": "Contact",
-    "applications": "Toepassingen"
+    "applications": "Toepassingen",
+    "contact": "Contact"
   },
   "cta": {
     "learnMore": "Meer informatie",
@@ -180,6 +181,61 @@
       "description": "Heeft u vragen over onze producten of wilt u meer informatie over specifieke toepassingen? Wij helpen u graag verder met persoonlijk advies.",
       "contactUs": "Vraag advies",
       "viewAll": "Bekijk alle toepassingen"
+    }
+  },
+  "about": {
+    "title": {
+      "tag": "Over Ons",
+      "main": "Uw Partner in Professionele Tuinbouw",
+      "subtitle": "Directe fabrikant van hoogwaardige steenwol pluggen en kweektrays"
+    },
+    "intro": {
+      "title": "Welkom bij Lumora Horticulture",
+      "description": "Als toonaangevende fabrikant van steenwol pluggen en kweektrays, bedienen wij professionele kwekers in heel Europa. Met onze eigen productielijn garanderen wij constante kwaliteit en directe levering aan groothandels en professionele tuinders."
+    },
+    "ourStory": {
+      "title": "Onze Geschiedenis",
+      "description": "Lumora Horticulture is opgericht vanuit een passie voor innovatieve tuinbouwoplossingen. Met jarenlange ervaring in de glastuinbouw sector, hebben we ons gespecialiseerd in het produceren van hoogwaardige steenwol pluggen die perfect zijn afgestemd op de behoeften van moderne kwekers."
+    },
+    "production": {
+      "title": "Eigen Productie",
+      "description": "In onze moderne productiefaciliteit vervaardigen we dagelijks duizenden steenwol pluggen. Door de volledige controle over het productieproces kunnen we flexibel inspelen op specifieke klantwensen en garanderen we een constante productkwaliteit.",
+      "features": [
+        "Moderne productielijn voor steenwol pluggen",
+        "Capaciteit: meer dan 100.000 pluggen per dag",
+        "Strenge kwaliteitscontrole op elke batch",
+        "Flexibele productie voor custom orders"
+      ]
+    },
+    "whyUs": {
+      "title": "Waarom Lumora Horticulture?",
+      "reasons": [
+        {
+          "title": "Direct van de Fabrikant",
+          "description": "Geen tussenpersonen, directe prijzen en persoonlijk contact"
+        },
+        {
+          "title": "B2B Specialist",
+          "description": "100% gefocust op professionele kwekers en groothandels"
+        },
+        {
+          "title": "Eigen Productie",
+          "description": "Volledige controle over kwaliteit en leveringstijden"
+        },
+        {
+          "title": "Europese Kwaliteit",
+          "description": "Producten voldoen aan de hoogste Europese standaarden"
+        }
+      ]
+    },
+    "certifications": {
+      "title": "Kwaliteit & Certificeringen",
+      "description": "Onze producten voldoen aan de strengste kwaliteitseisen voor professionele tuinbouw. We werken volgens de laatste milieunormen en duurzaamheidsprincipes."
+    },
+    "cta": {
+      "title": "Klaar om samen te werken?",
+      "description": "Neem contact op voor een vrijblijvende offerte of meer informatie over onze producten en mogelijkheden.",
+      "button": "Vraag een offerte aan"
     }
   },
   "home": {

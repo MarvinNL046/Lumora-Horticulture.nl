@@ -8,6 +8,7 @@
 // English URL paths (used as the reference/default since they match the file structure)
 export const basePaths = {
   home: '',
+  about: 'about',
   products: 'products',
   contact: 'contact',
   applications: 'applications',
@@ -22,6 +23,7 @@ export const basePaths = {
 export const localizedPaths: Record<string, Record<string, string>> = {
   // Dutch paths
   nl: {
+    about: 'over-ons',
     products: 'producten',
     applications: 'toepassingen',
     // Individual products in Dutch
@@ -39,6 +41,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   
   // German paths
   de: {
+    about: 'uber-uns',
     products: 'produkte',
     contact: 'kontakt',
     applications: 'anwendungen',

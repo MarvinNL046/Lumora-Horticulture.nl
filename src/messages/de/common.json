@@ -9,9 +9,10 @@
   },
   "nav": {
     "home": "Startseite",
+    "about": "Über Uns",
     "products": "Produkte",
-    "contact": "Kontakt",
-    "applications": "Anwendungen"
+    "applications": "Anwendungen",
+    "contact": "Kontakt"
   },
   "cta": {
     "learnMore": "Mehr erfahren",
@@ -109,6 +110,61 @@
     "cta": {
       "viewAll": "Alle Anwendungen ansehen",
       "contactUs": "Beratung anfragen"
+    }
+  },
+  "about": {
+    "title": {
+      "tag": "Über Uns",
+      "main": "Ihr Partner im Professionellen Gartenbau",
+      "subtitle": "Direkter Hersteller von hochwertigen Steinwollsteckern und Anzuchtschalen"
+    },
+    "intro": {
+      "title": "Willkommen bei Lumora Horticulture",
+      "description": "Als führender Hersteller von Steinwollsteckern und Anzuchtschalen bedienen wir professionelle Züchter in ganz Europa. Mit unserer eigenen Produktionslinie garantieren wir konstante Qualität und direkte Lieferung an Großhändler und professionelle Gärtner."
+    },
+    "ourStory": {
+      "title": "Unsere Geschichte",
+      "description": "Lumora Horticulture wurde aus einer Leidenschaft für innovative Gartenbaulösungen gegründet. Mit jahrelanger Erfahrung im Gewächshausgartenbau haben wir uns auf die Produktion hochwertiger Steinwollstecker spezialisiert, die perfekt auf die Bedürfnisse moderner Züchter abgestimmt sind."
+    },
+    "production": {
+      "title": "Eigene Produktion",
+      "description": "In unserer modernen Produktionsanlage stellen wir täglich Tausende von Steinwollsteckern her. Durch die vollständige Kontrolle über den Produktionsprozess können wir flexibel auf spezifische Kundenwünsche reagieren und eine konstante Produktqualität garantieren.",
+      "features": [
+        "Moderne Produktionslinie für Steinwollstecker",
+        "Kapazität: über 100.000 Stecker pro Tag",
+        "Strenge Qualitätskontrolle bei jeder Charge",
+        "Flexible Produktion für kundenspezifische Aufträge"
+      ]
+    },
+    "whyUs": {
+      "title": "Warum Lumora Horticulture?",
+      "reasons": [
+        {
+          "title": "Direkt vom Hersteller",
+          "description": "Keine Zwischenhändler, direkte Preise und persönlicher Kontakt"
+        },
+        {
+          "title": "B2B-Spezialist",
+          "description": "100% fokussiert auf professionelle Züchter und Großhändler"
+        },
+        {
+          "title": "Eigene Produktion",
+          "description": "Vollständige Kontrolle über Qualität und Lieferzeiten"
+        },
+        {
+          "title": "Europäische Qualität",
+          "description": "Produkte erfüllen die höchsten europäischen Standards"
+        }
+      ]
+    },
+    "certifications": {
+      "title": "Qualität & Zertifizierungen",
+      "description": "Unsere Produkte erfüllen die strengsten Qualitätsanforderungen für den professionellen Gartenbau. Wir arbeiten nach den neuesten Umweltstandards und Nachhaltigkeitsprinzipien."
+    },
+    "cta": {
+      "title": "Bereit zur Zusammenarbeit?",
+      "description": "Kontaktieren Sie uns für ein kostenloses Angebot oder weitere Informationen über unsere Produkte und Möglichkeiten.",
+      "button": "Angebot anfordern"
     }
   },
   "home": {

@@ -134,6 +134,17 @@ export default function HeaderNav() {
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
             <NavLink 
+              href={localizePathForLocale('/about', currentLocale)} 
+              label={
+                currentLocale === 'nl' ? 'Over Ons' : 
+                currentLocale === 'de' ? 'Über Uns' : 
+                'About'
+              } 
+              color="text-lumora-cream" 
+              activeColor="text-lumora-cream bg-lumora-dark-700" 
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            />
+            <NavLink 
               href={localizePathForLocale('/products', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Producten' : 
@@ -231,6 +242,15 @@ export default function HeaderNav() {
             <MobileNavLink 
               href={localizePathForLocale('/', currentLocale)} 
               label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <MobileNavLink 
+              href={localizePathForLocale('/about', currentLocale)} 
+              label={
+                currentLocale === 'nl' ? 'Over Ons' : 
+                currentLocale === 'de' ? 'Über Uns' : 
+                'About'
+              }
               onClick={() => setMobileMenuOpen(false)} 
             />
             <MobileNavLink 
