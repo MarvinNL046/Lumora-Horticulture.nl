@@ -77,12 +77,19 @@ export default function HeaderNav() {
   // Get the current locale
   const currentLocale = getCurrentLocale()
   
-  // Get the path without the locale prefix
+  // Get the path without the locale prefix and convert to base path
   const getPathWithoutLocale = (): string => {
-    if (pathname.startsWith('/' + currentLocale + '/')) {
-      return pathname.substring(('/' + currentLocale).length);
+    let cleanPath = pathname;
+    
+    // Remove the locale prefix if present
+    if (cleanPath.startsWith('/' + currentLocale + '/')) {
+      cleanPath = cleanPath.substring(('/' + currentLocale).length);
+    } else if (cleanPath.startsWith('/' + currentLocale)) {
+      cleanPath = '/';
     }
-    return pathname;
+    
+    // Convert localized path back to base path
+    return basePathFromLocalizedPath(cleanPath, currentLocale);
   }
   
   const pathWithoutLocale = getPathWithoutLocale()

@@ -66,14 +66,23 @@ export const domainLocaleMap: Record<string, string> = {
  * Convert a path from the base path (English) to a localized path
  */
 export function localizePathForLocale(path: string, locale: string): string {
-  // Extract the first segment of the path (or use the whole path if there's no segment)
-  const pathSegments = path.split('/').filter(Boolean);
-  const firstSegment = pathSegments[0] || '';
+  // Clean the path and remove leading/trailing slashes
+  const cleanPath = path.replace(/^\/|\/$/g, '');
   
   // If this is the homepage (empty path), return as is
-  if (!firstSegment) {
-    return '';
+  if (!cleanPath) {
+    return '/';
   }
+  
+  // Check if we have a direct match for the full path
+  const localizedPath = localizedPaths[locale]?.[cleanPath];
+  if (localizedPath) {
+    return '/' + localizedPath;
+  }
+  
+  // Otherwise try to localize the first segment
+  const pathSegments = cleanPath.split('/');
+  const firstSegment = pathSegments[0];
   
   // Find the localized version of the first segment if it exists
   const localizedFirstSegment = localizedPaths[locale]?.[firstSegment] || firstSegment;
@@ -89,20 +98,29 @@ export function localizePathForLocale(path: string, locale: string): string {
  * Convert a localized path back to its base path (English)
  */
 export function basePathFromLocalizedPath(localizedPath: string, locale: string): string {
-  // Extract the first segment of the path
-  const pathSegments = localizedPath.split('/').filter(Boolean);
-  const firstSegment = pathSegments[0] || '';
+  // Clean the path and remove leading/trailing slashes
+  const cleanPath = localizedPath.replace(/^\/|\/$/g, '');
   
   // If this is the homepage (empty path), return as is
-  if (!firstSegment) {
-    return '';
+  if (!cleanPath) {
+    return '/';
   }
+  
+  // First check if we have a direct match for the full path
+  const localePathMap = localizedPaths[locale] || {};
+  for (const [baseKey, localizedValue] of Object.entries(localePathMap)) {
+    if (localizedValue === cleanPath) {
+      return '/' + baseKey;
+    }
+  }
+  
+  // Otherwise try to de-localize the first segment
+  const pathSegments = cleanPath.split('/');
+  const firstSegment = pathSegments[0];
   
   // Find which base path key this segment corresponds to
   let basePath = firstSegment;
   
-  // Go through the localized paths for this locale and find a match
-  const localePathMap = localizedPaths[locale] || {};
   for (const [baseKey, localizedValue] of Object.entries(localePathMap)) {
     if (localizedValue === firstSegment) {
       basePath = baseKey;
