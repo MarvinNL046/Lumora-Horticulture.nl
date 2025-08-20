@@ -1,0 +1,53 @@
+LUMORA HORTICULTURE - B2B EMAIL TEMPLATE
+========================================
+
+Onderwerp: Bespaar tot 30% op uw kweektrays - Directe levering uit voorraad
+
+---
+
+Beste [Naam],
+
+Als professionele kweker weet u hoe belangrijk betrouwbare kweektrays zijn voor uw bedrijfsresultaat. Daarom introduceren wij graag Lumora Horticulture - uw nieuwe partner voor hoogwaardige kweekbenodigdheden tegen scherpe prijzen.
+
+Waarom kiezen voor Lumora Horticulture?
+
+✓ Directe besparing: Tot 30% voordeliger dan marktprijzen
+✓ Uit voorraad leverbaar: 85% van onze producten binnen 48 uur geleverd
+✓ Bewezen kwaliteit: Duurzame trays die meerdere seizoenen meegaan
+✓ Volume-kortingen: Extra voordeel bij afname vanaf 500 stuks
+
+Onze topsellers voor professionals:
+- Tray 84: Perfect voor potplanten en groenten
+- Tray 104: Ideaal voor kleinere zaailingen
+- Transportdozen: Veilig transport naar uw klanten
+- Inlegvellen: Optimale bescherming tijdens transport
+
+Exclusief voor nieuwe klanten:
+Bij uw eerste bestelling ontvangt u 10% introductiekorting met code: WELKOM2025
+
+[Download prijslijst] [Vraag samples aan]
+
+Ik neem graag contact met u op om uw specifieke behoeften te bespreken. Wanneer schikt het u voor een kort gesprek?
+
+Met vriendelijke groet,
+
+[Uw naam]
+Lumora Horticulture
+📧 info@lumorahorticulture.nl
+📱 [Telefoonnummer]
+🌐 www.lumorahorticulture.nl
+
+P.S. Onze nieuwe voorjaarsvoorraad is binnen - bestel nu voor het seizoen begint!
+
+---
+
+BREVO TIPS:
+- Gebruik personalisatie tags: {{firstname}}, {{company}}
+- A/B test verschillende onderwerpen
+- Verstuur op dinsdag-donderdag, 10-11 uur
+- Voeg een duidelijke CTA button toe
+
+ALTERNATIEVE ONDERWERPEN VOOR A/B TESTING:
+1. "Nieuw: Premium kweektrays met volumekorting voor professionals"
+2. "[Bedrijfsnaam], bespaar dit seizoen op uw kweekbenodigdheden"
+3. "Voorjaarsactie: 10% korting op alle kweektrays"

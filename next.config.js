@@ -27,8 +27,8 @@ const nextConfig = {
       },
     ],
   },
-  // Ensure trailing slashes for better compatibility
-  trailingSlash: true,
+  // Remove trailing slash to work better with Netlify
+  trailingSlash: false,
   
   // Make sure static assets are properly handled
   async rewrites() {
