@@ -30,6 +30,11 @@ const nextConfig = {
   // Remove trailing slash to work better with Netlify
   trailingSlash: false,
   
+  // Optimize for serverless deployment
+  experimental: {
+    serverMinification: false,
+  },
+  
   // Make sure static assets are properly handled
   async rewrites() {
     return [
