@@ -40,19 +40,28 @@ const createLocalizedUrl = (locale: string, pathname: string): string => {
   // Get the domain for this locale
   const domain = localeMap[locale as keyof typeof localeMap];
   
-  // First get the base path (in case this is already a localized path)
-  const basePath = basePathFromLocalizedPath(pathname, locale);
+  // First get the current locale from the pathname
+  const currentLocale = getCurrentLocaleFromPath(pathname);
+  
+  // Convert the current path back to base path
+  const basePath = basePathFromLocalizedPath(pathname, currentLocale);
   
   // Then localize it for the target locale
   const localizedPath = localizePathForLocale(basePath, locale);
   
   // For local development, use locale in path
-  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    return `/${locale}${localizedPath.startsWith('/') ? localizedPath : `/${localizedPath}`}`;
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))) {
+    return `/${locale}${localizedPath}`;
   }
   
   // For production, use full domain
-  return `https://${domain}${localizedPath.startsWith('/') ? localizedPath : `/${localizedPath}`}`;
+  return `https://${domain}${localizedPath}`;
+}
+
+// Helper to get current locale from pathname
+const getCurrentLocaleFromPath = (pathname: string): string => {
+  const match = pathname.match(/^\/(nl|en|de)/);
+  return match ? match[1] : defaultLocale;
 }
 
 export default function HeaderNav() {
@@ -113,7 +122,7 @@ export default function HeaderNav() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center group relative">
+            <Link href={localizePathForLocale('/', currentLocale)} className="flex items-center group relative">
               <div className={`relative transition-all duration-300 
                 ${scrolled ? 'h-12' : 'h-16'}`}>
                 <Image 

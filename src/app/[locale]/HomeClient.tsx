@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import HeroContactForm from '@/components/HeroContactForm'
+import { localizePathForLocale } from '@/lib/url-localizations'
 
 // Define TypeScript interface for ApplicationCard props
 interface ApplicationCardProps {
@@ -162,7 +163,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  href="/products" 
+                  href={localizePathForLocale('/products', locale)} 
                   className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.viewProducts}</span>
@@ -171,7 +172,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                   </svg>
                 </Link>
                 <Link 
-                  href="/contact"
+                  href={localizePathForLocale('/contact', locale)}
                   className="bg-lumora-cream hover:bg-lumora-cream/90 text-lumora-dark border border-lumora-dark/10 font-medium px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center group"
                 >
                   <span>{t.hero.contactUs}</span>
@@ -250,7 +251,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Tray 84"
               title="Tray-84st: TRANSPLANT 84"
               description="Plug 3.5 cm diameter, 52.5 x 30.5 cm"
-              href="/products#tray84"
+              href={localizePathForLocale('/products', locale) + '#tray84'}
               moreInfoText={t.products.moreInfo}
             />
             
@@ -262,7 +263,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Tray 104"
               title="Tray-104st: PAPER PLUG TRAY 104"
               description="Plug 3 cm diameter, 52.5 x 30.5 cm"
-              href="/products#tray104"
+              href={localizePathForLocale('/products', locale) + '#tray104'}
               moreInfoText={t.products.moreInfo}
             />
             
@@ -274,7 +275,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               altText="Transport Box"
               title="Transportdoos (Vouwdoos)"
               description="557 x 322 x 180mm"
-              href="/products#transportbox"
+              href={localizePathForLocale('/products', locale) + '#transportbox'}
               moreInfoText={t.products.moreInfo}
             />
           </div>
@@ -285,7 +286,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             }`}
           >
             <Link 
-              href="/products"
+              href={localizePathForLocale('/products', locale)}
               className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
             >
               <span>{t.products.viewAll}</span>
@@ -363,7 +364,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             }`}
           >
             <Link 
-              href="/applications"
+              href={localizePathForLocale('/applications', locale)}
               className="bg-lumora-dark hover:bg-lumora-dark-700 text-lumora-cream font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center inline-flex group"
             >
               <span>{t.applications?.viewAll || "Bekijk alle toepassingen"}</span>
@@ -397,7 +398,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 {t.cta.description}
               </p>
               <Link 
-                href="/contact"
+                href={localizePathForLocale('/contact', locale)}
                 className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
                          hover:bg-lumora-cream/90 px-8 py-4 rounded-xl shadow-soft 
                          hover:shadow-soft-md transition-all duration-300 

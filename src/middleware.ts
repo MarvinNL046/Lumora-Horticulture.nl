@@ -81,8 +81,19 @@ export function middleware(request: NextRequest) {
   // 1. Development/localhost: Use locale prefixes in URLs
   // 2. Production domains: No locale prefixes in URLs, but internally we need them
   
-  if (domain === 'localhost') {
-    // In development, just use the standard next-intl middleware
+  if (domain === 'localhost' || domain.includes('netlify.app')) {
+    // In development/preview, handle localized URLs
+    if (!hasLocalePrefix) {
+      // Check if this is a localized path that needs to be converted to base path
+      const basePath = basePathFromLocalizedPath(pathname, locale);
+      
+      // Add the locale prefix for internal routing
+      url.pathname = `/${locale}${basePath}`;
+      console.log(`Rewriting ${pathname} to ${url.pathname} for locale ${locale}`);
+      return NextResponse.rewrite(url);
+    }
+    
+    // If it already has a locale prefix, use standard middleware
     return intlMiddleware(request);
   }
   

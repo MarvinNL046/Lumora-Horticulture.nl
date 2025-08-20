@@ -4,6 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { 
+  domainLocaleMap, 
+  localizePathForLocale,
+  basePathFromLocalizedPath
+} from '@/lib/url-localizations'
 
 // Define the locales we support directly in this file and their corresponding domains
 const localeMap = {
@@ -17,16 +22,7 @@ const defaultLocale = 'nl'
 // Helper function to get current locale from domain
 const getLocaleFromDomain = (domain?: string): string => {
   if (!domain) return defaultLocale;
-  
-  // Check which domain matches
-  for (const [locale, domainValue] of Object.entries(localeMap)) {
-    if (domain.includes(domainValue)) {
-      return locale;
-    }
-  }
-  
-  // Default to nl if no match found
-  return defaultLocale;
+  return domainLocaleMap[domain] || defaultLocale;
 }
 
 // Helper function to create a link for a different locale
@@ -34,13 +30,26 @@ const createLocalizedUrl = (locale: string, pathname: string): string => {
   // Get the domain for this locale
   const domain = localeMap[locale as keyof typeof localeMap];
   
+  // First get the base path (in case this is already a localized path)
+  const currentLocale = getCurrentLocaleFromPath(pathname);
+  const basePath = basePathFromLocalizedPath(pathname, currentLocale);
+  
+  // Then localize it for the target locale
+  const localizedPath = localizePathForLocale(basePath, locale);
+  
   // For local development, use locale in path
-  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    return `/${locale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))) {
+    return `/${locale}${localizedPath}`;
   }
   
   // For production, use full domain
-  return `https://${domain}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  return `https://${domain}${localizedPath}`;
+}
+
+// Helper to get current locale from pathname
+const getCurrentLocaleFromPath = (pathname: string): string => {
+  const match = pathname.match(/^\/(nl|en|de)/);
+  return match ? match[1] : defaultLocale;
 }
 
 export default function Footer() {
@@ -141,7 +150,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center group relative">
+            <Link href={localizePathForLocale('/', currentLocale)} className="flex items-center group relative">
               <div className="relative overflow-hidden w-32 h-auto">
                 <Image 
                   src="/logo/lumura-horticulture-logo.jpeg" 
@@ -172,9 +181,9 @@ export default function Footer() {
                 Navigation
               </h3>
               <ul className="space-y-3">
-                <FooterLink href="/" label={navLabels.home} />
-                <FooterLink href="/products" label={navLabels.products} />
-                <FooterLink href="/contact" label={navLabels.contact} />
+                <FooterLink href={localizePathForLocale('/', currentLocale)} label={navLabels.home} />
+                <FooterLink href={localizePathForLocale('/products', currentLocale)} label={navLabels.products} />
+                <FooterLink href={localizePathForLocale('/contact', currentLocale)} label={navLabels.contact} />
               </ul>
             </div>
             
