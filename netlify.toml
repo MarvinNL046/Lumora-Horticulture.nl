@@ -4,13 +4,7 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  
-  [plugins.inputs]
-    # Enable ISR (Incremental Static Regeneration)
-    enable_ssr = true
-    # Set function size limit to avoid bundling issues
-    functionSizeLimit = 50
-  
+
 [build.environment]
   NPM_FLAGS = "--no-optional --legacy-peer-deps --force"
   NODE_ENV = "production"
@@ -90,8 +84,7 @@
   status = 200
   conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
 
-# Essential functions configuration
+# Functions configuration to reduce bundle size
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["sharp"]
-  included_files = [".env", ".env.production", ".env.local", ".env.production.local"]
+  external_node_modules = ["sharp", "@next/swc-*"]

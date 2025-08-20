@@ -33,6 +33,21 @@ const nextConfig = {
   // Optimize for serverless deployment
   experimental: {
     serverMinification: false,
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild/linux-x64',
+      ],
+    },
+  },
+  
+  // Reduce bundle size
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...(config.externals || []), 'sharp'];
+    }
+    return config;
   },
   
   // Make sure static assets are properly handled
