@@ -6,7 +6,6 @@
   package = "@netlify/plugin-nextjs"
   
 [build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
   NPM_FLAGS = "--no-optional --legacy-peer-deps --force"
   NODE_ENV = "production"
 
@@ -130,8 +129,14 @@
   to = "/productAfbeeldingen/:splat"
   status = 200
 
-# SPA fallback - should come after all other redirects
+# Handle Next.js routing properly
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/___netlify-handler"
   status = 200
+  
+# Fallback for 404 pages  
+[[redirects]]
+  from = "/*"
+  to = "/404"
+  status = 404

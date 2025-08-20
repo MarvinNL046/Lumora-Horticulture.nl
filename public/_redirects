@@ -1,0 +1,15 @@
+# Handle domain-based routing
+https://lumorahorticulture.nl/* https://lumorahorticulture.nl/:splat 200!
+https://lumorahorticulture.com/* https://lumorahorticulture.com/:splat 200!
+https://lumorahorticulture.de/* https://lumorahorticulture.de/:splat 200!
+
+# Handle trailing slashes
+/*/ /:splat 301!
+
+# Handle static assets
+/productAfbeeldingen/* /productAfbeeldingen/:splat 200!
+/logo/* /logo/:splat 200!
+/_next/* /_next/:splat 200!
+
+# Let Next.js handle all other routes
+/* /.netlify/functions/___netlify-handler 200
