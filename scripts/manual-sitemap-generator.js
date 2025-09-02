@@ -12,6 +12,9 @@ const domains = {
   de: 'lumorahorticulture.de'
 };
 
+// All sitemaps hosted on main domain for easier management
+const sitemapHostDomain = 'lumorahorticulture.nl';
+
 const pages = {
   nl: [
     { path: '/', priority: 1.0 },
@@ -73,7 +76,7 @@ function generateSitemapIndex() {
   
   Object.entries(domains).forEach(([locale, domain]) => {
     xml += '  <sitemap>\n';
-    xml += `    <loc>https://${domain}/sitemap-${domain}.xml</loc>\n`;
+    xml += `    <loc>https://${sitemapHostDomain}/sitemap-${domain}.xml</loc>\n`;
     xml += `    <lastmod>${lastmod}</lastmod>\n`;
     xml += '  </sitemap>\n';
   });

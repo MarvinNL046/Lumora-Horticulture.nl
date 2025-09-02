@@ -188,6 +188,53 @@ export default function Footer() {
                     href={localizePathForLocale('/products/ellepot-fp12', currentLocale)} 
                     label={currentLocale === 'nl' ? '• Ellepot FP 12+' : '• Ellepot FP 12+'} 
                   />
+                  <FooterLink 
+                    href={localizePathForLocale(
+                      currentLocale === 'nl' ? '/paperbus-steenwol-pluggen' : 
+                      currentLocale === 'en' ? '/paper-pot-rockwool-plugs' : 
+                      '/papiertopf-steinwollstecker', 
+                      currentLocale
+                    )} 
+                    label={
+                      currentLocale === 'nl' ? '• Paperbus Steenwol Pluggen' : 
+                      currentLocale === 'en' ? '• Paper Pot Rockwool Plugs' : 
+                      '• Papiertopf Steinwollstecker'
+                    } 
+                  />
+                  <FooterLink 
+                    href={localizePathForLocale('/marketing/ellepot-flyer', currentLocale)} 
+                    label={
+                      currentLocale === 'nl' ? '• Marketing Materiaal' : 
+                      currentLocale === 'en' ? '• Marketing Material' : 
+                      '• Marketing Material'
+                    } 
+                  />
+                  <FooterLink 
+                    href={localizePathForLocale(
+                      currentLocale === 'nl' ? '/over-ons' : 
+                      currentLocale === 'en' ? '/about' : 
+                      '/uber-uns', 
+                      currentLocale
+                    )} 
+                    label={
+                      currentLocale === 'nl' ? 'Over Ons' : 
+                      currentLocale === 'en' ? 'About' : 
+                      'Über Uns'
+                    } 
+                  />
+                  <FooterLink 
+                    href={localizePathForLocale(
+                      currentLocale === 'nl' ? '/toepassingen' : 
+                      currentLocale === 'en' ? '/applications' : 
+                      '/anwendungen', 
+                      currentLocale
+                    )} 
+                    label={
+                      currentLocale === 'nl' ? 'Toepassingen' : 
+                      currentLocale === 'en' ? 'Applications' : 
+                      'Anwendungen'
+                    } 
+                  />
                   <FooterLink href={localizePathForLocale('/contact', currentLocale)} label={navLabels.contact} />
                 </ul>
               </div>
