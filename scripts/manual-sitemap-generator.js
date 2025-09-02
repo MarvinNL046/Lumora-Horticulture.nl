@@ -17,6 +17,8 @@ const pages = {
     { path: '/', priority: 1.0 },
     { path: '/producten/', priority: 0.9 },
     { path: '/producten/ellepot-fp12/', priority: 0.8 },
+    { path: '/paperbus-steenwol-pluggen/', priority: 0.8 },
+    { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/contact/', priority: 0.7 },
     { path: '/over-ons/', priority: 0.6 },
     { path: '/toepassingen/', priority: 0.6 }
@@ -25,6 +27,8 @@ const pages = {
     { path: '/', priority: 1.0 },
     { path: '/products/', priority: 0.9 },
     { path: '/products/ellepot-fp12/', priority: 0.8 },
+    { path: '/paper-pot-rockwool-plugs/', priority: 0.8 },
+    { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/contact/', priority: 0.7 },
     { path: '/about/', priority: 0.6 },
     { path: '/applications/', priority: 0.6 }
@@ -33,6 +37,8 @@ const pages = {
     { path: '/', priority: 1.0 },
     { path: '/produkte/', priority: 0.9 },
     { path: '/produkte/ellepot-fp12/', priority: 0.8 },
+    { path: '/papiertopf-steinwollstecker/', priority: 0.8 },
+    { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/kontakt/', priority: 0.7 },
     { path: '/uber-uns/', priority: 0.6 },
     { path: '/anwendungen/', priority: 0.6 }
