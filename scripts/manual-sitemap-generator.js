@@ -24,7 +24,9 @@ const pages = {
     { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/contact/', priority: 0.7 },
     { path: '/over-ons/', priority: 0.6 },
-    { path: '/toepassingen/', priority: 0.6 }
+    { path: '/toepassingen/', priority: 0.6 },
+    { path: '/privacy/', priority: 0.5 },
+    { path: '/terms/', priority: 0.5 }
   ],
   en: [
     { path: '/', priority: 1.0 },
@@ -34,7 +36,9 @@ const pages = {
     { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/contact/', priority: 0.7 },
     { path: '/about/', priority: 0.6 },
-    { path: '/applications/', priority: 0.6 }
+    { path: '/applications/', priority: 0.6 },
+    { path: '/privacy/', priority: 0.5 },
+    { path: '/terms/', priority: 0.5 }
   ],
   de: [
     { path: '/', priority: 1.0 },
@@ -44,7 +48,9 @@ const pages = {
     { path: '/marketing/ellepot-flyer/', priority: 0.7 },
     { path: '/kontakt/', priority: 0.7 },
     { path: '/uber-uns/', priority: 0.6 },
-    { path: '/anwendungen/', priority: 0.6 }
+    { path: '/anwendungen/', priority: 0.6 },
+    { path: '/privacy/', priority: 0.5 },
+    { path: '/terms/', priority: 0.5 }
   ]
 };
 

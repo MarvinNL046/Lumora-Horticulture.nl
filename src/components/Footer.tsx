@@ -362,16 +362,16 @@ export default function Footer() {
           
           <div className="mt-4 sm:mt-0">
             <div className="flex space-x-6">
-              <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
+              <Link href={localizePathForLocale('/privacy', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
                 {currentLocale === 'nl' ? 'Privacybeleid' : 
                  currentLocale === 'en' ? 'Privacy Policy' : 
                  'Datenschutz'}
-              </a>
-              <a href="#" className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
+              </Link>
+              <Link href={localizePathForLocale('/terms', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
                 {currentLocale === 'nl' ? 'Algemene Voorwaarden' : 
                  currentLocale === 'en' ? 'Terms & Conditions' : 
                  'Allgemeine Geschäftsbedingungen'}
-              </a>
+              </Link>
             </div>
           </div>
         </div>
