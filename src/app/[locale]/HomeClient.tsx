@@ -242,6 +242,83 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             </p>
           </div>
           
+          {/* Benefits Grid */}
+          <div 
+            className={`mb-12 transition-all duration-1000 delay-300 transform ${
+              isVisible.products ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Benefit 1 - Milieuvriendelijk */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌱</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Milieuvriendelijk' : locale === 'de' ? 'Umweltfreundlich' : 'Eco-friendly'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu' 
+                      : locale === 'de'
+                      ? 'Hergestellt aus Holzfasern aus erneuerbaren Quellen mit minimaler Umweltbelastung'
+                      : 'Made from wood fibers from renewable sources with minimal environmental impact'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 2 - 12+ Maanden Afbraaktijd */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">⏰</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? '12+ Maanden Afbraaktijd' : locale === 'de' ? '12+ Monate Abbauzeit' : '12+ Months Degradation Time'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden' 
+                      : locale === 'de'
+                      ? 'Perfekt für Kulturen mit längerer Produktionszeit vor dem Auspflanzen oder Umtopfen'
+                      : 'Perfect for crops with longer production time before transplanting or potting'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 3 - Schimmelwerend */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🛡️</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                      : locale === 'de'
+                      ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
+                      : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 4 - Geen Transplantatieschok */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌿</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Geen Transplantatieschok' : locale === 'de' ? 'Kein Transplantationsschock' : 'No Transplant Shock'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand' 
+                      : locale === 'de'
+                      ? 'Wurzeln wachsen mühelos durch das Papier, wodurch Pflanzen stark und gesund ohne Wachstumsstillstand weiterwachsen'
+                      : 'Roots grow effortlessly through the paper, allowing plants to continue growing strong and healthy without growth stagnation'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {/* Product Card 1 - Tray 84 */}
             <ProductCard 
@@ -249,8 +326,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               delay={0}
               imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
               altText="Tray 84"
-              title="Tray-84st: TRANSPLANT 84"
-              description="Plug 3.5 cm diameter, 52.5 x 30.5 cm"
+              title="Tray-84st: Paperbus Steenwol Pluggen"
+              description="84 pluggen, 3.5 cm diameter, 52.5 x 30.5 cm"
               href={localizePathForLocale('/products', locale) + '#tray84'}
               moreInfoText={t.products.moreInfo}
             />
@@ -261,8 +338,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               delay={1}
               imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
               altText="Tray 104"
-              title="Tray-104st: PAPER PLUG TRAY 104"
-              description="Plug 3 cm diameter, 52.5 x 30.5 cm"
+              title="Tray-104st: Paperbus Steenwol Pluggen"
+              description="104 pluggen, 3 cm diameter, 52.5 x 30.5 cm"
               href={localizePathForLocale('/products', locale) + '#tray104'}
               moreInfoText={t.products.moreInfo}
             />

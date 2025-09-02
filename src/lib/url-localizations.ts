@@ -17,6 +17,9 @@ export const basePaths = {
   tray104: 'products/tray104',
   transportbox: 'products/transportbox',
   insertsheets: 'products/insertsheets',
+  ellepotfp12: 'products/ellepot-fp12',
+  // Marketing paths
+  ellepotflyer: 'marketing/ellepot-flyer',
 }
 
 // URL path translations for each locale
@@ -31,6 +34,9 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'products/tray104': 'producten/tray104',
     'products/transportbox': 'producten/transportdoos',
     'products/insertsheets': 'producten/inlegvellen',
+    'products/ellepot-fp12': 'producten/ellepot-fp12',
+    // Marketing materials
+    'marketing/ellepot-flyer': 'marketing/ellepot-folder',
     // contact is the same in Dutch, no need to translate
   },
   
@@ -50,6 +56,9 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'products/tray104': 'produkte/tray104',
     'products/transportbox': 'produkte/transportbox',
     'products/insertsheets': 'produkte/einlegebogen',
+    'products/ellepot-fp12': 'produkte/ellepot-fp12',
+    // Marketing materials
+    'marketing/ellepot-flyer': 'marketing/ellepot-broschure',
   }
 }
 

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import brand colors */
+@import './brand-colors.css';
+
 /* Custom base styles */
 :root {
   --lumora-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);

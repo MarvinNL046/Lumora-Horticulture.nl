@@ -108,12 +108,90 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         
         {/* Reduced vertical spacing on mobile */}
         <section className="mt-12 md:mt-24 space-y-16 md:space-y-32">
+          {/* Benefits Grid before first product */}
+          <motion.div 
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            className="mb-12"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Benefit 1 - Milieuvriendelijk */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌱</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Milieuvriendelijk' : locale === 'de' ? 'Umweltfreundlich' : 'Eco-friendly'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu' 
+                      : locale === 'de'
+                      ? 'Hergestellt aus Holzfasern aus erneuerbaren Quellen mit minimaler Umweltbelastung'
+                      : 'Made from wood fibers from renewable sources with minimal environmental impact'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 2 - 12+ Maanden Afbraaktijd */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">⏰</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? '12+ Maanden Afbraaktijd' : locale === 'de' ? '12+ Monate Abbauzeit' : '12+ Months Degradation Time'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden' 
+                      : locale === 'de'
+                      ? 'Perfekt für Kulturen mit längerer Produktionszeit vor dem Auspflanzen oder Umtopfen'
+                      : 'Perfect for crops with longer production time before transplanting or potting'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 3 - Schimmelwerend */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🛡️</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                      : locale === 'de'
+                      ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
+                      : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 4 - Geen Transplantatieschok */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌿</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Geen Transplantatieschok' : locale === 'de' ? 'Kein Transplantationsschock' : 'No Transplant Shock'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand' 
+                      : locale === 'de'
+                      ? 'Wurzeln wachsen mühelos durch das Papier, wodurch Pflanzen stark und gesund ohne Wachstumsstillstand weiterwachsen'
+                      : 'Roots grow effortlessly through the paper, allowing plants to continue growing strong and healthy without growth stagnation'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           <ProductDetail
             t={t}
             id="tray84"
-            title="Tray-84st: PAPER PLUG TRAY 84"
+            title="Tray-84st: Paperbus Steenwol Pluggen (84)"
             subtitle="Perfect voor professionele zaailingenkweek"
-            description="Onze TRANSPLANT 84 tray is ontworpen voor professionele tuinbouwapplicaties, met 84 cellen voor efficiënte kweek van zaailingen. De precieze afstand en afmetingen zorgen voor optimale groeiomstandigheden."
+            description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok."
             imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
@@ -135,12 +213,90 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             locale={locale}
           />
           
+          {/* Benefits Grid before second product */}
+          <motion.div 
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            className="mb-12"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Benefit 1 - Milieuvriendelijk */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌱</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Milieuvriendelijk' : locale === 'de' ? 'Umweltfreundlich' : 'Eco-friendly'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu' 
+                      : locale === 'de'
+                      ? 'Hergestellt aus Holzfasern aus erneuerbaren Quellen mit minimaler Umweltbelastung'
+                      : 'Made from wood fibers from renewable sources with minimal environmental impact'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 2 - 12+ Maanden Afbraaktijd */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">⏰</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? '12+ Maanden Afbraaktijd' : locale === 'de' ? '12+ Monate Abbauzeit' : '12+ Months Degradation Time'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden' 
+                      : locale === 'de'
+                      ? 'Perfekt für Kulturen mit längerer Produktionszeit vor dem Auspflanzen oder Umtopfen'
+                      : 'Perfect for crops with longer production time before transplanting or potting'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 3 - Schimmelwerend */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🛡️</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                      : locale === 'de'
+                      ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
+                      : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Benefit 4 - Geen Transplantatieschok */}
+              <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl mb-4">🌿</span>
+                  <h3 className="font-semibold text-lumora-dark text-lg mb-2">
+                    {locale === 'nl' ? 'Geen Transplantatieschok' : locale === 'de' ? 'Kein Transplantationsschock' : 'No Transplant Shock'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand' 
+                      : locale === 'de'
+                      ? 'Wurzeln wachsen mühelos durch das Papier, wodurch Pflanzen stark und gesund ohne Wachstumsstillstand weiterwachsen'
+                      : 'Roots grow effortlessly through the paper, allowing plants to continue growing strong and healthy without growth stagnation'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           <ProductDetail
             t={t}
             id="tray104"
-            title="Tray-104st: PAPER PLUG TRAY 104"
+            title="Tray-104st: Paperbus Steenwol Pluggen (104)"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
-            description="De PAPER PLUG TRAY 104 biedt uitstekende groeiomstandigheden met 104 cellen voor zaailingen. De speciaal ontworpen paper plug-technologie verbetert de wortelontwikkeling en het succes bij het overplanten."
+            description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten."
             imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
             imagePosition="right"
             specs={[
@@ -188,6 +344,72 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             badges={["Transparant", "Lichtgewicht", "Compatibel"]}
             locale={locale}
           />
+          
+          {/* Ellepot FP 12+ Product Link */}
+          <motion.div 
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-3xl p-8 md:p-12 text-center border border-lumora-green-100"
+          >
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-lumora-dark mb-4">
+              {locale === 'nl' ? 'Onze pluggen met Ellepot® FP 12+ Papier' : locale === 'de' ? 'Unsere Stecker mit Ellepot® FP 12+ Papier' : 'Our plugs with Ellepot® FP 12+ Paper'}
+            </h2>
+            <p className="text-lumora-dark/80 mb-6 max-w-2xl mx-auto">
+              {locale === 'nl' 
+                ? 'Alle Lumora paperbus steenwol pluggen zijn verpakt met milieuvriendelijk Ellepot FP 12+ papier. Ontdek de voordelen van deze duurzame verpakking.' 
+                : locale === 'de'
+                ? 'Alle Lumora Papiertopf-Steinwollstecker sind mit umweltfreundlichem Ellepot FP 12+ Papier umhüllt. Entdecken Sie die Vorteile dieser nachhaltigen Verpackung.'
+                : 'All Lumora paper pot rockwool plugs are wrapped with eco-friendly Ellepot FP 12+ paper. Discover the benefits of this sustainable wrapping.'}
+            </p>
+            
+            {/* Schimmelwerend highlight */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 max-w-xl mx-auto border border-lumora-green-200 shadow-soft">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🛡️</span>
+                <div className="text-left">
+                  <h3 className="font-semibold text-lumora-dark mb-2">
+                    {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
+                  </h3>
+                  <p className="text-lumora-dark/70 text-sm">
+                    {locale === 'nl' 
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                      : locale === 'de'
+                      ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
+                      : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href={localizePathForLocale('/products/ellepot-fp12', locale || 'nl')}
+                className="inline-flex items-center justify-center bg-lumora-dark text-lumora-cream 
+                        hover:bg-lumora-dark-800 px-6 py-3 rounded-xl shadow-soft 
+                        hover:shadow-soft-md transition-all duration-300 
+                        font-medium group"
+              >
+                <span>{locale === 'nl' ? 'Meer informatie' : locale === 'de' ? 'Mehr Informationen' : 'Learn More'}</span>
+                <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+              
+              <a
+                href="/downloads/ellepot-fp12-folder.pdf"
+                download="Lumora-Ellepot-FP12-Folder.pdf"
+                className="inline-flex items-center justify-center bg-lumora-green-600 text-white 
+                        hover:bg-lumora-green-700 px-6 py-3 rounded-xl shadow-soft 
+                        hover:shadow-soft-md transition-all duration-300 
+                        font-medium group"
+              >
+                <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>{locale === 'nl' ? 'Download Lumora productfolder (PDF)' : locale === 'de' ? 'Lumora Produktbroschüre herunterladen (PDF)' : 'Download Lumora product brochure (PDF)'}</span>
+              </a>
+            </div>
+          </motion.div>
         </section>
         
         <ContactCTA t={t} locale={locale} />
@@ -432,7 +654,7 @@ function ProductDetail({
               </motion.div>
             )}
             
-            <motion.div variants={fadeIn} className="pt-4 md:pt-6">
+            <motion.div variants={fadeIn} className="pt-4 md:pt-6 space-y-3">
               <Link
                 href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(title)}`}
               className="inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base"
@@ -448,6 +670,28 @@ function ProductDetail({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
+              
+              {/* Download PDF link for plugs products */}
+              {(id === "tray84" || id === "tray104") && (
+                <div>
+                  <a
+                    href="/downloads/ellepot-fp12-folder.pdf"
+                    download="Lumora-Ellepot-FP12-Folder.pdf"
+                    className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
+                  >
+                    <svg 
+                      className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                      xmlns="http://www.w3.org/2000/svg" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>{locale === 'nl' ? 'Download Lumora productfolder (PDF)' : locale === 'de' ? 'Lumora Produktbroschüre herunterladen (PDF)' : 'Download Lumora product brochure (PDF)'}</span>
+                  </a>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         </div>

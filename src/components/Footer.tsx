@@ -148,7 +148,7 @@ export default function Footer() {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           <div className="lg:col-span-1">
             <Link href={localizePathForLocale('/', currentLocale)} className="flex items-center group relative">
               <div className="relative overflow-hidden w-32 h-auto">
@@ -175,66 +175,94 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-8">
-            <div>
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div>
                 <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
-                Navigation
-              </h3>
-              <ul className="space-y-3">
-                <FooterLink href={localizePathForLocale('/', currentLocale)} label={navLabels.home} />
-                <FooterLink href={localizePathForLocale('/products', currentLocale)} label={navLabels.products} />
-                <FooterLink href={localizePathForLocale('/contact', currentLocale)} label={navLabels.contact} />
-              </ul>
+                  Navigation
+                </h3>
+                <ul className="space-y-3">
+                  <FooterLink href={localizePathForLocale('/', currentLocale)} label={navLabels.home} />
+                  <FooterLink href={localizePathForLocale('/products', currentLocale)} label={navLabels.products} />
+                  <FooterLink 
+                    href={localizePathForLocale('/products/ellepot-fp12', currentLocale)} 
+                    label={currentLocale === 'nl' ? '• Ellepot FP 12+' : '• Ellepot FP 12+'} 
+                  />
+                  <FooterLink href={localizePathForLocale('/contact', currentLocale)} label={navLabels.contact} />
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
+                  Contact
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start text-lumora-cream/80 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <a href="mailto:info@lumorahorticulture.com" className="transition-colors duration-300 group-hover:text-lumora-cream break-all text-sm">
+                      info@lumorahorticulture.com
+                    </a>
+                  </li>
+                  <li className="flex items-start text-lumora-cream/80 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    <a href="https://lumorahorticulture.nl" className="transition-colors duration-300 group-hover:text-lumora-cream">
+                      lumorahorticulture.nl
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
+                  {currentLocale === 'nl' ? 'Downloads' : currentLocale === 'de' ? 'Downloads' : 'Downloads'}
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <a 
+                      href="/downloads/ellepot-fp12-folder.pdf"
+                      download="Lumora-Ellepot-FP12-Folder.pdf"
+                      className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center relative"
+                    >
+                      <span className="absolute w-0 h-0.5 bg-lumora-cream/60 group-hover:w-4 transition-all duration-300"></span>
+                      <span className="group-hover:pl-5 transition-all duration-300 block">
+                        {currentLocale === 'nl' ? 'Lumora Productfolder (PDF)' : currentLocale === 'de' ? 'Lumora Produktbroschüre (PDF)' : 'Lumora Product Brochure (PDF)'}
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             
-            <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+              <div>
                 <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
-                Contact
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex items-start text-lumora-cream/80 group">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <a href="mailto:info@lumorahorticulture.com" className="transition-colors duration-300 group-hover:text-lumora-cream">
-                    info@lumorahorticulture.com
-                  </a>
-                </li>
-                <li className="flex items-start text-lumora-cream/80 group">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-lumora-cream mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                  <a href="https://lumorahorticulture.nl" className="transition-colors duration-300 group-hover:text-lumora-cream">
-                    lumorahorticulture.nl
-                  </a>
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
-                Taal / Language
-              </h3>
-              <ul className="space-y-3">
-                <FooterLangLink 
-                  locale="nl" 
-                  label="Nederlands" 
-                  active={currentLocale === 'nl'} 
-                  path={pathWithoutLocale} 
-                />
-                <FooterLangLink 
-                  locale="en" 
-                  label="English" 
-                  active={currentLocale === 'en'} 
-                  path={pathWithoutLocale} 
-                />
-                <FooterLangLink 
-                  locale="de" 
-                  label="Deutsch" 
-                  active={currentLocale === 'de'} 
-                  path={pathWithoutLocale} 
-                />
-              </ul>
+                  Taal / Language
+                </h3>
+                <ul className="space-y-3">
+                  <FooterLangLink 
+                    locale="nl" 
+                    label="Nederlands" 
+                    active={currentLocale === 'nl'} 
+                    path={pathWithoutLocale} 
+                  />
+                  <FooterLangLink 
+                    locale="en" 
+                    label="English" 
+                    active={currentLocale === 'en'} 
+                    path={pathWithoutLocale} 
+                  />
+                  <FooterLangLink 
+                    locale="de" 
+                    label="Deutsch" 
+                    active={currentLocale === 'de'} 
+                    path={pathWithoutLocale} 
+                  />
+                </ul>
+              </div>
             </div>
           </div>
           
@@ -311,10 +339,10 @@ function FooterLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link 
         href={href} 
-        className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center"
+        className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center relative"
       >
-        <span className="absolute w-0 h-0.5 bg-lumora-cream/60 group-hover:w-4 transition-all duration-300"></span>
-        <span className="group-hover:pl-5 transition-all duration-300">{label}</span>
+        <span className="absolute left-0 w-0 h-0.5 bg-lumora-cream/60 group-hover:w-4 transition-all duration-300"></span>
+        <span className="group-hover:pl-5 transition-all duration-300 block">{label}</span>
       </Link>
     </li>
   )

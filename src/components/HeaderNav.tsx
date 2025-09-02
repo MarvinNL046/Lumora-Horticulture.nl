@@ -160,16 +160,9 @@ export default function HeaderNav() {
               activeColor="text-lumora-cream bg-lumora-dark-700" 
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
             />
-            <NavLink 
-              href={localizePathForLocale('/products', currentLocale)} 
-              label={
-                currentLocale === 'nl' ? 'Producten' : 
-                currentLocale === 'de' ? 'Produkte' : 
-                'Products'
-              } 
-              color="text-lumora-cream" 
-              activeColor="text-lumora-cream bg-lumora-dark-700" 
-              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            <ProductsDropdown 
+              currentLocale={currentLocale}
+              pathWithoutLocale={pathWithoutLocale}
             />
             <NavLink 
               href={localizePathForLocale('/applications', currentLocale)} 
@@ -279,6 +272,15 @@ export default function HeaderNav() {
               onClick={() => setMobileMenuOpen(false)} 
             />
             <MobileNavLink 
+              href={localizePathForLocale('/products/ellepot-fp12', currentLocale)} 
+              label={
+                currentLocale === 'nl' ? '→ Ellepot FP 12+ Papier' : 
+                currentLocale === 'de' ? '→ Ellepot FP 12+ Papier' : 
+                '→ Ellepot FP 12+ Paper'
+              }
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <MobileNavLink 
               href={localizePathForLocale('/applications', currentLocale)} 
               label={
                 currentLocale === 'nl' ? 'Toepassingen' : 
@@ -361,6 +363,76 @@ function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) 
         transition-opacity duration-500 bg-lumora-dark-700/40 
         blur-sm -z-10"></span>
     </Link>
+  )
+}
+
+// Products dropdown component
+function ProductsDropdown({ currentLocale, pathWithoutLocale }: { currentLocale: string, pathWithoutLocale: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+  
+  const products = [
+    {
+      href: '/products',
+      label: {
+        nl: 'Alle Producten',
+        en: 'All Products',
+        de: 'Alle Produkte'
+      }
+    },
+    {
+      href: '/products/ellepot-fp12',
+      label: {
+        nl: 'Ellepot FP 12+ Papier',
+        en: 'Ellepot FP 12+ Paper',
+        de: 'Ellepot FP 12+ Papier'
+      }
+    }
+  ]
+  
+  const isActive = pathWithoutLocale.startsWith('/products')
+  
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <button
+        className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group flex items-center gap-1
+          ${isActive 
+            ? 'text-lumora-cream bg-lumora-dark-700/80 shadow-soft-sm'
+            : 'text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
+          }`}
+      >
+        {currentLocale === 'nl' ? 'Producten' : currentLocale === 'de' ? 'Produkte' : 'Products'}
+        <svg 
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+        {isActive && (
+          <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-1/2 bg-lumora-cream rounded-full"></span>
+        )}
+      </button>
+      
+      {/* Dropdown menu */}
+      <div className={`absolute top-full left-0 mt-2 w-64 rounded-xl bg-lumora-dark/95 backdrop-blur-sm shadow-lg border border-lumora-cream/10 overflow-hidden transition-all duration-200 ${
+        isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+      }`}>
+        {products.map((product) => (
+          <Link
+            key={product.href}
+            href={localizePathForLocale(product.href, currentLocale)}
+            className="block px-4 py-3 text-sm text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50 transition-colors duration-200"
+          >
+            {product.label[currentLocale as keyof typeof product.label]}
+          </Link>
+        ))}
+      </div>
+    </div>
   )
 }
 

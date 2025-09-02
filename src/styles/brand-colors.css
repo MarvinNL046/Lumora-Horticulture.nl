@@ -1,0 +1,110 @@
+/**
+ * Lumora Horticulture Brand Colors
+ * =================================
+ * Dit bestand bevat alle huisstijl kleuren voor gemakkelijk gebruik
+ * in zowel CSS als JavaScript/React componenten.
+ */
+
+:root {
+  /* Primary Brand Colors */
+  --lumora-cream: #FAF3C3;           /* Lichte crème kleur - hoofdkleur voor lichte achtergronden */
+  --lumora-dark: #404F4A;            /* Donkergroen uit het logo - hoofdkleur voor donkere elementen */
+  --lumora-dark-700: #354540;        /* Donkerder variant */
+  --lumora-dark-800: #2A3632;        /* Nog donkerder variant */
+  
+  /* Gold/Goud Kleuren */
+  --lumora-gold: #D4AF37;            /* Goud kleur uit het logo */
+  --lumora-gold-50: #FBF6E3;         /* Zeer licht goud */
+  --lumora-gold-100: #F7E9BA;        /* Licht goud */
+  --lumora-gold-200: #F2DC91;
+  --lumora-gold-300: #ECCF67;
+  --lumora-gold-400: #E6C33E;
+  --lumora-gold-500: #D4AF37;        /* Primary goud */
+  --lumora-gold-600: #B69221;        /* Donker goud */
+  --lumora-gold-700: #97761C;
+  --lumora-gold-800: #785B16;
+  --lumora-gold-900: #594111;        /* Zeer donker goud */
+  
+  /* Green/Groen Kleuren */
+  --lumora-green-50: #E6F5EB;        /* Zeer licht groen */
+  --lumora-green-100: #C1E5CD;       /* Licht groen */
+  --lumora-green-200: #9BD5AF;
+  --lumora-green-300: #74C490;
+  --lumora-green-400: #4DB472;
+  --lumora-green-500: #2D7D46;       /* Primary groen */
+  --lumora-green-600: #256B3D;       /* Donker groen */
+  --lumora-green-700: #1D5935;
+  --lumora-green-800: #16472C;
+  --lumora-green-900: #0F3523;       /* Zeer donker groen */
+  
+  /* Gray/Grijs Kleuren (voor tekst en neutrale elementen) */
+  --lumora-gray-50: #F7F7F8;         /* Bijna wit */
+  --lumora-gray-100: #EEEEF0;        /* Zeer licht grijs */
+  --lumora-gray-200: #DEDEDF;
+  --lumora-gray-300: #CACBCD;
+  --lumora-gray-400: #A8A9AC;
+  --lumora-gray-500: #87888C;        /* Medium grijs */
+  --lumora-gray-600: #696A6E;
+  --lumora-gray-700: #4C4D50;
+  --lumora-gray-800: #323234;
+  --lumora-gray-900: #17181A;        /* Bijna zwart */
+  
+  /* Shadow Colors (voor schaduwen) */
+  --shadow-soft: 0 5px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-glow-green: 0 0 15px rgba(45, 125, 70, 0.35);
+  --shadow-glow-gold: 0 0 15px rgba(212, 175, 55, 0.35);
+}
+
+/* Utility Classes voor Brand Colors */
+.brand-cream { color: var(--lumora-cream); }
+.brand-dark { color: var(--lumora-dark); }
+.brand-gold { color: var(--lumora-gold); }
+.brand-green { color: var(--lumora-green-500); }
+
+.bg-brand-cream { background-color: var(--lumora-cream); }
+.bg-brand-dark { background-color: var(--lumora-dark); }
+.bg-brand-gold { background-color: var(--lumora-gold); }
+.bg-brand-green { background-color: var(--lumora-green-500); }
+
+/* Gradient Combinaties */
+.gradient-brand-primary {
+  background: linear-gradient(135deg, var(--lumora-dark) 0%, var(--lumora-green-700) 100%);
+}
+
+.gradient-brand-accent {
+  background: linear-gradient(135deg, var(--lumora-gold-400) 0%, var(--lumora-gold-600) 100%);
+}
+
+.gradient-brand-soft {
+  background: linear-gradient(135deg, var(--lumora-cream) 0%, var(--lumora-gold-100) 100%);
+}
+
+/* Text on Brand Backgrounds */
+.on-dark {
+  color: var(--lumora-cream);
+}
+
+.on-light {
+  color: var(--lumora-dark);
+}
+
+/* Brand Color Usage Guide:
+ * ========================
+ * 
+ * PRIMAIRE KLEUREN:
+ * - Lumora Cream (#FAF3C3): Gebruik voor lichte achtergronden, accenten
+ * - Lumora Dark (#404F4A): Gebruik voor headers, footers, donkere secties
+ * - Lumora Gold (#D4AF37): Gebruik voor accenten, belangrijke knoppen, highlights
+ * - Lumora Green (#2D7D46): Gebruik voor natuurlijke elementen, CTA's, succes states
+ * 
+ * GEBRUIK IN TAILWIND:
+ * - text-lumora-cream, bg-lumora-cream
+ * - text-lumora-dark, bg-lumora-dark, bg-lumora-dark-700
+ * - text-lumora-gold-500, bg-lumora-gold-500
+ * - text-lumora-green-500, bg-lumora-green-500
+ * 
+ * GEBRUIK IN CSS:
+ * - color: var(--lumora-cream);
+ * - background-color: var(--lumora-dark);
+ * - border-color: var(--lumora-gold);
+ */
