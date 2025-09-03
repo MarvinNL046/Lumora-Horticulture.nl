@@ -355,10 +355,47 @@ const flyerHTML = `
             opacity: 0.05;
             z-index: 0;
         }
+        
+        /* NIEUW badge */
+        .nieuw-badge {
+            position: absolute;
+            top: 25mm;
+            right: 20mm;
+            background: #ff0000;
+            color: white;
+            font-size: 16pt;
+            font-weight: bold;
+            padding: 8mm 12mm;
+            border-radius: 50%;
+            transform: rotate(-15deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            text-transform: uppercase;
+            letter-spacing: 1mm;
+            border: 3px solid #fff;
+            background: radial-gradient(ellipse at center, #ff3333 0%, #cc0000 100%);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nieuw-badge:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: radial-gradient(ellipse at center, #ff6666 0%, #ff0000 100%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
     <div class="page">
+        <!-- NIEUW Badge -->
+        <div class="nieuw-badge">NIEUW</div>
+        
         <!-- Header -->
         <div class="header">
             <img src="${logoDataUrl}" alt="Lumora Horticulture" class="logo">

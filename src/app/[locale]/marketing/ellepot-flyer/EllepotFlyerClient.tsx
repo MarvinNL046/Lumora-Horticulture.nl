@@ -38,13 +38,18 @@ export default function EllepotFlyerClient() {
     <>
       {/* Download button */}
       <div className="no-print fixed top-4 right-4 z-50">
-        <a
-          href="/downloads/ellepot-fp12-folder.pdf"
-          download="Lumora-Ellepot-FP12-Folder.pdf"
-          className="inline-block bg-lumora-dark text-lumora-cream px-6 py-3 rounded-lg shadow-lg hover:bg-lumora-dark-800 transition-colors duration-200"
-        >
-          Download Lumora Productfolder (PDF)
-        </a>
+        <div className="inline-flex items-center gap-2">
+          <a
+            href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
+            download="Lumora-Ellepot-FP12-Folder.pdf"
+            className="inline-block bg-lumora-dark text-lumora-cream px-6 py-3 rounded-lg shadow-lg hover:bg-lumora-dark-800 transition-colors duration-200"
+          >
+            Download Lumora Productfolder (PDF)
+          </a>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg animate-pulse">
+            NEW
+          </span>
+        </div>
       </div>
 
       {/* A4 Flyer Content */}
@@ -52,6 +57,8 @@ export default function EllepotFlyerClient() {
         {/* Header with brand colors */}
         <div className="bg-gradient-to-r from-lumora-dark to-lumora-green-700 text-white p-6 relative">
           <div className="absolute inset-0 bg-grain opacity-10"></div>
+          
+          
           <div className="relative z-10">
             <div className="flex justify-between items-start mb-4">
               <div className="bg-white rounded-lg p-2">
@@ -63,7 +70,7 @@ export default function EllepotFlyerClient() {
                   className="object-contain"
                 />
               </div>
-              <div className="text-right">
+              <div className="text-right mr-24">
                 <h3 className="text-lumora-cream font-semibold text-base mb-1">Milieuvriendelijk</h3>
                 <p className="text-lumora-cream/80 text-xs">Duurzame kweekoplossing</p>
               </div>

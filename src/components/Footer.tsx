@@ -270,7 +270,7 @@ export default function Footer() {
                 <ul className="space-y-3">
                   <li>
                     <a 
-                      href="/downloads/ellepot-fp12-folder.pdf"
+                      href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
                       download="Lumora-Ellepot-FP12-Folder.pdf"
                       className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center relative"
                     >
