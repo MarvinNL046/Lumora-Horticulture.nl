@@ -122,13 +122,26 @@ export async function POST(request: NextRequest) {
       .where(eq(orders.id, order.id));
 
     // Parse shipping address voor emails
-    const addressParts = shipping_address.split(',').map((part: string) => part.trim());
-    const shippingAddressObj = {
-      street: addressParts[0] || shipping_address,
-      postalCode: addressParts[1]?.split(' ')[0] || '',
-      city: addressParts[1]?.split(' ').slice(1).join(' ') || addressParts[1] || '',
-      country: addressParts[2] || 'Nederland',
-    };
+    let shippingAddressObj;
+
+    if (typeof shipping_address === 'string') {
+      // Als het een string is, parse dan het adres
+      const addressParts = shipping_address.split(',').map((part: string) => part.trim());
+      shippingAddressObj = {
+        street: addressParts[0] || shipping_address,
+        postalCode: addressParts[1]?.split(' ')[0] || '',
+        city: addressParts[1]?.split(' ').slice(1).join(' ') || addressParts[1] || '',
+        country: addressParts[2] || 'Nederland',
+      };
+    } else {
+      // Als het al een object is, gebruik het direct
+      shippingAddressObj = {
+        street: shipping_address.street || '',
+        postalCode: shipping_address.postalCode || shipping_address.postal_code || '',
+        city: shipping_address.city || '',
+        country: shipping_address.country || 'Nederland',
+      };
+    }
 
     // Bereken subtotaal en korting voor email
     const subtotal = productDetails.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
@@ -193,12 +206,19 @@ export async function POST(request: NextRequest) {
           totalAmount,
           shippingAddress: shippingAddressObj,
           billingAddress: billing_address
-            ? {
-                street: billing_address.split(',')[0]?.trim() || billing_address,
-                postalCode: billing_address.split(',')[1]?.split(' ')[0] || '',
-                city: billing_address.split(',')[1]?.split(' ').slice(1).join(' ') || '',
-                country: billing_address.split(',')[2]?.trim() || 'Nederland',
-              }
+            ? typeof billing_address === 'string'
+              ? {
+                  street: billing_address.split(',')[0]?.trim() || billing_address,
+                  postalCode: billing_address.split(',')[1]?.split(' ')[0] || '',
+                  city: billing_address.split(',')[1]?.split(' ').slice(1).join(' ') || '',
+                  country: billing_address.split(',')[2]?.trim() || 'Nederland',
+                }
+              : {
+                  street: billing_address.street || '',
+                  postalCode: billing_address.postalCode || billing_address.postal_code || '',
+                  city: billing_address.city || '',
+                  country: billing_address.country || 'Nederland',
+                }
             : undefined,
           paymentId: payment.id,
         })
