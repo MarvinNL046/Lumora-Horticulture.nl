@@ -5,8 +5,10 @@ import { createPayment } from '@/lib/mollie';
 import { eq } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { Resend } from 'resend';
+import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
 import { AdminNotificationEmail } from '@/emails/AdminNotification';
+import React from 'react';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -134,11 +136,8 @@ export async function POST(request: NextRequest) {
 
     // Verzend klant bevestigingsmail
     try {
-      await resend.emails.send({
-        from: 'Lumora Horticulture <noreply@lumorahorticulture.com>',
-        to: customer_email,
-        subject: `Bevestiging bestelling ${order.id} - Lumora Horticulture`,
-        react: OrderConfirmationEmail({
+      const customerEmailHtml = await render(
+        React.createElement(OrderConfirmationEmail, {
           orderNumber: order.id,
           customerName: customer_name,
           orderDate: new Date().toLocaleDateString('nl-NL', {
@@ -156,7 +155,14 @@ export async function POST(request: NextRequest) {
           discount,
           totalAmount,
           shippingAddress: shippingAddressObj,
-        }),
+        })
+      );
+
+      await resend.emails.send({
+        from: 'Lumora Horticulture <noreply@lumorahorticulture.com>',
+        to: customer_email,
+        subject: `Bevestiging bestelling ${order.id} - Lumora Horticulture`,
+        html: customerEmailHtml,
       });
     } catch (emailError) {
       console.error('Failed to send customer email:', emailError);
@@ -165,11 +171,8 @@ export async function POST(request: NextRequest) {
 
     // Verzend admin notificatie
     try {
-      await resend.emails.send({
-        from: 'Lumora Webshop <noreply@lumorahorticulture.com>',
-        to: 'info@lumorahorticulture.com',
-        subject: `🔔 Nieuwe bestelling ${order.id} - €${totalAmount.toFixed(2)}`,
-        react: AdminNotificationEmail({
+      const adminEmailHtml = await render(
+        React.createElement(AdminNotificationEmail, {
           orderNumber: order.id,
           orderDate: new Date().toLocaleDateString('nl-NL', {
             day: 'numeric',
@@ -198,7 +201,14 @@ export async function POST(request: NextRequest) {
               }
             : undefined,
           paymentId: payment.id,
-        }),
+        })
+      );
+
+      await resend.emails.send({
+        from: 'Lumora Webshop <noreply@lumorahorticulture.com>',
+        to: 'info@lumorahorticulture.com',
+        subject: `🔔 Nieuwe bestelling ${order.id} - €${totalAmount.toFixed(2)}`,
+        html: adminEmailHtml,
       });
     } catch (emailError) {
       console.error('Failed to send admin email:', emailError);
