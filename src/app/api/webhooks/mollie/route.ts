@@ -17,8 +17,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const paymentId = body.id;
+    // Mollie stuurt form-data, niet JSON
+    const formData = await request.formData();
+    const paymentId = formData.get('id') as string;
 
     if (!paymentId) {
       return NextResponse.json(
@@ -84,12 +85,16 @@ export async function POST(request: NextRequest) {
     // Verzend emails alleen bij succesvolle betaling
     if (payment.status === 'paid') {
       try {
+        console.log(`Processing emails for paid order ${order.id}`);
+
         // Haal order items op
         const items = await db
           .select()
           .from(orderItems)
           .leftJoin(products, eq(orderItems.product_id, products.id))
           .where(eq(orderItems.order_id, order.id));
+
+        console.log(`Found ${items.length} order items`);
 
         // Parse shipping address
         const shipping_address = order.shipping_address as any;
@@ -109,7 +114,14 @@ export async function POST(request: NextRequest) {
         }));
 
         const totalAmount = parseFloat(order.total_amount);
-        const subtotal = productDetails.reduce((sum, item) => sum + item.total, 0);
+
+        // Bereken subtotaal en korting op basis van base price uit products tabel
+        const subtotalWithoutDiscount = items.reduce((sum, item) => {
+          const basePrice = item.products ? parseFloat(item.products.price) : parseFloat(item.order_items.price_at_purchase);
+          return sum + (basePrice * parseInt(item.order_items.quantity));
+        }, 0);
+
+        const subtotal = subtotalWithoutDiscount;
         const discount = subtotal - totalAmount;
 
         // Verzend klant bevestigingsmail
