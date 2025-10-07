@@ -320,6 +320,7 @@ const itemsSection = {
   backgroundColor: '#ffffff',
   padding: '24px',
   margin: '0 0 16px',
+  width: '100%',
 };
 
 const sectionTitle = {
@@ -327,6 +328,7 @@ const sectionTitle = {
   fontSize: '18px',
   fontWeight: 'bold',
   margin: '0 0 16px',
+  textAlign: 'center' as const,
 };
 
 const itemRow = {
@@ -380,6 +382,7 @@ const summarySection = {
   backgroundColor: '#ffffff',
   padding: '24px',
   margin: '0 0 16px',
+  width: '100%',
 };
 
 const summaryRow = {
@@ -454,6 +457,7 @@ const addressSection = {
   backgroundColor: '#ffffff',
   padding: '24px',
   margin: '0 0 16px',
+  width: '100%',
 };
 
 const addressText = {
@@ -461,6 +465,7 @@ const addressText = {
   fontSize: '14px',
   lineHeight: '22px',
   margin: '0',
+  textAlign: 'center' as const,
 };
 
 const footer = {

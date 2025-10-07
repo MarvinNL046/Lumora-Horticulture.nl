@@ -2,15 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { orders, orderItems, products } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
-import { Resend } from 'resend';
-import { render } from '@react-email/components';
-import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
-import { AdminNotificationEmail } from '@/emails/AdminNotification';
-import React from 'react';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * POST /api/checkout
@@ -78,10 +71,32 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Genereer menselijk leesbaar order nummer
+    const now = new Date();
+    const year = now.getFullYear();
+
+    // Haal laatste order van dit jaar op om nummer te bepalen
+    const lastOrder = await db
+      .select()
+      .from(orders)
+      .where(sql`EXTRACT(YEAR FROM ${orders.created_at}) = ${year}`)
+      .orderBy(sql`${orders.created_at} DESC`)
+      .limit(1);
+
+    let orderCounter = 1;
+    if (lastOrder && lastOrder.length > 0 && lastOrder[0].order_number) {
+      // Extract counter from last order number (ORD-2025-0001 -> 0001)
+      const lastNumber = parseInt(lastOrder[0].order_number.split('-').pop() || '0', 10);
+      orderCounter = lastNumber + 1;
+    }
+
+    const orderNumber = `ORD-${year}-${String(orderCounter).padStart(4, '0')}`;
+
     // Maak bestelling aan
     const [order] = await db
       .insert(orders)
       .values({
+        order_number: orderNumber,
         customer_email,
         customer_name,
         customer_phone,
@@ -121,119 +136,7 @@ export async function POST(request: NextRequest) {
       .set({ payment_id: payment.id })
       .where(eq(orders.id, order.id));
 
-    // Parse shipping address voor emails
-    let shippingAddressObj;
-
-    if (typeof shipping_address === 'string') {
-      // Als het een string is, parse dan het adres
-      const addressParts = shipping_address.split(',').map((part: string) => part.trim());
-      shippingAddressObj = {
-        street: addressParts[0] || shipping_address,
-        postalCode: addressParts[1]?.split(' ')[0] || '',
-        city: addressParts[1]?.split(' ').slice(1).join(' ') || addressParts[1] || '',
-        country: addressParts[2] || 'Nederland',
-      };
-    } else {
-      // Als het al een object is, gebruik het direct
-      shippingAddressObj = {
-        street: shipping_address.street || '',
-        postalCode: shipping_address.postalCode || shipping_address.postal_code || '',
-        city: shipping_address.city || '',
-        country: shipping_address.country || 'Nederland',
-      };
-    }
-
-    // Bereken subtotaal en korting voor email
-    const subtotal = productDetails.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
-    const discount = subtotal - totalAmount;
-
-    // Verzend klant bevestigingsmail
-    try {
-      const customerEmailHtml = await render(
-        React.createElement(OrderConfirmationEmail, {
-          orderNumber: order.id,
-          customerName: customer_name,
-          orderDate: new Date().toLocaleDateString('nl-NL', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          }),
-          items: productDetails.map((item) => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-            total: item.price * item.quantity,
-          })),
-          subtotal,
-          discount,
-          totalAmount,
-          shippingAddress: shippingAddressObj,
-        })
-      );
-
-      await resend.emails.send({
-        from: 'Lumora Horticulture <noreply@lumorahorticulture.com>',
-        to: customer_email,
-        subject: `Bevestiging bestelling ${order.id} - Lumora Horticulture`,
-        html: customerEmailHtml,
-      });
-    } catch (emailError) {
-      console.error('Failed to send customer email:', emailError);
-      // Don't fail the order if email fails
-    }
-
-    // Verzend admin notificatie
-    try {
-      const adminEmailHtml = await render(
-        React.createElement(AdminNotificationEmail, {
-          orderNumber: order.id,
-          orderDate: new Date().toLocaleDateString('nl-NL', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          }),
-          customerName: customer_name,
-          customerEmail: customer_email,
-          customerPhone: customer_phone || 'Niet opgegeven',
-          items: productDetails.map((item) => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-            total: item.price * item.quantity,
-          })),
-          subtotal,
-          discount,
-          totalAmount,
-          shippingAddress: shippingAddressObj,
-          billingAddress: billing_address
-            ? typeof billing_address === 'string'
-              ? {
-                  street: billing_address.split(',')[0]?.trim() || billing_address,
-                  postalCode: billing_address.split(',')[1]?.split(' ')[0] || '',
-                  city: billing_address.split(',')[1]?.split(' ').slice(1).join(' ') || '',
-                  country: billing_address.split(',')[2]?.trim() || 'Nederland',
-                }
-              : {
-                  street: billing_address.street || '',
-                  postalCode: billing_address.postalCode || billing_address.postal_code || '',
-                  city: billing_address.city || '',
-                  country: billing_address.country || 'Nederland',
-                }
-            : undefined,
-          paymentId: payment.id,
-        })
-      );
-
-      await resend.emails.send({
-        from: 'Lumora Webshop <noreply@lumorahorticulture.com>',
-        to: 'info@lumorahorticulture.com',
-        subject: `🔔 Nieuwe bestelling ${order.id} - €${totalAmount.toFixed(2)}`,
-        html: adminEmailHtml,
-      });
-    } catch (emailError) {
-      console.error('Failed to send admin email:', emailError);
-      // Don't fail the order if email fails
-    }
+    // Emails worden verzonden via de Mollie webhook na succesvolle betaling
 
     return NextResponse.json({
       success: true,

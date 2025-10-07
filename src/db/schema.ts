@@ -28,6 +28,7 @@ export const products = pgTable('products', {
 // Orders table
 export const orders = pgTable('orders', {
   id: uuid('id').primaryKey().defaultRandom(),
+  order_number: text('order_number'), // Human-readable order number like ORD-2025-0001
   customer_email: text('customer_email').notNull(),
   customer_name: text('customer_name').notNull(),
   customer_phone: text('customer_phone'),
