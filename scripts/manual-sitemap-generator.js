@@ -93,7 +93,7 @@ function generateSitemapIndex() {
 
 async function generateAllSitemaps() {
   const publicDir = path.join(__dirname, '../public');
-  
+
   // Generate individual sitemaps
   for (const [locale, domain] of Object.entries(domains)) {
     const sitemap = generateSitemapXML(locale, domain);
@@ -101,11 +101,21 @@ async function generateAllSitemaps() {
     await fs.promises.writeFile(path.join(publicDir, filename), sitemap, 'utf-8');
     console.log(`Generated ${filename}`);
   }
-  
+
   // Generate sitemap index
   const sitemapIndex = generateSitemapIndex();
   await fs.promises.writeFile(path.join(publicDir, 'sitemap.xml'), sitemapIndex, 'utf-8');
   console.log('Generated sitemap index');
+}
+
+// Run if called directly
+if (require.main === module) {
+  generateAllSitemaps()
+    .then(() => console.log('✓ All sitemaps generated successfully'))
+    .catch(err => {
+      console.error('Error generating sitemaps:', err);
+      process.exit(1);
+    });
 }
 
 module.exports = { generateAllSitemaps };
