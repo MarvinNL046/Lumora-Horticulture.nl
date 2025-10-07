@@ -660,22 +660,40 @@ function ProductDetail({
             )}
             
             <motion.div variants={fadeIn} className="pt-4 md:pt-6 space-y-3">
-              <Link
-                href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(title)}`}
-              className="inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base"
-              >
-                <span>{t.detail?.requestQuote}</span>
-                <svg 
-                  className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href={`${localizePathForLocale('/shop', locale || 'nl')}`}
+                  className="inline-flex items-center justify-center px-6 py-3 bg-lumora-green-600 text-white font-semibold rounded-lg hover:bg-lumora-green-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm md:text-base"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-              
+                  <svg
+                    className="mr-2 w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  Bestel nu
+                </Link>
+
+                <Link
+                  href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(title)}`}
+                  className="inline-flex items-center justify-center px-6 py-3 text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base border-2 border-lumora-green-600 rounded-lg hover:bg-lumora-green-50"
+                >
+                  <span>{t.detail?.requestQuote}</span>
+                  <svg
+                    className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </div>
+
               {/* Download PDF link for plugs products */}
               {(id === "tray84" || id === "tray104") && (
                 <div>

@@ -142,45 +142,56 @@ export default function HeaderNav() {
           
           {/* Desktop navigation with localized links */}
           <nav className="hidden md:flex md:items-center md:space-x-1">
-            <NavLink 
-              href={localizePathForLocale('/', currentLocale)} 
-              label={currentLocale === 'de' ? 'Startseite' : 'Home'} 
-              color="text-lumora-cream" 
-              activeColor="text-lumora-cream bg-lumora-dark-700" 
-              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            <NavLink
+              href={localizePathForLocale('/', currentLocale)}
+              label={currentLocale === 'de' ? 'Startseite' : 'Home'}
+              color="text-lumora-cream"
+              activeColor="text-lumora-cream bg-lumora-dark-700"
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80"
             />
-            <NavLink 
-              href={localizePathForLocale('/about', currentLocale)} 
+            <Link
+              href={localizePathForLocale('/shop', currentLocale)}
+              className="ml-2 px-5 py-2.5 bg-lumora-gold text-lumora-dark font-semibold rounded-xl hover:bg-lumora-gold-600 transition-all duration-300 shadow-glow-gold hover:shadow-soft-md flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {currentLocale === 'nl' ? 'Webshop' :
+               currentLocale === 'de' ? 'Webshop' :
+               'Webshop'}
+            </Link>
+            <NavLink
+              href={localizePathForLocale('/about', currentLocale)}
               label={
-                currentLocale === 'nl' ? 'Over Ons' : 
-                currentLocale === 'de' ? 'Über Uns' : 
+                currentLocale === 'nl' ? 'Over Ons' :
+                currentLocale === 'de' ? 'Über Uns' :
                 'About'
-              } 
-              color="text-lumora-cream" 
-              activeColor="text-lumora-cream bg-lumora-dark-700" 
-              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+              }
+              color="text-lumora-cream"
+              activeColor="text-lumora-cream bg-lumora-dark-700"
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80"
             />
-            <ProductsDropdown 
+            <ProductsDropdown
               currentLocale={currentLocale}
               pathWithoutLocale={pathWithoutLocale}
             />
-            <NavLink 
-              href={localizePathForLocale('/applications', currentLocale)} 
+            <NavLink
+              href={localizePathForLocale('/applications', currentLocale)}
               label={
-                currentLocale === 'nl' ? 'Toepassingen' : 
-                currentLocale === 'de' ? 'Anwendungen' : 
+                currentLocale === 'nl' ? 'Toepassingen' :
+                currentLocale === 'de' ? 'Anwendungen' :
                 'Applications'
-              } 
-              color="text-lumora-cream" 
-              activeColor="text-lumora-cream bg-lumora-dark-700" 
-              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+              }
+              color="text-lumora-cream"
+              activeColor="text-lumora-cream bg-lumora-dark-700"
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80"
             />
-            <NavLink 
-              href={localizePathForLocale('/contact', currentLocale)} 
-              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
-              color="text-lumora-cream" 
-              activeColor="text-lumora-cream bg-lumora-dark-700" 
-              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80" 
+            <NavLink
+              href={localizePathForLocale('/contact', currentLocale)}
+              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'}
+              color="text-lumora-cream"
+              activeColor="text-lumora-cream bg-lumora-dark-700"
+              hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80"
             />
             
             {/* Language switcher - with domain switching */}
@@ -262,24 +273,36 @@ export default function HeaderNav() {
               }
               onClick={() => setMobileMenuOpen(false)} 
             />
-            <MobileNavLink 
-              href={localizePathForLocale('/products', currentLocale)} 
+            <MobileNavLink
+              href={localizePathForLocale('/products', currentLocale)}
               label={
-                currentLocale === 'nl' ? 'Producten' : 
-                currentLocale === 'de' ? 'Produkte' : 
+                currentLocale === 'nl' ? 'Producten' :
+                currentLocale === 'de' ? 'Produkte' :
                 'Products'
               }
-              onClick={() => setMobileMenuOpen(false)} 
+              onClick={() => setMobileMenuOpen(false)}
             />
-            <MobileNavLink 
-              href={localizePathForLocale('/products/ellepot-fp12', currentLocale)} 
+            <MobileNavLink
+              href={localizePathForLocale('/products/ellepot-fp12', currentLocale)}
               label={
-                currentLocale === 'nl' ? '→ Ellepot FP 12+ Papier' : 
-                currentLocale === 'de' ? '→ Ellepot FP 12+ Papier' : 
+                currentLocale === 'nl' ? '→ Ellepot FP 12+ Papier' :
+                currentLocale === 'de' ? '→ Ellepot FP 12+ Papier' :
                 '→ Ellepot FP 12+ Paper'
               }
-              onClick={() => setMobileMenuOpen(false)} 
+              onClick={() => setMobileMenuOpen(false)}
             />
+            <Link
+              href={localizePathForLocale('/shop', currentLocale)}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 bg-lumora-gold text-lumora-dark font-semibold rounded-xl hover:bg-lumora-gold-600 transition-all duration-300 shadow-glow-gold my-2 flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {currentLocale === 'nl' ? '🛒 Webshop - Bestel Direct' :
+               currentLocale === 'de' ? '🛒 Webshop - Jetzt Bestellen' :
+               '🛒 Webshop - Order Now'}
+            </Link>
             <MobileNavLink 
               href={localizePathForLocale('/applications', currentLocale)} 
               label={

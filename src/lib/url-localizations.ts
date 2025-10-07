@@ -10,8 +10,13 @@ export const basePaths = {
   home: '',
   about: 'about',
   products: 'products',
+  shop: 'shop',
   contact: 'contact',
   applications: 'applications',
+  // Legal pages
+  privacyPolicy: 'privacy-policy',
+  termsConditions: 'terms-conditions',
+  returnPolicy: 'return-policy',
   // Individual product paths
   tray84: 'products/tray84',
   tray104: 'products/tray104',
@@ -28,7 +33,12 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   nl: {
     about: 'over-ons',
     products: 'producten',
+    shop: 'winkel',
     applications: 'toepassingen',
+    // Legal pages
+    'privacy-policy': 'privacybeleid',
+    'terms-conditions': 'algemene-voorwaarden',
+    'return-policy': 'retourbeleid',
     // Individual products in Dutch
     'products/tray84': 'producten/tray84',
     'products/tray104': 'producten/tray104',
@@ -49,8 +59,13 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   de: {
     about: 'uber-uns',
     products: 'produkte',
+    shop: 'shop',
     contact: 'kontakt',
     applications: 'anwendungen',
+    // Legal pages
+    'privacy-policy': 'datenschutz',
+    'terms-conditions': 'allgemeine-geschaftsbedingungen',
+    'return-policy': 'ruckgaberecht',
     // Individual products in German
     'products/tray84': 'produkte/tray84',
     'products/tray104': 'produkte/tray104',

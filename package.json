@@ -9,11 +9,20 @@
     "generate-sitemaps": "node scripts/manual-sitemap-generator.js",
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@emailjs/browser": "4.4.1",
     "@headlessui/react": "^2.2.2",
+    "@mollie/api-client": "^4.3.3",
+    "@neondatabase/serverless": "^1.0.2",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.5",
+    "drizzle-orm": "^0.44.6",
     "framer-motion": "^12.9.2",
     "next": "^14.0.0",
     "next-intl": "^3.0.0",

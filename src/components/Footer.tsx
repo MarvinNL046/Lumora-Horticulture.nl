@@ -184,9 +184,17 @@ export default function Footer() {
                 <ul className="space-y-3">
                   <FooterLink href={localizePathForLocale('/', currentLocale)} label={navLabels.home} />
                   <FooterLink href={localizePathForLocale('/products', currentLocale)} label={navLabels.products} />
-                  <FooterLink 
-                    href={localizePathForLocale('/products/ellepot-fp12', currentLocale)} 
-                    label={currentLocale === 'nl' ? '• Ellepot FP 12+' : '• Ellepot FP 12+'} 
+                  <FooterLink
+                    href={localizePathForLocale('/shop', currentLocale)}
+                    label={
+                      currentLocale === 'nl' ? '• 🛒 Webshop' :
+                      currentLocale === 'en' ? '• 🛒 Webshop' :
+                      '• 🛒 Webshop'
+                    }
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/products/ellepot-fp12', currentLocale)}
+                    label={currentLocale === 'nl' ? '• Ellepot FP 12+' : '• Ellepot FP 12+'}
                   />
                   <FooterLink 
                     href={localizePathForLocale(
@@ -269,7 +277,7 @@ export default function Footer() {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <a 
+                    <a
                       href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
                       download="Lumora-Ellepot-FP12-Folder.pdf"
                       className="text-lumora-cream/70 transition-colors duration-300 hover:text-lumora-cream group flex items-center relative"
@@ -280,6 +288,26 @@ export default function Footer() {
                       </span>
                     </a>
                   </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
+                  {currentLocale === 'nl' ? 'Juridisch' : currentLocale === 'de' ? 'Rechtliches' : 'Legal'}
+                </h3>
+                <ul className="space-y-3">
+                  <FooterLink
+                    href={localizePathForLocale('/privacy-policy', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Privacybeleid' : currentLocale === 'de' ? 'Datenschutz' : 'Privacy Policy'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/terms-conditions', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Algemene Voorwaarden' : currentLocale === 'de' ? 'AGB' : 'Terms & Conditions'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/return-policy', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Retourbeleid' : currentLocale === 'de' ? 'Rückgaberecht' : 'Return Policy'}
+                  />
                 </ul>
               </div>
             </div>
@@ -361,16 +389,21 @@ export default function Footer() {
           </p>
           
           <div className="mt-4 sm:mt-0">
-            <div className="flex space-x-6">
-              <Link href={localizePathForLocale('/privacy', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
-                {currentLocale === 'nl' ? 'Privacybeleid' : 
-                 currentLocale === 'en' ? 'Privacy Policy' : 
+            <div className="flex flex-wrap gap-4">
+              <Link href={localizePathForLocale('/privacy-policy', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
+                {currentLocale === 'nl' ? 'Privacybeleid' :
+                 currentLocale === 'en' ? 'Privacy Policy' :
                  'Datenschutz'}
               </Link>
-              <Link href={localizePathForLocale('/terms', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
-                {currentLocale === 'nl' ? 'Algemene Voorwaarden' : 
-                 currentLocale === 'en' ? 'Terms & Conditions' : 
+              <Link href={localizePathForLocale('/terms-conditions', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
+                {currentLocale === 'nl' ? 'Algemene Voorwaarden' :
+                 currentLocale === 'en' ? 'Terms & Conditions' :
                  'Allgemeine Geschäftsbedingungen'}
+              </Link>
+              <Link href={localizePathForLocale('/return-policy', currentLocale)} className="text-sm text-lumora-cream/70 hover:text-lumora-cream transition-colors duration-300">
+                {currentLocale === 'nl' ? 'Retourbeleid' :
+                 currentLocale === 'en' ? 'Return Policy' :
+                 'Rückgaberecht'}
               </Link>
             </div>
           </div>
