@@ -4,6 +4,11 @@ import { orders, orderItems, products } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
 import { eq } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
+import { Resend } from 'resend';
+import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
+import { AdminNotificationEmail } from '@/emails/AdminNotification';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * POST /api/checkout
@@ -113,6 +118,92 @@ export async function POST(request: NextRequest) {
       .update(orders)
       .set({ payment_id: payment.id })
       .where(eq(orders.id, order.id));
+
+    // Parse shipping address voor emails
+    const addressParts = shipping_address.split(',').map((part: string) => part.trim());
+    const shippingAddressObj = {
+      street: addressParts[0] || shipping_address,
+      postalCode: addressParts[1]?.split(' ')[0] || '',
+      city: addressParts[1]?.split(' ').slice(1).join(' ') || addressParts[1] || '',
+      country: addressParts[2] || 'Nederland',
+    };
+
+    // Bereken subtotaal en korting voor email
+    const subtotal = productDetails.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+    const discount = subtotal - totalAmount;
+
+    // Verzend klant bevestigingsmail
+    try {
+      await resend.emails.send({
+        from: 'Lumora Horticulture <noreply@lumorahorticulture.com>',
+        to: customer_email,
+        subject: `Bevestiging bestelling ${order.id} - Lumora Horticulture`,
+        react: OrderConfirmationEmail({
+          orderNumber: order.id,
+          customerName: customer_name,
+          orderDate: new Date().toLocaleDateString('nl-NL', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
+          items: productDetails.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+            total: item.price * item.quantity,
+          })),
+          subtotal,
+          discount,
+          totalAmount,
+          shippingAddress: shippingAddressObj,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Failed to send customer email:', emailError);
+      // Don't fail the order if email fails
+    }
+
+    // Verzend admin notificatie
+    try {
+      await resend.emails.send({
+        from: 'Lumora Webshop <noreply@lumorahorticulture.com>',
+        to: 'info@lumorahorticulture.com',
+        subject: `🔔 Nieuwe bestelling ${order.id} - €${totalAmount.toFixed(2)}`,
+        react: AdminNotificationEmail({
+          orderNumber: order.id,
+          orderDate: new Date().toLocaleDateString('nl-NL', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
+          customerName: customer_name,
+          customerEmail: customer_email,
+          customerPhone: customer_phone || 'Niet opgegeven',
+          items: productDetails.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+            total: item.price * item.quantity,
+          })),
+          subtotal,
+          discount,
+          totalAmount,
+          shippingAddress: shippingAddressObj,
+          billingAddress: billing_address
+            ? {
+                street: billing_address.split(',')[0]?.trim() || billing_address,
+                postalCode: billing_address.split(',')[1]?.split(' ')[0] || '',
+                city: billing_address.split(',')[1]?.split(' ').slice(1).join(' ') || '',
+                country: billing_address.split(',')[2]?.trim() || 'Nederland',
+              }
+            : undefined,
+          paymentId: payment.id,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Failed to send admin email:', emailError);
+      // Don't fail the order if email fails
+    }
 
     return NextResponse.json({
       success: true,
