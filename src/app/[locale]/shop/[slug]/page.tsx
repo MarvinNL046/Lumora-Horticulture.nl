@@ -275,15 +275,46 @@ export default function ProductPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 mb-4">
-                  <label className="text-lumora-dark font-medium">{t.quantity}</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                    className="w-24 px-4 py-2 border-2 border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-lumora-green-500 font-semibold text-lg"
-                  />
+                <div className="mb-4">
+                  <label className="text-lumora-dark font-medium block mb-2">{t.quantity}</label>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-10 flex items-center justify-center bg-lumora-green-500 text-white rounded-lg hover:bg-lumora-green-600 transition-colors font-bold text-xl"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantity}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '') {
+                          setQuantity(1);
+                        } else {
+                          const num = parseInt(val);
+                          if (!isNaN(num) && num >= 1) {
+                            setQuantity(num);
+                          }
+                        }
+                      }}
+                      onBlur={(e) => {
+                        if (e.target.value === '' || parseInt(e.target.value) < 1) {
+                          setQuantity(1);
+                        }
+                      }}
+                      className="w-20 px-4 py-2 border-2 border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-lumora-green-500 font-semibold text-lg text-center"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-10 h-10 flex items-center justify-center bg-lumora-green-500 text-white rounded-lg hover:bg-lumora-green-600 transition-colors font-bold text-xl"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
 
                 {/* Korting Breakdown */}
