@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import {
+  VOLUME_DISCOUNT_TIERS,
+  calculateDiscountedPrice,
+  calculateTotalPrice,
+  getDiscountInfo,
+  formatPrice,
+} from '@/lib/volume-discount';
+import { localizePathForLocale } from '@/lib/url-localizations';
 
 interface Product {
   id: string;
@@ -22,6 +31,32 @@ export default function ProductPage() {
   const router = useRouter();
   const productSlug = params.slug as string;
   const locale = (params.locale as string) || 'nl';
+
+  // Translations
+  const t = {
+    freeShipping: locale === 'de' ? 'Immer Kostenloser Versand!' : locale === 'en' ? 'Always Free Shipping!' : 'Altijd Gratis Verzending!',
+    freeShippingDesc: locale === 'de' ? 'Kostenlose Lieferung innerhalb der Niederlande, Belgien und Deutschland' : locale === 'en' ? 'Free delivery within Netherlands, Belgium and Germany' : 'Gratis levering binnen Nederland, België en Duitsland',
+    volumeDiscount: locale === 'de' ? 'Mengenrabatt' : locale === 'en' ? 'Volume Discount' : 'Staffelkorting',
+    normalPrice: locale === 'de' ? 'Normalpreis' : locale === 'en' ? 'Normal price' : 'Normale prijs',
+    pieces: locale === 'de' ? 'Stück' : locale === 'en' ? 'pieces' : 'stuks',
+    tip: locale === 'de' ? 'Tipp' : locale === 'en' ? 'Tip' : 'Tip',
+    tipText: (qty: number, discount: number) =>
+      locale === 'de' ? `Bei ${qty} Stück erhalten Sie ${discount}% Rabatt!` :
+      locale === 'en' ? `Order ${qty} pieces and get ${discount}% discount!` :
+      `Bij ${qty} stuks krijg je ${discount}% korting!`,
+    pricePerPiece: locale === 'de' ? 'Preis pro Stück:' : locale === 'en' ? 'Price per piece:' : 'Prijs per stuk:',
+    discount: locale === 'de' ? 'Rabatt' : locale === 'en' ? 'discount' : 'korting',
+    quantity: locale === 'de' ? 'Anzahl:' : locale === 'en' ? 'Quantity:' : 'Aantal:',
+    subtotalNoDiscount: locale === 'de' ? 'Zwischensumme ohne Rabatt:' : locale === 'en' ? 'Subtotal without discount:' : 'Subtotaal zonder korting:',
+    volumeDiscountLabel: locale === 'de' ? 'Mengenrabatt' : locale === 'en' ? 'Volume discount' : 'Staffelkorting',
+    total: locale === 'de' ? 'Gesamt:' : locale === 'en' ? 'Total:' : 'Totaal:',
+    orderText: (qty: number, discount: number) =>
+      locale === 'de' ? `Bestellen Sie ${qty} Stück und erhalten Sie ${discount}% Rabatt!` :
+      locale === 'en' ? `Order ${qty} pieces and get ${discount}% discount!` :
+      `Bestel ${qty} stuks en krijg ${discount}% korting!`,
+    b2bButton: locale === 'de' ? '🏢 Geschäftlich Bestellen (B2B)' : locale === 'en' ? '🏢 Business Orders (B2B)' : '🏢 Zakelijk Bestellen (B2B)',
+    b2bText: locale === 'de' ? 'Große Mengen? Kontaktieren Sie uns für maßgeschneiderte Lösungen und zusätzliche Vorteile' : locale === 'en' ? 'Large orders? Contact us for custom solutions and additional benefits' : 'Grote afname? Neem contact op voor maatwerk en extra voordeel',
+  };
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -116,7 +151,11 @@ export default function ProductPage() {
     );
   }
 
-  const totalPrice = parseFloat(product.price) * quantity;
+  const basePrice = parseFloat(product.price);
+  const discountInfo = getDiscountInfo(quantity);
+  const discountedPrice = calculateDiscountedPrice(basePrice, quantity);
+  const totalPrice = calculateTotalPrice(basePrice, quantity);
+  const totalDiscount = (basePrice * quantity) - totalPrice;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white">
@@ -139,6 +178,54 @@ export default function ProductPage() {
             </h1>
             <p className="text-xl text-lumora-dark/70 mb-6 leading-relaxed">{product.description}</p>
 
+            {/* Staffelkorting Tabel */}
+            <div className="bg-gradient-to-br from-lumora-green-500/10 to-lumora-green-600/5 rounded-2xl p-6 border-2 border-lumora-green-500/20 mb-6">
+              <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4 flex items-center gap-2">
+                <span className="text-2xl">💰</span> {t.volumeDiscount}
+              </h3>
+              <div className="space-y-2">
+                {VOLUME_DISCOUNT_TIERS.map((tier, index) => (
+                  <div
+                    key={index}
+                    className={`flex justify-between items-center p-3 rounded-xl transition-all ${
+                      quantity >= tier.minQuantity &&
+                      (tier.maxQuantity === null || quantity <= tier.maxQuantity)
+                        ? 'bg-lumora-green-500 text-white font-semibold shadow-soft'
+                        : 'bg-white/60 text-lumora-dark/70'
+                    }`}
+                  >
+                    <span className="font-medium">
+                      {tier.minQuantity}
+                      {tier.maxQuantity ? `-${tier.maxQuantity}` : '+'} {t.pieces}
+                    </span>
+                    <span className="font-bold">
+                      {tier.discountPercentage === 0
+                        ? t.normalPrice
+                        : `-${tier.discountPercentage}%`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              {discountInfo.nextTier && (
+                <p className="text-sm text-lumora-dark/70 mt-4 bg-white/60 rounded-lg p-3 border border-lumora-dark/10">
+                  💡 <strong>{t.tip}:</strong> {t.tipText(discountInfo.nextTier.quantity, discountInfo.nextTier.discount)}
+                </p>
+              )}
+            </div>
+
+            {/* Gratis Verzending Badge */}
+            <div className="bg-gradient-to-r from-lumora-green-500 to-lumora-green-600 rounded-2xl p-6 text-white mb-6 shadow-soft-lg">
+              <div className="flex items-center gap-4">
+                <span className="text-4xl">📦</span>
+                <div>
+                  <h3 className="text-2xl font-display font-bold mb-1">{t.freeShipping}</h3>
+                  <p className="text-lumora-cream/90">
+                    {t.freeShippingDesc}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {product.metadata && (
               <div className="bg-lumora-cream/30 rounded-2xl p-6 border border-lumora-dark/10">
                 <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4">Specificaties</h3>
@@ -160,28 +247,78 @@ export default function ProductPage() {
           <div>
             <div className="bg-white rounded-3xl shadow-soft-lg p-8 sticky top-8 border border-lumora-dark/10">
               <div className="mb-6">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-display font-semibold text-lumora-dark">Prijs:</span>
-                  <span className="text-3xl font-bold text-lumora-green-500">
-                    €{parseFloat(product.price).toFixed(2)}
-                  </span>
+                {/* Gratis Verzending Badge - Compact */}
+                <div className="bg-gradient-to-r from-lumora-green-500 to-lumora-green-600 rounded-xl p-4 text-white mb-6 text-center shadow-soft">
+                  <p className="font-bold text-lg">📦 {t.freeShipping}</p>
                 </div>
+
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-display font-semibold text-lumora-dark">{t.pricePerPiece}</span>
+                  <div className="text-right">
+                    {discountInfo.hasDiscount ? (
+                      <>
+                        <span className="text-lg text-lumora-dark/50 line-through block">
+                          {formatPrice(basePrice)}
+                        </span>
+                        <span className="text-2xl font-bold text-lumora-green-500">
+                          {formatPrice(discountedPrice)}
+                        </span>
+                        <span className="text-sm text-lumora-green-600 font-semibold block">
+                          -{discountInfo.currentDiscount}% {t.discount}!
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-2xl font-bold text-lumora-dark">
+                        {formatPrice(basePrice)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-4 mb-4">
-                  <label className="text-lumora-dark font-medium">Aantal:</label>
+                  <label className="text-lumora-dark font-medium">{t.quantity}</label>
                   <input
                     type="number"
                     min="1"
                     value={quantity}
                     onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                    className="w-20 px-3 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                    className="w-24 px-4 py-2 border-2 border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-lumora-green-500 font-semibold text-lg"
                   />
                 </div>
-                <div className="flex justify-between items-center pt-4 border-t border-lumora-dark/10">
-                  <span className="text-xl font-display font-semibold text-lumora-dark">Totaal:</span>
+
+                {/* Korting Breakdown */}
+                {discountInfo.hasDiscount && (
+                  <div className="bg-lumora-green-50 rounded-xl p-4 mb-4 border border-lumora-green-200">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-lumora-dark/70">{t.subtotalNoDiscount}</span>
+                      <span className="font-semibold text-lumora-dark/70 line-through">
+                        {formatPrice(basePrice * quantity)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-lumora-green-600 font-semibold">
+                        {t.volumeDiscountLabel} ({discountInfo.currentDiscount}%):
+                      </span>
+                      <span className="font-bold text-lumora-green-600">
+                        -{formatPrice(totalDiscount)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-between items-center pt-4 border-t-2 border-lumora-dark/10">
+                  <span className="text-xl font-display font-semibold text-lumora-dark">{t.total}</span>
                   <span className="text-3xl font-bold text-lumora-green-500">
-                    €{totalPrice.toFixed(2)}
+                    {formatPrice(totalPrice)}
                   </span>
                 </div>
+
+                {/* Next Tier Tip */}
+                {discountInfo.nextTier && (
+                  <p className="text-xs text-lumora-dark/60 mt-3 text-center bg-lumora-cream/50 rounded-lg p-2">
+                    💡 {t.orderText(discountInfo.nextTier.quantity, discountInfo.nextTier.discount)}
+                  </p>
+                )}
               </div>
 
               <form onSubmit={handleCheckout} className="space-y-4">
@@ -293,6 +430,19 @@ export default function ProductPage() {
                     ? 'Niet beschikbaar'
                     : 'Bestellen'}
                 </button>
+
+                {/* B2B / Zakelijk Bestellen Knop */}
+                <div className="mt-4 pt-4 border-t border-lumora-dark/10">
+                  <Link
+                    href={localizePathForLocale('/contact', locale)}
+                    className="block w-full bg-gradient-to-r from-lumora-dark to-lumora-dark/90 text-white py-4 rounded-xl font-semibold text-lg hover:from-lumora-dark/90 hover:to-lumora-dark transition-all duration-300 shadow-soft hover:shadow-soft-md text-center"
+                  >
+                    {t.b2bButton}
+                  </Link>
+                  <p className="text-xs text-lumora-dark/60 mt-2 text-center">
+                    {t.b2bText}
+                  </p>
+                </div>
 
                 <div className="text-center mt-6">
                   <p className="text-sm text-lumora-dark/60 mb-2">

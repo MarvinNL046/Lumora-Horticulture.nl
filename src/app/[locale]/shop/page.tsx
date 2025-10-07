@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { localizePathForLocale } from '@/lib/url-localizations';
 
 interface Product {
   id: string;
@@ -20,6 +21,13 @@ export default function ShopPage() {
   const locale = (params.locale as string) || 'nl';
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Translations
+  const t = {
+    freeShipping: locale === 'de' ? 'Immer Kostenloser Versand!' : locale === 'en' ? 'Always Free Shipping!' : 'Altijd Gratis Verzending!',
+    freeShippingDesc: locale === 'de' ? 'Für Niederlande, Belgien und Deutschland' : locale === 'en' ? 'For Netherlands, Belgium and Germany' : 'Voor Nederland, België en Duitsland',
+    b2bButton: locale === 'de' ? '🏢 Geschäftlich Bestellen? Kontaktieren Sie uns für maßgeschneiderte Lösungen' : locale === 'en' ? '🏢 Business Orders? Contact us for custom solutions' : '🏢 Zakelijk Bestellen? Neem contact op voor maatwerk',
+  };
 
   useEffect(() => {
     fetch(`/api/products?locale=${locale}`)
@@ -52,9 +60,30 @@ export default function ShopPage() {
           <h1 className="text-4xl md:text-5xl font-display font-bold text-lumora-dark mb-4">
             Webshop
           </h1>
-          <p className="text-xl text-lumora-dark/70">
+          <p className="text-xl text-lumora-dark/70 mb-6">
             Professionele kweekoplossingen voor optimale resultaten
           </p>
+
+          {/* Gratis Verzending Banner */}
+          <div className="inline-block bg-gradient-to-r from-lumora-green-500 to-lumora-green-600 rounded-2xl px-8 py-4 text-white shadow-soft-lg mb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">📦</span>
+              <div className="text-left">
+                <p className="font-bold text-xl">{t.freeShipping}</p>
+                <p className="text-sm text-lumora-cream/90">{t.freeShippingDesc}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* B2B Banner */}
+          <div className="text-center">
+            <Link
+              href={localizePathForLocale('/contact', locale)}
+              className="inline-flex items-center gap-2 bg-lumora-dark text-white px-6 py-3 rounded-xl hover:bg-lumora-dark/90 transition-all duration-300 shadow-soft hover:shadow-soft-md font-semibold"
+            >
+              {t.b2bButton}
+            </Link>
+          </div>
         </div>
 
         {/* Products Grid */}

@@ -679,9 +679,9 @@ function ProductDetail({
 
                 <Link
                   href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(title)}`}
-                  className="inline-flex items-center justify-center px-6 py-3 text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base border-2 border-lumora-green-600 rounded-lg hover:bg-lumora-green-50"
+                  className="inline-flex items-center justify-center px-6 py-3 text-white font-semibold bg-lumora-dark hover:bg-lumora-dark/90 transition-all duration-300 group text-sm md:text-base border-2 border-lumora-dark rounded-lg shadow-soft hover:shadow-soft-md"
                 >
-                  <span>{t.detail?.requestQuote}</span>
+                  <span>🏢 Zakelijk Bestellen (B2B)</span>
                   <svg
                     className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -765,14 +765,14 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
             {t.cta?.description}
           </motion.p>
           <motion.div variants={fadeIn}>
-            <Link 
+            <Link
               href={localizePathForLocale('/contact', locale || 'nl')}
-              className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
-                      hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
-                      hover:shadow-soft-md transition-all duration-300 
-                      font-medium text-base sm:text-lg group"
+              className="inline-flex items-center justify-center bg-lumora-dark text-white
+                      hover:bg-lumora-dark/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft
+                      hover:shadow-soft-md transition-all duration-300
+                      font-semibold text-base sm:text-lg group"
             >
-              <span>{t.cta?.button}</span>
+              <span>🏢 Zakelijk Bestellen (B2B)</span>
               <svg className="ml-2 -mr-1 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>

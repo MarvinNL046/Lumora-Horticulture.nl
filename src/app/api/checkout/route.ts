@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { orders, orderItems, products } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
 import { eq } from 'drizzle-orm';
+import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 
 /**
  * POST /api/checkout
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Bereken totaal bedrag
+    // Bereken totaal bedrag met staffelkorting
     let totalAmount = 0;
     const productDetails = [];
 
@@ -53,12 +54,19 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const price = parseFloat(product[0].price);
-      totalAmount += price * item.quantity;
+      const basePrice = parseFloat(product[0].price);
+      const quantity = item.quantity;
+
+      // Bereken korting op basis van aantal
+      const discountedPrice = calculateDiscountedPrice(basePrice, quantity);
+      const itemTotal = calculateTotalPrice(basePrice, quantity);
+
+      totalAmount += itemTotal;
       productDetails.push({
         product_id: item.product_id,
-        quantity: item.quantity,
-        price,
+        quantity: quantity,
+        price: discountedPrice, // Prijs PER STUK na korting
+        basePrice: basePrice, // Originele prijs
         name: product[0].name,
       });
     }
