@@ -84,11 +84,12 @@ async function setupDatabase() {
 
     // Insert your actual products
     await sql`
-      INSERT INTO "products" ("name", "description", "price", "image_url", "gtin", "brand", "availability", "google_product_category", "product_type", "metadata")
+      INSERT INTO "products" ("name", "slug", "description", "price", "image_url", "gtin", "brand", "availability", "google_product_category", "product_type", "metadata")
       VALUES
         (
           'PAPER PLUG TRAY 84',
-          'Professionele TRANSPLANT 84 tray met 84 cellen voor efficiënte kweek van zaailingen. Direct van de fabrikant. Met FP 12+ technologie voor 12+ maanden stabiliteit.',
+          'paper-plug-tray-84',
+          'Professionele TRANSPLANT 84 tray met 84 cellen voor efficiënte kweek van zaailingen. Direct van de fabrikant. Met FP 12+ technologie voor 12+ maanden stabiliteit. Verpakking: 8 trays per doos.',
           49.95,
           '/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg',
           NULL,
@@ -96,11 +97,12 @@ async function setupDatabase() {
           'in stock',
           '499676',
           'Business & Industrial > Agriculture > Planting & Growing',
-          '{"cells": 84, "plug_diameter": "3.5cm", "technology": "FP 12+", "stability": "12+ months", "coating": "Fungicide", "eco_friendly": true, "biodegradable": true}'::json
+          '{"cells": 84, "plug_diameter": "3.5cm", "technology": "FP 12+", "stability": "12+ months", "coating": "Fungicide", "eco_friendly": true, "biodegradable": true, "trays_per_box": 8}'::json
         ),
         (
           'PAPER PLUG TRAY 104',
-          'PAPER PLUG TRAY 104 met 104 cellen voor optimale wortelontwikkeling. Geschikt voor professionele glastuinbouw. FP 12+ technologie geeft langdurige stabiliteit.',
+          'paper-plug-tray-104',
+          'PAPER PLUG TRAY 104 met 104 cellen voor optimale wortelontwikkeling. Geschikt voor professionele glastuinbouw. FP 12+ technologie geeft langdurige stabiliteit. Verpakking: 7 trays per doos.',
           59.95,
           '/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg',
           NULL,
@@ -108,10 +110,11 @@ async function setupDatabase() {
           'in stock',
           '499676',
           'Business & Industrial > Agriculture > Planting & Growing',
-          '{"cells": 104, "plug_diameter": "3cm", "technology": "FP 12+", "stability": "12+ months", "coating": "Fungicide", "eco_friendly": true, "biodegradable": true}'::json
+          '{"cells": 104, "plug_diameter": "3cm", "technology": "FP 12+", "stability": "12+ months", "coating": "Fungicide", "eco_friendly": true, "biodegradable": true, "trays_per_box": 7}'::json
         ),
         (
           'Transportdoos (Vouwdoos)',
+          'transportdoos-vouwdoos',
           'Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt. Afmetingen: 557 x 322 x 180mm.',
           12.50,
           '/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg',
@@ -124,6 +127,7 @@ async function setupDatabase() {
         ),
         (
           'Inlegvellen',
+          'inlegvellen',
           'Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Lichtgewicht en compatibel met standaard transportdozen.',
           3.95,
           '/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg',

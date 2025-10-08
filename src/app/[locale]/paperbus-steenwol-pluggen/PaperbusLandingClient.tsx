@@ -391,13 +391,19 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                   Beschikbare Formaten:
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b border-lumora-cream">
-                    <span className="font-medium text-lumora-dark">Tray-84st</span>
-                    <span className="text-gray-600">84 pluggen</span>
+                  <div className="py-3 border-b border-lumora-cream">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-lumora-dark">Tray-84st</span>
+                      <span className="text-gray-600">84 pluggen</span>
+                    </div>
+                    <p className="text-sm text-gray-500 italic">Verpakking: 8 trays per doos</p>
                   </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="font-medium text-lumora-dark">Tray-104st</span>
-                    <span className="text-gray-600">104 pluggen</span>
+                  <div className="py-3">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-lumora-dark">Tray-104st</span>
+                      <span className="text-gray-600">104 pluggen</span>
+                    </div>
+                    <p className="text-sm text-gray-500 italic">Verpakking: 7 trays per doos</p>
                   </div>
                 </div>
               </div>

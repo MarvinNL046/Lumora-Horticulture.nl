@@ -47,21 +47,21 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
   const products = [
     {
       name: "Tray-84st: PAPER PLUG TRAY 84",
-      description: locale === 'nl' 
-        ? "Professionele TRANSPLANT 84 tray met 84 cellen voor efficiënte kweek van zaailingen. Direct van de fabrikant."
+      description: locale === 'nl'
+        ? "Professionele TRANSPLANT 84 tray met 84 cellen voor efficiënte kweek van zaailingen. Direct van de fabrikant. Verpakking: 8 trays per doos."
         : locale === 'de'
-        ? "Professionelles TRANSPLANT 84 Tablett mit 84 Zellen für effiziente Sämlingsanzucht. Direkt vom Hersteller."
-        : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer.",
+        ? "Professionelles TRANSPLANT 84 Tablett mit 84 Zellen für effiziente Sämlingsanzucht. Direkt vom Hersteller. Verpackung: 8 Tabletts pro Karton."
+        : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer. Packaging: 8 trays per box.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg",
       sku: "TRAY-84"
     },
     {
       name: "Tray-104st: PAPER PLUG TRAY 104",
-      description: locale === 'nl' 
-        ? "PAPER PLUG TRAY 104 met 104 cellen voor optimale wortelontwikkeling. Geschikt voor professionele glastuinbouw."
+      description: locale === 'nl'
+        ? "PAPER PLUG TRAY 104 met 104 cellen voor optimale wortelontwikkeling. Geschikt voor professionele glastuinbouw. Verpakking: 7 trays per doos."
         : locale === 'de'
-        ? "PAPER PLUG TRAY 104 mit 104 Zellen für optimale Wurzelentwicklung. Geeignet für professionellen Gewächshausgartenbau."
-        : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture.",
+        ? "PAPER PLUG TRAY 104 mit 104 Zellen für optimale Wurzelentwicklung. Geeignet für professionellen Gewächshausgartenbau. Verpackung: 7 Tabletts pro Karton."
+        : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture. Packaging: 7 trays per box.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg",
       sku: "TRAY-104"
     },
@@ -191,7 +191,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             id="tray84"
             title="Tray-84st: Paperbus Steenwol Pluggen (84)"
             subtitle="Perfect voor professionele zaailingenkweek"
-            description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok."
+            description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok. Verpakking: 8 trays per doos."
             imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
@@ -296,7 +296,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             id="tray104"
             title="Tray-104st: Paperbus Steenwol Pluggen (104)"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
-            description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten."
+            description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
             imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
             imagePosition="right"
             specs={[
