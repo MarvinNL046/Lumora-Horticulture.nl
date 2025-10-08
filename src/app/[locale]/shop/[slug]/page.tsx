@@ -50,6 +50,8 @@ export default function ProductPage() {
     quantity: locale === 'de' ? 'Anzahl:' : locale === 'en' ? 'Quantity:' : 'Aantal:',
     quantityPackages: locale === 'de' ? 'Anzahl Verpackungen:' : locale === 'en' ? 'Number of packages:' : 'Aantal verpakkingen:',
     packageNote: locale === 'de' ? '1 Verpackung = 25 Stück' : locale === 'en' ? '1 package = 25 units' : '1 verpakking = 25 stuks',
+    trayBoxNote84: locale === 'de' ? '1 Karton enthält 8 Tabletts' : locale === 'en' ? '1 box contains 8 trays' : '1 doos bevat 8 trays',
+    trayBoxNote104: locale === 'de' ? '1 Karton enthält 7 Tabletts' : locale === 'en' ? '1 box contains 7 trays' : '1 doos bevat 7 trays',
     subtotalNoDiscount: locale === 'de' ? 'Zwischensumme ohne Rabatt:' : locale === 'en' ? 'Subtotal without discount:' : 'Subtotaal zonder korting:',
     volumeDiscountLabel: locale === 'de' ? 'Mengenrabatt' : locale === 'en' ? 'Volume discount' : 'Staffelkorting',
     total: locale === 'de' ? 'Gesamt:' : locale === 'en' ? 'Total:' : 'Totaal:',
@@ -325,6 +327,16 @@ export default function ProductPage() {
                   {productSlug === 'transportdoos-vouwdoos' && (
                     <p className="text-xs text-lumora-dark/60 mt-2 bg-lumora-cream/50 rounded-lg p-2 text-center">
                       ℹ️ {t.packageNote}
+                    </p>
+                  )}
+                  {productSlug === 'paper-plug-tray-84' && (
+                    <p className="text-xs text-lumora-dark/60 mt-2 bg-lumora-green-50 rounded-lg p-2 text-center border border-lumora-green-100">
+                      📦 {t.trayBoxNote84}
+                    </p>
+                  )}
+                  {productSlug === 'paper-plug-tray-104' && (
+                    <p className="text-xs text-lumora-dark/60 mt-2 bg-lumora-green-50 rounded-lg p-2 text-center border border-lumora-green-100">
+                      📦 {t.trayBoxNote104}
                     </p>
                   )}
                 </div>
