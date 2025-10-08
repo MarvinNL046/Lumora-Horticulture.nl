@@ -331,14 +331,19 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
           <ProductDetail
             t={t}
             id="transportbox"
-            title="Transportdoos (Vouwdoos)"
-            subtitle="Duurzame en efficiënte oplossing voor transport"
-            description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden. Verkocht per 25 stuks (inclusief verzendkosten)."
+            title={locale === 'nl' ? 'Transportdoos (Vouwdoos)' : locale === 'de' ? 'Transportbox (Faltbox)' : 'Transport Box (Folding Box)'}
+            subtitle={locale === 'nl' ? 'Duurzame en efficiënte oplossing voor transport' : locale === 'de' ? 'Nachhaltige und effiziente Transportlösung' : 'Sustainable and efficient transport solution'}
+            description={locale === 'nl'
+              ? 'Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden. Verkocht per 25 stuks (inclusief verzendkosten).'
+              : locale === 'de'
+              ? 'Unsere Transportboxen sind für den sicheren und effizienten Transport von Gartenbauprodukten konzipiert. Das Faltdesign ermöglicht einfache Lagerung und Handhabung bei maximalem Schutz. Verkauft pro 25 Stück (inklusive Versandkosten).'
+              : 'Our transport boxes are designed for safe and efficient transport of horticultural products. The folding design ensures easy storage and handling while providing maximum protection. Sold per 25 units (including shipping costs).'}
             imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
             specs={[
-              { label: "Afmetingen", value: "557 x 322 x 180mm" }
+              { label: locale === 'nl' ? 'Afmetingen' : locale === 'de' ? 'Abmessungen' : 'Dimensions', value: "557 x 322 x 180mm" },
+              { label: locale === 'nl' ? 'Per verpakking' : locale === 'de' ? 'Pro Verpackung' : 'Per package', value: locale === 'nl' ? '25 stuks' : locale === 'de' ? '25 Stück' : '25 units' }
             ]}
-            badges={["Duurzaam", "Efficiënt", "Stapelbaar"]}
+            badges={locale === 'nl' ? ['Duurzaam', 'Efficiënt', 'Stapelbaar'] : locale === 'de' ? ['Nachhaltig', 'Effizient', 'Stapelbar'] : ['Sustainable', 'Efficient', 'Stackable']}
             locale={locale}
           />
           

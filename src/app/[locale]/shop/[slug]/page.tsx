@@ -45,8 +45,11 @@ export default function ProductPage() {
       locale === 'en' ? `Order ${qty} pieces and get ${discount}% discount!` :
       `Bij ${qty} stuks krijg je ${discount}% korting!`,
     pricePerPiece: locale === 'de' ? 'Preis pro Stück:' : locale === 'en' ? 'Price per piece:' : 'Prijs per stuk:',
+    pricePerPackage: locale === 'de' ? 'Preis pro 25 Stück:' : locale === 'en' ? 'Price per 25 units:' : 'Prijs per 25 stuks:',
     discount: locale === 'de' ? 'Rabatt' : locale === 'en' ? 'discount' : 'korting',
     quantity: locale === 'de' ? 'Anzahl:' : locale === 'en' ? 'Quantity:' : 'Aantal:',
+    quantityPackages: locale === 'de' ? 'Anzahl Verpackungen:' : locale === 'en' ? 'Number of packages:' : 'Aantal verpakkingen:',
+    packageNote: locale === 'de' ? '1 Verpackung = 25 Stück' : locale === 'en' ? '1 package = 25 units' : '1 verpakking = 25 stuks',
     subtotalNoDiscount: locale === 'de' ? 'Zwischensumme ohne Rabatt:' : locale === 'en' ? 'Subtotal without discount:' : 'Subtotaal zonder korting:',
     volumeDiscountLabel: locale === 'de' ? 'Mengenrabatt' : locale === 'en' ? 'Volume discount' : 'Staffelkorting',
     total: locale === 'de' ? 'Gesamt:' : locale === 'en' ? 'Total:' : 'Totaal:',
@@ -253,7 +256,9 @@ export default function ProductPage() {
                 </div>
 
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-lg font-display font-semibold text-lumora-dark">{t.pricePerPiece}</span>
+                  <span className="text-lg font-display font-semibold text-lumora-dark">
+                    {productSlug === 'transportdoos-vouwdoos' ? t.pricePerPackage : t.pricePerPiece}
+                  </span>
                   <div className="text-right">
                     {discountInfo.hasDiscount ? (
                       <>
@@ -276,7 +281,9 @@ export default function ProductPage() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="text-lumora-dark font-medium block mb-2">{t.quantity}</label>
+                  <label className="text-lumora-dark font-medium block mb-2">
+                    {productSlug === 'transportdoos-vouwdoos' ? t.quantityPackages : t.quantity}
+                  </label>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -315,6 +322,11 @@ export default function ProductPage() {
                       +
                     </button>
                   </div>
+                  {productSlug === 'transportdoos-vouwdoos' && (
+                    <p className="text-xs text-lumora-dark/60 mt-2 bg-lumora-cream/50 rounded-lg p-2 text-center">
+                      ℹ️ {t.packageNote}
+                    </p>
+                  )}
                 </div>
 
                 {/* Korting Breakdown */}
@@ -343,6 +355,12 @@ export default function ProductPage() {
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
+
+                {productSlug === 'transportdoos-vouwdoos' && (
+                  <p className="text-xs text-lumora-dark/60 mt-2 text-center">
+                    = {quantity * 25} {locale === 'de' ? 'Stück' : locale === 'en' ? 'units' : 'stuks'} {locale === 'de' ? 'insgesamt' : locale === 'en' ? 'total' : 'totaal'}
+                  </p>
+                )}
 
                 {/* Next Tier Tip */}
                 {discountInfo.nextTier && (
