@@ -126,8 +126,8 @@ async function setupDatabase() {
           '{"dimensions": "557 x 322 x 180mm", "material": "Cardboard", "stackable": true, "foldable": true, "eco_friendly": true, "units_per_package": 25}'::json
         ),
         (
-          'Inlegvellen',
-          'inlegvellen',
+          'Inlegvellen 60x80cm LDPE',
+          'inlegvellen-60x80-ldpe',
           'Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks.',
           88.00,
           '/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg',
@@ -137,6 +137,19 @@ async function setupDatabase() {
           '499811',
           'Business & Industrial > Agriculture > Packaging',
           '{"material": "LDPE", "thickness": "20 mu", "dimensions": "60 x 80 cm", "weight": "Lightweight", "compatible": "Standard transport boxes", "protective": true, "units_per_package": 500}'::json
+        ),
+        (
+          'Inlegvellen 40x60cm HDPE',
+          'inlegvellen-40x60-hdpe',
+          'Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Afmetingen: 40 x 60 cm, HDPE kwaliteit. Verkocht per 500 stuks.',
+          42.00,
+          '/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg',
+          NULL,
+          'Lumora',
+          'in stock',
+          '499811',
+          'Business & Industrial > Agriculture > Packaging',
+          '{"material": "HDPE", "dimensions": "40 x 60 cm", "weight": "Lightweight", "compatible": "Standard transport boxes", "protective": true, "units_per_package": 500}'::json
         )
       ON CONFLICT DO NOTHING
     `;
@@ -148,11 +161,12 @@ async function setupDatabase() {
     console.log('  - orders');
     console.log('  - order_items');
     console.log('');
-    console.log('📦 Inserted your 4 products:');
+    console.log('📦 Inserted your 5 products:');
     console.log('  - PAPER PLUG TRAY 84 (€49.95)');
     console.log('  - PAPER PLUG TRAY 104 (€59.95)');
-    console.log('  - Transportdoos (Vouwdoos) (€12.50)');
-    console.log('  - Inlegvellen (€3.95)');
+    console.log('  - Transportdoos (Vouwdoos) (€50.00)');
+    console.log('  - Inlegvellen 60x80cm LDPE (€88.00)');
+    console.log('  - Inlegvellen 40x60cm HDPE (€42.00)');
     console.log('');
     console.log('💡 OPMERKING: Placeholder prijzen gebruikt.');
     console.log('   Pas prijzen aan via SQL of Drizzle Studio (npm run db:studio)');

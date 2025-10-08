@@ -108,14 +108,24 @@ export default function ProductsPage() {
           />
           
           <ProductDetail
-            id="insertsheets"
-            title="Inlegvellen"
+            id="insertsheets-ldpe"
+            title="Inlegvellen 60x80cm LDPE"
             subtitle="Extra bescherming voor uw producten"
             description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks."
             imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             imagePosition="right"
             showSpecs={false}
-            badges={["Transparant", "Lichtgewicht", "Compatibel"]}
+            badges={["Transparant", "Lichtgewicht", "LDPE"]}
+          />
+
+          <ProductDetail
+            id="insertsheets-hdpe"
+            title="Inlegvellen 40x60cm HDPE"
+            subtitle="Duurzame en stevige bescherming"
+            description="Onze HDPE inlegvellen bieden extra stevigheid en bescherming voor uw producten tijdens transport. Perfect voor zwaardere producten. Afmetingen: 40 x 60 cm, HDPE kwaliteit. Verkocht per 500 stuks."
+            imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
+            showSpecs={false}
+            badges={["Transparant", "Stevig", "HDPE"]}
           />
         </section>
         
