@@ -67,21 +67,21 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
     },
     {
       name: locale === 'nl' ? "Transportdoos (Vouwdoos)" : locale === 'de' ? "Transportbox (Faltbox)" : "Transport Box (Folding Box)",
-      description: locale === 'nl' 
-        ? "Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt."
+      description: locale === 'nl'
+        ? "Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt. Verkocht per 25 stuks (inclusief verzendkosten)."
         : locale === 'de'
-        ? "Nachhaltige faltbare Transportbox für sicheren Transport von Gartenbauprodukten. Stapelbar und effizient."
-        : "Sustainable folding transport box for safe transport of horticultural products. Stackable and efficient.",
+        ? "Nachhaltige faltbare Transportbox für sicheren Transport von Gartenbauprodukten. Stapelbar und effizient. Verkauft pro 25 Stück (inklusive Versandkosten)."
+        : "Sustainable folding transport box for safe transport of horticultural products. Stackable and efficient. Sold per 25 units (including shipping costs).",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg",
       sku: "TRANSPORT-BOX"
     },
     {
       name: locale === 'nl' ? "Inlegvellen" : locale === 'de' ? "Einlegeblätter" : "Insert Sheets",
-      description: locale === 'nl' 
-        ? "Transparante inlegvellen voor extra bescherming en organisatie in transportdozen."
+      description: locale === 'nl'
+        ? "Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks."
         : locale === 'de'
-        ? "Transparente Einlegeblätter für zusätzlichen Schutz und Organisation in Transportboxen."
-        : "Transparent insert sheets for extra protection and organization in transport boxes.",
+        ? "Transparente Einlegeblätter für zusätzlichen Schutz und Organisation in Transportboxen. Abmessungen: 60 x 80 cm, 20 mu LDPE Qualität. Verkauft pro 500 Stück."
+        : "Transparent insert sheets for extra protection and organization in transport boxes. Dimensions: 60 x 80 cm, 20 mu LDPE quality. Sold per 500 units.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg",
       sku: "INSERT-SHEETS"
     }
@@ -323,7 +323,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             id="transportbox"
             title="Transportdoos (Vouwdoos)"
             subtitle="Duurzame en efficiënte oplossing voor transport"
-            description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden."
+            description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden. Verkocht per 25 stuks (inclusief verzendkosten)."
             imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
             specs={[
               { label: "Afmetingen", value: "557 x 322 x 180mm" }
@@ -337,7 +337,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             id="insertsheets"
             title="Inlegvellen"
             subtitle="Extra bescherming voor uw producten"
-            description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport."
+            description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks."
             imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             imagePosition="right"
             showSpecs={false}

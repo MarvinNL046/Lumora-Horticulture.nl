@@ -99,7 +99,7 @@ export default function ProductsPage() {
             id="transportbox"
             title="Transportdoos (Vouwdoos)"
             subtitle="Duurzame en efficiënte oplossing voor transport"
-            description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden."
+            description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden. Verkocht per 25 stuks (inclusief verzendkosten)."
             imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
             specs={[
               { label: "Afmetingen", value: "557 x 322 x 180mm" }
@@ -111,7 +111,7 @@ export default function ProductsPage() {
             id="insertsheets"
             title="Inlegvellen"
             subtitle="Extra bescherming voor uw producten"
-            description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport."
+            description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks."
             imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             imagePosition="right"
             showSpecs={false}

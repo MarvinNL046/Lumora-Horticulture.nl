@@ -115,28 +115,28 @@ async function setupDatabase() {
         (
           'Transportdoos (Vouwdoos)',
           'transportdoos-vouwdoos',
-          'Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt. Afmetingen: 557 x 322 x 180mm.',
-          12.50,
+          'Duurzame vouwbare transportdoos voor veilig transport van tuinbouwproducten. Stapelbaar en efficiënt. Afmetingen: 557 x 322 x 180mm. Verpakking: verkocht per 25 stuks (inclusief verzendkosten).',
+          50.00,
           '/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg',
           NULL,
           'Lumora',
           'in stock',
           '499811',
           'Business & Industrial > Agriculture > Packaging',
-          '{"dimensions": "557 x 322 x 180mm", "material": "Cardboard", "stackable": true, "foldable": true, "eco_friendly": true}'::json
+          '{"dimensions": "557 x 322 x 180mm", "material": "Cardboard", "stackable": true, "foldable": true, "eco_friendly": true, "units_per_package": 25}'::json
         ),
         (
           'Inlegvellen',
           'inlegvellen',
-          'Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Lichtgewicht en compatibel met standaard transportdozen.',
-          3.95,
+          'Transparante inlegvellen voor extra bescherming en organisatie in transportdozen. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks.',
+          88.00,
           '/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg',
           NULL,
           'Lumora',
           'in stock',
           '499811',
           'Business & Industrial > Agriculture > Packaging',
-          '{"material": "Transparent plastic", "weight": "Lightweight", "compatible": "Standard transport boxes", "protective": true}'::json
+          '{"material": "LDPE", "thickness": "20 mu", "dimensions": "60 x 80 cm", "weight": "Lightweight", "compatible": "Standard transport boxes", "protective": true, "units_per_package": 500}'::json
         )
       ON CONFLICT DO NOTHING
     `;
