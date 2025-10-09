@@ -72,29 +72,54 @@ export const AdminNotificationEmail = ({
 }: AdminNotificationEmailProps) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{`
+          @media only screen and (max-width: 600px) {
+            .mobile-padding {
+              padding: 16px !important;
+            }
+            .mobile-text-small {
+              font-size: 14px !important;
+            }
+            .mobile-heading {
+              font-size: 20px !important;
+            }
+            .mobile-header-title {
+              font-size: 24px !important;
+            }
+            .mobile-stack {
+              display: block !important;
+              width: 100% !important;
+              margin-bottom: 12px !important;
+            }
+            .mobile-full-width {
+              width: 100% !important;
+            }
+          }
+        `}</style>
+      </Head>
       <Preview>Nieuwe bestelling ontvangen - {orderNumber} - €{totalAmount.toFixed(2)}</Preview>
       <Body style={main}>
         <Container style={container}>
           {/* Header */}
-          <Section style={header}>
+          <Section style={header} className="mobile-padding">
             <Text style={alertIcon}>🔔</Text>
-            <Heading style={headerTitle}>Nieuwe Bestelling Ontvangen!</Heading>
+            <Heading style={headerTitle} className="mobile-header-title">Nieuwe Bestelling Ontvangen!</Heading>
             <Text style={headerSubtitle}>Lumora Horticulture Webshop</Text>
           </Section>
 
           {/* Order Summary Badge */}
-          <Section style={summaryBadge}>
+          <Section style={summaryBadge} className="mobile-padding">
             <Row>
-              <Column style={summaryColumn}>
+              <Column style={summaryColumn} className="mobile-stack">
                 <Text style={summaryLabel}>Bestelnummer</Text>
                 <Text style={summaryValue}>{orderNumber}</Text>
               </Column>
-              <Column style={summaryColumn}>
+              <Column style={summaryColumn} className="mobile-stack">
                 <Text style={summaryLabel}>Datum</Text>
                 <Text style={summaryValue}>{orderDate}</Text>
               </Column>
-              <Column style={summaryColumn}>
+              <Column style={summaryColumn} className="mobile-stack">
                 <Text style={summaryLabel}>Totaal</Text>
                 <Text style={summaryValueGreen}>€{totalAmount.toFixed(2)}</Text>
               </Column>
@@ -102,8 +127,8 @@ export const AdminNotificationEmail = ({
           </Section>
 
           {/* Customer Information */}
-          <Section style={section}>
-            <Heading style={sectionTitle}>📋 Klantgegevens</Heading>
+          <Section style={section} className="mobile-padding">
+            <Heading style={sectionTitle} className="mobile-heading">📋 Klantgegevens</Heading>
             <div style={infoBox}>
               <Row style={infoRow}>
                 <Column style={infoLabel}>
@@ -137,8 +162,8 @@ export const AdminNotificationEmail = ({
           </Section>
 
           {/* Order Items */}
-          <Section style={section}>
-            <Heading style={sectionTitle}>📦 Bestelde Producten</Heading>
+          <Section style={section} className="mobile-padding">
+            <Heading style={sectionTitle} className="mobile-heading">📦 Bestelde Producten</Heading>
             <div style={itemsBox}>
               {items.map((item, index) => (
                 <div key={index}>
@@ -198,8 +223,8 @@ export const AdminNotificationEmail = ({
           </Section>
 
           {/* Shipping Address */}
-          <Section style={section}>
-            <Heading style={sectionTitle}>🚚 Verzendadres</Heading>
+          <Section style={section} className="mobile-padding">
+            <Heading style={sectionTitle} className="mobile-heading">🚚 Verzendadres</Heading>
             <div style={addressBox}>
               <Text style={addressText}>
                 {shippingAddress.street}
@@ -214,8 +239,8 @@ export const AdminNotificationEmail = ({
           {/* Billing Address (if different) */}
           {billingAddress &&
             billingAddress.street !== shippingAddress.street && (
-              <Section style={section}>
-                <Heading style={sectionTitle}>💳 Factuuradres</Heading>
+              <Section style={section} className="mobile-padding">
+                <Heading style={sectionTitle} className="mobile-heading">💳 Factuuradres</Heading>
                 <div style={addressBox}>
                   <Text style={addressText}>
                     {billingAddress.street}
@@ -230,8 +255,8 @@ export const AdminNotificationEmail = ({
 
           {/* Payment Information */}
           {paymentId && (
-            <Section style={section}>
-              <Heading style={sectionTitle}>💳 Betalingsinformatie</Heading>
+            <Section style={section} className="mobile-padding">
+              <Heading style={sectionTitle} className="mobile-heading">💳 Betalingsinformatie</Heading>
               <div style={paymentBox}>
                 <Text style={paymentText}>
                   Payment ID: <strong>{paymentId}</strong>
@@ -289,6 +314,7 @@ const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   maxWidth: '640px',
+  width: '100%',
 };
 
 const header = {

@@ -60,33 +60,61 @@ export const OrderConfirmationEmail = ({
 }: OrderConfirmationEmailProps) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{`
+          @media only screen and (max-width: 600px) {
+            .mobile-padding {
+              padding: 16px !important;
+            }
+            .mobile-text-small {
+              font-size: 14px !important;
+            }
+            .mobile-heading {
+              font-size: 20px !important;
+            }
+            .mobile-header-title {
+              font-size: 24px !important;
+            }
+            .mobile-hide {
+              display: none !important;
+            }
+            .mobile-full-width {
+              width: 100% !important;
+              display: block !important;
+            }
+            .mobile-stack {
+              display: block !important;
+              width: 100% !important;
+            }
+          }
+        `}</style>
+      </Head>
       <Preview>Bedankt voor je bestelling bij Lumora Horticulture! 🌱</Preview>
       <Body style={main}>
         <Container style={container}>
           {/* Header with Logo */}
-          <Section style={header}>
-            <Heading style={headerTitle}>Lumora Horticulture</Heading>
+          <Section style={header} className="mobile-padding">
+            <Heading style={headerTitle} className="mobile-header-title">Lumora Horticulture</Heading>
             <Text style={headerSubtitle}>Professionele Kweekoplossingen</Text>
           </Section>
 
           {/* Success Message */}
-          <Section style={successBox}>
+          <Section style={successBox} className="mobile-padding">
             <Text style={successIcon}>✅</Text>
-            <Heading style={successTitle}>Bestelling Bevestigd!</Heading>
-            <Text style={successText}>
+            <Heading style={successTitle} className="mobile-heading">Bestelling Bevestigd!</Heading>
+            <Text style={successText} className="mobile-text-small">
               Bedankt voor je bestelling, {customerName}! We hebben je order succesvol ontvangen.
             </Text>
           </Section>
 
           {/* Order Details */}
-          <Section style={orderInfo}>
+          <Section style={orderInfo} className="mobile-padding">
             <Row>
-              <Column style={orderInfoColumn}>
+              <Column style={orderInfoColumn} className="mobile-stack">
                 <Text style={orderInfoLabel}>Bestelnummer</Text>
                 <Text style={orderInfoValue}>{orderNumber}</Text>
               </Column>
-              <Column style={orderInfoColumn}>
+              <Column style={orderInfoColumn} className="mobile-stack">
                 <Text style={orderInfoLabel}>Besteldatum</Text>
                 <Text style={orderInfoValue}>{orderDate}</Text>
               </Column>
@@ -104,8 +132,8 @@ export const OrderConfirmationEmail = ({
           </Section>
 
           {/* Order Items */}
-          <Section style={itemsSection}>
-            <Heading style={sectionTitle}>Bestelde Producten</Heading>
+          <Section style={itemsSection} className="mobile-padding">
+            <Heading style={sectionTitle} className="mobile-heading">Bestelde Producten</Heading>
             {items.map((item, index) => (
               <div key={index}>
                 <Row style={itemRow}>
@@ -124,7 +152,7 @@ export const OrderConfirmationEmail = ({
           </Section>
 
           {/* Price Summary */}
-          <Section style={summarySection}>
+          <Section style={summarySection} className="mobile-padding">
             <Row style={summaryRow}>
               <Column>
                 <Text style={summaryLabel}>Subtotaal</Text>
@@ -163,8 +191,8 @@ export const OrderConfirmationEmail = ({
           </Section>
 
           {/* Shipping Address */}
-          <Section style={addressSection}>
-            <Heading style={sectionTitle}>Verzendadres</Heading>
+          <Section style={addressSection} className="mobile-padding">
+            <Heading style={sectionTitle} className="mobile-heading">Verzendadres</Heading>
             <Text style={addressText}>
               {shippingAddress.street}
               <br />
@@ -175,7 +203,7 @@ export const OrderConfirmationEmail = ({
           </Section>
 
           {/* Footer */}
-          <Section style={footer}>
+          <Section style={footer} className="mobile-padding">
             <Text style={footerText}>
               Vragen over je bestelling?
               <br />
@@ -212,6 +240,7 @@ const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   maxWidth: '600px',
+  width: '100%',
 };
 
 const header = {
