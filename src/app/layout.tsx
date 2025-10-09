@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
+import GoogleAds from '@/components/GoogleAds'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 
@@ -36,9 +37,12 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
+        {/* Google Ads tracking */}
+        <GoogleAds />
+
         {/* Organization structured data */}
         <OrganizationSchema locale="nl" />
-        
+
         {/* Fixed header with transparent background that becomes solid on scroll */}
         <HeaderNav />
         
