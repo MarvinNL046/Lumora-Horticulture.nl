@@ -1,7 +1,7 @@
 /**
- * Google Ads Conversion Tracking Utilities
+ * Google Ads Conversion Tracking & Google Analytics 4 Utilities
  *
- * Deze functies sturen conversie events naar Google Ads voor het meten van aankopen.
+ * Deze functies sturen conversie events naar Google Ads en GA4 voor het meten van aankopen en gebruikersgedrag.
  */
 
 declare global {
@@ -13,6 +13,14 @@ declare global {
     ) => void;
     dataLayer?: any[];
   }
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  quantity?: number;
+  category?: string;
 }
 
 /**
@@ -58,6 +66,86 @@ export function trackPurchase(
     value,
     transactionId,
   });
+}
+
+/**
+ * Track product view in GA4
+ *
+ * @param product - Product informatie
+ */
+export function trackViewItem(product: Product) {
+  if (typeof window === 'undefined' || !window.gtag) {
+    return;
+  }
+
+  window.gtag('event', 'view_item', {
+    currency: 'EUR',
+    value: product.price,
+    items: [
+      {
+        item_id: product.id,
+        item_name: product.name,
+        price: product.price,
+        item_category: product.category || 'Horticulture Products',
+        quantity: 1,
+      },
+    ],
+  });
+
+  console.log('Product view tracked:', product.name);
+}
+
+/**
+ * Track begin checkout in GA4
+ *
+ * @param products - Array van producten in checkout
+ * @param totalValue - Totale waarde van checkout
+ */
+export function trackBeginCheckout(products: Product[], totalValue: number) {
+  if (typeof window === 'undefined' || !window.gtag) {
+    return;
+  }
+
+  window.gtag('event', 'begin_checkout', {
+    currency: 'EUR',
+    value: totalValue,
+    items: products.map((product) => ({
+      item_id: product.id,
+      item_name: product.name,
+      price: product.price,
+      quantity: product.quantity || 1,
+      item_category: product.category || 'Horticulture Products',
+    })),
+  });
+
+  console.log('Begin checkout tracked:', { products, totalValue });
+}
+
+/**
+ * Track add to cart in GA4 (voor toekomstig gebruik)
+ *
+ * @param product - Product informatie
+ */
+export function trackAddToCart(product: Product) {
+  if (typeof window === 'undefined' || !window.gtag) {
+    return;
+  }
+
+  window.gtag('event', 'add_to_cart', {
+    currency: 'EUR',
+    value: product.price * (product.quantity || 1),
+    items: [
+      {
+        item_id: product.id,
+        item_name: product.name,
+        price: product.price,
+        quantity: product.quantity || 1,
+        item_category: product.category || 'Horticulture Products',
+      },
+    ],
+  });
+
+  console.log('Add to cart tracked:', product.name);
 }
 
 /**

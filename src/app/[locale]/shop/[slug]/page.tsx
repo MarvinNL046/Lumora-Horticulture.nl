@@ -11,6 +11,7 @@ import {
   formatPrice,
 } from '@/lib/volume-discount';
 import { localizePathForLocale } from '@/lib/url-localizations';
+import { trackViewItem, trackBeginCheckout } from '@/lib/google-ads';
 
 interface Product {
   id: string;
@@ -83,6 +84,14 @@ export default function ProductPage() {
       .then((data) => {
         if (data.success) {
           setProduct(data.product);
+
+          // Track product view in GA4
+          trackViewItem({
+            id: data.product.id,
+            name: data.product.name,
+            price: parseFloat(data.product.price),
+            category: 'Horticulture Products',
+          });
         }
         setLoading(false);
       })
@@ -98,6 +107,23 @@ export default function ProductPage() {
     if (!product) return;
 
     setCheckoutLoading(true);
+
+    // Track begin checkout in GA4
+    const basePrice = parseFloat(product.price);
+    const totalPrice = calculateTotalPrice(basePrice, quantity);
+
+    trackBeginCheckout(
+      [
+        {
+          id: product.id,
+          name: product.name,
+          price: calculateDiscountedPrice(basePrice, quantity),
+          quantity: quantity,
+          category: 'Horticulture Products',
+        },
+      ],
+      totalPrice
+    );
 
     try {
       const response = await fetch('/api/checkout', {
