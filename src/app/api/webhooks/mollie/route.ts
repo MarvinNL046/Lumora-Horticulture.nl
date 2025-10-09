@@ -7,6 +7,7 @@ import { Resend } from 'resend';
 import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
 import { AdminNotificationEmail } from '@/emails/AdminNotification';
+import { trackServerSideConversion } from '@/lib/google-ads';
 import React from 'react';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -84,6 +85,13 @@ export async function POST(request: NextRequest) {
 
     // Verzend emails alleen bij succesvolle betaling
     if (payment.status === 'paid') {
+      // Track conversie voor Google Ads (server-side backup)
+      trackServerSideConversion(
+        order.order_number || order.id,
+        parseFloat(order.total_amount),
+        paymentId,
+        order.customer_email
+      );
       try {
         console.log(`Processing emails for paid order ${order.id}`);
 

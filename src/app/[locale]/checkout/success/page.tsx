@@ -3,17 +3,38 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { trackPurchase } from '@/lib/google-ads';
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('order_id');
   const [orderStatus, setOrderStatus] = useState<string>('pending');
+  const [orderData, setOrderData] = useState<any>(null);
 
   useEffect(() => {
-    // In een productie-omgeving zou je hier de order status ophalen
-    // Voor nu tonen we gewoon een success message
+    // Haal order gegevens op en track conversie
     if (orderId) {
       setOrderStatus('success');
+
+      // Fetch order data voor conversie tracking
+      fetch(`/api/orders/${orderId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.order) {
+            setOrderData(data.order);
+
+            // Track Google Ads conversie
+            const totalAmount = parseFloat(data.order.total_amount);
+            trackPurchase(
+              data.order.order_number || orderId,
+              totalAmount,
+              data.order.payment_id
+            );
+          }
+        })
+        .catch((error) => {
+          console.error('Failed to fetch order data:', error);
+        });
     }
   }, [orderId]);
 
