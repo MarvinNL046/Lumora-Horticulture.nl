@@ -35,7 +35,7 @@ export function trackPurchase(
 
   // Stuur conversie event naar Google Ads
   window.gtag('event', 'conversion', {
-    send_to: 'AW-17631948540/YOUR_CONVERSION_LABEL', // Je moet dit nog aanvullen met je conversion label
+    send_to: 'AW-17631948540/oL8KCMO5-6kbEPzdyNdB',
     value: value,
     currency: 'EUR',
     transaction_id: transactionId || orderId,
