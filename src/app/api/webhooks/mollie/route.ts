@@ -151,7 +151,8 @@ export async function POST(request: NextRequest) {
         );
 
         await resend.emails.send({
-          from: 'Lumora Horticulture <noreply@lumorahorticulture.com>',
+          from: 'Lumora Horticulture <info@lumorahorticulture.com>',
+          replyTo: 'info@lumorahorticulture.com',
           to: order.customer_email,
           subject: `Bevestiging bestelling ${order.order_number || order.id} - Lumora Horticulture`,
           html: customerEmailHtml,
@@ -194,7 +195,8 @@ export async function POST(request: NextRequest) {
         );
 
         await resend.emails.send({
-          from: 'Lumora Webshop <noreply@lumorahorticulture.com>',
+          from: 'Lumora Webshop <info@lumorahorticulture.com>',
+          replyTo: 'info@lumorahorticulture.com',
           to: 'info@lumorahorticulture.com',
           subject: `🔔 Nieuwe bestelling ${order.order_number || order.id} - €${totalAmount.toFixed(2)}`,
           html: adminEmailHtml,
