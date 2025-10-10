@@ -54,8 +54,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer. Packaging: 8 trays per box.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg",
       sku: "TRAY-84",
-      lowPrice: 15.00,
-      highPrice: 25.00
+      price: 84.00
     },
     {
       name: "Tray-104st: PAPER PLUG TRAY 104",
@@ -66,8 +65,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture. Packaging: 7 trays per box.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg",
       sku: "TRAY-104",
-      lowPrice: 18.00,
-      highPrice: 28.00
+      price: 80.00
     },
     {
       name: locale === 'nl' ? "Transportdoos (Vouwdoos)" : locale === 'de' ? "Transportbox (Faltbox)" : "Transport Box (Folding Box)",
@@ -78,8 +76,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : "Sustainable folding transport box for safe transport of horticultural products. Stackable and efficient. Sold per 25 units (including shipping costs).",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg",
       sku: "TRANSPORT-BOX",
-      lowPrice: 50.00,
-      highPrice: 75.00
+      price: 50.00
     },
     {
       name: locale === 'nl' ? "Inlegvellen 60x80cm LDPE" : locale === 'de' ? "Einlegeblätter 60x80cm LDPE" : "Insert Sheets 60x80cm LDPE",
@@ -90,8 +87,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : "Transparent insert sheets for extra protection and organization in transport boxes. Dimensions: 60 x 80 cm, 20 mu LDPE quality. Sold per 500 units.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg",
       sku: "INSERT-SHEETS-LDPE",
-      lowPrice: 40.00,
-      highPrice: 60.00
+      price: 88.00
     },
     {
       name: locale === 'nl' ? "Inlegvellen 40x60cm HDPE" : locale === 'de' ? "Einlegeblätter 40x60cm HDPE" : "Insert Sheets 40x60cm HDPE",
@@ -102,8 +98,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : "Transparent insert sheets for extra protection and organization in transport boxes. Dimensions: 40 x 60 cm, HDPE quality. Sold per 500 units.",
       image: "https://lumorahorticulture.nl/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg",
       sku: "INSERT-SHEETS-HDPE",
-      lowPrice: 35.00,
-      highPrice: 55.00
+      price: 42.00
     }
   ]
 
