@@ -264,7 +264,9 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
     name: content.title,
     description: content.description,
     image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg",
-    sku: "ELLEPOT-FP12"
+    sku: "ELLEPOT-FP12",
+    lowPrice: 20.00,
+    highPrice: 35.00
   }
 
   return (

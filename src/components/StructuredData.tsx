@@ -56,11 +56,41 @@ interface ProductSchemaProps {
     image: string
     sku: string
     brand?: string
+    price?: number
+    lowPrice?: number
+    highPrice?: number
   }
   locale: string
 }
 
 export function ProductSchema({ product, locale }: ProductSchemaProps) {
+  // Use AggregateOffer if we have price range, otherwise use regular Offer
+  const hasAggregateOffer = product.lowPrice && product.highPrice;
+
+  const offerData = hasAggregateOffer ? {
+    "@type": "AggregateOffer",
+    "priceCurrency": "EUR",
+    "lowPrice": product.lowPrice,
+    "highPrice": product.highPrice,
+    "availability": "https://schema.org/InStock",
+    "url": typeof window !== 'undefined' ? window.location.href : '',
+    "seller": {
+      "@type": "Organization",
+      "name": "Lumora Horticulture"
+    }
+  } : {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": product.price || 0,
+    "availability": "https://schema.org/InStock",
+    "url": typeof window !== 'undefined' ? window.location.href : '',
+    "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+    "seller": {
+      "@type": "Organization",
+      "name": "Lumora Horticulture"
+    }
+  };
+
   const productData = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -76,16 +106,7 @@ export function ProductSchema({ product, locale }: ProductSchemaProps) {
       "@type": "Organization",
       "name": "Lumora Horticulture"
     },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock",
-      "priceRange": locale === 'nl' ? "Prijs op aanvraag" : locale === 'de' ? "Preis auf Anfrage" : "Price on request",
-      "seller": {
-        "@type": "Organization",
-        "name": "Lumora Horticulture"
-      }
-    }
+    "offers": offerData
   }
 
   return (
