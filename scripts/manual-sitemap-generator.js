@@ -222,7 +222,8 @@ function generateSitemapIndex() {
 
   Object.entries(domains).forEach(([locale, domain]) => {
     xml += '  <sitemap>\n';
-    xml += `    <loc>https://lumorahorticulture.nl/sitemap-${domain}.xml</loc>\n`;
+    // Each sitemap should be referenced from its own domain
+    xml += `    <loc>https://${domain}/sitemap-${domain}.xml</loc>\n`;
     xml += `    <lastmod>${lastmod}</lastmod>\n`;
     xml += '  </sitemap>\n';
   });
@@ -241,7 +242,7 @@ async function generateAllSitemaps() {
   const discoveredPages = discoverPages();
   console.log(`Found ${discoveredPages.length} pages:`, discoveredPages);
 
-  // Generate individual sitemaps
+  // Generate individual sitemaps for each domain
   for (const [locale, domain] of Object.entries(domains)) {
     const sitemap = generateSitemapXML(locale, domain);
     const filename = `sitemap-${domain}.xml`;
@@ -249,10 +250,25 @@ async function generateAllSitemaps() {
     console.log(`Generated ${filename}`);
   }
 
-  // Generate sitemap index
+  // Generate main sitemap index (all domains reference from .nl for now)
   const sitemapIndex = generateSitemapIndex();
   await fs.promises.writeFile(path.join(publicDir, 'sitemap.xml'), sitemapIndex, 'utf-8');
-  console.log('Generated sitemap index');
+  console.log('Generated sitemap index (all domains)');
+
+  // Also generate domain-specific sitemap.xml files that point to their own sitemap
+  for (const [locale, domain] of Object.entries(domains)) {
+    const domainSitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://${domain}/sitemap-${domain}.xml</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+  </sitemap>
+</sitemapindex>`;
+
+    const filename = `sitemap-${locale}.xml`;
+    await fs.promises.writeFile(path.join(publicDir, filename), domainSitemapIndex, 'utf-8');
+    console.log(`Generated ${filename} (for ${domain})`);
+  }
 }
 
 // Run if called directly

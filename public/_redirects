@@ -1,0 +1,17 @@
+# Netlify redirects for domain-specific sitemaps
+# Serve the correct sitemap.xml based on the domain
+
+# Dutch domain - serve NL sitemap
+https://lumorahorticulture.nl/sitemap.xml  /sitemap-nl.xml  200
+https://lumorahorticulture.nl/sitemap-nl.xml  /sitemap-lumorahorticulture.nl.xml  200
+
+# English domain - serve EN sitemap
+https://lumorahorticulture.com/sitemap.xml  /sitemap-en.xml  200
+https://lumorahorticulture.com/sitemap-en.xml  /sitemap-lumorahorticulture.com.xml  200
+
+# German domain - serve DE sitemap
+https://lumorahorticulture.de/sitemap.xml  /sitemap-de.xml  200
+https://lumorahorticulture.de/sitemap-de.xml  /sitemap-lumorahorticulture.de.xml  200
+
+# For Netlify preview - serve main sitemap index
+https://*.netlify.app/sitemap.xml  /sitemap.xml  200
