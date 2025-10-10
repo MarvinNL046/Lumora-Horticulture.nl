@@ -176,7 +176,7 @@ export default function Footer() {
           </div>
           
           <div className="lg:col-span-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               <div>
                 <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
                   Navigation
@@ -288,6 +288,38 @@ export default function Footer() {
                       </span>
                     </a>
                   </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4">
+                  {currentLocale === 'nl' ? 'Kennisbank' : currentLocale === 'de' ? 'Wissensdatenbank' : 'Knowledge Base'}
+                </h3>
+                <ul className="space-y-3">
+                  <FooterLink
+                    href={localizePathForLocale('/steenwol-vs-rockwool', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Steenwol vs ROCKWOOL' : currentLocale === 'de' ? 'Steinwolle vs ROCKWOOL' : 'Rockwool vs Stone Wool'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/voordelen-nadelen-steenwol', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Voor- en Nadelen Steenwol' : currentLocale === 'de' ? 'Vor- und Nachteile' : 'Rockwool Pros & Cons'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/steenwol-vastzetten', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Steenwol Vastzetten' : currentLocale === 'de' ? 'Steinwolle Befestigen' : 'Securing Rockwool'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/steenwol-longen', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Steenwol & Longen' : currentLocale === 'de' ? 'Steinwolle & Lunge' : 'Rockwool & Lungs'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/glaswol-aanraken', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Glaswol Aanraken' : currentLocale === 'de' ? 'Glaswolle Berühren' : 'Touching Fiberglass'}
+                  />
+                  <FooterLink
+                    href={localizePathForLocale('/levensduur-steenwol', currentLocale)}
+                    label={currentLocale === 'nl' ? 'Levensduur Steenwol' : currentLocale === 'de' ? 'Steinwolle Lebensdauer' : 'Rockwool Lifespan'}
+                  />
                 </ul>
               </div>
 

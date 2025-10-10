@@ -19,6 +19,18 @@ const pageConfig: Record<string, { changefreq: string; priority: number }> = {
   '/': { changefreq: 'weekly', priority: 1.0 },
   '/products': { changefreq: 'weekly', priority: 0.9 },
   '/products/ellepot-fp12': { changefreq: 'monthly', priority: 0.8 },
+  '/shop': { changefreq: 'weekly', priority: 0.9 },
+  // SEO Landing pages - high priority
+  '/paperbus-pluggen': { changefreq: 'weekly', priority: 0.85 },
+  '/steenwol-pluggen': { changefreq: 'weekly', priority: 0.85 },
+  '/stekpluggen': { changefreq: 'weekly', priority: 0.85 },
+  // FAQ pages - SEO optimized content
+  '/steenwol-vs-rockwool': { changefreq: 'monthly', priority: 0.75 },
+  '/voordelen-nadelen-steenwol': { changefreq: 'monthly', priority: 0.75 },
+  '/steenwol-vastzetten': { changefreq: 'monthly', priority: 0.75 },
+  '/steenwol-longen': { changefreq: 'monthly', priority: 0.75 },
+  '/glaswol-aanraken': { changefreq: 'monthly', priority: 0.75 },
+  '/levensduur-steenwol': { changefreq: 'monthly', priority: 0.75 },
   '/contact': { changefreq: 'monthly', priority: 0.7 },
   '/about': { changefreq: 'monthly', priority: 0.6 },
   '/applications': { changefreq: 'monthly', priority: 0.6 },

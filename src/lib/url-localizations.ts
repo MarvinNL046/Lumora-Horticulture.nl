@@ -25,6 +25,17 @@ export const basePaths = {
   ellepotfp12: 'products/ellepot-fp12',
   // Marketing paths
   ellepotflyer: 'marketing/ellepot-flyer',
+  // SEO Landing pages
+  paperbusPluggen: 'paperbus-pluggen',
+  steenwolPluggen: 'steenwol-pluggen',
+  stekpluggen: 'stekpluggen',
+  // FAQ pages
+  steenwolVsRockwool: 'steenwol-vs-rockwool',
+  voordelenNadelenSteenwol: 'voordelen-nadelen-steenwol',
+  steenwolVastzetten: 'steenwol-vastzetten',
+  steenwolLongen: 'steenwol-longen',
+  glaswolAanraken: 'glaswol-aanraken',
+  levensduurSteenwol: 'levensduur-steenwol',
 }
 
 // URL path translations for each locale
@@ -47,12 +58,34 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'products/ellepot-fp12': 'producten/ellepot-fp12',
     // Marketing materials
     'marketing/ellepot-flyer': 'marketing/ellepot-folder',
+    // SEO Landing pages (Dutch uses same URLs as base)
+    'paperbus-pluggen': 'paperbus-pluggen',
+    'steenwol-pluggen': 'steenwol-pluggen',
+    'stekpluggen': 'stekpluggen',
+    // FAQ pages (Dutch uses same URLs as base)
+    'steenwol-vs-rockwool': 'steenwol-vs-rockwool',
+    'voordelen-nadelen-steenwol': 'voordelen-nadelen-steenwol',
+    'steenwol-vastzetten': 'steenwol-vastzetten',
+    'steenwol-longen': 'steenwol-longen',
+    'glaswol-aanraken': 'glaswol-aanraken',
+    'levensduur-steenwol': 'levensduur-steenwol',
     // contact is the same in Dutch, no need to translate
   },
   
   // English paths (same as base paths)
   en: {
-    // No translation needed as they match the base paths
+    // SEO Landing pages translated to English
+    'paperbus-pluggen': 'paper-pot-plugs',
+    'steenwol-pluggen': 'rockwool-plugs',
+    'stekpluggen': 'cutting-plugs',
+    // FAQ pages translated to English
+    'steenwol-vs-rockwool': 'rockwool-vs-stone-wool',
+    'voordelen-nadelen-steenwol': 'rockwool-pros-cons',
+    'steenwol-vastzetten': 'securing-rockwool',
+    'steenwol-longen': 'rockwool-lungs',
+    'glaswol-aanraken': 'touching-fiberglass',
+    'levensduur-steenwol': 'rockwool-lifespan',
+    // No translation needed for other paths as they match the base paths
   },
   
   // German paths
@@ -74,6 +107,17 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'products/ellepot-fp12': 'produkte/ellepot-fp12',
     // Marketing materials
     'marketing/ellepot-flyer': 'marketing/ellepot-broschure',
+    // SEO Landing pages translated to German
+    'paperbus-pluggen': 'papiertopf-stecker',
+    'steenwol-pluggen': 'steinwolle-stecklinge',
+    'stekpluggen': 'stecklingsplugs',
+    // FAQ pages translated to German
+    'steenwol-vs-rockwool': 'steinwolle-vs-rockwool',
+    'voordelen-nadelen-steenwol': 'steinwolle-vor-nachteile',
+    'steenwol-vastzetten': 'steinwolle-befestigen',
+    'steenwol-longen': 'steinwolle-lunge',
+    'glaswol-aanraken': 'glaswolle-beruehren',
+    'levensduur-steenwol': 'steinwolle-lebensdauer',
   }
 }
 
