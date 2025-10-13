@@ -11,12 +11,12 @@ async function updateTrayImages() {
     const tray84 = await sql`
       UPDATE products
       SET
-        image_url = '/productAfbeeldingen/trays/tray84/pluggen84-dichtdoos-schuinvoorkant-transparant.png',
+        image_url = '/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg',
         metadata = jsonb_build_object(
           'images', jsonb_build_array(
+            '/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg',
             '/productAfbeeldingen/trays/tray84/pluggen84-dichtdoos-schuinvoorkant-transparant.png',
-            '/productAfbeeldingen/trays/tray84/pluggen84-opendoos-schuinvoorkant-transparant.png',
-            '/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg'
+            '/productAfbeeldingen/trays/tray84/pluggen84-opendoos-schuinvoorkant-transparant.png'
           ),
           'specifications', COALESCE((metadata->>'specifications')::jsonb, jsonb_build_object())
         ),
@@ -31,12 +31,12 @@ async function updateTrayImages() {
     const tray104 = await sql`
       UPDATE products
       SET
-        image_url = '/productAfbeeldingen/trays/tray104/pluggen104-dichtdoos-schuinvoorkant-transparant.png',
+        image_url = '/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.png',
         metadata = jsonb_build_object(
           'images', jsonb_build_array(
+            '/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.png',
             '/productAfbeeldingen/trays/tray104/pluggen104-dichtdoos-schuinvoorkant-transparant.png',
-            '/productAfbeeldingen/trays/tray104/pluggen104-opendoos-schuinvoorkant-transparant.png',
-            '/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.png'
+            '/productAfbeeldingen/trays/tray104/pluggen104-opendoos-schuinvoorkant-transparant.png'
           ),
           'specifications', COALESCE((metadata->>'specifications')::jsonb, jsonb_build_object())
         ),
