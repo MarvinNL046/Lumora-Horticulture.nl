@@ -71,32 +71,14 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Genereer menselijk leesbaar order nummer
-    const now = new Date();
-    const year = now.getFullYear();
+    // Order nummer wordt pas toegewezen na succesvolle betaling (in webhook)
+    // Dit voorkomt dat verlaten betalingen order nummers 'verbruiken'
 
-    // Haal laatste order van dit jaar op om nummer te bepalen
-    const lastOrder = await db
-      .select()
-      .from(orders)
-      .where(sql`EXTRACT(YEAR FROM ${orders.created_at}) = ${year}`)
-      .orderBy(sql`${orders.created_at} DESC`)
-      .limit(1);
-
-    let orderCounter = 1;
-    if (lastOrder && lastOrder.length > 0 && lastOrder[0].order_number) {
-      // Extract counter from last order number (ORD-2025-0001 -> 0001)
-      const lastNumber = parseInt(lastOrder[0].order_number.split('-').pop() || '0', 10);
-      orderCounter = lastNumber + 1;
-    }
-
-    const orderNumber = `ORD-${year}-${String(orderCounter).padStart(4, '0')}`;
-
-    // Maak bestelling aan
+    // Maak bestelling aan zonder order_number
     const [order] = await db
       .insert(orders)
       .values({
-        order_number: orderNumber,
+        order_number: null, // Wordt toegewezen in webhook na betaling
         customer_email,
         customer_name,
         customer_phone,
@@ -123,7 +105,7 @@ export async function POST(request: NextRequest) {
     const payment = await createPayment({
       amount: totalAmount,
       description: `Bestelling ${order.id}`,
-      redirectUrl: `${baseUrl}/checkout/success?order_id=${order.id}`,
+      redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order.id}`, // Redirect to conversion tracking page
       webhookUrl: `${baseUrl}/api/webhooks/mollie`,
       metadata: {
         order_id: order.id,

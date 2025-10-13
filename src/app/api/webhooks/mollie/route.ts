@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { orders, orderItems, products } from '@/db/schema';
 import { getPaymentStatus } from '@/lib/mollie';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
@@ -56,10 +56,34 @@ export async function POST(request: NextRequest) {
     // Update order status op basis van payment status
     let orderStatus = order.status;
     let paymentStatus: string = payment.status;
+    let orderNumber = order.order_number; // Bestaande order nummer (null als nog niet toegewezen)
 
     if (payment.status === 'paid') {
       orderStatus = 'processing';
       paymentStatus = 'paid';
+
+      // Genereer order nummer alleen bij eerste succesvolle betaling
+      if (!orderNumber) {
+        const now = new Date();
+        const year = now.getFullYear();
+
+        // Haal laatste order van dit jaar op om nummer te bepalen
+        const lastOrder = await db
+          .select()
+          .from(orders)
+          .where(sql`EXTRACT(YEAR FROM ${orders.created_at}) = ${year} AND ${orders.order_number} IS NOT NULL`)
+          .orderBy(sql`${orders.created_at} DESC`)
+          .limit(1);
+
+        let orderCounter = 1;
+        if (lastOrder && lastOrder.length > 0 && lastOrder[0].order_number) {
+          // Extract counter from last order number (ORD-2025-0001 -> 0001)
+          const lastNumber = parseInt(lastOrder[0].order_number.split('-').pop() || '0', 10);
+          orderCounter = lastNumber + 1;
+        }
+
+        orderNumber = `ORD-${year}-${String(orderCounter).padStart(4, '0')}`;
+      }
     } else if (payment.status === 'failed') {
       orderStatus = 'cancelled';
       paymentStatus = 'failed';
@@ -75,6 +99,7 @@ export async function POST(request: NextRequest) {
     await db
       .update(orders)
       .set({
+        order_number: orderNumber, // Wordt alleen gezet bij succesvolle betaling
         status: orderStatus,
         payment_status: paymentStatus,
         updated_at: new Date(),
