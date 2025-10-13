@@ -29,9 +29,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Lumora Horticulture | B2B Leverancier Steenwol Pluggen & Kweektrays',
-  description: 'Lumora Horticulture - B2B leverancier van steenwol pluggen, kweektrays en tuinbouw verpakkingen. Directe fabrikant voor groothandel en professionele kwekers. Eigen productie.',
-  keywords: 'steenwol pluggen groothandel, kweektrays B2B, tuinbouw verpakkingen, professionele kweektrays, glastuinbouw benodigdheden, paperpot trays, horticulture wholesale, rockwool plugs supplier',
+  title: 'Lumora Horticulture | B2B Leverancier Paperbus Steenwol Pluggen & Kweektrays',
+  description: 'Lumora Horticulture - B2B leverancier van paperbus steenwol pluggen, kweektrays en tuinbouw verpakkingen. Ellepot FP 12+ paper plugs met 12+ maanden stabiliteit. Directe fabrikant voor groothandel en professionele kwekers.',
+  keywords: 'paperbus steenwol pluggen, steenwol pluggen groothandel, ellepot paper plugs, kweektrays B2B, tuinbouw verpakkingen, professionele kweektrays, glastuinbouw benodigdheden, paperpot trays, rockwool paper plugs, horticulture wholesale, transplant trays',
   viewport: 'width=device-width, initial-scale=1',
   verification: {
     google: 'SpcTizFlTiNDDn9CpPqJ6O5Xjz2ivcEWKt3QHtxQgpQ',

@@ -54,8 +54,8 @@
   "products": {
     "title": {
       "tag": "Produkte",
-      "main": "Unsere Professionellen Gartenbau-Produkte",
-      "subtitle": "Hochwertige, nachhaltige Lösungen für den modernen professionellen Gartenbau"
+      "main": "Papier-Plug Steinwolle & Professionelle Anzuchtschalen",
+      "subtitle": "Ellepot FP 12+ Papier-Plugs mit 12+ Monaten Stabilität. Hochwertige, nachhaltige Lösungen für professionelle Züchter"
     },
     "detail": {
       "qualityTag": "Premium Qualität",
@@ -172,19 +172,19 @@
   },
   "home": {
     "hero": {
-        "subtitle": "Nachhaltige und professionelle Lösungen für den modernen Gartenbau",
-        "viewProducts": "Unsere Produkte anzeigen",
-        "contactUs": "Kontakt aufnehmen"
+      "subtitle": "Papier-Plug Steinwolle & professionelle Anzuchtschalen für moderne Züchter",
+      "viewProducts": "Unsere Produkte anzeigen",
+      "contactUs": "Kontakt aufnehmen"
     },
     "contactForm": {
-        "name": "Name",
-        "email": "E-Mail",
-        "phone": "Telefon",
-        "message": "Nachricht",
-        "submit": "Senden",
-        "success": "Nachricht gesendet!",
-        "error": "Fehler beim Senden",
-        "quickContact": "Schnellkontakt"
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "message": "Nachricht",
+      "submit": "Senden",
+      "success": "Nachricht gesendet!",
+      "error": "Fehler beim Senden",
+      "quickContact": "Schnellkontakt"
     },
     "products": {
       "title": "Unsere Produkte",

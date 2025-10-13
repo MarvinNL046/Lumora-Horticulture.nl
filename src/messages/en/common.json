@@ -54,8 +54,8 @@
   "products": {
     "title": {
       "tag": "Products",
-      "main": "Our Professional Horticulture Products",
-      "subtitle": "High-quality, sustainable solutions designed for modern professional growers"
+      "main": "Paper Plug Rockwool & Professional Growing Trays",
+      "subtitle": "Ellepot FP 12+ paper plugs with 12+ months stability. High-quality, sustainable solutions for professional growers"
     },
     "detail": {
       "qualityTag": "Premium Quality",
@@ -172,19 +172,19 @@
   },
   "home": {
     "hero": {
-        "subtitle": "Sustainable and professional horticulture solutions for the modern grower",
-        "viewProducts": "View our products",
-        "contactUs": "Contact us"
+      "subtitle": "Paper plug rockwool & professional growing trays for modern growers",
+      "viewProducts": "View our products",
+      "contactUs": "Contact us"
     },
     "contactForm": {
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone",
-        "message": "Message",
-        "submit": "Send",
-        "success": "Message sent!",
-        "error": "Error sending message",
-        "quickContact": "Quick Contact"
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send",
+      "success": "Message sent!",
+      "error": "Error sending message",
+      "quickContact": "Quick Contact"
     },
     "products": {
       "title": "Our Products",

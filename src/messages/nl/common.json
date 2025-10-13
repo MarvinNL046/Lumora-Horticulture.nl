@@ -54,8 +54,8 @@
   "products": {
     "title": {
       "tag": "Producten",
-      "main": "Onze Professionele Tuinbouw Producten",
-      "subtitle": "Hoogwaardige, duurzame oplossingen ontworpen voor de moderne professionele tuinder"
+      "main": "Paperbus Steenwol Pluggen & Professionele Kweektrays",
+      "subtitle": "Ellepot FP 12+ paper plugs met 12+ maanden stabiliteit. Hoogwaardige, duurzame oplossingen voor de professionele tuinder"
     },
     "detail": {
       "qualityTag": "Premium Kwaliteit",
@@ -243,19 +243,19 @@
   },
   "home": {
     "hero": {
-        "subtitle": "Duurzame en professionele tuinbouw oplossingen voor de moderne teler",
-        "viewProducts": "Bekijk onze producten",
-        "contactUs": "Neem contact op"
+      "subtitle": "Paperbus steenwol pluggen & professionele kweektrays voor de moderne teler",
+      "viewProducts": "Bekijk onze producten",
+      "contactUs": "Neem contact op"
     },
     "contactForm": {
-        "name": "Naam",
-        "email": "E-mail",
-        "phone": "Telefoon",
-        "message": "Bericht",
-        "submit": "Versturen",
-        "success": "Bericht verzonden!",
-        "error": "Fout bij verzenden",
-        "quickContact": "Snel contact"
+      "name": "Naam",
+      "email": "E-mail",
+      "phone": "Telefoon",
+      "message": "Bericht",
+      "submit": "Versturen",
+      "success": "Bericht verzonden!",
+      "error": "Fout bij verzenden",
+      "quickContact": "Snel contact"
     },
     "products": {
       "title": "Onze Producten",
