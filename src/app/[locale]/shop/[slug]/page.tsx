@@ -24,6 +24,10 @@ interface Product {
   brand: string;
   availability: string;
   metadata?: {
+    images?: string[];
+    specifications?: {
+      [key: string]: any;
+    };
     [key: string]: any;
   };
 }
@@ -75,6 +79,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');  // For image gallery
 
   useEffect(() => {
     fetch(`/api/products/slug/${productSlug}?locale=${locale}`)
@@ -82,6 +87,8 @@ export default function ProductPage() {
       .then((data) => {
         if (data.success) {
           setProduct(data.product);
+          // Set the selected image to the first image in the gallery or the main image
+          setSelectedImage(data.product.metadata?.images?.[0] || data.product.image_url);
 
           // Track product view in GA4
           trackViewItem({
@@ -170,15 +177,47 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product afbeelding en details */}
           <div>
-            <div className="relative rounded-3xl overflow-hidden shadow-soft-lg mb-6">
-              <img
-                src={product.image_url}
-                alt={product.name}
-                className="w-full"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
-                }}
-              />
+            {/* Image Gallery */}
+            <div className="mb-6">
+              {/* Main Image */}
+              <div className="relative rounded-3xl overflow-hidden shadow-soft-lg mb-4 bg-white">
+                <img
+                  src={selectedImage || product.image_url}
+                  alt={product.name}
+                  className="w-full h-auto"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
+                  }}
+                />
+              </div>
+
+              {/* Thumbnail Gallery */}
+              {product.metadata?.images && product.metadata.images.length > 1 && (
+                <div className="grid grid-cols-3 gap-3">
+                  {product.metadata.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(image)}
+                      className={`relative rounded-xl overflow-hidden transition-all duration-200 ${
+                        selectedImage === image
+                          ? 'ring-4 ring-lumora-green-500 shadow-soft-md scale-105'
+                          : 'ring-2 ring-lumora-dark/10 hover:ring-lumora-green-300 hover:scale-105'
+                      }`}
+                    >
+                      <div className="aspect-square bg-white p-2">
+                        <img
+                          src={image}
+                          alt={`${product.name} - afbeelding ${index + 1}`}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
+                          }}
+                        />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <h1 className="text-4xl font-display font-bold text-lumora-dark mb-4">
               {product.name}
@@ -233,11 +272,13 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {product.metadata && (
+            {product.metadata?.specifications && Object.keys(product.metadata.specifications).length > 0 && (
               <div className="bg-lumora-cream/30 rounded-2xl p-6 border border-lumora-dark/10">
-                <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4">Specificaties</h3>
+                <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4">
+                  {locale === 'de' ? 'Spezifikationen' : locale === 'en' ? 'Specifications' : 'Specificaties'}
+                </h3>
                 <dl className="space-y-3">
-                  {Object.entries(product.metadata).map(([key, value]) => (
+                  {Object.entries(product.metadata.specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between border-b border-lumora-dark/10 pb-2">
                       <dt className="text-lumora-dark/70 capitalize font-medium">{key}:</dt>
                       <dd className="font-semibold text-lumora-dark">
