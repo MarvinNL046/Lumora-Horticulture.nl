@@ -26,6 +26,7 @@ interface CartContextType {
   setSavedEmail: (email: string) => void;
   showEmailPrompt: boolean;
   setShowEmailPrompt: (show: boolean) => void;
+  loadCartFromDatabase: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -33,12 +34,65 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = 'lumora-cart';
 const EMAIL_STORAGE_KEY = 'lumora-cart-email';
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({ children }: { children: React.ReactNode}) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [savedEmail, setSavedEmailState] = useState<string | null>(null);
   const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+  const [dbCartLoaded, setDbCartLoaded] = useState(false);
+
+  // Function to load cart from database (called externally when user is available)
+  const loadCartFromDatabase = async () => {
+    if (dbCartLoaded) {
+      return; // Already loaded
+    }
+
+    try {
+      const response = await fetch('/api/cart/load');
+      const data = await response.json();
+
+      if (data.success && data.cart && data.cart.length > 0) {
+        // Merge database cart with local cart (prefer database)
+        const localCart = localStorage.getItem(CART_STORAGE_KEY);
+        let localItems: CartItem[] = [];
+
+        if (localCart) {
+          try {
+            localItems = JSON.parse(localCart);
+          } catch (error) {
+            console.error('Failed to parse local cart:', error);
+          }
+        }
+
+        // Merge carts: if product exists in both, keep the higher quantity
+        const mergedCart = [...data.cart];
+        localItems.forEach(localItem => {
+          const existingIndex = mergedCart.findIndex(
+            (item: CartItem) => item.product_id === localItem.product_id
+          );
+
+          if (existingIndex >= 0) {
+            // Keep higher quantity
+            if (localItem.quantity > mergedCart[existingIndex].quantity) {
+              mergedCart[existingIndex] = localItem;
+            }
+          } else {
+            // Add local item if not in database cart
+            mergedCart.push(localItem);
+          }
+        });
+
+        setItems(mergedCart);
+        console.log('Cart loaded from database and merged with local cart');
+      }
+
+      setDbCartLoaded(true);
+    } catch (error) {
+      console.error('Failed to load cart from database:', error);
+      setDbCartLoaded(true);
+    }
+  };
 
   // Load cart and email from localStorage on mount
   useEffect(() => {
@@ -67,7 +121,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isLoaded]);
 
-  // Auto-save cart to database (debounced)
+  // Auto-save cart to database for guest users (debounced)
   useEffect(() => {
     if (!isLoaded || items.length === 0 || !savedEmail) {
       return;
@@ -192,6 +246,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setSavedEmail,
         showEmailPrompt,
         setShowEmailPrompt,
+        loadCartFromDatabase,
       }}
     >
       {children}

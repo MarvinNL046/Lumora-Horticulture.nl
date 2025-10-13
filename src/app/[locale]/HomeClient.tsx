@@ -321,22 +321,22 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {/* Product Card 1 - Tray 84 */}
-            <ProductCard 
+            <ProductCard
               visible={isVisible.products}
               delay={0}
-              imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+              imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
               altText="Tray 84"
               title="Tray-84st: Paperbus Steenwol Pluggen"
               description="84 pluggen, 3.5 cm diameter, 52.5 x 30.5 cm"
               href={localizePathForLocale('/products', locale) + '#tray84'}
               moreInfoText={t.products.moreInfo}
             />
-            
+
             {/* Product Card 2 - Tray 104 */}
-            <ProductCard 
+            <ProductCard
               visible={isVisible.products}
               delay={1}
-              imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+              imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
               altText="Tray 104"
               title="Tray-104st: Paperbus Steenwol Pluggen"
               description="104 pluggen, 3 cm diameter, 52.5 x 30.5 cm"

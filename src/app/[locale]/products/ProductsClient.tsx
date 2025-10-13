@@ -52,7 +52,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : locale === 'de'
         ? "Professionelles TRANSPLANT 84 Tablett mit 84 Zellen für effiziente Sämlingsanzucht. Direkt vom Hersteller. Verpackung: 8 Tabletts pro Karton."
         : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer. Packaging: 8 trays per box.",
-      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp",
       sku: "TRAY-84",
       price: 84.00
     },
@@ -63,7 +63,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : locale === 'de'
         ? "PAPER PLUG TRAY 104 mit 104 Zellen für optimale Wurzelentwicklung. Geeignet für professionellen Gewächshausgartenbau. Verpackung: 7 Tabletts pro Karton."
         : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture. Packaging: 7 trays per box.",
-      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp",
       sku: "TRAY-104",
       price: 80.00
     },
@@ -207,7 +207,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-84st: Paperbus Steenwol Pluggen (84)"
             subtitle="Perfect voor professionele zaailingenkweek"
             description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok. Verpakking: 8 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+            imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
               { label: "Afmetingen", value: "52.5 x 30.5 cm" },
@@ -312,7 +312,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-104st: Paperbus Steenwol Pluggen (104)"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
             description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+            imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
             imagePosition="right"
             specs={[
               { label: "Plug diameter", value: "3 cm" },

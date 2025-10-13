@@ -60,7 +60,7 @@ export default function ProductsPage() {
             title="Tray-84st: PAPER PLUG TRAY 84"
             subtitle="Perfect voor professionele zaailingenkweek"
             description="Onze TRANSPLANT 84 tray is ontworpen voor professionele tuinbouwapplicaties, met 84 cellen voor efficiënte kweek van zaailingen. De precieze afstand en afmetingen zorgen voor optimale groeiomstandigheden. Verpakking: 8 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+            imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
               { label: "Afmetingen", value: "52.5 x 30.5 cm" },
@@ -74,13 +74,13 @@ export default function ProductsPage() {
               { label: "Hengelslot", value: "Straight 25" }
             ]}
           />
-          
+
           <ProductDetail
             id="tray104"
             title="Tray-104st: PAPER PLUG TRAY 104"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
             description="De PAPER PLUG TRAY 104 biedt uitstekende groeiomstandigheden met 104 cellen voor zaailingen. De speciaal ontworpen paper plug-technologie verbetert de wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+            imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
             imagePosition="right"
             specs={[
               { label: "Plug diameter", value: "3 cm" },

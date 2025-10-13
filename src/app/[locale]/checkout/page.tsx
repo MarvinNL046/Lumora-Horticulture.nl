@@ -354,87 +354,96 @@ export default function CheckoutPage() {
                 return (
                   <div
                     key={item.product_id}
-                    className="flex gap-4 pb-4 border-b border-lumora-dark/10"
+                    className="flex flex-col sm:flex-row gap-4 pb-4 border-b border-lumora-dark/10"
                   >
-                    <img
-                      src={item.image_url}
-                      alt={item.name}
-                      className="w-20 h-20 object-cover rounded-lg"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
-                      }}
-                    />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lumora-dark mb-1">{item.name}</h3>
+                    <div className="flex gap-4 flex-1">
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
+                        }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-lumora-dark mb-1">{item.name}</h3>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm text-lumora-dark/60">{t.quantity}:</span>
-                        <div className="flex items-center gap-1 bg-lumora-cream/50 rounded-lg p-1">
+                        {/* Quantity Controls */}
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <span className="text-sm text-lumora-dark/60">{t.quantity}:</span>
+                          <div className="flex items-center gap-1 bg-lumora-cream/50 rounded-lg p-1">
+                            <button
+                              onClick={() => {
+                                if (item.quantity > 1) {
+                                  updateQuantity(item.product_id, item.quantity - 1);
+                                }
+                              }}
+                              className="w-7 h-7 flex items-center justify-center rounded-lg bg-white hover:bg-lumora-green-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              disabled={item.quantity <= 1}
+                              aria-label="Decrease quantity"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                              </svg>
+                            </button>
+                            <span className="w-8 text-center font-semibold text-lumora-dark">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                              className="w-7 h-7 flex items-center justify-center rounded-lg bg-white hover:bg-lumora-green-500 hover:text-white transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                              </svg>
+                            </button>
+                          </div>
+
+                          {/* Remove Button */}
                           <button
-                            onClick={() => {
-                              if (item.quantity > 1) {
-                                updateQuantity(item.product_id, item.quantity - 1);
-                              }
-                            }}
-                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-white hover:bg-lumora-green-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={item.quantity <= 1}
-                            aria-label="Decrease quantity"
+                            onClick={() => removeItem(item.product_id)}
+                            className="ml-auto sm:ml-2 p-1.5 text-lumora-dark/40 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                            title={t.remove}
+                            aria-label={t.remove}
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                            </svg>
-                          </button>
-                          <span className="w-8 text-center font-semibold text-lumora-dark">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-white hover:bg-lumora-green-500 hover:text-white transition-colors"
-                            aria-label="Increase quantity"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                           </button>
                         </div>
 
-                        {/* Remove Button */}
-                        <button
-                          onClick={() => removeItem(item.product_id)}
-                          className="ml-2 p-1.5 text-lumora-dark/40 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                          title={t.remove}
-                          aria-label={t.remove}
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      </div>
-
-                      <div className="flex items-baseline gap-2">
-                        {discountInfo.hasDiscount ? (
-                          <>
-                            <span className="text-sm text-lumora-dark/50 line-through">
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          {discountInfo.hasDiscount ? (
+                            <>
+                              <span className="text-sm text-lumora-dark/50 line-through">
+                                {formatPrice(item.price)}
+                              </span>
+                              <span className="font-bold text-lumora-green-500">
+                                {formatPrice(discountedPrice)}
+                              </span>
+                              <span className="text-xs text-lumora-green-600">
+                                -{discountInfo.currentDiscount}%
+                              </span>
+                            </>
+                          ) : (
+                            <span className="font-bold text-lumora-dark">
                               {formatPrice(item.price)}
                             </span>
-                            <span className="font-bold text-lumora-green-500">
-                              {formatPrice(discountedPrice)}
-                            </span>
-                            <span className="text-xs text-lumora-green-600">
-                              -{discountInfo.currentDiscount}%
-                            </span>
-                          </>
-                        ) : (
-                          <span className="font-bold text-lumora-dark">
-                            {formatPrice(item.price)}
-                          </span>
-                        )}
-                        <span className="text-xs text-lumora-dark/60">{t.pricePerPiece}</span>
+                          )}
+                          <span className="text-xs text-lumora-dark/60">{t.pricePerPiece}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-bold text-lumora-dark">{formatPrice(itemTotal)}</div>
+
+                    {/* Total - clearly visible on all screens */}
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 px-4 py-2 sm:p-0 bg-lumora-cream/30 sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-lumora-green-500/20">
+                      <span className="text-sm sm:text-xs text-lumora-dark/60 font-medium uppercase tracking-wide">
+                        {t.total}
+                      </span>
+                      <div className="text-xl sm:text-base font-bold text-lumora-green-500">
+                        {formatPrice(itemTotal)}
+                      </div>
                     </div>
                   </div>
                 );

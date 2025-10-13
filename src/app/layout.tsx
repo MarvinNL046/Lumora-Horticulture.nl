@@ -11,8 +11,9 @@ import { CartProvider } from '@/contexts/CartContext'
 import CartSidebar from '@/components/CartSidebar'
 import dynamic from 'next/dynamic'
 
-// Dynamically import WelcomeEmailTrigger with SSR disabled
+// Dynamically import WelcomeEmailTrigger and CartSync with SSR disabled
 const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
+const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
 
 // Initialize fonts
 const inter = Inter({ 
@@ -48,6 +49,9 @@ export default function RootLayout({
         <CartProvider>
           {/* Welcome email trigger for new users */}
           <WelcomeEmailTrigger />
+
+          {/* Cart sync temporarily disabled - causing SSR issues */}
+          {/* <CartSync /> */}
 
           {/* Google Ads tracking */}
           <GoogleAds />
