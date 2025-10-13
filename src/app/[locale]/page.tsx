@@ -20,7 +20,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
   // Pull home translations from the messages
   const t = messages.home || {
     hero: {
-      subtitle: "Duurzame en professionele tuinbouw oplossingen voor de moderne teler.",
+      subtitle: "Paperbus steenwol pluggen & professionele kweektrays voor de moderne teler",
       viewProducts: "Bekijk onze producten",
       contactUs: "Neem contact op"
     },
@@ -35,13 +35,13 @@ export default async function Home({ params }: { params: { locale: string } }) {
     },
     products: {
       title: "Onze Producten",
-      subtitle: "Hoogwaardige, duurzame oplossingen ontworpen voor de moderne professionele tuinder",
+      subtitle: "Paperbus steenwol pluggen & professionele kweektrays met Ellepot FP 12+ technologie",
       moreInfo: "Meer informatie",
       viewAll: "Bekijk alle producten"
     },
     cta: {
       title: "Neem contact met ons op",
-      description: "Heeft u vragen over onze producten of wilt u een bestelling plaatsen? Wij helpen u graag verder met persoonlijk advies.",
+      description: "Heeft u vragen over onze paperbus steenwol pluggen of andere producten? Wij helpen u graag verder met persoonlijk advies.",
       button: "Contact opnemen"
     }
   }
