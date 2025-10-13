@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { abandonedCarts } from '@/db/schema';
 import { eq, and, sql } from 'drizzle-orm';
+import { stackServerApp } from '@/stack/server';
 
 /**
  * POST /api/cart/save
@@ -24,6 +25,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if user is logged in
+    let userId = null;
+    try {
+      const user = await stackServerApp.getUser();
+      if (user) {
+        userId = user.id;
+      }
+    } catch (error) {
+      // User is not logged in - continue without user_id
+      console.log('Guest cart save - no user logged in');
+    }
+
     // Check if there's already an abandoned cart for this email (not recovered)
     const existingCart = await db
       .select()
@@ -41,6 +54,7 @@ export async function POST(request: NextRequest) {
       await db
         .update(abandonedCarts)
         .set({
+          user_id: userId, // Update user_id if user logged in
           customer_name: customer_name || existingCart[0].customer_name,
           cart_data,
           total_amount: total_amount.toString(),
@@ -60,6 +74,7 @@ export async function POST(request: NextRequest) {
       const [cart] = await db
         .insert(abandonedCarts)
         .values({
+          user_id: userId, // Link to logged in user
           customer_email,
           customer_name,
           cart_data,

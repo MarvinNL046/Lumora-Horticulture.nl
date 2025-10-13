@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { usePathname, useParams } from 'next/navigation'
 import {
   domainLocaleMap,
@@ -11,6 +12,17 @@ import {
   basePathFromLocalizedPath
 } from '@/lib/url-localizations'
 import { useCart } from '@/contexts/CartContext'
+
+// Dynamically import HeaderNavClient with SSR disabled to avoid Stack Auth SSR issues
+const HeaderNavClient = dynamic(() => import('./HeaderNavClient'), {
+  ssr: false,
+  loading: () => (
+    <div className="hidden lg:flex items-center gap-2 ml-4">
+      <div className="w-20 h-10 bg-lumora-dark-700/50 animate-pulse rounded-lg"></div>
+      <div className="w-20 h-10 bg-lumora-gold/20 animate-pulse rounded-lg"></div>
+    </div>
+  )
+})
 
 // Define the locales we support directly in this file and their corresponding domains
 const localeMap = {
@@ -71,18 +83,18 @@ export default function HeaderNav() {
   const { getTotalItems, setIsCartOpen } = useCart()
 
   // Get current locale from URL or domain
-  const getCurrentLocale = (): string => {
+  const getCurrentLocale = (): 'nl' | 'en' | 'de' => {
     // If we have a locale in the URL params, use that
     if (params?.locale) {
-      return params.locale as string;
+      return params.locale as 'nl' | 'en' | 'de';
     }
 
     // Otherwise try to determine from domain
     if (typeof window !== 'undefined') {
-      return getLocaleFromDomain(window.location.hostname);
+      return getLocaleFromDomain(window.location.hostname) as 'nl' | 'en' | 'de';
     }
 
-    return defaultLocale;
+    return defaultLocale as 'nl' | 'en' | 'de';
   }
 
   // Get the current locale
@@ -215,6 +227,9 @@ export default function HeaderNav() {
                 ))}
               </div>
             </div>
+
+            {/* Account Section */}
+            <HeaderNavClient currentLocale={currentLocale} />
 
             {/* Cart Icon */}
             <button
@@ -353,8 +368,11 @@ export default function HeaderNav() {
               onClick={() => setMobileMenuOpen(false)} 
             />
             
+            {/* Account Section (mobile) */}
+            <HeaderNavClient currentLocale={currentLocale} setMobileMenuOpen={setMobileMenuOpen} />
+
             {/* Language switcher (mobile) - with domain switching */}
-            <div className="border-t border-lumora-cream/10 pt-4 pb-2">
+            <div className="border-t border-lumora-cream/10 pt-4 pb-2 mt-4">
               <div className="flex justify-center space-x-4">
                 {Object.keys(localeMap).map((locale) => (
                   <a

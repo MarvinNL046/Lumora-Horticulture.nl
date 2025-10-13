@@ -12,6 +12,18 @@ import {
   formatPrice,
 } from '@/lib/volume-discount';
 import { trackBeginCheckout } from '@/lib/google-ads';
+import { useUser } from '@stackframe/stack';
+
+interface SavedAddress {
+  id: string
+  name: string
+  street: string
+  city: string
+  postal_code: string
+  country: string
+  phone: string | null
+  is_default: boolean
+}
 
 export default function CheckoutPage() {
   const params = useParams();
@@ -19,6 +31,7 @@ export default function CheckoutPage() {
   const searchParams = useSearchParams();
   const locale = (params?.locale as string) || 'nl';
   const { items, getTotalPrice, clearCart, updateQuantity, removeItem } = useCart();
+  const user = useUser();
 
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -30,6 +43,43 @@ export default function CheckoutPage() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [recoveryCartId, setRecoveryCartId] = useState<string | null>(null);
 
+  // Saved addresses
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string>('');
+
+  // Auto-fill form with user data if logged in
+  useEffect(() => {
+    if (user) {
+      // Fill in name and email from Stack Auth
+      if (user.displayName && !customerName) {
+        setCustomerName(user.displayName);
+      }
+      if (user.primaryEmail && !customerEmail) {
+        setCustomerEmail(user.primaryEmail);
+      }
+    }
+  }, [user]);
+
+  // Fetch saved addresses for logged-in users
+  useEffect(() => {
+    if (user) {
+      fetch('/api/addresses')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.addresses) {
+            setSavedAddresses(data.addresses);
+            // Auto-select default address if available
+            const defaultAddress = data.addresses.find((addr: SavedAddress) => addr.is_default);
+            if (defaultAddress) {
+              setSelectedAddressId(defaultAddress.id);
+              fillAddressFields(defaultAddress);
+            }
+          }
+        })
+        .catch((error) => console.error('Error fetching addresses:', error));
+    }
+  }, [user]);
+
   // Check for cart recovery parameter
   useEffect(() => {
     const cartRecoveryId = searchParams.get('cart_recovery');
@@ -38,6 +88,34 @@ export default function CheckoutPage() {
       console.log('Cart recovery detected:', cartRecoveryId);
     }
   }, [searchParams]);
+
+  // Fill address fields from selected saved address
+  const fillAddressFields = (address: SavedAddress) => {
+    setStreet(address.street);
+    setCity(address.city);
+    setPostalCode(address.postal_code);
+    setCountry(address.country);
+    if (address.phone) {
+      setCustomerPhone(address.phone);
+    }
+  };
+
+  // Handle address selection
+  const handleAddressSelect = (addressId: string) => {
+    setSelectedAddressId(addressId);
+    if (addressId === '') {
+      // Clear address fields if "new address" is selected
+      setStreet('');
+      setCity('');
+      setPostalCode('');
+      setCountry('NL');
+      return;
+    }
+    const address = savedAddresses.find((addr) => addr.id === addressId);
+    if (address) {
+      fillAddressFields(address);
+    }
+  };
 
   const t = {
     checkout: locale === 'de' ? 'Zur Kasse' : locale === 'en' ? 'Checkout' : 'Afrekenen',
@@ -56,6 +134,8 @@ export default function CheckoutPage() {
     email: locale === 'de' ? 'E-Mail' : locale === 'en' ? 'Email' : 'Email',
     phone: locale === 'de' ? 'Telefon' : locale === 'en' ? 'Phone' : 'Telefoon',
     shippingAddress: locale === 'de' ? 'Lieferadresse' : locale === 'en' ? 'Shipping Address' : 'Bezorgadres',
+    selectAddress: locale === 'de' ? 'Adresse wählen' : locale === 'en' ? 'Select address' : 'Selecteer adres',
+    newAddress: locale === 'de' ? 'Neue Adresse eingeben' : locale === 'en' ? 'Enter new address' : 'Nieuw adres invoeren',
     street: locale === 'de' ? 'Straße und Hausnummer' : locale === 'en' ? 'Street and house number' : 'Straat en huisnummer',
     postalCode: locale === 'de' ? 'Postleitzahl' : locale === 'en' ? 'Postal code' : 'Postcode',
     city: locale === 'de' ? 'Stadt' : locale === 'en' ? 'City' : 'Plaats',
@@ -346,6 +426,28 @@ export default function CheckoutPage() {
                 </h2>
 
                 <div className="space-y-4">
+                  {/* Address Selector for logged-in users */}
+                  {user && savedAddresses.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-lumora-dark mb-1">
+                        {t.selectAddress}
+                      </label>
+                      <select
+                        value={selectedAddressId}
+                        onChange={(e) => handleAddressSelect(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      >
+                        <option value="">{t.newAddress}</option>
+                        {savedAddresses.map((address) => (
+                          <option key={address.id} value={address.id}>
+                            {address.name} - {address.street}, {address.city}
+                            {address.is_default ? ` (${locale === 'de' ? 'Standard' : locale === 'en' ? 'Default' : 'Standaard'})` : ''}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-sm font-medium text-lumora-dark mb-1">
                       {t.street} *

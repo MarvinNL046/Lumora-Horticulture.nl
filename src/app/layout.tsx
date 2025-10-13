@@ -1,4 +1,6 @@
 import '@/styles/globals.css'
+import { StackProvider, StackTheme } from "@stackframe/stack";
+import { stackClientApp } from "../stack/client";
 import type { Metadata } from 'next'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
@@ -38,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
+      <body className="min-h-screen flex flex-col bg-white antialiased font-sans"><StackProvider app={stackClientApp}><StackTheme>
         <CartProvider>
           {/* Google Ads tracking */}
           <GoogleAds />
@@ -60,7 +62,7 @@ export default function RootLayout({
           {/* Shopping cart sidebar */}
           <CartSidebar />
         </CartProvider>
-      </body>
+      </StackTheme></StackProvider></body>
     </html>
   )
 }

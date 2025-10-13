@@ -29,6 +29,7 @@ export const products = pgTable('products', {
 export const orders = pgTable('orders', {
   id: uuid('id').primaryKey().defaultRandom(),
   order_number: text('order_number'), // Human-readable order number like ORD-2025-0001
+  user_id: text('user_id'), // Stack Auth user ID (optional for guest checkouts)
   customer_email: text('customer_email').notNull(),
   customer_name: text('customer_name').notNull(),
   customer_phone: text('customer_phone'),
@@ -59,6 +60,7 @@ export const orderItems = pgTable('order_items', {
 // Abandoned carts table
 export const abandonedCarts = pgTable('abandoned_carts', {
   id: uuid('id').primaryKey().defaultRandom(),
+  user_id: text('user_id'), // Stack Auth user ID (optional for guest carts)
   customer_email: text('customer_email').notNull(),
   customer_name: text('customer_name'),
   cart_data: json('cart_data').notNull(), // Array of cart items
@@ -71,6 +73,21 @@ export const abandonedCarts = pgTable('abandoned_carts', {
   recovery_order_id: uuid('recovery_order_id').references(() => orders.id),
 });
 
+// Saved addresses table
+export const savedAddresses = pgTable('saved_addresses', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  user_id: text('user_id').notNull(), // Stack Auth user ID
+  name: text('name').notNull(), // Label like "Thuis", "Werk", "Bedrijf"
+  street: text('street').notNull(),
+  city: text('city').notNull(),
+  postal_code: text('postal_code').notNull(),
+  country: text('country').notNull().default('NL'),
+  phone: text('phone'), // Optioneel telefoonnummer
+  is_default: boolean('is_default').default(false),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
 // Types voor TypeScript
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -80,3 +97,5 @@ export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
 export type AbandonedCart = typeof abandonedCarts.$inferSelect;
 export type NewAbandonedCart = typeof abandonedCarts.$inferInsert;
+export type SavedAddress = typeof savedAddresses.$inferSelect;
+export type NewSavedAddress = typeof savedAddresses.$inferInsert;

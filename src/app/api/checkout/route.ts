@@ -4,6 +4,7 @@ import { orders, orderItems, products, abandonedCarts } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
 import { eq, sql } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
+import { stackServerApp } from '@/stack/server';
 
 /**
  * POST /api/checkout
@@ -32,6 +33,18 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       );
+    }
+
+    // Check if user is logged in (optional - guest checkout blijft mogelijk)
+    let userId = null;
+    try {
+      const user = await stackServerApp.getUser();
+      if (user) {
+        userId = user.id;
+      }
+    } catch (error) {
+      // User is not logged in - continue with guest checkout
+      console.log('Guest checkout - no user logged in');
     }
 
     // Bereken totaal bedrag met staffelkorting
@@ -80,6 +93,7 @@ export async function POST(request: NextRequest) {
       .insert(orders)
       .values({
         order_number: null, // Wordt toegewezen in webhook na betaling
+        user_id: userId, // Koppel aan ingelogde user (null voor guest checkout)
         customer_email,
         customer_name,
         customer_phone,
