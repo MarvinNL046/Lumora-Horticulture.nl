@@ -9,3 +9,4 @@ export const resend = new Resend(process.env.RESEND_API_KEY);
 // Email configuration
 export const EMAIL_FROM = 'Lumora Horticulture <orders@lumorahorticulture.nl>';
 export const EMAIL_REPLY_TO = 'info@lumorahorticulture.nl';
+export const EMAIL_NOTIFICATION_TO = 'info@lumorahorticulture.nl'; // Business notifications

@@ -9,6 +9,10 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
 import CartSidebar from '@/components/CartSidebar'
+import dynamic from 'next/dynamic'
+
+// Dynamically import WelcomeEmailTrigger with SSR disabled
+const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
 
 // Initialize fonts
 const inter = Inter({ 
@@ -42,6 +46,9 @@ export default function RootLayout({
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans"><StackProvider app={stackClientApp}><StackTheme>
         <CartProvider>
+          {/* Welcome email trigger for new users */}
+          <WelcomeEmailTrigger />
+
           {/* Google Ads tracking */}
           <GoogleAds />
 
