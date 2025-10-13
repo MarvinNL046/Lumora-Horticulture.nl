@@ -5,11 +5,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
-import { 
-  domainLocaleMap, 
+import {
+  domainLocaleMap,
   localizePathForLocale,
   basePathFromLocalizedPath
 } from '@/lib/url-localizations'
+import { useCart } from '@/contexts/CartContext'
 
 // Define the locales we support directly in this file and their corresponding domains
 const localeMap = {
@@ -67,43 +68,45 @@ const getCurrentLocaleFromPath = (pathname: string): string => {
 export default function HeaderNav() {
   const pathname = usePathname() || ''
   const params = useParams()
-  
+  const { getTotalItems, setIsCartOpen } = useCart()
+
   // Get current locale from URL or domain
   const getCurrentLocale = (): string => {
     // If we have a locale in the URL params, use that
     if (params?.locale) {
       return params.locale as string;
     }
-    
+
     // Otherwise try to determine from domain
     if (typeof window !== 'undefined') {
       return getLocaleFromDomain(window.location.hostname);
     }
-    
+
     return defaultLocale;
   }
-  
+
   // Get the current locale
   const currentLocale = getCurrentLocale()
-  
+
   // Get the path without the locale prefix and convert to base path
   const getPathWithoutLocale = (): string => {
     let cleanPath = pathname;
-    
+
     // Remove the locale prefix if present
     if (cleanPath.startsWith('/' + currentLocale + '/')) {
       cleanPath = cleanPath.substring(('/' + currentLocale).length);
     } else if (cleanPath.startsWith('/' + currentLocale)) {
       cleanPath = '/';
     }
-    
+
     // Convert localized path back to base path
     return basePathFromLocalizedPath(cleanPath, currentLocale);
   }
-  
+
   const pathWithoutLocale = getPathWithoutLocale()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const cartItemCount = getTotalItems()
   
   // Handle scroll for transparent/solid header effect
   useEffect(() => {
@@ -212,13 +215,45 @@ export default function HeaderNav() {
                 ))}
               </div>
             </div>
+
+            {/* Cart Icon */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative ml-4 p-2 text-lumora-cream hover:text-lumora-gold transition-colors"
+              aria-label={currentLocale === 'de' ? 'Warenkorb öffnen' : currentLocale === 'en' ? 'Open cart' : 'Open winkelwagen'}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-lumora-gold text-lumora-dark text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemCount > 99 ? '99+' : cartItemCount}
+                </span>
+              )}
+            </button>
           </nav>
           
-          {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
+          {/* Mobile menu button and cart */}
+          <div className="flex items-center gap-3 md:hidden">
+            {/* Cart Icon Mobile */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative p-2 text-lumora-cream hover:text-lumora-gold transition-colors"
+              aria-label={currentLocale === 'de' ? 'Warenkorb öffnen' : currentLocale === 'en' ? 'Open cart' : 'Open winkelwagen'}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-lumora-gold text-lumora-dark text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemCount > 99 ? '99+' : cartItemCount}
+                </span>
+              )}
+            </button>
+
             <button
               type="button"
-              className={`inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300 
+              className={`inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300
                 bg-lumora-dark-700/50 text-lumora-cream hover:bg-lumora-dark-700 hover:text-lumora-cream
                 focus:outline-none border border-lumora-cream/20`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

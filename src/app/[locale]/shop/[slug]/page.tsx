@@ -11,7 +11,8 @@ import {
   formatPrice,
 } from '@/lib/volume-discount';
 import { localizePathForLocale } from '@/lib/url-localizations';
-import { trackViewItem, trackBeginCheckout } from '@/lib/google-ads';
+import { trackViewItem, trackAddToCart } from '@/lib/google-ads';
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
   id: string;
@@ -60,23 +61,20 @@ export default function ProductPage() {
       locale === 'de' ? `Bestellen Sie ${qty} Stück und erhalten Sie ${discount}% Rabatt!` :
       locale === 'en' ? `Order ${qty} pieces and get ${discount}% discount!` :
       `Bestel ${qty} stuks en krijg ${discount}% korting!`,
+    addToCart: locale === 'de' ? 'In den Warenkorb' : locale === 'en' ? 'Add to Cart' : 'Toevoegen aan Winkelwagen',
+    addedToCart: locale === 'de' ? 'Zum Warenkorb hinzugefügt!' : locale === 'en' ? 'Added to cart!' : 'Toegevoegd aan winkelwagen!',
+    viewCart: locale === 'de' ? 'Warenkorb ansehen' : locale === 'en' ? 'View cart' : 'Bekijk winkelwagen',
+    continueShopping: locale === 'de' ? 'Weiter einkaufen' : locale === 'en' ? 'Continue shopping' : 'Verder winkelen',
     b2bButton: locale === 'de' ? '🏢 Geschäftlich Bestellen (B2B)' : locale === 'en' ? '🏢 Business Orders (B2B)' : '🏢 Zakelijk Bestellen (B2B)',
     b2bText: locale === 'de' ? 'Große Mengen? Kontaktieren Sie uns für maßgeschneiderte Lösungen und zusätzliche Vorteile' : locale === 'en' ? 'Large orders? Contact us for custom solutions and additional benefits' : 'Grote afname? Neem contact op voor maatwerk en extra voordeel',
   };
 
+  const { addItem, setIsCartOpen } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
-
-  // Form state
-  const [customerName, setCustomerName] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('');
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [country, setCountry] = useState('NL');
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
 
   useEffect(() => {
     fetch(`/api/products/slug/${productSlug}?locale=${locale}`)
@@ -101,69 +99,47 @@ export default function ProductPage() {
       });
   }, [productSlug, locale]);
 
-  const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleAddToCart = () => {
     if (!product) return;
 
-    setCheckoutLoading(true);
+    setAddingToCart(true);
 
-    // Track begin checkout in GA4
+    // Track add to cart in GA4
     const basePrice = parseFloat(product.price);
-    const totalPrice = calculateTotalPrice(basePrice, quantity);
 
-    trackBeginCheckout(
-      [
-        {
-          id: product.id,
-          name: product.name,
-          price: calculateDiscountedPrice(basePrice, quantity),
-          quantity: quantity,
-          category: 'Horticulture Products',
-        },
-      ],
-      totalPrice
+    trackAddToCart({
+      id: product.id,
+      name: product.name,
+      price: calculateDiscountedPrice(basePrice, quantity),
+      quantity: quantity,
+      category: 'Horticulture Products',
+    });
+
+    // Add to cart
+    addItem(
+      {
+        product_id: product.id,
+        slug: product.slug,
+        name: product.name,
+        price: basePrice,
+        image_url: product.image_url,
+      },
+      quantity
     );
 
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          customer_name: customerName,
-          customer_email: customerEmail,
-          customer_phone: customerPhone,
-          shipping_address: {
-            street,
-            city,
-            postal_code: postalCode,
-            country,
-          },
-          items: [
-            {
-              product_id: product.id,
-              quantity,
-            },
-          ],
-        }),
-      });
+    // Show success message
+    setShowAddedMessage(true);
+    setAddingToCart(false);
 
-      const data = await response.json();
+    // Open cart sidebar after a short delay
+    setTimeout(() => {
+      setIsCartOpen(true);
+    }, 300);
 
-      if (data.success && data.payment_url) {
-        // Redirect naar Mollie betaalpagina
-        window.location.href = data.payment_url;
-      } else {
-        alert('Er is iets fout gegaan met de bestelling. Probeer het opnieuw.');
-        setCheckoutLoading(false);
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      alert('Er is iets fout gegaan. Probeer het opnieuw.');
-      setCheckoutLoading(false);
-    }
+    // Hide message after 3 seconds
+    setTimeout(() => {
+      setShowAddedMessage(false);
+    }, 3000);
   };
 
   if (loading) {
@@ -408,118 +384,35 @@ export default function ProductPage() {
                 )}
               </div>
 
-              <form onSubmit={handleCheckout} className="space-y-4">
-                <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4">Contactgegevens</h3>
-
-                <div>
-                  <label className="block text-sm font-medium text-lumora-dark mb-1">
-                    Naam *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-lumora-dark mb-1">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-lumora-dark mb-1">
-                    Telefoon
-                  </label>
-                  <input
-                    type="tel"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                  />
-                </div>
-
-                <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4 pt-4">Bezorgadres</h3>
-
-                <div>
-                  <label className="block text-sm font-medium text-lumora-dark mb-1">
-                    Straat en huisnummer *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      Postcode *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
+              {/* Add to Cart Button */}
+              <div className="space-y-4">
+                {/* Success Message */}
+                {showAddedMessage && (
+                  <div className="bg-lumora-green-500 text-white px-4 py-3 rounded-xl flex items-center gap-2 animate-fade-in">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="font-semibold">{t.addedToCart}</span>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      Plaats *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-lumora-dark mb-1">
-                    Land *
-                  </label>
-                  <select
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                  >
-                    <option value="NL">Nederland</option>
-                    <option value="BE">België</option>
-                    <option value="DE">Duitsland</option>
-                  </select>
-                </div>
+                )}
 
                 <button
-                  type="submit"
-                  disabled={checkoutLoading || product.availability !== 'in stock'}
-                  className="w-full bg-lumora-green-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-lumora-green-600 transition-all duration-300 shadow-soft hover:shadow-soft-md disabled:bg-gray-400 disabled:cursor-not-allowed mt-6"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || product.availability !== 'in stock'}
+                  className="w-full bg-lumora-green-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-lumora-green-600 transition-all duration-300 shadow-soft hover:shadow-soft-md disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {checkoutLoading
-                    ? 'Bezig met bestellen...'
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  {addingToCart
+                    ? (locale === 'de' ? 'Wird hinzugefügt...' : locale === 'en' ? 'Adding...' : 'Toevoegen...')
                     : product.availability !== 'in stock'
-                    ? 'Niet beschikbaar'
-                    : 'Bestellen'}
+                    ? (locale === 'de' ? 'Nicht verfügbar' : locale === 'en' ? 'Not available' : 'Niet beschikbaar')
+                    : t.addToCart}
                 </button>
 
                 {/* B2B / Zakelijk Bestellen Knop */}
-                <div className="mt-4 pt-4 border-t border-lumora-dark/10">
+                <div className="pt-4 border-t border-lumora-dark/10">
                   <Link
                     href={localizePathForLocale('/contact', locale)}
                     className="block w-full bg-gradient-to-r from-lumora-dark to-lumora-dark/90 text-white py-4 rounded-xl font-semibold text-lg hover:from-lumora-dark/90 hover:to-lumora-dark transition-all duration-300 shadow-soft hover:shadow-soft-md text-center"
@@ -533,7 +426,7 @@ export default function ProductPage() {
 
                 <div className="text-center mt-6">
                   <p className="text-sm text-lumora-dark/60 mb-2">
-                    Veilig betalen met:
+                    {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                   </p>
                   <div className="flex justify-center items-center gap-2 text-xs text-lumora-dark/70 font-medium">
                     <span>iDEAL</span>
@@ -545,10 +438,10 @@ export default function ProductPage() {
                     <span>PayPal</span>
                   </div>
                   <p className="text-xs text-lumora-dark/50 mt-2">
-                    Beveiligd door Mollie
+                    {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}
                   </p>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

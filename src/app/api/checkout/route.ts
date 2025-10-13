@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
-import { orders, orderItems, products } from '@/db/schema';
+import { orders, orderItems, products, abandonedCarts } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
 import { eq, sql } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
       shipping_address,
       billing_address,
       items, // Array of { product_id, quantity }
+      recovery_cart_id, // Optional: ID of abandoned cart being recovered
     } = body;
 
     // Validatie
@@ -117,6 +118,25 @@ export async function POST(request: NextRequest) {
       .update(orders)
       .set({ payment_id: payment.id })
       .where(eq(orders.id, order.id));
+
+    // Mark abandoned cart as recovered if this is a cart recovery
+    if (recovery_cart_id) {
+      try {
+        await db
+          .update(abandonedCarts)
+          .set({
+            recovered: true,
+            recovered_at: sql`NOW()`,
+            recovery_order_id: order.id,
+          })
+          .where(eq(abandonedCarts.id, recovery_cart_id));
+
+        console.log(`✅ Abandoned cart ${recovery_cart_id} marked as recovered`);
+      } catch (error) {
+        console.error('Failed to mark cart as recovered:', error);
+        // Don't fail the checkout if this fails
+      }
+    }
 
     // Emails worden verzonden via de Mollie webhook na succesvolle betaling
 

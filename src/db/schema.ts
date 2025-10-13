@@ -56,6 +56,21 @@ export const orderItems = pgTable('order_items', {
   created_at: timestamp('created_at').defaultNow(),
 });
 
+// Abandoned carts table
+export const abandonedCarts = pgTable('abandoned_carts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  customer_email: text('customer_email').notNull(),
+  customer_name: text('customer_name'),
+  cart_data: json('cart_data').notNull(), // Array of cart items
+  total_amount: numeric('total_amount', { precision: 10, scale: 2 }).notNull(),
+  locale: text('locale').default('nl'), // nl, en, de
+  created_at: timestamp('created_at').defaultNow(),
+  reminded_at: timestamp('reminded_at'), // When reminder email was sent
+  recovered: boolean('recovered').default(false), // If cart led to purchase
+  recovered_at: timestamp('recovered_at'),
+  recovery_order_id: uuid('recovery_order_id').references(() => orders.id),
+});
+
 // Types voor TypeScript
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -63,3 +78,5 @@ export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
 export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
+export type AbandonedCart = typeof abandonedCarts.$inferSelect;
+export type NewAbandonedCart = typeof abandonedCarts.$inferInsert;

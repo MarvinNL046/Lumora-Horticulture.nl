@@ -19,6 +19,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://lumorahorticulture.com/checkout/</loc>
+    <lastmod>2025-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://lumorahorticulture.com/checkout/conversion/</loc>
     <lastmod>2025-10-13</lastmod>
     <changefreq>monthly</changefreq>

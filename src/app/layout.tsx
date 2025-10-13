@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import GoogleAds from '@/components/GoogleAds'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
+import { CartProvider } from '@/contexts/CartContext'
+import CartSidebar from '@/components/CartSidebar'
 
 // Initialize fonts
 const inter = Inter({ 
@@ -37,22 +39,27 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
-        {/* Google Ads tracking */}
-        <GoogleAds />
+        <CartProvider>
+          {/* Google Ads tracking */}
+          <GoogleAds />
 
-        {/* Organization structured data */}
-        <OrganizationSchema locale="nl" />
+          {/* Organization structured data */}
+          <OrganizationSchema locale="nl" />
 
-        {/* Fixed header with transparent background that becomes solid on scroll */}
-        <HeaderNav />
-        
-        {/* Main content with padding top to account for fixed header */}
-        <main className="flex-grow pt-24">
-          {children}
-        </main>
-        
-        {/* Enhanced footer with modern design */}
-        <Footer />
+          {/* Fixed header with transparent background that becomes solid on scroll */}
+          <HeaderNav />
+
+          {/* Main content with padding top to account for fixed header */}
+          <main className="flex-grow pt-24">
+            {children}
+          </main>
+
+          {/* Enhanced footer with modern design */}
+          <Footer />
+
+          {/* Shopping cart sidebar */}
+          <CartSidebar />
+        </CartProvider>
       </body>
     </html>
   )
