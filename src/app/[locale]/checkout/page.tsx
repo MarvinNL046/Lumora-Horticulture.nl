@@ -46,6 +46,7 @@ export default function CheckoutPage() {
   // Saved addresses
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
+  const [saveAddressForFuture, setSaveAddressForFuture] = useState(false);
 
   // Auto-fill form with user data if logged in
   useEffect(() => {
@@ -136,6 +137,8 @@ export default function CheckoutPage() {
     shippingAddress: locale === 'de' ? 'Lieferadresse' : locale === 'en' ? 'Shipping Address' : 'Bezorgadres',
     selectAddress: locale === 'de' ? 'Adresse wählen' : locale === 'en' ? 'Select address' : 'Selecteer adres',
     newAddress: locale === 'de' ? 'Neue Adresse eingeben' : locale === 'en' ? 'Enter new address' : 'Nieuw adres invoeren',
+    manageAddresses: locale === 'de' ? 'Adressen verwalten' : locale === 'en' ? 'Manage addresses' : 'Adressen beheren',
+    saveAddress: locale === 'de' ? 'Adresse für zukünftige Bestellungen speichern' : locale === 'en' ? 'Save address for future orders' : 'Adres opslaan voor toekomstige bestellingen',
     street: locale === 'de' ? 'Straße und Hausnummer' : locale === 'en' ? 'Street and house number' : 'Straat en huisnummer',
     postalCode: locale === 'de' ? 'Postleitzahl' : locale === 'en' ? 'Postal code' : 'Postcode',
     city: locale === 'de' ? 'Stadt' : locale === 'en' ? 'City' : 'Plaats',
@@ -211,6 +214,24 @@ export default function CheckoutPage() {
       const data = await response.json();
 
       if (data.success && data.payment_url) {
+        // Save address for future orders if checkbox is checked
+        if (user && saveAddressForFuture && selectedAddressId === '') {
+          // Save asynchronously in background (don't wait for response)
+          fetch('/api/addresses', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: locale === 'de' ? 'Lieferadresse' : locale === 'en' ? 'Delivery Address' : 'Bezorgadres',
+              street,
+              city,
+              postal_code: postalCode,
+              country,
+              phone: customerPhone || null,
+              is_default: savedAddresses.length === 0, // Set as default if it's the first address
+            }),
+          }).catch(err => console.error('Failed to save address:', err));
+        }
+
         // Clear cart before redirect
         clearCart();
         // Redirect to Mollie payment page
@@ -429,9 +450,17 @@ export default function CheckoutPage() {
                   {/* Address Selector for logged-in users */}
                   {user && savedAddresses.length > 0 && (
                     <div>
-                      <label className="block text-sm font-medium text-lumora-dark mb-1">
-                        {t.selectAddress}
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-sm font-medium text-lumora-dark">
+                          {t.selectAddress}
+                        </label>
+                        <Link
+                          href={localizePathForLocale('/account/addresses', locale)}
+                          className="text-sm text-lumora-green-500 hover:text-lumora-green-600 font-medium transition-colors"
+                        >
+                          {t.manageAddresses}
+                        </Link>
+                      </div>
                       <select
                         value={selectedAddressId}
                         onChange={(e) => handleAddressSelect(e.target.value)}
@@ -502,6 +531,22 @@ export default function CheckoutPage() {
                       <option value="DE">Duitsland</option>
                     </select>
                   </div>
+
+                  {/* Save address checkbox - only for logged-in users entering new address */}
+                  {user && selectedAddressId === '' && (
+                    <div className="flex items-start gap-3 p-4 bg-lumora-cream/20 rounded-xl border border-lumora-green-500/20">
+                      <input
+                        type="checkbox"
+                        id="saveAddress"
+                        checked={saveAddressForFuture}
+                        onChange={(e) => setSaveAddressForFuture(e.target.checked)}
+                        className="mt-1 w-4 h-4 text-lumora-green-500 border-lumora-dark/20 rounded focus:ring-lumora-green-500"
+                      />
+                      <label htmlFor="saveAddress" className="text-sm text-lumora-dark cursor-pointer">
+                        {t.saveAddress}
+                      </label>
+                    </div>
+                  )}
                 </div>
               </div>
 

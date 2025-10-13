@@ -53,6 +53,13 @@ export default function HeaderNavClient({ currentLocale, setMobileMenuOpen }: He
                   >
                     {currentLocale === 'de' ? 'Bestellungen' : currentLocale === 'en' ? 'Orders' : 'Bestellingen'}
                   </Link>
+                  <Link
+                    href={localizePathForLocale('/account/addresses', currentLocale)}
+                    className="block px-4 py-2 text-sm text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50 transition-colors"
+                    onClick={() => setAccountMenuOpen(false)}
+                  >
+                    {currentLocale === 'de' ? 'Meine Adressen' : currentLocale === 'en' ? 'My Addresses' : 'Mijn Adressen'}
+                  </Link>
                   <button
                     onClick={async () => {
                       await user?.signOut()
@@ -106,6 +113,13 @@ export default function HeaderNavClient({ currentLocale, setMobileMenuOpen }: He
               onClick={() => setMobileMenuOpen?.(false)}
             >
               {currentLocale === 'de' ? 'Bestellungen' : currentLocale === 'en' ? 'Orders' : 'Bestellingen'}
+            </Link>
+            <Link
+              href={localizePathForLocale('/account/addresses', currentLocale)}
+              className="block px-4 py-3 text-base font-medium text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/70 rounded-xl transition-all duration-300"
+              onClick={() => setMobileMenuOpen?.(false)}
+            >
+              {currentLocale === 'de' ? 'Meine Adressen' : currentLocale === 'en' ? 'My Addresses' : 'Mijn Adressen'}
             </Link>
             <button
               onClick={async () => {
