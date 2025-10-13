@@ -48,6 +48,12 @@ export default function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
   const [saveAddressForFuture, setSaveAddressForFuture] = useState(false);
 
+  // Email recognition for guest users
+  const [emailExists, setEmailExists] = useState(false);
+  const [suggestedData, setSuggestedData] = useState<{ customer_name: string; customer_phone: string | null } | null>(null);
+  const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
+
   // Auto-fill form with user data if logged in
   useEffect(() => {
     if (user) {
@@ -90,6 +96,45 @@ export default function CheckoutPage() {
     }
   }, [searchParams]);
 
+  // Email recognition for guest users (debounced)
+  useEffect(() => {
+    if (!user && customerEmail && customerEmail.includes('@')) {
+      setEmailCheckLoading(true);
+
+      const timeoutId = setTimeout(async () => {
+        try {
+          const response = await fetch('/api/check-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: customerEmail }),
+          });
+
+          const data = await response.json();
+
+          if (data.success && data.exists) {
+            setEmailExists(true);
+            setSuggestedData(data.order_data);
+            setShowEmailPrompt(true);
+          } else {
+            setEmailExists(false);
+            setSuggestedData(null);
+            setShowEmailPrompt(false);
+          }
+        } catch (error) {
+          console.error('Error checking email:', error);
+        } finally {
+          setEmailCheckLoading(false);
+        }
+      }, 800); // 800ms debounce
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setEmailExists(false);
+      setSuggestedData(null);
+      setShowEmailPrompt(false);
+    }
+  }, [customerEmail, user]);
+
   // Fill address fields from selected saved address
   const fillAddressFields = (address: SavedAddress) => {
     setStreet(address.street);
@@ -116,6 +161,19 @@ export default function CheckoutPage() {
     if (address) {
       fillAddressFields(address);
     }
+  };
+
+  // Apply suggested data from previous order
+  const applySuggestedData = () => {
+    if (suggestedData) {
+      if (suggestedData.customer_name && !customerName) {
+        setCustomerName(suggestedData.customer_name);
+      }
+      if (suggestedData.customer_phone && !customerPhone) {
+        setCustomerPhone(suggestedData.customer_phone);
+      }
+    }
+    setShowEmailPrompt(false);
   };
 
   const t = {
@@ -147,6 +205,20 @@ export default function CheckoutPage() {
     processing: locale === 'de' ? 'Verarbeitung...' : locale === 'en' ? 'Processing...' : 'Bezig met verwerken...',
     pricePerPiece: locale === 'de' ? 'pro Stück' : locale === 'en' ? 'per piece' : 'per stuk',
     remove: locale === 'de' ? 'Entfernen' : locale === 'en' ? 'Remove' : 'Verwijderen',
+    emailRecognized: locale === 'de' ? 'Willkommen zurück!' : locale === 'en' ? 'Welcome back!' : 'Welkom terug!',
+    emailRecognizedText: locale === 'de'
+      ? 'Wir haben Ihre E-Mail-Adresse erkannt. Sie haben bereits bei uns bestellt.'
+      : locale === 'en'
+      ? 'We recognized your email address. You have ordered with us before.'
+      : 'We herkennen je e-mailadres. Je hebt eerder bij ons besteld.',
+    loginSuggestion: locale === 'de'
+      ? 'Möchten Sie sich anmelden für ein besseres Einkaufserlebnis?'
+      : locale === 'en'
+      ? 'Would you like to log in for a better shopping experience?'
+      : 'Wil je inloggen voor een betere winkelervaring?',
+    loginButton: locale === 'de' ? 'Anmelden' : locale === 'en' ? 'Sign in' : 'Inloggen',
+    continueAsGuest: locale === 'de' ? 'Als Gast fortfahren' : locale === 'en' ? 'Continue as guest' : 'Verder als gast',
+    usePreviousInfo: locale === 'de' ? 'Vorherige Daten verwenden' : locale === 'en' ? 'Use previous information' : 'Vorige gegevens gebruiken',
   };
 
   if (items.length === 0) {
@@ -418,14 +490,65 @@ export default function CheckoutPage() {
                     <label className="block text-sm font-medium text-lumora-dark mb-1">
                       {t.email} *
                     </label>
-                    <input
-                      type="email"
-                      required
-                      value={customerEmail}
-                      onChange={(e) => setCustomerEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
+                    <div className="relative">
+                      <input
+                        type="email"
+                        required
+                        value={customerEmail}
+                        onChange={(e) => setCustomerEmail(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      />
+                      {emailCheckLoading && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                          <svg className="animate-spin h-5 w-5 text-lumora-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      )}
+                    </div>
                   </div>
+
+                  {/* Email Recognition Prompt */}
+                  {!user && showEmailPrompt && emailExists && (
+                    <div className="bg-gradient-to-r from-lumora-green-500/10 to-lumora-gold/10 rounded-xl p-5 border-2 border-lumora-green-500/30">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="flex-shrink-0 mt-0.5">
+                          <svg className="w-6 h-6 text-lumora-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lumora-dark mb-1">{t.emailRecognized}</h3>
+                          <p className="text-sm text-lumora-dark/80 mb-2">{t.emailRecognizedText}</p>
+                          <p className="text-sm text-lumora-dark/70 mb-3">{t.loginSuggestion}</p>
+
+                          <div className="flex flex-col sm:flex-row gap-2">
+                            <Link
+                              href="/handler/signin"
+                              className="px-4 py-2 bg-lumora-green-500 text-white rounded-lg font-medium hover:bg-lumora-green-600 transition-colors text-center text-sm"
+                            >
+                              {t.loginButton}
+                            </Link>
+                            {suggestedData && (suggestedData.customer_name || suggestedData.customer_phone) && (
+                              <button
+                                onClick={applySuggestedData}
+                                className="px-4 py-2 bg-lumora-gold/20 text-lumora-dark rounded-lg font-medium hover:bg-lumora-gold/30 transition-colors text-sm"
+                              >
+                                {t.usePreviousInfo}
+                              </button>
+                            )}
+                            <button
+                              onClick={() => setShowEmailPrompt(false)}
+                              className="px-4 py-2 bg-lumora-cream/50 text-lumora-dark rounded-lg font-medium hover:bg-lumora-cream transition-colors text-sm"
+                            >
+                              {t.continueAsGuest}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-lumora-dark mb-1">
