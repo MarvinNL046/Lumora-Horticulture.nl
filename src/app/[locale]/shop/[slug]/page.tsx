@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Head from 'next/head';
 import {
   VOLUME_DISCOUNT_TIERS,
   calculateDiscountedPrice,
@@ -13,6 +14,28 @@ import {
 import { localizePathForLocale } from '@/lib/url-localizations';
 import { trackViewItem, trackAddToCart } from '@/lib/google-ads';
 import { useCart } from '@/contexts/CartContext';
+
+// Trust Badge Component
+function TrustBadge({ icon, text }: { icon: string; text: string }) {
+  return (
+    <div className="flex items-center gap-2 text-sm text-lumora-dark/80">
+      <span className="text-lumora-green-500">{icon}</span>
+      <span>{text}</span>
+    </div>
+  );
+}
+
+// USP Item Component
+function USPItem({ text }: { text: string }) {
+  return (
+    <div className="flex items-start gap-2">
+      <svg className="w-5 h-5 text-lumora-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+      </svg>
+      <span className="text-lumora-dark/80">{text}</span>
+    </div>
+  );
+}
 
 interface Product {
   id: string;
@@ -71,6 +94,23 @@ export default function ProductPage() {
     continueShopping: locale === 'de' ? 'Weiter einkaufen' : locale === 'en' ? 'Continue shopping' : 'Verder winkelen',
     b2bButton: locale === 'de' ? '🏢 Geschäftlich Bestellen (B2B)' : locale === 'en' ? '🏢 Business Orders (B2B)' : '🏢 Zakelijk Bestellen (B2B)',
     b2bText: locale === 'de' ? 'Große Mengen? Kontaktieren Sie uns für maßgeschneiderte Lösungen und zusätzliche Vorteile' : locale === 'en' ? 'Large orders? Contact us for custom solutions and additional benefits' : 'Grote afname? Neem contact op voor maatwerk en extra voordeel',
+    // Trust badges
+    inStock: locale === 'de' ? 'Auf Lager' : locale === 'en' ? 'In Stock' : 'Op voorraad',
+    delivery: locale === 'de' ? '24-48h Lieferung' : locale === 'en' ? '24-48h Delivery' : '24-48u levering',
+    euCertified: locale === 'de' ? 'EU-Zertifiziert' : locale === 'en' ? 'EU Certified' : 'EU Gecertificeerd',
+    yearsExperience: locale === 'de' ? '15+ Jahre Erfahrung' : locale === 'en' ? '15+ Years Experience' : '15+ Jaar Ervaring',
+    sustainable: locale === 'de' ? '100% Nachhaltig' : locale === 'en' ? '100% Sustainable' : '100% Duurzaam',
+    // Breadcrumbs
+    home: locale === 'de' ? 'Startseite' : locale === 'en' ? 'Home' : 'Home',
+    shop: locale === 'de' ? 'Webshop' : locale === 'en' ? 'Shop' : 'Webshop',
+    // USPs
+    usps: [
+      locale === 'de' ? 'Kein Transplantationsschock' : locale === 'en' ? 'No transplant shock' : 'Geen transplantatieschok',
+      locale === 'de' ? '100% biologisch abbaubar' : locale === 'en' ? '100% biodegradable' : '100% biologisch afbreekbaar',
+      locale === 'de' ? 'FP 12+ Technologie (12+ Monate Stabilität)' : locale === 'en' ? 'FP 12+ Technology (12+ months stability)' : 'FP 12+ technologie (12+ maanden stabiliteit)',
+      locale === 'de' ? 'Direkt pflanzbar' : locale === 'en' ? 'Directly plantable' : 'Direct plantbaar',
+      locale === 'de' ? 'Optimale Wurzelentwicklung' : locale === 'en' ? 'Optimal root development' : 'Optimale wortelontwikkeling',
+    ],
   };
 
   const { addItem, setIsCartOpen } = useCart();
@@ -171,9 +211,130 @@ export default function ProductPage() {
   const totalPrice = calculateTotalPrice(basePrice, quantity);
   const totalDiscount = (basePrice * quantity) - totalPrice;
 
+  // Domain based on locale
+  const domain = locale === 'de' ? 'lumorahorticulture.de' : locale === 'en' ? 'lumorahorticulture.com' : 'lumorahorticulture.nl';
+  const shopPath = locale === 'de' || locale === 'en' ? 'shop' : 'winkel';
+
+  // JSON-LD Product Structured Data
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    image: `https://${domain}${product.image_url}`,
+    brand: {
+      '@type': 'Brand',
+      name: product.brand || 'Lumora'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://${domain}/${shopPath}/${product.slug}`,
+      priceCurrency: 'EUR',
+      price: basePrice.toFixed(2),
+      availability: product.availability === 'in stock' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Lumora Horticulture'
+      },
+      priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'EUR'
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 2,
+            unitCode: 'DAY'
+          }
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['NL', 'BE', 'DE']
+        }
+      }
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '127'
+    }
+  };
+
+  // Breadcrumb Schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: t.home,
+        item: `https://${domain}/`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t.shop,
+        item: `https://${domain}/${shopPath}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.name,
+        item: `https://${domain}/${shopPath}/${product.slug}`
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="mb-6" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 text-sm text-lumora-dark/60">
+            <li>
+              <Link href={localizePathForLocale('/', locale)} className="hover:text-lumora-green-500 transition-colors">
+                {t.home}
+              </Link>
+            </li>
+            <li><span className="mx-2">/</span></li>
+            <li>
+              <Link href={localizePathForLocale('/shop', locale)} className="hover:text-lumora-green-500 transition-colors">
+                {t.shop}
+              </Link>
+            </li>
+            <li><span className="mx-2">/</span></li>
+            <li className="text-lumora-dark font-medium truncate max-w-[200px]">{product.name}</li>
+          </ol>
+        </nav>
+
+        {/* Trust Badges Bar */}
+        <div className="bg-white rounded-xl shadow-soft p-4 mb-8 border border-lumora-dark/5">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+            <TrustBadge icon="✓" text={t.inStock} />
+            <TrustBadge icon="🚚" text={t.delivery} />
+            <TrustBadge icon="🏆" text={t.euCertified} />
+            <TrustBadge icon="⭐" text={t.yearsExperience} />
+            <TrustBadge icon="♻️" text={t.sustainable} />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product afbeelding en details */}
           <div>
@@ -222,7 +383,41 @@ export default function ProductPage() {
             <h1 className="text-4xl font-display font-bold text-lumora-dark mb-4">
               {product.name}
             </h1>
-            <p className="text-xl text-lumora-dark/70 mb-6 leading-relaxed">{product.description}</p>
+
+            {/* Stock Status Badge */}
+            <div className="flex items-center gap-4 mb-4">
+              {product.availability === 'in stock' ? (
+                <span className="inline-flex items-center gap-1 bg-lumora-green-500/10 text-lumora-green-600 px-3 py-1 rounded-full text-sm font-semibold border border-lumora-green-500/20">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {t.inStock}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                  {locale === 'de' ? 'Nicht auf Lager' : locale === 'en' ? 'Out of Stock' : 'Niet op voorraad'}
+                </span>
+              )}
+              <span className="text-sm text-lumora-dark/60">
+                🚚 {t.delivery}
+              </span>
+            </div>
+
+            <p className="text-lg text-lumora-dark/70 mb-6 leading-relaxed">{product.description}</p>
+
+            {/* USP Checklist - Only for Tray products */}
+            {(productSlug.includes('paper-plug-tray') || productSlug.includes('tray')) && (
+              <div className="bg-lumora-cream/50 rounded-xl p-5 mb-6 border border-lumora-dark/10">
+                <h3 className="font-semibold text-lumora-dark mb-3">
+                  {locale === 'de' ? 'Warum Paper Plugs wählen?' : locale === 'en' ? 'Why choose Paper Plugs?' : 'Waarom Paper Plugs kiezen?'}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {t.usps.map((usp, index) => (
+                    <USPItem key={index} text={usp} />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Staffelkorting Tabel */}
             <div className="bg-gradient-to-br from-lumora-green-500/10 to-lumora-green-600/5 rounded-2xl p-6 border-2 border-lumora-green-500/20 mb-6">
