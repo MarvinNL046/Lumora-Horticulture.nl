@@ -258,7 +258,7 @@ export default function ShopPage() {
                     <div className="text-3xl font-bold text-lumora-green-500">
                       €{parseFloat(product.price).toFixed(2)}
                     </div>
-                    <span className="text-xs text-lumora-dark/50">excl. BTW</span>
+                    <span className="text-xs text-lumora-dark/50">{locale === 'de' ? 'inkl. MwSt.' : locale === 'en' ? 'incl. VAT' : 'incl. BTW'}</span>
                   </div>
                   <Link
                     href={localizePathForLocale(`/shop/${product.slug}`, locale)}
