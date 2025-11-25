@@ -88,6 +88,55 @@ export const savedAddresses = pgTable('saved_addresses', {
   updated_at: timestamp('updated_at').defaultNow(),
 });
 
+// SEO Landing Pages table
+export const seoPages = pgTable('seo_pages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  pillar: text('pillar').notNull(), // e.g., "Propagatie Technologie Fundamentals"
+  subpillar: text('subpillar').notNull(), // e.g., "Wat zijn Paper Plug Trays?"
+  slug_nl: text('slug_nl').notNull().unique(), // e.g., "wat-zijn-paper-plug-trays"
+  slug_en: text('slug_en').notNull().unique(),
+  slug_de: text('slug_de').notNull().unique(),
+  pillar_number: numeric('pillar_number', { precision: 2, scale: 0 }).notNull(), // 1-10
+  subpillar_number: numeric('subpillar_number', { precision: 2, scale: 0 }).notNull(), // 1-5
+  status: text('status').default('draft').notNull(), // draft, published, archived
+  published_at: timestamp('published_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// CTA Queries table for conversion tracking
+export const ctaQueries = pgTable('cta_queries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  seo_page_id: uuid('seo_page_id')
+    .references(() => seoPages.id)
+    .notNull(),
+  page_slug: text('page_slug').notNull(), // Full path e.g., "/wat-zijn-paper-plug-trays"
+  locale: text('locale').notNull(), // nl, en, de
+  cta_text_nl: text('cta_text_nl'), // e.g., "Bestel Nu"
+  cta_text_en: text('cta_text_en'),
+  cta_text_de: text('cta_text_de'),
+  cta_type: text('cta_type').notNull(), // primary, secondary, tertiary
+  cta_position: text('cta_position').notNull(), // hero, mid-content, footer
+  cta_action: text('cta_action').notNull(), // shop, contact, download, learn-more
+  target_url: text('target_url'), // Where CTA leads to
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+// CTA Click Tracking table
+export const ctaClicks = pgTable('cta_clicks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  cta_query_id: uuid('cta_query_id')
+    .references(() => ctaQueries.id)
+    .notNull(),
+  user_id: text('user_id'), // Stack Auth user ID (optional)
+  session_id: text('session_id'), // Anonymous session tracking
+  clicked_at: timestamp('clicked_at').defaultNow(),
+  referrer: text('referrer'), // Where user came from
+  user_agent: text('user_agent'), // Browser/device info
+  converted: boolean('converted').default(false), // Did this lead to a purchase?
+  conversion_order_id: uuid('conversion_order_id').references(() => orders.id),
+});
+
 // Types voor TypeScript
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -99,3 +148,9 @@ export type AbandonedCart = typeof abandonedCarts.$inferSelect;
 export type NewAbandonedCart = typeof abandonedCarts.$inferInsert;
 export type SavedAddress = typeof savedAddresses.$inferSelect;
 export type NewSavedAddress = typeof savedAddresses.$inferInsert;
+export type SeoPage = typeof seoPages.$inferSelect;
+export type NewSeoPage = typeof seoPages.$inferInsert;
+export type CtaQuery = typeof ctaQueries.$inferSelect;
+export type NewCtaQuery = typeof ctaQueries.$inferInsert;
+export type CtaClick = typeof ctaClicks.$inferSelect;
+export type NewCtaClick = typeof ctaClicks.$inferInsert;

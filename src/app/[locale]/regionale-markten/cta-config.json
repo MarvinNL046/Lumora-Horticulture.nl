@@ -1,0 +1,512 @@
+{
+  "pillar": "regionale-markten",
+  "pillarName": {
+    "nl": "Regionale Markt Specifieke Content",
+    "en": "Regional Market-Specific Content",
+    "de": "Regionale Marktspezifische Inhalte"
+  },
+  "defaultCTA": {
+    "primary": {
+      "text": {
+        "nl": "Vraag Gratis Advies",
+        "en": "Request Free Consultation",
+        "de": "Kostenlose Beratung Anfragen"
+      },
+      "href": "/contact",
+      "variant": "primary"
+    },
+    "secondary": {
+      "text": {
+        "nl": "Bekijk Alle Producten",
+        "en": "View All Products",
+        "de": "Alle Produkte Ansehen"
+      },
+      "href": "/shop",
+      "variant": "secondary"
+    }
+  },
+  "pages": {
+    "nederlandse-glastuinbouw": {
+      "market": "Netherlands",
+      "locale": "nl",
+      "cta": {
+        "hero": {
+          "primary": {
+            "text": {
+              "nl": "Bekijk Producten",
+              "en": "View Products",
+              "de": "Produkte Ansehen"
+            },
+            "href": "/shop"
+          },
+          "secondary": {
+            "text": {
+              "nl": "Vraag Advies",
+              "en": "Request Advice",
+              "de": "Beratung Anfragen"
+            },
+            "href": "/contact"
+          }
+        },
+        "caseStudy": {
+          "text": {
+            "nl": "Vergelijkbare Resultaten?",
+            "en": "Similar Results?",
+            "de": "Ähnliche Ergebnisse?"
+          },
+          "href": "/contact",
+          "context": "Westlandse Tomatenteler case study - 42% labor savings"
+        },
+        "products": {
+          "text": {
+            "nl": "Bekijk Product",
+            "en": "View Product",
+            "de": "Produkt Ansehen"
+          },
+          "href": "/shop"
+        },
+        "catalog": {
+          "text": {
+            "nl": "Download Catalogus (PDF)",
+            "en": "Download Catalog (PDF)",
+            "de": "Katalog Herunterladen (PDF)"
+          },
+          "href": "/shop",
+          "type": "download"
+        },
+        "final": {
+          "headline": {
+            "nl": "Klaar voor Duurzame Teelt in Nederland?",
+            "en": "Ready for Sustainable Growing in the Netherlands?",
+            "de": "Bereit für Nachhaltigen Anbau in den Niederlanden?"
+          },
+          "description": {
+            "nl": "Sluit je aan bij 300+ Nederlandse glastuinbouwbedrijven die al overstapten naar Paper Plug trays. Gratis advies op maat voor jouw teelt.",
+            "en": "Join 300+ Dutch greenhouse businesses that already switched to Paper Plug trays. Free customized advice for your cultivation.",
+            "de": "Schließen Sie sich 300+ niederländischen Gewächshausbetrieben an, die bereits auf Paper Plug Trays umgestiegen sind. Kostenlose maßgeschneiderte Beratung."
+          },
+          "primary": {
+            "text": {
+              "nl": "Vraag Gratis Advies",
+              "en": "Request Free Advice",
+              "de": "Kostenlose Beratung Anfragen"
+            },
+            "href": "/contact"
+          },
+          "secondary": {
+            "text": {
+              "nl": "Bekijk Alle Producten",
+              "en": "View All Products",
+              "de": "Alle Produkte Ansehen"
+            },
+            "href": "/shop"
+          }
+        }
+      },
+      "conversionGoals": [
+        "Contact form submission from Dutch greenhouse growers",
+        "Product page visits from Westland/Aalsmeer/Venlo regions",
+        "Catalog download requests",
+        "Phone inquiries about MPS certification compatibility"
+      ],
+      "targetAudience": {
+        "primary": "Dutch greenhouse vegetable growers (Westland, Venlo)",
+        "secondary": "Ornamental growers (Aalsmeer, Boskoop)",
+        "tertiary": "Herb producers (various regions)"
+      }
+    },
+    "Duitse-gaertnerei": {
+      "market": "Germany",
+      "locale": "de",
+      "cta": {
+        "hero": {
+          "primary": {
+            "text": {
+              "de": "Produkte Ansehen",
+              "en": "View Products",
+              "nl": "Bekijk Producten"
+            },
+            "href": "/shop"
+          },
+          "secondary": {
+            "text": {
+              "de": "Beratung Anfragen",
+              "en": "Request Consultation",
+              "nl": "Vraag Advies"
+            },
+            "href": "/contact"
+          }
+        },
+        "caseStudy": {
+          "text": {
+            "de": "Ähnliche Ergebnisse Erzielen?",
+            "en": "Achieve Similar Results?",
+            "nl": "Vergelijkbare Resultaten Behalen?"
+          },
+          "href": "/contact",
+          "context": "Bio-Gärtnerei Bayern case study - 38% labor savings, 100% plastic reduction"
+        },
+        "products": {
+          "text": {
+            "de": "Produkt Ansehen",
+            "en": "View Product",
+            "nl": "Bekijk Product"
+          },
+          "href": "/shop"
+        },
+        "catalog": {
+          "text": {
+            "de": "Katalog Herunterladen (PDF)",
+            "en": "Download Catalog (PDF)",
+            "nl": "Download Catalogus (PDF)"
+          },
+          "href": "/shop",
+          "type": "download"
+        },
+        "final": {
+          "headline": {
+            "de": "Bereit für Nachhaltigen Anbau in Deutschland?",
+            "en": "Ready for Sustainable Growing in Germany?",
+            "nl": "Klaar voor Duurzame Teelt in Duitsland?"
+          },
+          "description": {
+            "de": "Schließen Sie sich 150+ deutschen Gärtnereien an, die bereits auf Paper Plug Trays umgestiegen sind. Kostenlose maßgeschneiderte Beratung für Ihren Betrieb.",
+            "en": "Join 150+ German nurseries that already switched to Paper Plug trays. Free customized consultation for your operation.",
+            "nl": "Sluit je aan bij 150+ Duitse tuinbouwbedrijven die al overstapten naar Paper Plug trays. Gratis advies op maat voor jouw bedrijf."
+          },
+          "primary": {
+            "text": {
+              "de": "Kostenlose Beratung Anfragen",
+              "en": "Request Free Consultation",
+              "nl": "Vraag Gratis Advies"
+            },
+            "href": "/contact"
+          },
+          "secondary": {
+            "text": {
+              "de": "Alle Produkte Ansehen",
+              "en": "View All Products",
+              "nl": "Bekijk Alle Producten"
+            },
+            "href": "/shop"
+          }
+        }
+      },
+      "conversionGoals": [
+        "Contact form submissions from German bio-certified growers",
+        "Product inquiries about Bioland/Demeter compatibility",
+        "Catalog downloads for German market",
+        "Partnership inquiries from regional distributors"
+      ],
+      "targetAudience": {
+        "primary": "Bio-certified growers in Bavaria, Baden-Württemberg",
+        "secondary": "Vegetable growers in Niedersachsen, NRW",
+        "tertiary": "Ornamental and herb producers in Rheinland-Pfalz"
+      }
+    },
+    "belgische-sierteelt": {
+      "market": "Belgium",
+      "locale": "nl",
+      "cta": {
+        "hero": {
+          "primary": {
+            "text": {
+              "nl": "Ontdek Producten",
+              "en": "Discover Products",
+              "de": "Produkte Entdecken"
+            },
+            "href": "/shop"
+          },
+          "secondary": {
+            "text": {
+              "nl": "Vraag Advies Aan",
+              "en": "Request Advice",
+              "de": "Beratung Anfragen"
+            },
+            "href": "/contact"
+          }
+        },
+        "final": {
+          "headline": {
+            "nl": "Klaar voor Duurzame Sierteelt in België?",
+            "en": "Ready for Sustainable Ornamentals in Belgium?",
+            "de": "Bereit für Nachhaltige Zierpflanzen in Belgien?"
+          },
+          "description": {
+            "nl": "Word lid van 80+ Belgische sierteeltbedrijven die kozen voor Paper Plug trays. Gratis advies voor azalea's, potplanten en meer.",
+            "en": "Join 80+ Belgian ornamental businesses that chose Paper Plug trays. Free advice for azaleas, pot plants and more.",
+            "de": "Schließen Sie sich 80+ belgischen Zierpflanzenbetrieben an, die sich für Paper Plug Trays entschieden haben."
+          },
+          "primary": {
+            "text": {
+              "nl": "Neem Contact Op",
+              "en": "Get in Touch",
+              "de": "Kontakt Aufnehmen"
+            },
+            "href": "/contact"
+          }
+        }
+      },
+      "conversionGoals": [
+        "Contact from Flemish azalea growers",
+        "Inquiries about ornamental plant cultivation",
+        "Partnership with Belgian auction systems"
+      ],
+      "targetAudience": {
+        "primary": "Azalea growers in Oost & West-Vlaanderen",
+        "secondary": "Pot plant producers in Antwerpen region",
+        "tertiary": "Small-scale growers in Wallonia"
+      }
+    },
+    "marche-horticole-francais": {
+      "market": "France",
+      "locale": "en",
+      "cta": {
+        "hero": {
+          "primary": {
+            "text": {
+              "en": "View Products",
+              "nl": "Bekijk Producten",
+              "de": "Produkte Ansehen"
+            },
+            "href": "/shop"
+          },
+          "secondary": {
+            "text": {
+              "en": "Request Information",
+              "nl": "Vraag Informatie",
+              "de": "Informationen Anfordern"
+            },
+            "href": "/contact"
+          }
+        },
+        "final": {
+          "headline": {
+            "en": "Ready for Organic Growing in France?",
+            "nl": "Klaar voor Biologische Teelt in Frankrijk?",
+            "de": "Bereit für Biologischen Anbau in Frankreich?"
+          },
+          "description": {
+            "en": "Join 60+ French horticultural operations using Paper Plug trays for organic and quality production. Free consultation for your specific crops.",
+            "nl": "Sluit je aan bij 60+ Franse tuinbouwbedrijven die Paper Plug trays gebruiken voor biologische en kwaliteitsproductie.",
+            "de": "Schließen Sie sich 60+ französischen Gartenbaubetrieben an, die Paper Plug Trays für biologische Produktion verwenden."
+          },
+          "primary": {
+            "text": {
+              "en": "Contact Us",
+              "nl": "Neem Contact Op",
+              "de": "Kontaktieren Sie Uns"
+            },
+            "href": "/contact"
+          }
+        }
+      },
+      "conversionGoals": [
+        "Inquiries from French organic growers",
+        "Interest from Bretagne tomato producers",
+        "Partnership with French distributors",
+        "Agriculture Biologique certification inquiries"
+      ],
+      "targetAudience": {
+        "primary": "Organic vegetable growers in Bretagne",
+        "secondary": "Herb producers in Provence and Loire Valley",
+        "tertiary": "Mediterranean crop growers in Sud-Ouest"
+      }
+    },
+    "scandinavische-groeimarkten": {
+      "market": "Scandinavia",
+      "locale": "en",
+      "cta": {
+        "hero": {
+          "primary": {
+            "text": {
+              "en": "Explore Products",
+              "nl": "Verken Producten",
+              "de": "Produkte Erkunden"
+            },
+            "href": "/shop"
+          },
+          "secondary": {
+            "text": {
+              "en": "Get in Touch",
+              "nl": "Neem Contact Op",
+              "de": "Kontakt Aufnehmen"
+            },
+            "href": "/contact"
+          }
+        },
+        "final": {
+          "headline": {
+            "en": "Ready for Circular Growing in Scandinavia?",
+            "nl": "Klaar voor Circulaire Teelt in Scandinavië?",
+            "de": "Bereit für Kreislaufwirtschaft in Skandinavien?"
+          },
+          "description": {
+            "en": "Join 40+ Scandinavian greenhouse operations achieving 100% renewable energy and circular economy goals with Paper Plug trays.",
+            "nl": "Sluit je aan bij 40+ Scandinavische kassenbedrijven die 100% hernieuwbare energie en circulaire economie doelen bereiken.",
+            "de": "Schließen Sie sich 40+ skandinavischen Gewächshausbetrieben an, die 100% erneuerbare Energie und Kreislaufwirtschaftsziele erreichen."
+          },
+          "primary": {
+            "text": {
+              "en": "Request Nordic Consultation",
+              "nl": "Vraag Scandinavisch Advies",
+              "de": "Nordische Beratung Anfragen"
+            },
+            "href": "/contact"
+          }
+        }
+      },
+      "conversionGoals": [
+        "Inquiries from Swedish greenhouse tomato producers",
+        "Interest from Danish automation-focused operations",
+        "Partnership discussions with Nordic distributors",
+        "Nordic Swan Ecolabel compatibility questions"
+      ],
+      "targetAudience": {
+        "primary": "Swedish tomato and cucumber growers",
+        "secondary": "Danish herb and vegetable producers",
+        "tertiary": "Norwegian local production initiatives"
+      }
+    }
+  },
+  "regionalMessaging": {
+    "netherlands": {
+      "keyThemes": [
+        "World leadership in greenhouse innovation",
+        "MPS and PlanetProof certification support",
+        "Labor efficiency in tight labor market",
+        "CO₂-neutral cultivation goals"
+      ],
+      "painPoints": [
+        "High labor costs and scarcity",
+        "Strict sustainability requirements",
+        "Plastic waste regulations",
+        "Energy cost pressures"
+      ],
+      "valueProp": "Help Dutch growers maintain world-leading efficiency while meeting 2040 sustainability targets"
+    },
+    "germany": {
+      "keyThemes": [
+        "Kreislaufwirtschaft (circular economy) compliance",
+        "Bio-certification support (Bioland, Demeter, EU-Bio)",
+        "Quality and sustainability standards",
+        "Regional marketing and direct sales"
+      ],
+      "painPoints": [
+        "Increasing bio-certification requirements",
+        "Plastic waste legislation compliance",
+        "Labor shortages",
+        "Consumer demand for sustainability proof"
+      ],
+      "valueProp": "Enable German growers to meet strict sustainability and bio-certification requirements while improving efficiency"
+    },
+    "belgium": {
+      "keyThemes": [
+        "Ornamental specialization (azaleas)",
+        "Quality focus for export markets",
+        "Flemish environmental standards",
+        "Auction system integration"
+      ],
+      "painPoints": [
+        "Maintaining quality in competitive export market",
+        "Environmental compliance costs",
+        "Labor availability for ornamentals",
+        "Differentiation in crowded market"
+      ],
+      "valueProp": "Help Belgian ornamental growers maintain premium quality while reducing environmental impact"
+    },
+    "france": {
+      "keyThemes": [
+        "Agriculture Biologique (organic) growth",
+        "Short supply chains and local markets",
+        "Label Rouge and quality certifications",
+        "Mediterranean crop specialization"
+      ],
+      "painPoints": [
+        "Meeting organic certification standards",
+        "Pesticide reduction requirements (Loi Labbé)",
+        "Local market expectations",
+        "Competition from Spanish imports"
+      ],
+      "valueProp": "Support French growers in organic certification and quality production for local markets"
+    },
+    "scandinavia": {
+      "keyThemes": [
+        "100% renewable energy and climate neutrality",
+        "Circular economy as standard practice",
+        "Local production and self-sufficiency",
+        "Advanced automation and technology"
+      ],
+      "painPoints": [
+        "Short growing season limitations",
+        "High energy costs (even with renewables)",
+        "Labor costs and availability",
+        "Consumer expectations for sustainability"
+      ],
+      "valueProp": "Enable Scandinavian growers to achieve circular economy and climate neutrality goals"
+    }
+  },
+  "abTestVariants": {
+    "ctaText": {
+      "variant_a": {
+        "nl": "Vraag Gratis Advies",
+        "en": "Request Free Consultation",
+        "de": "Kostenlose Beratung"
+      },
+      "variant_b": {
+        "nl": "Start Met Paperpot",
+        "en": "Start With Paperpot",
+        "de": "Starten Sie Mit Paperpot"
+      },
+      "variant_c": {
+        "nl": "Bespaar Arbeid & Plastic",
+        "en": "Save Labor & Plastic",
+        "de": "Sparen Sie Arbeit & Plastik"
+      }
+    },
+    "urgency": {
+      "seasonal": {
+        "nl": "Bereid je voor op seizoen 2025",
+        "en": "Prepare for 2025 season",
+        "de": "Bereiten Sie sich auf Saison 2025 vor"
+      },
+      "limited": {
+        "nl": "Beperkte voorraad voor Q1 2025",
+        "en": "Limited stock for Q1 2025",
+        "de": "Begrenzter Vorrat für Q1 2025"
+      }
+    }
+  },
+  "trackingParameters": {
+    "netherlands": {
+      "utm_source": "organic",
+      "utm_medium": "seo",
+      "utm_campaign": "regional-nl-greenhouse",
+      "utm_content": "netherlands-market-page"
+    },
+    "germany": {
+      "utm_source": "organic",
+      "utm_medium": "seo",
+      "utm_campaign": "regional-de-gaertnerei",
+      "utm_content": "germany-market-page"
+    },
+    "belgium": {
+      "utm_source": "organic",
+      "utm_medium": "seo",
+      "utm_campaign": "regional-be-ornamentals",
+      "utm_content": "belgium-market-page"
+    },
+    "france": {
+      "utm_source": "organic",
+      "utm_medium": "seo",
+      "utm_campaign": "regional-fr-horticulture",
+      "utm_content": "france-market-page"
+    },
+    "scandinavia": {
+      "utm_source": "organic",
+      "utm_medium": "seo",
+      "utm_campaign": "regional-nordic-growth",
+      "utm_content": "scandinavia-market-page"
+    }
+  }
+}

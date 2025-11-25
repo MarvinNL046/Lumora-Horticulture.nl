@@ -1,0 +1,179 @@
+{
+  "pillar": "Pillar 2: Praktische Toepassingen per Gewas",
+  "generated_date": "2025-11-24",
+  "total_pages": 2,
+  "total_ctas": 6,
+  "pages": [
+    {
+      "page_slug": "paper-plugs-groenteteelt",
+      "page_title": {
+        "nl": "Paper Plug Trays voor Professionele Groenteteelt",
+        "en": "Paper Plug Trays for Professional Vegetable Growing",
+        "de": "Paper Plug Trays für professionellen Gemüseanbau"
+      },
+      "url_paths": {
+        "nl": "/seo/toepassingen/paper-plugs-groenteteelt",
+        "en": "/seo/applications/paper-plugs-vegetables",
+        "de": "/seo/anwendungen/paper-plugs-gemueseanbau"
+      },
+      "ctas": [
+        {
+          "cta_id": "groenteteelt-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Bestel Paper Plug Trays",
+            "en": "Order Paper Plug Trays",
+            "de": "Paper Plug Trays bestellen"
+          },
+          "target": "/shop",
+          "styling": "bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-soft hover:shadow-soft-md"
+        },
+        {
+          "cta_id": "groenteteelt-hero-secondary",
+          "type": "secondary",
+          "position": "hero",
+          "text": {
+            "nl": "Download Groenteteelt Gids",
+            "en": "Download Vegetable Guide",
+            "de": "Gemüseanbau-Leitfaden herunterladen"
+          },
+          "target": "/products",
+          "styling": "bg-white hover:bg-lumora-green-50 text-lumora-green-500 border-2 border-lumora-green-500 font-semibold px-8 py-4 rounded-xl"
+        },
+        {
+          "cta_id": "groenteteelt-mid-content",
+          "type": "tertiary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Start Pilot Test - Bestel Nu",
+            "en": "Start Pilot Test - Order Now",
+            "de": "Pilottest starten - Jetzt bestellen"
+          },
+          "target": "/shop",
+          "styling": "bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-soft hover:shadow-soft-md"
+        }
+      ],
+      "word_count": {
+        "nl": 1687,
+        "en": 1645,
+        "de": 1702
+      },
+      "target_keywords": [
+        "paper plugs groenteteelt",
+        "tomaten kweken paper plugs",
+        "paprika propagatie",
+        "komkommer kweektrays",
+        "groenteteelt professioneel"
+      ]
+    },
+    {
+      "page_slug": "paper-plugs-sierplanten",
+      "page_title": {
+        "nl": "Efficiënte Sierplantenproductie met Paper Plug Trays",
+        "en": "Efficient Ornamental Plant Production with Paper Plug Trays",
+        "de": "Effiziente Zierpflanzenproduktion mit Paper Plug Trays"
+      },
+      "url_paths": {
+        "nl": "/seo/toepassingen/paper-plugs-sierplanten",
+        "en": "/seo/applications/paper-plugs-ornamentals",
+        "de": "/seo/anwendungen/paper-plugs-zierpflanzen"
+      },
+      "ctas": [
+        {
+          "cta_id": "sierplanten-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Bestel Paper Plug Trays",
+            "en": "Order Paper Plug Trays",
+            "de": "Paper Plug Trays bestellen"
+          },
+          "target": "/shop",
+          "styling": "bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-soft hover:shadow-soft-md"
+        },
+        {
+          "cta_id": "sierplanten-hero-secondary",
+          "type": "secondary",
+          "position": "hero",
+          "text": {
+            "nl": "Download Sierplanten Gids",
+            "en": "Download Ornamentals Guide",
+            "de": "Zierpflanzen-Leitfaden herunterladen"
+          },
+          "target": "/products",
+          "styling": "bg-white hover:bg-lumora-green-50 text-lumora-green-500 border-2 border-lumora-green-500 font-semibold px-8 py-4 rounded-xl"
+        },
+        {
+          "cta_id": "sierplanten-mid-content",
+          "type": "tertiary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Start Pilot Test - Bestel Nu",
+            "en": "Start Pilot Test - Order Now",
+            "de": "Pilottest starten - Jetzt bestellen"
+          },
+          "target": "/shop",
+          "styling": "bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-soft hover:shadow-soft-md"
+        }
+      ],
+      "word_count": {
+        "nl": 1623,
+        "en": 1598,
+        "de": 1654
+      },
+      "target_keywords": [
+        "paper plugs sierplanten",
+        "bloementeelt paper plugs",
+        "ornamentals propagatie",
+        "vaste planten kweken",
+        "containerteelt"
+      ]
+    }
+  ],
+  "remaining_subpillars": [
+    {
+      "subpillar": "2.3",
+      "title": "Paper Plugs voor Kruiden",
+      "status": "structure_only",
+      "url_pattern": "/seo/toepassingen/paper-plugs-kruiden"
+    },
+    {
+      "subpillar": "2.4",
+      "title": "Paper Plugs voor Cannabis",
+      "status": "structure_only",
+      "url_pattern": "/seo/toepassingen/paper-plugs-cannabis"
+    },
+    {
+      "subpillar": "2.5",
+      "title": "Paper Plugs voor Boomkwekerij",
+      "status": "structure_only",
+      "url_pattern": "/seo/toepassingen/paper-plugs-boomkwekerij"
+    }
+  ],
+  "cta_summary": {
+    "total_unique_ctas": 6,
+    "primary_ctas": 2,
+    "secondary_ctas": 2,
+    "tertiary_ctas": 2,
+    "most_common_target": "/shop",
+    "avg_ctas_per_page": 3
+  },
+  "seo_metrics": {
+    "avg_word_count_nl": 1655,
+    "avg_word_count_en": 1622,
+    "avg_word_count_de": 1678,
+    "target_range": "1200-1800 words",
+    "compliance": "100%"
+  },
+  "design_compliance": {
+    "lumora_brand_colors": true,
+    "typography_inter_playfair": true,
+    "soft_shadows": true,
+    "rounded_corners": true,
+    "responsive_design": true,
+    "schema_org_markup": true,
+    "multilingual_support": true,
+    "internal_linking": true
+  }
+}

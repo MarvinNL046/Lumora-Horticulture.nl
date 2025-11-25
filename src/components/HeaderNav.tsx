@@ -49,24 +49,25 @@ const getLocaleFromDomain = (domain?: string): string => {
 }
 
 // Helper function to create a link for a different locale
-const createLocalizedUrl = (locale: string, pathname: string): string => {
+// isLocalDev parameter is passed from component to ensure hydration-safe rendering
+const createLocalizedUrl = (locale: string, pathname: string, isLocalDev: boolean = false): string => {
   // Get the domain for this locale
   const domain = localeMap[locale as keyof typeof localeMap];
-  
+
   // First get the current locale from the pathname
   const currentLocale = getCurrentLocaleFromPath(pathname);
-  
+
   // Convert the current path back to base path
   const basePath = basePathFromLocalizedPath(pathname, currentLocale);
-  
+
   // Then localize it for the target locale
   const localizedPath = localizePathForLocale(basePath, locale);
-  
-  // For local development, use locale in path
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))) {
+
+  // For local development, use locale in path (only when isLocalDev is explicitly true)
+  if (isLocalDev) {
     return `/${locale}${localizedPath}`;
   }
-  
+
   // For production, use full domain
   return `https://${domain}${localizedPath}`;
 }
@@ -82,6 +83,13 @@ export default function HeaderNav() {
   const params = useParams()
   const { getTotalItems, setIsCartOpen } = useCart()
 
+  // Track if component is mounted (for hydration-safe rendering)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Get current locale from URL or domain
   const getCurrentLocale = (): 'nl' | 'en' | 'de' => {
     // If we have a locale in the URL params, use that
@@ -89,8 +97,8 @@ export default function HeaderNav() {
       return params.locale as 'nl' | 'en' | 'de';
     }
 
-    // Otherwise try to determine from domain
-    if (typeof window !== 'undefined') {
+    // Otherwise try to determine from domain (only after mount to avoid hydration issues)
+    if (isMounted && typeof window !== 'undefined') {
       return getLocaleFromDomain(window.location.hostname) as 'nl' | 'en' | 'de';
     }
 
@@ -119,6 +127,10 @@ export default function HeaderNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const cartItemCount = getTotalItems()
+
+  // Determine if we're in local development (hydration-safe)
+  const isLocalDev = isMounted && typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))
   
   // Handle scroll for transparent/solid header effect
   useEffect(() => {
@@ -215,7 +227,7 @@ export default function HeaderNav() {
                 {Object.keys(localeMap).map((locale) => (
                   <a
                     key={locale}
-                    href={createLocalizedUrl(locale, pathWithoutLocale)}
+                    href={createLocalizedUrl(locale, pathWithoutLocale, isLocalDev)}
                     className={`uppercase text-sm font-medium px-2 py-1 rounded-md transition-all duration-300 ${
                       locale === currentLocale
                         ? 'bg-lumora-dark-700/80 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'
@@ -377,7 +389,7 @@ export default function HeaderNav() {
                 {Object.keys(localeMap).map((locale) => (
                   <a
                     key={locale}
-                    href={createLocalizedUrl(locale, pathWithoutLocale)}
+                    href={createLocalizedUrl(locale, pathWithoutLocale, isLocalDev)}
                     className={`uppercase text-sm font-medium px-3 py-2 rounded-xl transition-all duration-300 ${
                       locale === currentLocale
                         ? 'bg-lumora-dark-700 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'

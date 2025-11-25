@@ -1,0 +1,419 @@
+{
+  "pillar": "Duurzaamheid & Certificeringen",
+  "pillarDescription": "Environmental impact, sustainability credentials, circular economy, and compliance documentation for professional horticulture",
+  "defaultCTA": {
+    "primary": {
+      "nl": {
+        "text": "Bekijk duurzame paper plugs",
+        "href": "/nl/winkel/paper-plug-tray-84"
+      },
+      "en": {
+        "text": "View sustainable paper plugs",
+        "href": "/en/shop/paper-plug-tray-84"
+      },
+      "de": {
+        "text": "Nachhaltige Papier-Plugs ansehen",
+        "href": "/de/shop/paper-plug-tray-84"
+      }
+    },
+    "secondary": {
+      "nl": {
+        "text": "Download certificaten",
+        "href": "/nl/contact"
+      },
+      "en": {
+        "text": "Download certificates",
+        "href": "/en/contact"
+      },
+      "de": {
+        "text": "Zertifikate herunterladen",
+        "href": "/de/contact"
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "carbon-footprint-kweekmateriaal",
+      "title": {
+        "nl": "Carbon Footprint van Kweekmateriaal",
+        "en": "Carbon Footprint of Growing Media",
+        "de": "Carbon Footprint von Anzuchtmaterial"
+      },
+      "focus": "Environmental impact quantification and CO2 reduction",
+      "cta": {
+        "primary": {
+          "nl": {
+            "text": "Verlaag uw CO2-uitstoot",
+            "href": "/nl/winkel/paper-plug-tray-84"
+          },
+          "en": {
+            "text": "Reduce your CO2 emissions",
+            "href": "/en/shop/paper-plug-tray-84"
+          },
+          "de": {
+            "text": "Reduzieren Sie Ihre CO2-Emissionen",
+            "href": "/de/shop/paper-plug-tray-84"
+          }
+        },
+        "secondary": {
+          "nl": {
+            "text": "Vraag LCA-rapport aan",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Request LCA report",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "LCA-Bericht anfordern",
+            "href": "/de/contact"
+          }
+        }
+      },
+      "keyMetrics": [
+        "70% lower CO2 emissions vs rockwool/plastic",
+        "2.8 kg CO2eq per 1,000 plugs (vs 9.4-12.1 kg)",
+        "ISO 14040 LCA certified",
+        "Carbon Trust verified"
+      ],
+      "targetAudience": "Sustainability managers, growers calculating carbon footprint, ESG reporting teams",
+      "conversionGoal": "LCA report downloads, carbon calculator usage, product inquiry for CO2 reduction"
+    },
+    {
+      "slug": "composteerbaarheid-praktijk",
+      "title": {
+        "nl": "Composteerbaarheid in de Praktijk",
+        "en": "Compostability in Practice",
+        "de": "Kompostierbarkeit in der Praxis"
+      },
+      "focus": "Practical composting processes and soil enrichment benefits",
+      "cta": {
+        "primary": {
+          "nl": {
+            "text": "Start met composteren",
+            "href": "/nl/winkel/paper-plug-tray-84"
+          },
+          "en": {
+            "text": "Start composting today",
+            "href": "/en/shop/paper-plug-tray-84"
+          },
+          "de": {
+            "text": "Beginnen Sie mit Kompostierung",
+            "href": "/de/shop/paper-plug-tray-84"
+          }
+        },
+        "secondary": {
+          "nl": {
+            "text": "Download composteerhandleiding",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Download composting guide",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "Kompostierungsanleitung herunterladen",
+            "href": "/de/contact"
+          }
+        }
+      },
+      "keyMetrics": [
+        "100% biodegradable within 60-90 days",
+        "EN 13432 certified compostability",
+        "95.3% biodegradation rate (exceeds 90% standard)",
+        "Zero waste stream, 100% composted"
+      ],
+      "targetAudience": "Operations managers implementing circular systems, organic growers, waste management coordinators",
+      "conversionGoal": "Composting guide downloads, product trial orders, consultation bookings"
+    },
+    {
+      "slug": "eu-duurzaamheidsnormen",
+      "title": {
+        "nl": "EU Duurzaamheidsnormen voor Tuinbouw",
+        "en": "EU Sustainability Standards for Horticulture",
+        "de": "EU-Nachhaltigkeitsstandards für Gartenbau"
+      },
+      "focus": "Regulatory compliance with EU Green Deal, Farm to Fork, Circular Economy Action Plan",
+      "cta": {
+        "primary": {
+          "nl": {
+            "text": "Controleer compliance",
+            "href": "/nl/winkel/paper-plug-tray-84"
+          },
+          "en": {
+            "text": "Check compliance",
+            "href": "/en/shop/paper-plug-tray-84"
+          },
+          "de": {
+            "text": "Compliance prüfen",
+            "href": "/de/shop/paper-plug-tray-84"
+          }
+        },
+        "secondary": {
+          "nl": {
+            "text": "Download compliance checklist",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Download compliance checklist",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "Compliance-Checkliste herunterladen",
+            "href": "/de/contact"
+          }
+        }
+      },
+      "keyMetrics": [
+        "EU Green Deal aligned",
+        "EU Ecolabel requirements met",
+        "GPP core and comprehensive criteria fulfilled",
+        "Single-Use Plastics Directive compliant"
+      ],
+      "targetAudience": "Compliance officers, procurement managers, sustainability directors, public sector buyers",
+      "conversionGoal": "Compliance documentation requests, GPP tender support inquiries, bulk orders"
+    },
+    {
+      "slug": "subsidies-duurzame-kweek",
+      "title": {
+        "nl": "Subsidies voor Duurzame Kweek",
+        "en": "Subsidies for Sustainable Growing",
+        "de": "Subventionen für nachhaltigen Anbau"
+      },
+      "focus": "Financial support programs (SDE++, CAP, LIFE) for sustainable growing media transitions",
+      "cta": {
+        "primary": {
+          "nl": {
+            "text": "Bereken uw subsidie",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Calculate your subsidy",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "Berechnen Sie Ihre Subvention",
+            "href": "/de/contact"
+          }
+        },
+        "secondary": {
+          "nl": {
+            "text": "Download subsidiegids",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Download funding guide",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "Finanzierungsleitfaden herunterladen",
+            "href": "/de/contact"
+          }
+        }
+      },
+      "keyMetrics": [
+        "SDE++: €120,000 over 15 years (avg. greenhouse)",
+        "MIA/Vamil: 35% investment cost reduction",
+        "CAP eco-schemes: €387-€1,180/hectare annually",
+        "Combined subsidies can exceed initial investment costs"
+      ],
+      "targetAudience": "Financial managers, farm owners, investment decision-makers, subsidy consultants",
+      "conversionGoal": "Subsidy consultation bookings, eligibility assessments, documentation package downloads"
+    },
+    {
+      "slug": "corporate-sustainability-reporting",
+      "title": {
+        "nl": "Corporate Sustainability Reporting",
+        "en": "Corporate Sustainability Reporting",
+        "de": "Corporate Sustainability Reporting"
+      },
+      "focus": "CSRD, ESG, GRI, CDP reporting support with verified growing media data",
+      "cta": {
+        "primary": {
+          "nl": {
+            "text": "Vraag rapportagedata aan",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Request reporting data",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "Berichtsdaten anfordern",
+            "href": "/de/contact"
+          }
+        },
+        "secondary": {
+          "nl": {
+            "text": "Download ESG template",
+            "href": "/nl/contact"
+          },
+          "en": {
+            "text": "Download ESG template",
+            "href": "/en/contact"
+          },
+          "de": {
+            "text": "ESG-Vorlage herunterladen",
+            "href": "/de/contact"
+          }
+        }
+      },
+      "keyMetrics": [
+        "Full Scope 3 Category 1 data available",
+        "ISO 14040/14044 compliant LCA",
+        "GRI 301, 306 pre-filled templates",
+        "CSRD ESRS E1, E5 alignment"
+      ],
+      "targetAudience": "Corporate sustainability officers, ESG reporting teams, investor relations, CFOs of large growers",
+      "conversionGoal": "LCA data package downloads, ESG consultation bookings, B2B partnership inquiries"
+    }
+  ],
+  "crossLinkingStrategy": {
+    "internalLinks": [
+      {
+        "from": "carbon-footprint-kweekmateriaal",
+        "to": ["composteerbaarheid-praktijk", "corporate-sustainability-reporting", "eu-duurzaamheidsnormen"],
+        "context": "Link CO2 data to composting benefits, reporting usage, and compliance requirements"
+      },
+      {
+        "from": "composteerbaarheid-praktijk",
+        "to": ["carbon-footprint-kweekmateriaal", "eu-duurzaamheidsnormen", "subsidies-duurzame-kweek"],
+        "context": "Link composting to carbon sequestration, circular economy standards, and organic farming subsidies"
+      },
+      {
+        "from": "eu-duurzaamheidsnormen",
+        "to": ["subsidies-duurzame-kweek", "corporate-sustainability-reporting", "carbon-footprint-kweekmateriaal"],
+        "context": "Connect compliance to funding opportunities, reporting requirements, and environmental metrics"
+      },
+      {
+        "from": "subsidies-duurzame-kweek",
+        "to": ["carbon-footprint-kweekmateriaal", "eu-duurzaamheidsnormen", "corporate-sustainability-reporting"],
+        "context": "Link subsidies to CO2 reduction data, compliance justifications, and ESG benefits"
+      },
+      {
+        "from": "corporate-sustainability-reporting",
+        "to": ["carbon-footprint-kweekmateriaal", "composteerbaarheid-praktijk", "eu-duurzaamheidsnormen"],
+        "context": "Connect reporting to LCA data sources, circular economy indicators, and regulatory frameworks"
+      }
+    ],
+    "externalAuthorityLinks": {
+      "carbon-footprint": [
+        "ISO 14040/14044 standards",
+        "Carbon Trust methodology",
+        "IPCC GHG calculation guidelines"
+      ],
+      "composteerbaarheid": [
+        "EN 13432 standard documentation",
+        "European Bioplastics Association",
+        "OK Compost certification body"
+      ],
+      "eu-standards": [
+        "European Commission Green Deal portal",
+        "EU Ecolabel criteria",
+        "GPP criteria documents"
+      ],
+      "subsidies": [
+        "RVO.nl (Dutch subsidies)",
+        "European Commission funding portal",
+        "National agricultural agencies"
+      ],
+      "reporting": [
+        "EFRAG ESRS portal",
+        "GRI Standards download",
+        "CDP platform",
+        "TCFD website"
+      ]
+    }
+  },
+  "seoStrategy": {
+    "pillarKeywords": [
+      "duurzaam kweekmateriaal",
+      "carbon footprint tuinbouw",
+      "composteerbaarheid glastuinbouw",
+      "EU duurzaamheidsnormen",
+      "circulaire economie tuinbouw"
+    ],
+    "longTailKeywords": [
+      "carbon footprint berekenen kweekmateriaal",
+      "EN 13432 certificering paperpot",
+      "SDE++ subsidie glastuinbouw",
+      "CSRD rapportage tuinbouw",
+      "EU Green Deal compliance kassen",
+      "composteerbare kweekbakken",
+      "scope 3 emissies growing media"
+    ],
+    "semanticClusters": {
+      "environmental-impact": [
+        "CO2 emissions",
+        "carbon footprint",
+        "life cycle analysis",
+        "environmental footprint",
+        "climate impact"
+      ],
+      "circular-economy": [
+        "compostability",
+        "biodegradability",
+        "zero waste",
+        "circular design",
+        "closed-loop system"
+      ],
+      "compliance-certification": [
+        "EN 13432",
+        "FSC certified",
+        "ISO 14040",
+        "EU Ecolabel",
+        "Carbon Trust verified"
+      ],
+      "financial-support": [
+        "subsidies",
+        "grants",
+        "tax credits",
+        "SDE++",
+        "CAP eco-schemes"
+      ],
+      "reporting-frameworks": [
+        "CSRD",
+        "ESG reporting",
+        "GRI standards",
+        "CDP disclosure",
+        "TCFD"
+      ]
+    }
+  },
+  "conversionFunnels": {
+    "awareness": {
+      "pages": ["carbon-footprint-kweekmateriaal", "eu-duurzaamheidsnormen"],
+      "goals": ["Educational content consumption", "Brand awareness", "Problem recognition"],
+      "metrics": ["Time on page >3 min", "Scroll depth >75%", "Return visits"]
+    },
+    "consideration": {
+      "pages": ["composteerbaarheid-praktijk", "subsidies-duurzame-kweek"],
+      "goals": ["Solution evaluation", "Financial justification", "Technical feasibility"],
+      "metrics": ["Guide downloads", "Calculator usage", "Multiple page visits"]
+    },
+    "decision": {
+      "pages": ["corporate-sustainability-reporting", "product pages"],
+      "goals": ["Purchase decision", "Supplier qualification", "Consultation booking"],
+      "metrics": ["Contact form submissions", "Quote requests", "Product inquiries"]
+    }
+  },
+  "contentUpdateSchedule": {
+    "quarterly": [
+      "Subsidy program changes and deadlines",
+      "New EU regulations and implementation dates",
+      "Updated carbon footprint data from annual LCA reviews"
+    ],
+    "annually": [
+      "CSRD reporting framework updates",
+      "New certification standards",
+      "Case study additions",
+      "Statistical data refreshes"
+    ],
+    "asNeeded": [
+      "Breaking regulatory announcements",
+      "Major subsidy program launches",
+      "Significant carbon footprint improvements",
+      "New third-party verifications"
+    ]
+  }
+}

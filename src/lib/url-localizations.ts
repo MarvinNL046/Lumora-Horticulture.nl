@@ -36,6 +36,17 @@ export const basePaths = {
   steenwolLongen: 'steenwol-longen',
   glaswolAanraken: 'glaswol-aanraken',
   levensduurSteenwol: 'levensduur-steenwol',
+  // New SEO Content Categories
+  propagatieTechnologie: 'propagatie-technologie',
+  praktischeToepassingen: 'praktische-toepassingen',
+  efficiencieRoi: 'efficiëntie-roi',
+  technischeSpecs: 'technische-specs',
+  duurzaamheid: 'duurzaamheid',
+  troubleshooting: 'troubleshooting',
+  innovatieTrends: 'innovatie-trends',
+  regionaleMarkten: 'regionale-markten',
+  supplyChain: 'supply-chain',
+  caseStudies: 'case-studies',
 }
 
 // URL path translations for each locale
@@ -69,6 +80,14 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'steenwol-longen',
     'glaswol-aanraken': 'glaswol-aanraken',
     'levensduur-steenwol': 'levensduur-steenwol',
+    // New SEO Content Categories (Dutch - same as base)
+    'propagatie-technologie': 'propagatie-technologie',
+    'praktische-toepassingen': 'praktische-toepassingen',
+    'efficiëntie-roi': 'efficiëntie-roi',
+    'technische-specs': 'technische-specs',
+    'regionale-markten': 'regionale-markten',
+    'supply-chain': 'supply-chain',
+    'case-studies': 'case-studies',
     // contact is the same in Dutch, no need to translate
   },
   
@@ -85,6 +104,17 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'rockwool-lungs',
     'glaswol-aanraken': 'touching-fiberglass',
     'levensduur-steenwol': 'rockwool-lifespan',
+    // New SEO Content Categories (English translations)
+    'propagatie-technologie': 'propagation-technology',
+    'praktische-toepassingen': 'practical-applications',
+    'efficiëntie-roi': 'efficiency-roi',
+    'technische-specs': 'technical-specifications',
+    'duurzaamheid': 'sustainability',
+    'troubleshooting': 'troubleshooting',
+    'innovatie-trends': 'innovation-trends',
+    'regionale-markten': 'regional-markets',
+    'supply-chain': 'supply-chain',
+    'case-studies': 'case-studies',
     // No translation needed for other paths as they match the base paths
   },
   
@@ -118,6 +148,17 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'steinwolle-lunge',
     'glaswol-aanraken': 'glaswolle-beruehren',
     'levensduur-steenwol': 'steinwolle-lebensdauer',
+    // New SEO Content Categories (German translations)
+    'propagatie-technologie': 'vermehrungstechnologie',
+    'praktische-toepassingen': 'praktische-anwendungen',
+    'efficiëntie-roi': 'effizienz-roi',
+    'technische-specs': 'technische-spezifikationen',
+    'duurzaamheid': 'nachhaltigkeit',
+    'troubleshooting': 'fehlerbehebung',
+    'innovatie-trends': 'innovation-trends',
+    'regionale-markten': 'regionale-maerkte',
+    'supply-chain': 'lieferkette',
+    'case-studies': 'fallstudien',
   }
 }
 

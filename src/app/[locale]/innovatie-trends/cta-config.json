@@ -1,0 +1,379 @@
+{
+  "pillar": "Innovatie & Toekomst Trends",
+  "pillar_slug": "innovatie-trends",
+  "description": "CTA configurations for Pillar 7: Innovation and Future Trends pages",
+  "pages": [
+    {
+      "page": "Automatisering in Propagatie",
+      "slug": "automatisering-propagatie",
+      "primary_cta": {
+        "nl": {
+          "title": "Start uw Automatiserings Journey",
+          "description": "Ontdek hoe paper plug trays uw automatiseringsprojecten versnellen",
+          "button_primary": "Plan Automatiserings-Scan",
+          "button_secondary": "Download ROI Calculator",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/roi-calculator"
+        },
+        "en": {
+          "title": "Start Your Automation Journey",
+          "description": "Discover how paper plug trays accelerate your automation projects",
+          "button_primary": "Plan Automation Scan",
+          "button_secondary": "Download ROI Calculator",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/roi-calculator"
+        },
+        "de": {
+          "title": "Starten Sie Ihre Automatisierungs-Reise",
+          "description": "Entdecken Sie, wie Paper Plug Trays Ihre Automatisierungsprojekte beschleunigen",
+          "button_primary": "Automatisierungs-Scan Planen",
+          "button_secondary": "ROI-Rechner Herunterladen",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/roi-calculator"
+        }
+      },
+      "conversion_goal": "automation_consultation",
+      "target_audience": "medium-large nurseries, tech-forward growers",
+      "intent": "high-intent (investment decision)"
+    },
+    {
+      "page": "Verticale Teelt met Paper Plugs",
+      "slug": "verticale-teelt-paper-plugs",
+      "primary_cta": {
+        "nl": {
+          "title": "Start uw Verticale Teelt Project",
+          "description": "Ontdek hoe paper plug trays uw urban farming succesvol maken",
+          "button_primary": "Plan Verticale Farm Consultatie",
+          "button_secondary": "Download Business Case Template",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/vertical-farming-business-case"
+        },
+        "en": {
+          "title": "Start Your Vertical Farming Project",
+          "description": "Discover how paper plug trays make your urban farming successful",
+          "button_primary": "Plan Vertical Farm Consultation",
+          "button_secondary": "Download Business Case Template",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/vertical-farming-business-case"
+        },
+        "de": {
+          "title": "Starten Sie Ihr Vertikales Anbau-Projekt",
+          "description": "Entdecken Sie, wie Paper Plug Trays Ihr Urban Farming erfolgreich machen",
+          "button_primary": "Vertikale Farm Beratung Planen",
+          "button_secondary": "Business Case Template Herunterladen",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/vertical-farming-business-case"
+        }
+      },
+      "conversion_goal": "vertical_farming_consultation",
+      "target_audience": "urban farmers, CEA operators, startups",
+      "intent": "high-intent (business planning)"
+    },
+    {
+      "page": "Data-Driven Kweek Optimalisatie",
+      "slug": "data-driven-kweek",
+      "primary_cta": {
+        "nl": {
+          "title": "Ontdek Data-Driven Teelt",
+          "description": "Transformeer uw propagatie met IoT-sensors en analytics",
+          "button_primary": "Vraag IoT Demo Aan",
+          "button_secondary": "Download Sensor Gids",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/iot-sensor-guide"
+        },
+        "en": {
+          "title": "Discover Data-Driven Growing",
+          "description": "Transform your propagation with IoT sensors and analytics",
+          "button_primary": "Request IoT Demo",
+          "button_secondary": "Download Sensor Guide",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/iot-sensor-guide"
+        },
+        "de": {
+          "title": "Entdecken Sie Datengesteuerten Anbau",
+          "description": "Transformieren Sie Ihre Vermehrung mit IoT-Sensoren und Analytik",
+          "button_primary": "IoT-Demo Anfordern",
+          "button_secondary": "Sensor-Leitfaden Herunterladen",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/iot-sensor-guide"
+        }
+      },
+      "conversion_goal": "iot_demo_request",
+      "target_audience": "tech-savvy growers, data-driven decision makers",
+      "intent": "medium-high intent (exploration phase)"
+    },
+    {
+      "page": "Nieuwe Materialen en Innovaties",
+      "slug": "nieuwe-materialen",
+      "primary_cta": {
+        "nl": {
+          "title": "Verken Materiaal Innovaties",
+          "description": "Blijf voorop met de nieuwste ontwikkelingen in kweekmedium",
+          "button_primary": "Ontvang Innovatie Updates",
+          "button_secondary": "Bekijk Material Science Research",
+          "link_primary": "/newsletter",
+          "link_secondary": "/resources/material-innovations"
+        },
+        "en": {
+          "title": "Explore Material Innovations",
+          "description": "Stay ahead with the latest developments in growing media",
+          "button_primary": "Receive Innovation Updates",
+          "button_secondary": "View Material Science Research",
+          "link_primary": "/newsletter",
+          "link_secondary": "/resources/material-innovations"
+        },
+        "de": {
+          "title": "Erkunden Sie Material-Innovationen",
+          "description": "Bleiben Sie vorne mit den neuesten Entwicklungen in Anzuchtmedien",
+          "button_primary": "Innovations-Updates Erhalten",
+          "button_secondary": "Materialwissenschaft Forschung Ansehen",
+          "link_primary": "/newsletter",
+          "link_secondary": "/resources/material-innovations"
+        }
+      },
+      "conversion_goal": "newsletter_signup",
+      "target_audience": "innovation-minded growers, sustainability advocates",
+      "intent": "medium intent (research/education)"
+    },
+    {
+      "page": "AI in Propagatie Management",
+      "slug": "ai-propagatie",
+      "primary_cta": {
+        "nl": {
+          "title": "Ontdek AI-Powered Teelt",
+          "description": "Zie hoe artificial intelligence uw propagatie optimaliseert",
+          "button_primary": "Plan AI Consultatie",
+          "button_secondary": "Download AI Use Cases",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/ai-propagation-use-cases"
+        },
+        "en": {
+          "title": "Discover AI-Powered Growing",
+          "description": "See how artificial intelligence optimizes your propagation",
+          "button_primary": "Plan AI Consultation",
+          "button_secondary": "Download AI Use Cases",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/ai-propagation-use-cases"
+        },
+        "de": {
+          "title": "Entdecken Sie KI-Gestützten Anbau",
+          "description": "Sehen Sie, wie künstliche Intelligenz Ihre Vermehrung optimiert",
+          "button_primary": "KI-Beratung Planen",
+          "button_secondary": "KI-Anwendungsfälle Herunterladen",
+          "link_primary": "/contact",
+          "link_secondary": "/resources/ai-propagation-use-cases"
+        }
+      },
+      "conversion_goal": "ai_consultation",
+      "target_audience": "forward-thinking growers, large operations",
+      "intent": "high intent (cutting-edge technology adoption)"
+    }
+  ],
+  "shared_ctas": {
+    "product_showcase": {
+      "nl": {
+        "title": "Bekijk Paper Plug Producten",
+        "description": "Ontdek onze propagatie-oplossingen voor innovatieve teeltsystemen",
+        "button": "Naar Productoverzicht",
+        "link": "/shop"
+      },
+      "en": {
+        "title": "View Paper Plug Products",
+        "description": "Discover our propagation solutions for innovative growing systems",
+        "button": "To Product Overview",
+        "link": "/shop"
+      },
+      "de": {
+        "title": "Paper Plug Produkte Ansehen",
+        "description": "Entdecken Sie unsere Vermehrungslösungen für innovative Anbausysteme",
+        "button": "Zur Produktübersicht",
+        "link": "/shop"
+      }
+    },
+    "innovation_newsletter": {
+      "nl": {
+        "title": "Blijf op de Hoogte van Innovaties",
+        "description": "Ontvang maandelijkse updates over nieuwe technologieën in propagatie",
+        "button": "Schrijf In voor Newsletter",
+        "link": "/newsletter",
+        "benefit_bullets": [
+          "Early access tot nieuwe producten",
+          "Case studies van innovatieve kwekers",
+          "Technologie trends en voorspellingen",
+          "Exclusieve webinar uitnodigingen"
+        ]
+      },
+      "en": {
+        "title": "Stay Updated on Innovations",
+        "description": "Receive monthly updates about new technologies in propagation",
+        "button": "Subscribe to Newsletter",
+        "link": "/newsletter",
+        "benefit_bullets": [
+          "Early access to new products",
+          "Case studies from innovative growers",
+          "Technology trends and predictions",
+          "Exclusive webinar invitations"
+        ]
+      },
+      "de": {
+        "title": "Bleiben Sie Über Innovationen Informiert",
+        "description": "Erhalten Sie monatliche Updates über neue Technologien in der Vermehrung",
+        "button": "Newsletter Abonnieren",
+        "link": "/newsletter",
+        "benefit_bullets": [
+          "Frühzeitiger Zugang zu neuen Produkten",
+          "Fallstudien innovativer Züchter",
+          "Technologie-Trends und Vorhersagen",
+          "Exklusive Webinar-Einladungen"
+        ]
+      }
+    },
+    "consultation_booking": {
+      "nl": {
+        "title": "Plan een Persoonlijk Gesprek",
+        "description": "Bespreek uw specifieke innovatie-doelen met onze experts",
+        "button": "Boek Consultatie",
+        "link": "/contact",
+        "consultation_types": [
+          "Automatisering & Robotica",
+          "Verticale Teelt Systemen",
+          "IoT & Data Analytics",
+          "AI Implementatie"
+        ]
+      },
+      "en": {
+        "title": "Schedule a Personal Meeting",
+        "description": "Discuss your specific innovation goals with our experts",
+        "button": "Book Consultation",
+        "link": "/contact",
+        "consultation_types": [
+          "Automation & Robotics",
+          "Vertical Growing Systems",
+          "IoT & Data Analytics",
+          "AI Implementation"
+        ]
+      },
+      "de": {
+        "title": "Planen Sie ein Persönliches Gespräch",
+        "description": "Besprechen Sie Ihre spezifischen Innovationsziele mit unseren Experten",
+        "button": "Beratung Buchen",
+        "link": "/contact",
+        "consultation_types": [
+          "Automatisierung & Robotik",
+          "Vertikale Anbausysteme",
+          "IoT & Datenanalyse",
+          "KI-Implementierung"
+        ]
+      }
+    }
+  },
+  "conversion_tracking": {
+    "automation_consultation": {
+      "event_name": "automation_consult_request",
+      "value": 500,
+      "category": "high_value_lead"
+    },
+    "vertical_farming_consultation": {
+      "event_name": "vertical_farm_consult_request",
+      "value": 750,
+      "category": "high_value_lead"
+    },
+    "iot_demo_request": {
+      "event_name": "iot_demo_request",
+      "value": 300,
+      "category": "medium_value_lead"
+    },
+    "newsletter_signup": {
+      "event_name": "newsletter_subscribe",
+      "value": 50,
+      "category": "engagement"
+    },
+    "ai_consultation": {
+      "event_name": "ai_consult_request",
+      "value": 600,
+      "category": "high_value_lead"
+    },
+    "resource_download": {
+      "event_name": "resource_download",
+      "value": 100,
+      "category": "lead_magnet"
+    }
+  },
+  "ab_testing": {
+    "enabled": true,
+    "test_variants": [
+      {
+        "name": "direct_consultation",
+        "description": "Emphasize immediate consultation booking",
+        "primary_button_text": "Plan Direct Gesprek"
+      },
+      {
+        "name": "educational_first",
+        "description": "Lead with downloadable resources",
+        "primary_button_text": "Download Gratis Gids"
+      },
+      {
+        "name": "hybrid_approach",
+        "description": "Balance consultation and resources",
+        "primary_button_text": "Verken Oplossingen"
+      }
+    ]
+  },
+  "followup_sequences": {
+    "automation_consultation": {
+      "email_1": {
+        "delay_hours": 1,
+        "subject_nl": "Bevestiging: Uw Automatiserings-Scan Aanvraag",
+        "subject_en": "Confirmation: Your Automation Scan Request",
+        "content_type": "confirmation + next steps"
+      },
+      "email_2": {
+        "delay_hours": 48,
+        "subject_nl": "Voorbereiding voor uw Automatiserings-Scan",
+        "subject_en": "Preparation for Your Automation Scan",
+        "content_type": "checklist + questions to prepare"
+      },
+      "email_3": {
+        "delay_hours": 168,
+        "subject_nl": "Case Studies: Succesvolle Automatisering",
+        "subject_en": "Case Studies: Successful Automation",
+        "content_type": "social proof + testimonials"
+      }
+    },
+    "vertical_farming_consultation": {
+      "email_1": {
+        "delay_hours": 1,
+        "subject_nl": "Welkom bij de Verticale Teelt Revolutie",
+        "subject_en": "Welcome to the Vertical Farming Revolution",
+        "content_type": "confirmation + inspiration"
+      },
+      "email_2": {
+        "delay_hours": 72,
+        "subject_nl": "Verticale Teelt Business Model Template",
+        "subject_en": "Vertical Farming Business Model Template",
+        "content_type": "spreadsheet + financial projections"
+      }
+    },
+    "resource_download": {
+      "email_1": {
+        "delay_hours": 24,
+        "subject_nl": "Vond u de Gids Waardevol?",
+        "subject_en": "Did You Find the Guide Valuable?",
+        "content_type": "feedback request + related resources"
+      },
+      "email_2": {
+        "delay_hours": 168,
+        "subject_nl": "Volgende Stap: Persoonlijk Advies",
+        "subject_en": "Next Step: Personal Consultation",
+        "content_type": "soft CTA for consultation"
+      }
+    }
+  },
+  "notes": {
+    "implementation": "Use these CTAs in the corresponding page components. Track conversions via Google Analytics 4 events.",
+    "localization": "All CTAs are fully localized for NL, EN, DE markets.",
+    "optimization": "Run A/B tests quarterly to optimize conversion rates. Current baseline: 3-5% for high-intent CTAs.",
+    "resource_creation": "Downloadable resources (ROI calculators, guides, templates) need to be created separately.",
+    "consultation_flow": "Consultation requests should be routed to sales team with page context and user journey data."
+  }
+}

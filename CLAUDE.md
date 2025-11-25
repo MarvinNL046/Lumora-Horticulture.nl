@@ -94,7 +94,42 @@ URL paths are localized per domain:
 
 **Shadows**: Custom soft shadows (`shadow-soft`, `shadow-soft-md`, `shadow-soft-lg`)
 
+### SEO Content Architecture
+
+The site includes **50+ SEO landing pages** organized into 10 thematic categories at the root level (not under `/seo/`):
+
+**SEO Categories** (with localized URLs):
+- `propagatie-technologie/` → `propagation-technology/` (EN) → `vermehrungstechnologie/` (DE)
+- `praktische-toepassingen/` → `practical-applications/` (EN) → `praktische-anwendungen/` (DE)
+- `efficiëntie-roi/` → `efficiency-roi/` (EN) → `effizienz-roi/` (DE)
+- `technische-specs/` → `technical-specifications/` (EN) → `technische-spezifikationen/` (DE)
+- `duurzaamheid/` → `sustainability/` (EN) → `nachhaltigkeit/` (DE)
+- `troubleshooting/` (same across all locales)
+- `innovatie-trends/` → `innovation-trends/` (EN/DE same)
+- `regionale-markten/` → `regional-markets/` (EN) → `regionale-maerkte/` (DE)
+- `supply-chain/` (same across all locales)
+- `case-studies/` → (same EN) → `fallstudien/` (DE)
+
+**Important**: `praktische-toepassingen` was renamed from `toepassingen` to avoid conflict with the existing `/applications` page which translates to `/toepassingen` in Dutch.
+
+**Sitemap Configuration** (`src/lib/sitemap-generator.ts`):
+- SEO category index pages: priority 0.80, weekly changefreq
+- SEO content pages: priority 0.75, monthly changefreq
+- Automatically generates domain-specific sitemaps for .nl, .com, .de
+
 ### Key Components & Patterns
+
+**Homepage** (`src/app/[locale]/HomeClient.tsx`):
+- B2B-focused design with trust signals and conversion elements
+- Trust badges (EU certified, 15+ years, 24-48h delivery, 100% sustainable)
+- Social proof (testimonials with ratings, customer statistics)
+- Structured data (JSON-LD) for SEO enhancement
+- FAQ accordion, B2B benefits with ROI metrics
+
+**Footer** (`src/components/Footer.tsx`):
+- 5-column layout with dedicated "Kennisbank" (Knowledge Base) section
+- Links to best SEO content from each category
+- Newsletter subscription, social media links, language switcher
 
 **Product Pages**:
 - `/src/app/[locale]/products/ProductsClient.tsx` - Marketing product overview with detailed specs
@@ -131,6 +166,22 @@ NEXT_PUBLIC_SITE_URL= # Production URL for sitemap generation
 ```
 
 ## Important Development Notes
+
+### JSX Syntax in Content Pages
+
+When creating or editing SEO content pages, **always escape comparison operators in JSX**:
+- Use `&lt;` instead of `<` (e.g., "temperature &lt;5°C")
+- Use `&gt;` instead of `>` (e.g., "humidity &gt;60%")
+- These unescaped operators cause TypeScript/build errors
+
+**Example**:
+```typescript
+// ❌ Wrong - will cause build error
+<li>Temperature variations (<5°C)</li>
+
+// ✅ Correct - properly escaped
+<li>Temperature variations (&lt;5°C)</li>
+```
 
 ### Product Data Updates
 

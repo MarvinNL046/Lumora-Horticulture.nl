@@ -1,0 +1,346 @@
+{
+  "pillar": "supply-chain",
+  "pillar_title": "Supply Chain & Logistiek",
+  "description": "Professionele gidsen voor inkoop, opslag, voorraad management en logistieke optimalisatie van teeltmateriaal",
+
+  "cta_variants": {
+    "inkoop_leveranciersselectie": {
+      "page": "inkoop-leveranciersselectie",
+      "primary_cta": {
+        "title": "Optimaliseer Uw Inkoop Proces",
+        "description": "Lumora Horticulture biedt betrouwbare kwaliteit, transparante prijzen en professionele service. Ervaar het verschil van een strategische partner die uw teeltproces begrijpt.",
+        "buttons": [
+          {
+            "text": "Bekijk Ons Assortiment",
+            "link": "/winkel",
+            "style": "primary",
+            "icon": "arrow"
+          },
+          {
+            "text": "Vraag Offerte Aan",
+            "link": "/contact",
+            "style": "secondary",
+            "icon": "none"
+          }
+        ]
+      },
+      "related_topics": [
+        {
+          "title": "Opslag en Houdbaarheid",
+          "description": "Optimale opslagcondities en houdbaarheid maximalisatie voor teeltmateriaal",
+          "link": "/seo/supply-chain/opslag-houdbaarheid",
+          "icon": "shield"
+        },
+        {
+          "title": "Bulkinkoop Voordelen",
+          "description": "Volume kortingen en kostenbesparingen door strategische inkoop",
+          "link": "/seo/supply-chain/bulkinkoop-voordelen",
+          "icon": "trending-up"
+        },
+        {
+          "title": "Just-In-Time Levering",
+          "description": "Voorraad optimalisatie met tijdige leveringen op maat",
+          "link": "/seo/supply-chain/just-in-time-levering",
+          "icon": "clock"
+        }
+      ]
+    },
+
+    "opslag_houdbaarheid": {
+      "page": "opslag-houdbaarheid",
+      "primary_cta": {
+        "title": "Kwaliteit Gegarandeerd",
+        "description": "Lumora Horticulture levert teeltmateriaal met optimale houdbaarheid garantie. Vers geproduceerd, perfect verpakt en professioneel opgeslagen voor maximale kwaliteit bij u.",
+        "buttons": [
+          {
+            "text": "Bekijk Ons Assortiment",
+            "link": "/winkel",
+            "style": "primary",
+            "icon": "arrow"
+          },
+          {
+            "text": "Advies Vragen",
+            "link": "/contact",
+            "style": "secondary",
+            "icon": "none"
+          }
+        ]
+      },
+      "related_topics": [
+        {
+          "title": "Inkoop & Leveranciers",
+          "description": "Professionele selectie en management van betrouwbare leveranciers",
+          "link": "/seo/supply-chain/inkoop-leveranciersselectie",
+          "icon": "shield"
+        },
+        {
+          "title": "Bulkinkoop Voordelen",
+          "description": "Volume kortingen en kostenbesparingen door strategische inkoop",
+          "link": "/seo/supply-chain/bulkinkoop-voordelen",
+          "icon": "package"
+        },
+        {
+          "title": "Just-In-Time Levering",
+          "description": "Voorraad optimalisatie met tijdige leveringen op maat",
+          "link": "/seo/supply-chain/just-in-time-levering",
+          "icon": "clock"
+        }
+      ]
+    },
+
+    "bulkinkoop_voordelen": {
+      "page": "bulkinkoop-voordelen",
+      "primary_cta": {
+        "title": "Profiteer van Volume Voordelen",
+        "description": "Bespaar tot 20% met slimme bulkinkoop. Lumora Horticulture biedt competitieve volume kortingen, flexibele betalingstermijnen en gratis levering vanaf €500.",
+        "buttons": [
+          {
+            "text": "Bekijk Volume Kortingen",
+            "link": "/winkel",
+            "style": "primary",
+            "icon": "arrow"
+          },
+          {
+            "text": "Offerte Aanvragen",
+            "link": "/contact",
+            "style": "secondary",
+            "icon": "none"
+          }
+        ]
+      },
+      "related_topics": [
+        {
+          "title": "Inkoop & Leveranciers",
+          "description": "Strategische leverancier selectie en contract onderhandelingen",
+          "link": "/seo/supply-chain/inkoop-leveranciersselectie",
+          "icon": "shield"
+        },
+        {
+          "title": "Just-In-Time Levering",
+          "description": "Voorraad optimalisatie als alternatief voor bulk opslag",
+          "link": "/seo/supply-chain/just-in-time-levering",
+          "icon": "clock"
+        },
+        {
+          "title": "Opslag en Houdbaarheid",
+          "description": "Optimale opslag voor uw bulk voorraad",
+          "link": "/seo/supply-chain/opslag-houdbaarheid",
+          "icon": "package"
+        }
+      ]
+    },
+
+    "just_in_time_levering": {
+      "page": "just-in-time-levering",
+      "primary_cta": {
+        "title": "Stroomlijn Uw Voorraad Management",
+        "description": "Verminder voorraad kosten met just-in-time leveringen van Lumora. Flexibele planning, betrouwbare levertijden en persoonlijke service voor optimale teelt continuïteit.",
+        "buttons": [
+          {
+            "text": "Plan Uw Leveringen",
+            "link": "/contact",
+            "style": "primary",
+            "icon": "arrow"
+          },
+          {
+            "text": "Bekijk Producten",
+            "link": "/winkel",
+            "style": "secondary",
+            "icon": "none"
+          }
+        ]
+      },
+      "related_topics": [
+        {
+          "title": "Bulkinkoop Voordelen",
+          "description": "Volume kortingen als alternatieve strategie",
+          "link": "/seo/supply-chain/bulkinkoop-voordelen",
+          "icon": "trending-up"
+        },
+        {
+          "title": "Opslag en Houdbaarheid",
+          "description": "Minimale opslag vereisten met JIT systemen",
+          "link": "/seo/supply-chain/opslag-houdbaarheid",
+          "icon": "package"
+        },
+        {
+          "title": "Inkoop & Leveranciers",
+          "description": "Selecteer betrouwbare JIT partners",
+          "link": "/seo/supply-chain/inkoop-leveranciersselectie",
+          "icon": "shield"
+        }
+      ]
+    },
+
+    "internationale_verzending": {
+      "page": "internationale-verzending",
+      "primary_cta": {
+        "title": "Internationale Levering Gemakkelijk Gemaakt",
+        "description": "Lumora Horticulture verzorgt internationale leveringen naar heel Europa. Wij regelen douane, transport en zorgen voor veilige levering van uw teeltmateriaal.",
+        "buttons": [
+          {
+            "text": "Internationale Verzending Info",
+            "link": "/contact",
+            "style": "primary",
+            "icon": "arrow"
+          },
+          {
+            "text": "Bekijk Producten",
+            "link": "/winkel",
+            "style": "secondary",
+            "icon": "none"
+          }
+        ]
+      },
+      "related_topics": [
+        {
+          "title": "Inkoop & Leveranciers",
+          "description": "Internationale leverancier evaluatie en selectie",
+          "link": "/seo/supply-chain/inkoop-leveranciersselectie",
+          "icon": "shield"
+        },
+        {
+          "title": "Opslag en Houdbaarheid",
+          "description": "Kwaliteitsbehoud tijdens lange afstand transport",
+          "link": "/seo/supply-chain/opslag-houdbaarheid",
+          "icon": "package"
+        },
+        {
+          "title": "Bulkinkoop Voordelen",
+          "description": "Volume inkoop voor internationale orders",
+          "link": "/seo/supply-chain/bulkinkoop-voordelen",
+          "icon": "trending-up"
+        }
+      ]
+    }
+  },
+
+  "cross_pillar_links": {
+    "business_efficiency": {
+      "title": "Bedrijfsefficiëntie",
+      "relevant_topics": [
+        {
+          "title": "Kosten Calculaties",
+          "description": "Bereken totale ownership kosten en ROI",
+          "link": "/seo/business-efficiency/cost-calculations"
+        },
+        {
+          "title": "Budget Planning",
+          "description": "Jaarbudget en cash flow management",
+          "link": "/seo/business-efficiency/budget-planning"
+        }
+      ]
+    },
+    "product_guides": {
+      "title": "Product Gidsen",
+      "relevant_topics": [
+        {
+          "title": "Steenwol Pluggen",
+          "description": "Opslag en gebruik specificaties",
+          "link": "/seo/product-guides/steenwol-pluggen"
+        },
+        {
+          "title": "Paper Plugs",
+          "description": "Houdbaarheid en opslag requirements",
+          "link": "/seo/product-guides/paper-plugs"
+        }
+      ]
+    },
+    "sustainability": {
+      "title": "Duurzaamheid",
+      "relevant_topics": [
+        {
+          "title": "Transport Impact",
+          "description": "CO2 voetafdruk logistiek optimaliseren",
+          "link": "/seo/sustainability/transport-impact"
+        },
+        {
+          "title": "Circulaire Verpakking",
+          "description": "Herbruikbare en recycleerbare verpakkingen",
+          "link": "/seo/sustainability/circular-packaging"
+        }
+      ]
+    }
+  },
+
+  "targeted_messaging": {
+    "purchasing_managers": {
+      "pain_points": [
+        "Leverancier betrouwbaarheid",
+        "Kosten controle",
+        "Contract onderhandelingen",
+        "Prestatie monitoring"
+      ],
+      "value_propositions": [
+        "Transparante prijzen en voorwaarden",
+        "Volume kortingen tot 20%",
+        "Betrouwbare levertijden",
+        "Professionele service"
+      ]
+    },
+    "operations_managers": {
+      "pain_points": [
+        "Voorraad optimalisatie",
+        "Opslag capaciteit",
+        "Kwaliteitscontrole",
+        "Just-in-time coordinatie"
+      ],
+      "value_propositions": [
+        "Flexibele leverschema's",
+        "Kwaliteit garantie",
+        "Express levering beschikbaar",
+        "Minimale bestelgroottes"
+      ]
+    },
+    "financial_controllers": {
+      "pain_points": [
+        "Working capital binding",
+        "Cash flow management",
+        "Cost predictability",
+        "Budget planning"
+      ],
+      "value_propositions": [
+        "Competitieve prijzen",
+        "Flexibele betalingstermijnen",
+        "Volume discounts",
+        "Transparante cost structure"
+      ]
+    }
+  },
+
+  "conversion_optimization": {
+    "trust_signals": [
+      "MPS gecertificeerd",
+      "10+ jaar ervaring",
+      "1000+ tevreden klanten",
+      "Kwaliteit garantie"
+    ],
+    "urgency_triggers": [
+      "Beperkte voorraad seizoen producten",
+      "Volume korting tijdelijk verhoogd",
+      "Gratis verzending actie",
+      "Early bird kortingen nieuwe producten"
+    ],
+    "social_proof": [
+      "Klant testimonials",
+      "Case studies grote kwekerijen",
+      "Industrie certificeringen",
+      "Partner logos"
+    ]
+  },
+
+  "analytics_tracking": {
+    "cta_events": [
+      "cta_click_shop",
+      "cta_click_contact",
+      "cta_click_quote",
+      "related_topic_click"
+    ],
+    "conversion_goals": [
+      "shop_visit_from_supply_chain",
+      "contact_form_supply_chain",
+      "quote_request_supply_chain",
+      "download_template_supply_chain"
+    ]
+  }
+}

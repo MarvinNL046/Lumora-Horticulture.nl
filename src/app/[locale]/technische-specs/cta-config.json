@@ -1,0 +1,459 @@
+{
+  "pillar": "technische-specs",
+  "pillarTitle": "Technische Specificaties & Keuze Gids",
+  "description": "CTA configuration for Technical Specifications pillar pages",
+  "defaultCTA": {
+    "type": "dual-product",
+    "backgroundColor": "lumora-green",
+    "title": {
+      "nl": "Vind Uw Ideale Paper Plug Tray",
+      "en": "Find Your Ideal Paper Plug Tray",
+      "de": "Finden Sie Ihr Ideales Paper Plug Tray"
+    },
+    "subtitle": {
+      "nl": "Professionele kwaliteit, biologisch gecertificeerd, 100% recyclebaar",
+      "en": "Professional quality, organically certified, 100% recyclable",
+      "de": "Professionelle Qualität, biologisch zertifiziert, 100% recycelbar"
+    },
+    "primaryButton": {
+      "text": {
+        "nl": "84 Cellen Tray →",
+        "en": "84 Cell Tray →",
+        "de": "84 Zellen Tray →"
+      },
+      "url": "/shop/paper-plug-tray-84",
+      "style": "white-on-green"
+    },
+    "secondaryButton": {
+      "text": {
+        "nl": "104 Cellen Tray →",
+        "en": "104 Cell Tray →",
+        "de": "104 Zellen Tray →"
+      },
+      "url": "/shop/paper-plug-tray-104",
+      "style": "dark-on-green"
+    },
+    "trustBadges": {
+      "nl": [
+        "✓ Vanaf €1,18 per tray bij 8 stuks",
+        "✓ Biologisch gecertificeerd",
+        "✓ 100% recyclebaar"
+      ],
+      "en": [
+        "✓ From €1.18 per tray (8 pieces)",
+        "✓ Organically certified",
+        "✓ 100% recyclable"
+      ],
+      "de": [
+        "✓ Ab €1,18 pro Tray (8 Stück)",
+        "✓ Biologisch zertifiziert",
+        "✓ 100% recycelbar"
+      ]
+    }
+  },
+  "subpillarCTAs": {
+    "celgroottes-toepassingen": {
+      "type": "dual-product",
+      "variant": "comparison-focused",
+      "title": {
+        "nl": "Bestel de Juiste Celgrootte voor Uw Gewas",
+        "en": "Order the Right Cell Size for Your Crop",
+        "de": "Bestellen Sie die Richtige Zellgröße für Ihre Kultur"
+      },
+      "subtitle": {
+        "nl": "Direct levering van verse trays, optimaal voor biologische teelt",
+        "en": "Direct delivery of fresh trays, optimal for organic cultivation",
+        "de": "Direkte Lieferung frischer Trays, optimal für ökologischen Anbau"
+      },
+      "primaryButton": {
+        "text": {
+          "nl": "84 Cellen (Universeel) →",
+          "en": "84 Cells (Universal) →",
+          "de": "84 Zellen (Universal) →"
+        },
+        "url": "/shop/paper-plug-tray-84",
+        "badge": {
+          "nl": "Meest populair",
+          "en": "Most popular",
+          "de": "Beliebteste"
+        }
+      },
+      "secondaryButton": {
+        "text": {
+          "nl": "104 Cellen (Efficiënt) →",
+          "en": "104 Cells (Efficient) →",
+          "de": "104 Zellen (Effizient) →"
+        },
+        "url": "/shop/paper-plug-tray-104",
+        "badge": {
+          "nl": "Beste volume",
+          "en": "Best volume",
+          "de": "Bestes Volumen"
+        }
+      },
+      "additionalLinks": [
+        {
+          "text": {
+            "nl": "Bekijk alle celgroottes →",
+            "en": "View all cell sizes →",
+            "de": "Alle Zellgrößen ansehen →"
+          },
+          "url": "/products",
+          "style": "text-link"
+        }
+      ]
+    },
+    "84-vs-104-vergelijking": {
+      "type": "dual-product",
+      "variant": "decision-focused",
+      "title": {
+        "nl": "Klaar om te Bestellen?",
+        "en": "Ready to Order?",
+        "de": "Bereit zu Bestellen?"
+      },
+      "subtitle": {
+        "nl": "Nu u het verschil kent, kies de perfecte maat voor uw productie",
+        "en": "Now that you know the difference, choose the perfect size for your production",
+        "de": "Jetzt, da Sie den Unterschied kennen, wählen Sie die perfekte Größe für Ihre Produktion"
+      },
+      "primaryButton": {
+        "text": {
+          "nl": "Ik kies 84 Cellen →",
+          "en": "I choose 84 Cells →",
+          "de": "Ich wähle 84 Zellen →"
+        },
+        "url": "/shop/paper-plug-tray-84",
+        "description": {
+          "nl": "Voor kwaliteit en sterke planten",
+          "en": "For quality and strong plants",
+          "de": "Für Qualität und starke Pflanzen"
+        }
+      },
+      "secondaryButton": {
+        "text": {
+          "nl": "Ik kies 104 Cellen →",
+          "en": "I choose 104 Cells →",
+          "de": "Ich wähle 104 Zellen →"
+        },
+        "url": "/shop/paper-plug-tray-104",
+        "description": {
+          "nl": "Voor efficiëntie en volume",
+          "en": "For efficiency and volume",
+          "de": "Für Effizienz und Volumen"
+        }
+      },
+      "proTip": {
+        "nl": "💡 Twijfelt u nog? Start met beide maten om te testen wat het beste werkt voor uw specifieke situatie.",
+        "en": "💡 Still unsure? Start with both sizes to test what works best for your specific situation.",
+        "de": "💡 Noch unsicher? Beginnen Sie mit beiden Größen, um zu testen, was für Ihre spezifische Situation am besten funktioniert."
+      }
+    },
+    "substraat-compatibiliteit": {
+      "type": "product-category",
+      "variant": "education-to-purchase",
+      "title": {
+        "nl": "Kies Paper Plugs die Perfect Werken met Uw Substraat",
+        "en": "Choose Paper Plugs that Work Perfectly with Your Substrate",
+        "de": "Wählen Sie Paper Plugs, die Perfekt mit Ihrem Substrat Funktionieren"
+      },
+      "subtitle": {
+        "nl": "Al onze paper plug trays zijn getest en geoptimaliseerd voor alle gangbare substraten",
+        "en": "All our paper plug trays are tested and optimized for all common substrates",
+        "de": "Alle unsere Paper Plug Trays sind getestet und optimiert für alle gängigen Substrate"
+      },
+      "primaryButton": {
+        "text": {
+          "nl": "Bekijk Paper Plug Trays →",
+          "en": "View Paper Plug Trays →",
+          "de": "Paper Plug Trays ansehen →"
+        },
+        "url": "/products"
+      },
+      "secondaryButton": {
+        "text": {
+          "nl": "Contact voor Advies →",
+          "en": "Contact for Advice →",
+          "de": "Kontakt für Beratung →"
+        },
+        "url": "/contact"
+      },
+      "highlights": {
+        "nl": [
+          "✓ Compatibel met potgrond, veen, kokos, perliet",
+          "✓ SKAL gecertificeerd voor biologische substraten",
+          "✓ Optimale drainage en wortelontwikkeling"
+        ],
+        "en": [
+          "✓ Compatible with potting soil, peat, coir, perlite",
+          "✓ SKAL certified for organic substrates",
+          "✓ Optimal drainage and root development"
+        ],
+        "de": [
+          "✓ Kompatibel mit Blumenerde, Torf, Kokos, Perlit",
+          "✓ SKAL-zertifiziert für biologische Substrate",
+          "✓ Optimale Drainage und Wurzelentwicklung"
+        ]
+      }
+    },
+    "voedingsoplossingen": {
+      "type": "product-category",
+      "variant": "education-to-purchase",
+      "title": {
+        "nl": "Optimale Voeding Begint met Kwalitatieve Paper Plugs",
+        "en": "Optimal Nutrition Starts with Quality Paper Plugs",
+        "de": "Optimale Ernährung Beginnt mit Qualitäts-Paper Plugs"
+      },
+      "subtitle": {
+        "nl": "Onze paper plugs zijn ontworpen voor optimale voedingsopname en gezonde wortelontwikkeling",
+        "en": "Our paper plugs are designed for optimal nutrient uptake and healthy root development",
+        "de": "Unsere Paper Plugs sind für optimale Nährstoffaufnahme und gesunde Wurzelentwicklung konzipiert"
+      },
+      "primaryButton": {
+        "text": {
+          "nl": "Bestel Paper Plugs →",
+          "en": "Order Paper Plugs →",
+          "de": "Paper Plugs bestellen →"
+        },
+        "url": "/shop/paper-plug-tray-84"
+      },
+      "secondaryButton": {
+        "text": {
+          "nl": "Download Voedingsschema →",
+          "en": "Download Nutrition Schedule →",
+          "de": "Ernährungsplan herunterladen →"
+        },
+        "url": "/downloads/nutrition-guide.pdf",
+        "style": "outline"
+      },
+      "highlights": {
+        "nl": [
+          "✓ Poreus papier voor optimale wortelbeluchting",
+          "✓ Geen chemische coating die voedingsopname hindert",
+          "✓ Biologisch gecertificeerd voor organische voeding"
+        ],
+        "en": [
+          "✓ Porous paper for optimal root aeration",
+          "✓ No chemical coating that hinders nutrient uptake",
+          "✓ Organically certified for organic nutrition"
+        ],
+        "de": [
+          "✓ Poröses Papier für optimale Wurzelbelüftung",
+          "✓ Keine chemische Beschichtung, die Nährstoffaufnahme behindert",
+          "✓ Biologisch zertifiziert für organische Ernährung"
+        ]
+      }
+    },
+    "kwaliteitscriteria-inkoop": {
+      "type": "comparison",
+      "variant": "quality-focused",
+      "title": {
+        "nl": "Kies voor Bewezen Kwaliteit",
+        "en": "Choose Proven Quality",
+        "de": "Wählen Sie Bewährte Qualität"
+      },
+      "subtitle": {
+        "nl": "Lumora paper plugs voldoen aan alle professionele kwaliteitscriteria én zijn biologisch gecertificeerd",
+        "en": "Lumora paper plugs meet all professional quality criteria and are organically certified",
+        "de": "Lumora Paper Plugs erfüllen alle professionellen Qualitätskriterien und sind biologisch zertifiziert"
+      },
+      "primaryButton": {
+        "text": {
+          "nl": "Bekijk Certificaten →",
+          "en": "View Certificates →",
+          "de": "Zertifikate ansehen →"
+        },
+        "url": "/certificaten"
+      },
+      "secondaryButton": {
+        "text": {
+          "nl": "Bestel Sample Pack →",
+          "en": "Order Sample Pack →",
+          "de": "Musterpaket bestellen →"
+        },
+        "url": "/shop/paper-plug-tray-84"
+      },
+      "qualityBadges": [
+        {
+          "icon": "✓",
+          "text": {
+            "nl": "SKAL Gecertificeerd",
+            "en": "SKAL Certified",
+            "de": "SKAL Zertifiziert"
+          }
+        },
+        {
+          "icon": "✓",
+          "text": {
+            "nl": "280gsm Premium Papier",
+            "en": "280gsm Premium Paper",
+            "de": "280gsm Premium-Papier"
+          }
+        },
+        {
+          "icon": "✓",
+          "text": {
+            "nl": "100% Recyclebaar",
+            "en": "100% Recyclable",
+            "de": "100% Recycelbar"
+          }
+        },
+        {
+          "icon": "✓",
+          "text": {
+            "nl": "Direct van Producent",
+            "en": "Direct from Producer",
+            "de": "Direkt vom Hersteller"
+          }
+        }
+      ],
+      "comparisonTable": {
+        "title": {
+          "nl": "Lumora vs Marktstandaard",
+          "en": "Lumora vs Market Standard",
+          "de": "Lumora vs Marktstandard"
+        },
+        "columns": [
+          {
+            "header": {
+              "nl": "Criterium",
+              "en": "Criterion",
+              "de": "Kriterium"
+            }
+          },
+          {
+            "header": "Lumora"
+          },
+          {
+            "header": {
+              "nl": "Marktstandaard",
+              "en": "Market Standard",
+              "de": "Marktstandard"
+            }
+          }
+        ],
+        "rows": [
+          {
+            "criterion": {
+              "nl": "Papiergewicht",
+              "en": "Paper Weight",
+              "de": "Papiergewicht"
+            },
+            "lumora": "280gsm",
+            "standard": "250gsm",
+            "winner": "lumora"
+          },
+          {
+            "criterion": {
+              "nl": "Biologisch Gecertificeerd",
+              "en": "Organically Certified",
+              "de": "Biologisch Zertifiziert"
+            },
+            "lumora": "SKAL ✓",
+            "standard": {
+              "nl": "Vaak niet",
+              "en": "Often not",
+              "de": "Oft nicht"
+            },
+            "winner": "lumora"
+          },
+          {
+            "criterion": {
+              "nl": "Minimum Bestelling",
+              "en": "Minimum Order",
+              "de": "Mindestbestellung"
+            },
+            "lumora": {
+              "nl": "8 trays",
+              "en": "8 trays",
+              "de": "8 Trays"
+            },
+            "standard": {
+              "nl": "100+ trays",
+              "en": "100+ trays",
+              "de": "100+ Trays"
+            },
+            "winner": "lumora"
+          },
+          {
+            "criterion": {
+              "nl": "Levertijd",
+              "en": "Delivery Time",
+              "de": "Lieferzeit"
+            },
+            "lumora": "2-5 dagen",
+            "standard": "2-4 weken",
+            "winner": "lumora"
+          }
+        ]
+      }
+    }
+  },
+  "crossLinkingCTAs": {
+    "toPillar1": {
+      "text": {
+        "nl": "Ontdek de Voordelen →",
+        "en": "Discover the Benefits →",
+        "de": "Entdecken Sie die Vorteile →"
+      },
+      "url": "/seo/voordelen/biologische-certificering"
+    },
+    "toPillar2": {
+      "text": {
+        "nl": "Praktische Toepassingen →",
+        "en": "Practical Applications →",
+        "de": "Praktische Anwendungen →"
+      },
+      "url": "/seo/toepassingen/tomaten-teelt"
+    },
+    "toPillar3": {
+      "text": {
+        "nl": "Gebruikshandleidingen →",
+        "en": "User Guides →",
+        "de": "Benutzerhandbücher →"
+      },
+      "url": "/seo/handleidingen/beginnersgids"
+    },
+    "toProducts": {
+      "text": {
+        "nl": "Bekijk Alle Producten →",
+        "en": "View All Products →",
+        "de": "Alle Produkte ansehen →"
+      },
+      "url": "/products"
+    }
+  },
+  "emergencyCTA": {
+    "description": "Fallback CTA if specific configuration not found",
+    "type": "simple",
+    "title": {
+      "nl": "Klaar om te Beginnen met Paper Plugs?",
+      "en": "Ready to Start with Paper Plugs?",
+      "de": "Bereit, mit Paper Plugs zu Beginnen?"
+    },
+    "button": {
+      "text": {
+        "nl": "Bekijk Ons Assortiment →",
+        "en": "View Our Range →",
+        "de": "Unser Sortiment ansehen →"
+      },
+      "url": "/products"
+    }
+  },
+  "ab_testing": {
+    "enabled": false,
+    "variants": [],
+    "notes": "Enable A/B testing after baseline metrics established (3 months)"
+  },
+  "analytics": {
+    "trackCTAClicks": true,
+    "trackScrollDepth": true,
+    "trackTimeOnPage": true,
+    "conversionGoals": [
+      "cta_click_primary",
+      "cta_click_secondary",
+      "product_page_visit",
+      "add_to_cart",
+      "checkout_complete"
+    ]
+  }
+}

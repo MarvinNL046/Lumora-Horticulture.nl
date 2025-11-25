@@ -36,6 +36,24 @@ const pageConfig: Record<string, { changefreq: string; priority: number }> = {
   '/applications': { changefreq: 'monthly', priority: 0.6 },
 };
 
+// Default config for SEO content category pages
+const defaultSEOCategoryConfig = { changefreq: 'weekly', priority: 0.80 };
+const defaultSEOPageConfig = { changefreq: 'monthly', priority: 0.75 };
+
+// SEO content categories (automatically applied to matching paths)
+const seoCategories = [
+  'propagatie-technologie',
+  'praktische-toepassingen',
+  'efficiëntie-roi',
+  'technische-specs',
+  'duurzaamheid',
+  'troubleshooting',
+  'innovatie-trends',
+  'regionale-markten',
+  'supply-chain',
+  'case-studies'
+];
+
 /**
  * Get all valid pages from the app directory
  */
@@ -88,7 +106,21 @@ export function generateSitemapXML(entries: SitemapEntry[], domain: string): str
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries.map(entry => {
-    const config = pageConfig[entry.path] || { changefreq: 'monthly', priority: 0.5 };
+    // Check if this is a SEO content page
+    let config = pageConfig[entry.path];
+
+    if (!config) {
+      // Check if it's a category index page
+      const isCategoryIndex = seoCategories.some(cat => entry.path === `/${cat}`);
+      if (isCategoryIndex) {
+        config = defaultSEOCategoryConfig;
+      } else {
+        // Check if it's within a SEO category
+        const isInSEOCategory = seoCategories.some(cat => entry.path.startsWith(`/${cat}/`));
+        config = isInSEOCategory ? defaultSEOPageConfig : { changefreq: 'monthly', priority: 0.5 };
+      }
+    }
+
     return `  <url>
     <loc>https://${domain}${entry.path}</loc>
     <lastmod>${entry.lastmod || new Date().toISOString().split('T')[0]}</lastmod>
@@ -97,7 +129,7 @@ ${entries.map(entry => {
   </url>`;
   }).join('\n')}
 </urlset>`;
-  
+
   return xml;
 }
 

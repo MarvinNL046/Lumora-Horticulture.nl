@@ -1,0 +1,499 @@
+{
+  "pillar": "6",
+  "pillarName": "Probleem Oplossingen & Troubleshooting",
+  "theme": "problem-solving",
+  "ctaStrategy": "pain-point-focused",
+
+  "globalCTAs": {
+    "primary": {
+      "text": {
+        "nl": "Bekijk Paper Plug Oplossingen",
+        "en": "View Paper Plug Solutions",
+        "de": "Paper Plug Lösungen Ansehen"
+      },
+      "url": "/shop",
+      "style": "primary-green",
+      "placement": ["hero-bottom", "article-end"]
+    },
+    "secondary": {
+      "text": {
+        "nl": "Gratis Expert Advies",
+        "en": "Free Expert Advice",
+        "de": "Kostenlose Expertenberatung"
+      },
+      "url": "/contact",
+      "style": "outline-white",
+      "placement": ["hero-bottom", "article-end"]
+    },
+    "inline": {
+      "text": {
+        "nl": "Ontdek de Oplossing",
+        "en": "Discover the Solution",
+        "de": "Entdecken Sie die Lösung"
+      },
+      "url": "/shop",
+      "style": "inline-link",
+      "placement": ["mid-article"]
+    }
+  },
+
+  "pageCTAs": [
+    {
+      "page": "transplantatieschok-voorkomen",
+      "slug": "transplantatieschok-voorkomen",
+      "problemFocus": "Plant loss and delays after transplanting",
+      "
+": {
+        "title": {
+          "nl": "Stop Transplantatieschok Vandaag",
+          "en": "Stop Transplant Shock Today",
+          "de": "Stoppen Sie Umpflanzschock Heute"
+        },
+        "description": {
+          "nl": "Ontdek hoe paper plug trays je teeltproces kunnen transformeren. Verminder transplantatieschok tot 85% en bespaar tijd bij elke verplanting.",
+          "en": "Discover how paper plug trays can transform your growing process. Reduce transplant shock by up to 85% and save time with every transplant.",
+          "de": "Entdecken Sie, wie Paper Plug Trays Ihren Anbauprozess transformieren können. Reduzieren Sie Umpflanzschock um bis zu 85% und sparen Sie Zeit bei jeder Umpflanzung."
+        },
+        "benefits": [
+          {
+            "nl": "85% minder transplantatieschok",
+            "en": "85% less transplant shock",
+            "de": "85% weniger Umpflanzschock"
+          },
+          {
+            "nl": "40% snellere verwerking",
+            "en": "40% faster processing",
+            "de": "40% schnellere Verarbeitung"
+          },
+          {
+            "nl": "95-98% overlevingspercentage",
+            "en": "95-98% survival rate",
+            "de": "95-98% Überlebensrate"
+          }
+        ],
+        "urgency": {
+          "nl": "Voorkom plantuitval dit teeltseizoen",
+          "en": "Prevent plant loss this growing season",
+          "de": "Verhindern Sie Pflanzenverlust diese Anbausaison"
+        }
+      },
+      "inlinePrompts": [
+        {
+          "position": "after-strategy-1",
+          "text": {
+            "nl": "→ Bekijk onze paper plug trays voor optimale wortelontwikkeling",
+            "en": "→ View our paper plug trays for optimal root development",
+            "de": "→ Sehen Sie unsere Paper Plug Trays für optimale Wurzelentwicklung"
+          }
+        },
+        {
+          "position": "after-comparison-table",
+          "text": {
+            "nl": "Klaar om over te stappen? Ontdek welke paper plug tray bij jouw teelt past.",
+            "en": "Ready to switch? Discover which paper plug tray suits your growing needs.",
+            "de": "Bereit zum Wechsel? Entdecken Sie, welches Paper Plug Tray zu Ihrem Anbau passt."
+          }
+        }
+      ]
+    },
+    {
+      "page": "wortelvorming-optimaliseren",
+      "slug": "wortelvorming-optimaliseren",
+      "problemFocus": "Slow root development and weak root systems",
+      "heroCTA": {
+        "title": {
+          "nl": "Transformeer Je Wortelontwikkeling Vandaag",
+          "en": "Transform Your Root Development Today",
+          "de": "Transformieren Sie Ihre Wurzelentwicklung Heute"
+        },
+        "description": {
+          "nl": "Ervaar 40% snellere wortelvorming en sterkere plantvestiging met paper plug trays. Begin met het kweken van gezondere, veerkrachtiger planten.",
+          "en": "Experience 40% faster root formation and stronger plant establishment with paper plug trays. Start growing healthier, more resilient plants.",
+          "de": "Erleben Sie 40% schnellere Wurzelbildung und stärkere Pflanzenestablierung mit Paper Plug Trays. Beginnen Sie, gesündere, widerstandsfähigere Pflanzen zu züchten."
+        },
+        "benefits": [
+          {
+            "nl": "40% snellere wortelvorming",
+            "en": "40% faster root formation",
+            "de": "40% schnellere Wurzelbildung"
+          },
+          {
+            "nl": "30% meer wortelmassa",
+            "en": "30% more root mass",
+            "de": "30% mehr Wurzelmasse"
+          },
+          {
+            "nl": "Natuurlijke lucht-snoei",
+            "en": "Natural air pruning",
+            "de": "Natürliches Luftschneiden"
+          }
+        ],
+        "urgency": {
+          "nl": "Start met sterkere wortels dit seizoen",
+          "en": "Start with stronger roots this season",
+          "de": "Beginnen Sie diese Saison mit stärkeren Wurzeln"
+        }
+      },
+      "inlinePrompts": [
+        {
+          "position": "after-technique-1",
+          "text": {
+            "nl": "→ Ontdek onze paper plug trays voor superieure wortelgeleiding",
+            "en": "→ Discover our paper plug trays for superior root guidance",
+            "de": "→ Entdecken Sie unsere Paper Plug Trays für überlegene Wurzelführung"
+          }
+        },
+        {
+          "position": "after-timeline",
+          "text": {
+            "nl": "Wil je deze snelle wortelontwikkeling zelf ervaren? Bestel vandaag nog.",
+            "en": "Want to experience this rapid root development yourself? Order today.",
+            "de": "Möchten Sie diese schnelle Wurzelentwicklung selbst erleben? Bestellen Sie noch heute."
+          }
+        }
+      ]
+    },
+    {
+      "page": "vochtbeheer-paper-plugs",
+      "slug": "vochtbeheer-paper-plugs",
+      "problemFocus": "Overwatering, underwatering, and moisture inconsistency",
+      "heroCTA": {
+        "title": {
+          "nl": "Perfecte Vochtbalans met Paper Plugs",
+          "en": "Perfect Moisture Balance with Paper Plugs",
+          "de": "Perfekte Feuchtigkeitsbalance mit Paper Plugs"
+        },
+        "description": {
+          "nl": "Paper plugs reguleren vocht automatisch via capillaire werking. Geen zorgen meer over over- of onderwater geven.",
+          "en": "Paper plugs automatically regulate moisture through capillary action. No more worries about over- or underwatering.",
+          "de": "Paper Plugs regulieren Feuchtigkeit automatisch durch Kapillarwirkung. Keine Sorgen mehr über Über- oder Unterbewässerung."
+        },
+        "benefits": [
+          {
+            "nl": "Automatische vochtregulatie",
+            "en": "Automatic moisture regulation",
+            "de": "Automatische Feuchtigkeitsregulierung"
+          },
+          {
+            "nl": "Geen wateroverlast",
+            "en": "No waterlogging",
+            "de": "Keine Staunässe"
+          },
+          {
+            "nl": "Consistente wortelzone vocht",
+            "en": "Consistent root zone moisture",
+            "de": "Konstante Wurzelzonenfeuchtigkeit"
+          }
+        ],
+        "urgency": {
+          "nl": "Los vochtproblemen definitief op",
+          "en": "Solve moisture problems permanently",
+          "de": "Lösen Sie Feuchtigkeitsprobleme dauerhaft"
+        }
+      }
+    },
+    {
+      "page": "schimmel-preventie-paper-plugs",
+      "slug": "schimmel-preventie-paper-plugs",
+      "problemFocus": "Damping off, mold, and fungal diseases killing seedlings",
+      "heroCTA": {
+        "title": {
+          "nl": "Bescherm Je Zaailingen Tegen Schimmel",
+          "en": "Protect Your Seedlings from Mold",
+          "de": "Schützen Sie Ihre Sämlinge vor Schimmel"
+        },
+        "description": {
+          "nl": "Paper plugs bieden betere drainage en luchtcirculatie, waardoor schimmelgroei drastisch vermindert. Combineer met onze preventie strategieën voor 95%+ gezonde planten.",
+          "en": "Paper plugs provide better drainage and air circulation, drastically reducing mold growth. Combine with our prevention strategies for 95%+ healthy plants.",
+          "de": "Paper Plugs bieten bessere Drainage und Luftzirkulation, wodurch Schimmelwachstum drastisch reduziert wird. Kombinieren Sie mit unseren Präventionsstrategien für 95%+ gesunde Pflanzen."
+        },
+        "benefits": [
+          {
+            "nl": "Betere drainage = minder schimmel",
+            "en": "Better drainage = less mold",
+            "de": "Bessere Drainage = weniger Schimmel"
+          },
+          {
+            "nl": "Lucht-snoei verbetert circulatie",
+            "en": "Air pruning improves circulation",
+            "de": "Luftschneiden verbessert Zirkulation"
+          },
+          {
+            "nl": "Makkelijker isoleren van infecties",
+            "en": "Easier to isolate infections",
+            "de": "Einfacher Infektionen zu isolieren"
+          }
+        ],
+        "urgency": {
+          "nl": "Stop plantuitval door schimmel",
+          "en": "Stop plant loss from mold",
+          "de": "Stoppen Sie Pflanzenverlust durch Schimmel"
+        }
+      }
+    },
+    {
+      "page": "temperatuur-licht-optimalisatie",
+      "slug": "temperatuur-licht-optimalisatie",
+      "problemFocus": "Leggy seedlings, slow growth, temperature stress",
+      "heroCTA": {
+        "title": {
+          "nl": "Optimaal Klimaat voor Snelle Groei",
+          "en": "Optimal Climate for Rapid Growth",
+          "de": "Optimales Klima für Schnelles Wachstum"
+        },
+        "description": {
+          "nl": "Paper plugs bieden natuurlijke isolatie voor stabiele wortelzone temperatuur. Combineer met correcte belichting voor compacte, sterke planten.",
+          "en": "Paper plugs provide natural insulation for stable root zone temperature. Combine with correct lighting for compact, strong plants.",
+          "de": "Paper Plugs bieten natürliche Isolierung für stabile Wurzelzonentemperatur. Kombinieren Sie mit korrekter Beleuchtung für kompakte, starke Pflanzen."
+        },
+        "benefits": [
+          {
+            "nl": "Temperatuur stabiliteit",
+            "en": "Temperature stability",
+            "de": "Temperaturstabilität"
+          },
+          {
+            "nl": "Compacte groei",
+            "en": "Compact growth",
+            "de": "Kompaktes Wachstum"
+          },
+          {
+            "nl": "Betere klimaat veerkracht",
+            "en": "Better climate resilience",
+            "de": "Bessere Klimaresilienz"
+          }
+        ],
+        "urgency": {
+          "nl": "Voorkom lange, zwakke planten",
+          "en": "Prevent leggy, weak plants",
+          "de": "Verhindern Sie lange, schwache Pflanzen"
+        }
+      }
+    }
+  ],
+
+  "crossPromotionLinks": {
+    "relatedPillars": [
+      {
+        "pillar": "1",
+        "title": {
+          "nl": "Nieuw met Paper Plugs? Start hier",
+          "en": "New to Paper Plugs? Start here",
+          "de": "Neu bei Paper Plugs? Hier starten"
+        },
+        "url": "/seo/beginners-guide"
+      },
+      {
+        "pillar": "2",
+        "title": {
+          "nl": "Waarom Paper Plugs Werken",
+          "en": "Why Paper Plugs Work",
+          "de": "Warum Paper Plugs Funktionieren"
+        },
+        "url": "/seo/benefits"
+      },
+      {
+        "pillar": "5",
+        "title": {
+          "nl": "Geavanceerde Technieken",
+          "en": "Advanced Techniques",
+          "de": "Fortgeschrittene Techniken"
+        },
+        "url": "/seo/advanced-techniques"
+      }
+    ],
+    "withinPillar": [
+      {
+        "from": "transplantatieschok-voorkomen",
+        "to": "wortelvorming-optimaliseren",
+        "text": {
+          "nl": "→ Leer hoe je wortelvorming optimaliseert voor nóg minder schok",
+          "en": "→ Learn how to optimize root formation for even less shock",
+          "de": "→ Erfahren Sie, wie Sie Wurzelbildung optimieren für noch weniger Schock"
+        }
+      },
+      {
+        "from": "wortelvorming-optimaliseren",
+        "to": "vochtbeheer-paper-plugs",
+        "text": {
+          "nl": "→ Perfect vochtbeheer voor optimale wortelontwikkeling",
+          "en": "→ Perfect moisture management for optimal root development",
+          "de": "→ Perfektes Feuchtigkeitsmanagement für optimale Wurzelentwicklung"
+        }
+      },
+      {
+        "from": "vochtbeheer-paper-plugs",
+        "to": "schimmel-preventie-paper-plugs",
+        "text": {
+          "nl": "→ Voorkom schimmel door correct vochtbeheer",
+          "en": "→ Prevent mold through correct moisture management",
+          "de": "→ Verhindern Sie Schimmel durch korrektes Feuchtigkeitsmanagement"
+        }
+      },
+      {
+        "from": "schimmel-preventie-paper-plugs",
+        "to": "temperatuur-licht-optimalisatie",
+        "text": {
+          "nl": "→ Optimaliseer temperatuur en licht voor gezonde groei",
+          "en": "→ Optimize temperature and light for healthy growth",
+          "de": "→ Optimieren Sie Temperatur und Licht für gesundes Wachstum"
+        }
+      }
+    ]
+  },
+
+  "conversionOptimization": {
+    "trustSignals": [
+      {
+        "type": "testimonial",
+        "text": {
+          "nl": "\"Sinds ik paper plugs gebruik, heb ik 90% minder uitval na verplanting. Game changer!\" - Peter van Dam, Kasmanager",
+          "en": "\"Since using paper plugs, I have 90% less loss after transplanting. Game changer!\" - Peter van Dam, Greenhouse Manager",
+          "de": "\"Seit ich Paper Plugs verwende, habe ich 90% weniger Verlust nach der Umpflanzung. Game Changer!\" - Peter van Dam, Gewächshausmanager"
+        }
+      },
+      {
+        "type": "statistic",
+        "text": {
+          "nl": "Gebruikt door 500+ professionele telers in Nederland",
+          "en": "Used by 500+ professional growers in the Netherlands",
+          "de": "Verwendet von 500+ professionellen Züchtern in den Niederlanden"
+        }
+      },
+      {
+        "type": "guarantee",
+        "text": {
+          "nl": "30 dagen niet-goed-geld-terug garantie",
+          "en": "30-day money-back guarantee",
+          "de": "30-Tage-Geld-zurück-Garantie"
+        }
+      }
+    ],
+    "urgencyTriggers": [
+      {
+        "type": "seasonal",
+        "text": {
+          "nl": "Teeltseizoen start binnenkort - bestel nu voor optimale voorraad",
+          "en": "Growing season starts soon - order now for optimal stock",
+          "de": "Anbausaison beginnt bald - bestellen Sie jetzt für optimalen Bestand"
+        }
+      },
+      {
+        "type": "scarcity",
+        "text": {
+          "nl": "Populaire maten vaak uitverkocht - bestel tijdig",
+          "en": "Popular sizes often sold out - order in time",
+          "de": "Beliebte Größen oft ausverkauft - rechtzeitig bestellen"
+        }
+      }
+    ],
+    "riskReduction": [
+      {
+        "type": "free-shipping",
+        "text": {
+          "nl": "Gratis verzending vanaf €150",
+          "en": "Free shipping from €150",
+          "de": "Kostenloser Versand ab €150"
+        }
+      },
+      {
+        "type": "expert-support",
+        "text": {
+          "nl": "Gratis advies van teeltspecialisten",
+          "en": "Free advice from growing specialists",
+          "de": "Kostenlose Beratung von Anbausspezialisten"
+        }
+      }
+    ]
+  },
+
+  "abTestingVariants": {
+    "ctaButtonText": [
+      {
+        "variant": "A",
+        "text": {
+          "nl": "Bekijk Paper Plug Trays",
+          "en": "View Paper Plug Trays",
+          "de": "Paper Plug Trays Ansehen"
+        }
+      },
+      {
+        "variant": "B",
+        "text": {
+          "nl": "Los Dit Probleem Op",
+          "en": "Solve This Problem",
+          "de": "Lösen Sie Dieses Problem"
+        }
+      },
+      {
+        "variant": "C",
+        "text": {
+          "nl": "Start Vandaag",
+          "en": "Start Today",
+          "de": "Heute Beginnen"
+        }
+      }
+    ],
+    "headlineEmphasis": [
+      {
+        "variant": "A",
+        "focus": "problem",
+        "example": {
+          "nl": "Stop [Probleem] Definitief",
+          "en": "Stop [Problem] Permanently",
+          "de": "Stoppen Sie [Problem] Dauerhaft"
+        }
+      },
+      {
+        "variant": "B",
+        "focus": "solution",
+        "example": {
+          "nl": "Ontdek de [Oplossing]",
+          "en": "Discover the [Solution]",
+          "de": "Entdecken Sie die [Lösung]"
+        }
+      },
+      {
+        "variant": "C",
+        "focus": "benefit",
+        "example": {
+          "nl": "Bereik [Resultaat] in [Tijd]",
+          "en": "Achieve [Result] in [Time]",
+          "de": "Erreichen Sie [Ergebnis] in [Zeit]"
+        }
+      }
+    ]
+  },
+
+  "analyticsTracking": {
+    "events": [
+      {
+        "name": "troubleshooting_page_view",
+        "parameters": ["page_slug", "problem_category"]
+      },
+      {
+        "name": "cta_click",
+        "parameters": ["cta_type", "cta_position", "page_slug"]
+      },
+      {
+        "name": "inline_link_click",
+        "parameters": ["link_text", "article_position", "page_slug"]
+      },
+      {
+        "name": "scroll_depth",
+        "parameters": ["depth_percentage", "page_slug"]
+      },
+      {
+        "name": "time_to_cta_click",
+        "parameters": ["seconds_elapsed", "page_slug"]
+      }
+    ],
+    "conversionGoals": [
+      "shop_page_visit",
+      "product_view",
+      "add_to_cart",
+      "checkout_initiated",
+      "contact_form_submitted"
+    ]
+  }
+}

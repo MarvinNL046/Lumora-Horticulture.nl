@@ -1,0 +1,528 @@
+{
+  "pillar": "case-studies",
+  "pillarNumber": 10,
+  "pillarName": {
+    "nl": "Case Studies & Succes Verhalen",
+    "en": "Case Studies & Success Stories",
+    "de": "Fallstudien & Erfolgsgeschichten"
+  },
+  "description": {
+    "nl": "Echte resultaten van professionele telers die overstapten op Lumora Paper Pluggen. Meetbare verbeteringen, ROI analyses en testimonials.",
+    "en": "Real results from professional growers who switched to Lumora Paper Plugs. Measurable improvements, ROI analyses and testimonials.",
+    "de": "Echte Ergebnisse von professionellen Züchtern, die auf Lumora Paper Plugs umgestiegen sind. Messbare Verbesserungen, ROI-Analysen und Testimonials."
+  },
+  "pages": [
+    {
+      "slug": "nederlandse-tomatenkweker-case",
+      "status": "complete",
+      "name": {
+        "nl": "Nederlandse Tomatenkweker Case",
+        "en": "Dutch Tomato Grower Case",
+        "de": "Niederländische Tomatenzüchter Fallstudie"
+      },
+      "company": "Westland Tomatenteelt B.V.",
+      "industry": {
+        "nl": "Glastuinbouw - Tomaten",
+        "en": "Greenhouse Horticulture - Tomatoes",
+        "de": "Gewächshausgartenbau - Tomaten"
+      },
+      "keyMetric": {
+        "nl": "23% Hogere Opbrengst",
+        "en": "23% Higher Yield",
+        "de": "23% Höherer Ertrag"
+      },
+      "roiPayback": {
+        "nl": "2,6 maanden",
+        "en": "2.6 months",
+        "de": "2,6 Monate"
+      },
+      "annualSavings": {
+        "nl": "€42.000",
+        "en": "€42,000",
+        "de": "€42.000"
+      },
+      "ctas": {
+        "primary": {
+          "type": "consultation",
+          "label": {
+            "nl": "Plan Adviesgesprek",
+            "en": "Schedule Consultation",
+            "de": "Beratung Vereinbaren"
+          },
+          "url": "/contact",
+          "tracking": "cta_tomato_case_consultation",
+          "context": {
+            "nl": "Geïnteresseerd in vergelijkbare resultaten als Westland Tomatenteelt",
+            "en": "Interested in similar results as Westland Tomato Cultivation",
+            "de": "Interessiert an ähnlichen Ergebnissen wie Westland Tomato Cultivation"
+          }
+        },
+        "secondary": {
+          "type": "product",
+          "label": {
+            "nl": "Bekijk Paper Plug Trays",
+            "en": "View Paper Plug Trays",
+            "de": "Paper Plug Trays Ansehen"
+          },
+          "url": "/shop/paper-plug-tray-84",
+          "tracking": "cta_tomato_case_product"
+        },
+        "tertiary": {
+          "type": "download",
+          "label": {
+            "nl": "Download ROI Calculator",
+            "en": "Download ROI Calculator",
+            "de": "ROI-Rechner Herunterladen"
+          },
+          "url": "/contact?subject=ROI+Calculator+Tomatenteelt",
+          "tracking": "cta_tomato_case_roi_calculator"
+        }
+      },
+      "keywords": {
+        "nl": [
+          "tomatenteelt Westland",
+          "papierbus steenwol vergelijking",
+          "tomaat opbrengst verhoging",
+          "kiemingspercentage tomaten",
+          "glastuinbouw ROI",
+          "tomatenkweker case study"
+        ],
+        "en": [
+          "tomato cultivation case study",
+          "paper plug vs rockwool",
+          "tomato yield increase",
+          "germination rate tomatoes",
+          "greenhouse ROI analysis",
+          "tomato grower testimonial"
+        ],
+        "de": [
+          "Tomatenanbau Fallstudie",
+          "Paper Plug vs Steinwolle",
+          "Tomatenertrag steigern",
+          "Keimrate Tomaten",
+          "Gewächshaus ROI",
+          "Tomatenzüchter Erfahrungen"
+        ]
+      }
+    },
+    {
+      "slug": "Duitse-boomkwekerij-succes",
+      "status": "complete",
+      "name": {
+        "nl": "Duitse Boomkwekerij Succes",
+        "en": "German Tree Nursery Success",
+        "de": "Deutsche Baumschule Erfolg"
+      },
+      "company": "Baumschule Müller GmbH",
+      "industry": {
+        "nl": "Boomkwekerij - Container & Vollegrond",
+        "en": "Tree Nursery - Container & Field",
+        "de": "Baumschule - Container & Freiland"
+      },
+      "keyMetric": {
+        "nl": "56% Minder Wortelschade",
+        "en": "56% Less Root Damage",
+        "de": "56% Weniger Wurzelschäden"
+      },
+      "roiPayback": {
+        "nl": "3,1 maanden",
+        "en": "3.1 months",
+        "de": "3,1 Monate"
+      },
+      "annualSavings": {
+        "nl": "€63.000",
+        "en": "€63,000",
+        "de": "€63.000"
+      },
+      "ctas": {
+        "primary": {
+          "type": "site-visit",
+          "label": {
+            "nl": "Plan Bedrijfsbezoek",
+            "en": "Schedule Site Visit",
+            "de": "Besuch Vor Ort Vereinbaren"
+          },
+          "url": "/contact",
+          "tracking": "cta_nursery_case_site_visit",
+          "context": {
+            "nl": "Geïnteresseerd in boomkwekerij oplossingen zoals Baumschule Müller",
+            "en": "Interested in tree nursery solutions like Baumschule Müller",
+            "de": "Interessiert an Baumschul-Lösungen wie Baumschule Müller"
+          }
+        },
+        "secondary": {
+          "type": "product",
+          "label": {
+            "nl": "Bekijk Paper Plug Trays",
+            "en": "View Paper Plug Trays",
+            "de": "Paper Plug Trays Ansehen"
+          },
+          "url": "/shop/paper-plug-tray-84",
+          "tracking": "cta_nursery_case_product"
+        },
+        "tertiary": {
+          "type": "download",
+          "label": {
+            "nl": "Download Boomkwekerij ROI Calculator",
+            "en": "Download Tree Nursery ROI Calculator",
+            "de": "Baumschule ROI-Rechner Herunterladen"
+          },
+          "url": "/contact?subject=ROI+Calculator+Boomkwekerij",
+          "tracking": "cta_nursery_case_roi_calculator"
+        }
+      },
+      "keywords": {
+        "nl": [
+          "boomkwekerij wortelschade",
+          "rhododendron teelt",
+          "containerteelt optimalisatie",
+          "boomkwekerij ROI",
+          "paper plug boomkwekerij",
+          "Duitse boomkwekerij case"
+        ],
+        "en": [
+          "tree nursery root damage",
+          "rhododendron cultivation",
+          "container growing optimization",
+          "nursery ROI analysis",
+          "paper plug tree nursery",
+          "German nursery case study"
+        ],
+        "de": [
+          "Baumschule Wurzelschäden",
+          "Rhododendron Anbau",
+          "Containerkultur Optimierung",
+          "Baumschule ROI",
+          "Paper Plug Baumschule",
+          "Baumschule Fallstudie"
+        ]
+      }
+    },
+    {
+      "slug": "belgische-sierteelt-transformatie",
+      "status": "structure-only",
+      "name": {
+        "nl": "Belgische Sierteelt Transformatie",
+        "en": "Belgian Ornamental Plant Transformation",
+        "de": "Belgische Zierpflanzen Transformation"
+      },
+      "company": "To be determined (TBD)",
+      "industry": {
+        "nl": "Sierteelt - Potplanten & Bedding",
+        "en": "Ornamental Horticulture - Potted & Bedding Plants",
+        "de": "Zierpflanzenbau - Topf- & Bettungspflanzen"
+      },
+      "keyMetric": {
+        "nl": "Uniformiteit 85% → 97%",
+        "en": "Uniformity 85% → 97%",
+        "de": "Gleichmäßigkeit 85% → 97%"
+      },
+      "estimatedROI": {
+        "nl": "€38.000 - €45.000 per jaar",
+        "en": "€38,000 - €45,000 per year",
+        "de": "€38.000 - €45.000 pro Jahr"
+      },
+      "ctas": {
+        "primary": {
+          "type": "consultation",
+          "label": {
+            "nl": "Plan Adviesgesprek",
+            "en": "Schedule Consultation",
+            "de": "Beratung Vereinbaren"
+          },
+          "url": "/contact",
+          "tracking": "cta_belgian_ornamental_consultation"
+        }
+      },
+      "keywords": {
+        "nl": [
+          "Belgische sierteelt",
+          "geranium teelt België",
+          "export sierteelt",
+          "uniformiteit potplanten",
+          "bedding plants kwaliteit"
+        ],
+        "en": [
+          "Belgian ornamental growers",
+          "geranium production Belgium",
+          "export ornamental plants",
+          "potted plant uniformity",
+          "bedding plant quality"
+        ],
+        "de": [
+          "Belgische Zierpflanzen",
+          "Geranien Produktion Belgien",
+          "Export Zierpflanzen",
+          "Topfpflanzen Gleichmäßigkeit",
+          "Bettungspflanzen Qualität"
+        ]
+      }
+    },
+    {
+      "slug": "cannabis-kweker-testimonial",
+      "status": "structure-only",
+      "name": {
+        "nl": "Cannabis Kweker Testimonial",
+        "en": "Cannabis Grower Testimonial",
+        "de": "Cannabis-Züchter Testimonial"
+      },
+      "company": "Anonymous/Confidential",
+      "industry": {
+        "nl": "Cannabis Teelt (Medisch/Recreatief)",
+        "en": "Cannabis Cultivation (Medical/Recreational)",
+        "de": "Cannabis-Anbau (Medizinisch/Freizeitlich)"
+      },
+      "keyMetric": {
+        "nl": "Kiemingspercentage 89% → 99%",
+        "en": "Germination Rate 89% → 99%",
+        "de": "Keimrate 89% → 99%"
+      },
+      "estimatedROI": {
+        "nl": "€85.000 - €120.000 per jaar",
+        "en": "€85,000 - €120,000 per year",
+        "de": "€85.000 - €120.000 pro Jahr"
+      },
+      "ctas": {
+        "primary": {
+          "type": "confidential-inquiry",
+          "label": {
+            "nl": "Vertrouwelijke Aanvraag",
+            "en": "Confidential Inquiry",
+            "de": "Vertrauliche Anfrage"
+          },
+          "url": "/contact",
+          "tracking": "cta_cannabis_confidential_inquiry"
+        }
+      },
+      "keywords": {
+        "nl": [
+          "cannabis teelt Nederland",
+          "wiet kweken professioneel",
+          "cannabis kiemingspercentage",
+          "medicinale cannabis teelt",
+          "compliance cannabis productie"
+        ],
+        "en": [
+          "cannabis cultivation Netherlands",
+          "professional cannabis growing",
+          "cannabis germination rate",
+          "medical cannabis cultivation",
+          "compliant cannabis production"
+        ],
+        "de": [
+          "Cannabis-Anbau Deutschland",
+          "professioneller Cannabis-Anbau",
+          "Cannabis Keimrate",
+          "medizinischer Cannabis-Anbau",
+          "konformer Cannabis-Anbau"
+        ]
+      },
+      "notes": {
+        "nl": "Testimonial blijft professioneel en compliance-gericht. Anonimiteit gewaarborgd.",
+        "en": "Testimonial remains professional and compliance-focused. Anonymity guaranteed.",
+        "de": "Testimonial bleibt professionell und compliance-orientiert. Anonymität gewährleistet."
+      }
+    },
+    {
+      "slug": "kruidenteler-roi-analyse",
+      "status": "structure-only",
+      "name": {
+        "nl": "Kruidenteler ROI Analyse",
+        "en": "Herb Grower ROI Analysis",
+        "de": "Kräuteranbauer ROI-Analyse"
+      },
+      "company": "To be determined (TBD)",
+      "industry": {
+        "nl": "Kruidenteelt - Verse Kruiden",
+        "en": "Herb Cultivation - Fresh Herbs",
+        "de": "Kräuteranbau - Frische Kräuter"
+      },
+      "keyMetric": {
+        "nl": "Productiecycli 6 → 8 per jaar (+33%)",
+        "en": "Production Cycles 6 → 8 per year (+33%)",
+        "de": "Produktionszyklen 6 → 8 pro Jahr (+33%)"
+      },
+      "estimatedROI": {
+        "nl": "€72.000 - €95.000 per jaar",
+        "en": "€72,000 - €95,000 per year",
+        "de": "€72.000 - €95.000 pro Jahr"
+      },
+      "ctas": {
+        "primary": {
+          "type": "roi-analysis",
+          "label": {
+            "nl": "Vraag ROI Analyse Aan",
+            "en": "Request ROI Analysis",
+            "de": "ROI-Analyse Anfordern"
+          },
+          "url": "/contact",
+          "tracking": "cta_herb_roi_analysis"
+        },
+        "secondary": {
+          "type": "calculator",
+          "label": {
+            "nl": "Gebruik ROI Calculator",
+            "en": "Use ROI Calculator",
+            "de": "ROI-Rechner Verwenden"
+          },
+          "url": "/contact?subject=ROI+Calculator+Kruidenteelt",
+          "tracking": "cta_herb_roi_calculator"
+        }
+      },
+      "keywords": {
+        "nl": [
+          "kruiden telen bedrijfsmatig",
+          "basilicum teelt ROI",
+          "kruidenteelt winstgevendheid",
+          "supermarkt kruiden leveren",
+          "verse kruiden teelt jaar rond"
+        ],
+        "en": [
+          "commercial herb growing",
+          "basil cultivation ROI",
+          "herb farming profitability",
+          "supermarket herb supplier",
+          "year-round fresh herb production"
+        ],
+        "de": [
+          "kommerzieller Kräuteranbau",
+          "Basilikum Anbau ROI",
+          "Kräuteranbau Rentabilität",
+          "Supermarkt Kräuterlieferant",
+          "ganzjährige Kräuterproduktion"
+        ]
+      }
+    }
+  ],
+  "globalCTAs": {
+    "consultation": {
+      "label": {
+        "nl": "Plan Gratis Adviesgesprek",
+        "en": "Schedule Free Consultation",
+        "de": "Kostenlose Beratung Vereinbaren"
+      },
+      "url": "/contact",
+      "description": {
+        "nl": "Bespreek uw specifieke situatie met onze tuinbouw specialisten",
+        "en": "Discuss your specific situation with our horticulture specialists",
+        "de": "Besprechen Sie Ihre spezifische Situation mit unseren Gartenbau-Spezialisten"
+      }
+    },
+    "pilotProgram": {
+      "label": {
+        "nl": "Start Pilot Programma",
+        "en": "Start Pilot Program",
+        "de": "Pilotprogramm Starten"
+      },
+      "url": "/contact",
+      "description": {
+        "nl": "Begin met een proefperiode van 500-1000 trays",
+        "en": "Start with a trial period of 500-1000 trays",
+        "de": "Beginnen Sie mit einer Testphase von 500-1000 Trays"
+      }
+    },
+    "roiCalculator": {
+      "label": {
+        "nl": "Bereken Uw ROI",
+        "en": "Calculate Your ROI",
+        "de": "Berechnen Sie Ihren ROI"
+      },
+      "url": "/contact?subject=ROI+Calculator",
+      "description": {
+        "nl": "Ontvang een persoonlijke ROI projectie voor uw bedrijf",
+        "en": "Receive a personalized ROI projection for your operation",
+        "de": "Erhalten Sie eine personalisierte ROI-Prognose für Ihren Betrieb"
+      }
+    },
+    "viewProducts": {
+      "label": {
+        "nl": "Bekijk Producten",
+        "en": "View Products",
+        "de": "Produkte Ansehen"
+      },
+      "url": "/shop",
+      "description": {
+        "nl": "Ontdek ons complete assortiment Paper Plug Trays",
+        "en": "Discover our complete range of Paper Plug Trays",
+        "de": "Entdecken Sie unser komplettes Sortiment an Paper Plug Trays"
+      }
+    }
+  },
+  "conversionTracking": {
+    "events": [
+      "case_study_view",
+      "cta_click",
+      "form_submission",
+      "pdf_download",
+      "roi_calculator_use",
+      "product_view_from_case",
+      "scroll_depth_75",
+      "time_on_page_2min"
+    ],
+    "goals": {
+      "pageViews": 500,
+      "ctaClickRate": 5,
+      "formSubmissionRate": 2,
+      "conversionToSale": 0.5,
+      "avgTimeOnPage": 120,
+      "bounceRateMax": 40
+    }
+  },
+  "seoMetadata": {
+    "priority": "high",
+    "indexing": "index, follow",
+    "structuredData": {
+      "type": "Article",
+      "additionalTypes": [
+        "Review",
+        "Testimonial"
+      ]
+    },
+    "socialSharing": {
+      "enabled": true,
+      "platforms": [
+        "linkedin",
+        "facebook",
+        "twitter"
+      ]
+    }
+  },
+  "internalLinking": {
+    "relatedProducts": [
+      "/shop/paper-plug-tray-84",
+      "/shop/paper-plug-tray-104",
+      "/shop/transportdoos-vouwdoos"
+    ],
+    "relatedContent": [
+      "/products",
+      "/seo/voordelen/duurzaamheid-milieu-impact",
+      "/seo/toepassingen/glastuinbouw-groenteteelt"
+    ],
+    "crossLinkCases": true
+  },
+  "contentStrategy": {
+    "tone": "professional B2B",
+    "focus": [
+      "data-driven results",
+      "financial ROI",
+      "operational efficiency",
+      "testimonial authenticity",
+      "social proof"
+    ],
+    "avoidance": [
+      "overly promotional language",
+      "unsubstantiated claims",
+      "generic testimonials",
+      "stock photos"
+    ]
+  },
+  "futureEnhancements": [
+    "Video testimonials",
+    "Interactive ROI calculator widget",
+    "Photo galleries (before/after roots)",
+    "Downloadable PDF case studies",
+    "Webinar recordings",
+    "Email nurture sequences",
+    "Social media content snippets"
+  ]
+}

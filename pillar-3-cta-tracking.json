@@ -1,0 +1,367 @@
+{
+  "pillar": 3,
+  "pillar_name": "Efficiency & ROI Optimization",
+  "pages": [
+    {
+      "subpillar": 3.1,
+      "slug": "roi-berekenen",
+      "title": {
+        "nl": "ROI Berekenen voor Paper Plugs",
+        "en": "Calculate ROI for Paper Plugs",
+        "de": "ROI Berechnen für Paper Plugs"
+      },
+      "url": {
+        "nl": "/seo/efficiëntie-roi/roi-berekenen",
+        "en": "/seo/efficiency-roi/calculate-roi",
+        "de": "/seo/effizienz-roi/roi-berechnen"
+      },
+      "ctas": [
+        {
+          "id": "roi-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Bereken Uw ROI",
+            "en": "Calculate Your ROI",
+            "de": "ROI Berechnen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - ROI calculator access"
+        },
+        {
+          "id": "roi-hero-secondary",
+          "type": "secondary",
+          "position": "hero",
+          "text": {
+            "nl": "Bestel Test Pallet",
+            "en": "Order Test Pallet",
+            "de": "Testpalette Bestellen"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - pilot test order"
+        },
+        {
+          "id": "roi-mid-content",
+          "type": "primary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Vraag ROI-Analyse Aan",
+            "en": "Request ROI Analysis",
+            "de": "ROI-Analyse Anfordern"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - custom ROI analysis"
+        },
+        {
+          "id": "roi-final",
+          "type": "primary",
+          "position": "final",
+          "text": {
+            "nl": "Vraag Gratis ROI-Analyse Aan",
+            "en": "Request Free ROI Analysis",
+            "de": "Kostenlose ROI-Analyse Anfordern"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - free consultation"
+        }
+      ],
+      "conversion_goals": [
+        "ROI analysis request",
+        "Pilot test order",
+        "Consultation booking"
+      ]
+    },
+    {
+      "subpillar": 3.2,
+      "slug": "arbeidsbesparing-40-procent",
+      "title": {
+        "nl": "40% Arbeidsbesparing met Paper Plugs",
+        "en": "40% Labor Savings with Paper Plugs",
+        "de": "40% Arbeitsersparnis mit Paper Plugs"
+      },
+      "url": {
+        "nl": "/seo/efficiëntie-roi/arbeidsbesparing-40-procent",
+        "en": "/seo/efficiency-roi/labor-savings-40-percent",
+        "de": "/seo/effizienz-roi/arbeitsersparnis-40-prozent"
+      },
+      "ctas": [
+        {
+          "id": "labor-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Bereken Arbeidsbesparing",
+            "en": "Calculate Labor Savings",
+            "de": "Arbeitsersparnis Berechnen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - labor savings calculator"
+        },
+        {
+          "id": "labor-hero-secondary",
+          "type": "secondary",
+          "position": "hero",
+          "text": {
+            "nl": "Start Pilot Test",
+            "en": "Start Pilot Test",
+            "de": "Pilottest Starten"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - pilot program"
+        },
+        {
+          "id": "labor-mid-content",
+          "type": "primary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Plan Gratis Consultatie",
+            "en": "Schedule Free Consultation",
+            "de": "Kostenlose Beratung Planen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - workflow consultation"
+        },
+        {
+          "id": "labor-final",
+          "type": "primary",
+          "position": "final",
+          "text": {
+            "nl": "Start Pilot Test Nu",
+            "en": "Start Pilot Test Now",
+            "de": "Pilottest Jetzt Starten"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - pilot order"
+        }
+      ],
+      "conversion_goals": [
+        "Workflow consultation request",
+        "Labor savings calculation",
+        "Pilot test order"
+      ]
+    },
+    {
+      "subpillar": 3.3,
+      "slug": "ruimtebesparende-kweek",
+      "title": {
+        "nl": "Ruimtebesparende Kweek met Paper Plugs",
+        "en": "Space-Saving Growing with Paper Plugs",
+        "de": "Platzsparender Anbau mit Paper Plugs"
+      },
+      "url": {
+        "nl": "/seo/efficiëntie-roi/ruimtebesparende-kweek",
+        "en": "/seo/efficiency-roi/space-saving-growing",
+        "de": "/seo/effizienz-roi/platzsparender-anbau"
+      },
+      "status": "structure_only",
+      "ctas": [
+        {
+          "id": "space-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Bereken Ruimtebesparing",
+            "en": "Calculate Space Savings",
+            "de": "Platzersparnis Berechnen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - space audit"
+        },
+        {
+          "id": "space-mid-content",
+          "type": "primary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Ruimte Audit Aanvragen",
+            "en": "Request Space Audit",
+            "de": "Raumaudit Anfordern"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - facility optimization"
+        },
+        {
+          "id": "space-final",
+          "type": "primary",
+          "position": "final",
+          "text": {
+            "nl": "Optimaliseer Uw Ruimte",
+            "en": "Optimize Your Space",
+            "de": "Optimieren Sie Ihren Raum"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - space optimization order"
+        }
+      ],
+      "conversion_goals": [
+        "Space audit request",
+        "Layout optimization consultation",
+        "Bulk order for space optimization"
+      ]
+    },
+    {
+      "subpillar": 3.4,
+      "slug": "waterbesparing-30-procent",
+      "title": {
+        "nl": "30% Waterbesparing met Paper Plugs",
+        "en": "30% Water Savings with Paper Plugs",
+        "de": "30% Wassereinsparung mit Paper Plugs"
+      },
+      "url": {
+        "nl": "/seo/efficiëntie-roi/waterbesparing-30-procent",
+        "en": "/seo/efficiency-roi/water-savings-30-percent",
+        "de": "/seo/effizienz-roi/wassereinsparung-30-prozent"
+      },
+      "status": "structure_only",
+      "ctas": [
+        {
+          "id": "water-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Audit Watergebruik",
+            "en": "Audit Water Usage",
+            "de": "Wasserverbrauch Prüfen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - water audit"
+        },
+        {
+          "id": "water-mid-content",
+          "type": "primary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Bespaar Water en Geld",
+            "en": "Save Water and Money",
+            "de": "Wasser und Geld Sparen"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - sustainability angle"
+        },
+        {
+          "id": "water-final",
+          "type": "primary",
+          "position": "final",
+          "text": {
+            "nl": "Start Waterbesparend Kweken",
+            "en": "Start Water-Saving Growing",
+            "de": "Wassersparendes Wachsen Starten"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - environmental compliance"
+        }
+      ],
+      "conversion_goals": [
+        "Water usage audit",
+        "Irrigation optimization consultation",
+        "Sustainability compliance order"
+      ]
+    },
+    {
+      "subpillar": 3.5,
+      "slug": "schaalbaarheid-grote-kwekerijen",
+      "title": {
+        "nl": "Schaalbaarheid voor Grote Kwekerijen",
+        "en": "Scalability for Large Nurseries",
+        "de": "Skalierbarkeit für Große Gärtnereien"
+      },
+      "url": {
+        "nl": "/seo/efficiëntie-roi/schaalbaarheid-grote-kwekerijen",
+        "en": "/seo/efficiency-roi/scalability-large-nurseries",
+        "de": "/seo/effizienz-roi/skalierbarkeit-grosse-gaertnereien"
+      },
+      "status": "structure_only",
+      "ctas": [
+        {
+          "id": "scale-hero-primary",
+          "type": "primary",
+          "position": "hero",
+          "text": {
+            "nl": "Enterprise Consultatie",
+            "en": "Enterprise Consultation",
+            "de": "Unternehmensberatung"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - enterprise sales"
+        },
+        {
+          "id": "scale-mid-content",
+          "type": "primary",
+          "position": "mid-content",
+          "text": {
+            "nl": "Schaal Op met Paper Plugs",
+            "en": "Scale Up with Paper Plugs",
+            "de": "Mit Paper Plugs Skalieren"
+          },
+          "target": "/shop",
+          "purpose": "Direct sales - bulk enterprise order"
+        },
+        {
+          "id": "scale-final",
+          "type": "primary",
+          "position": "final",
+          "text": {
+            "nl": "Plan Grote Implementatie",
+            "en": "Plan Large Implementation",
+            "de": "Große Implementierung Planen"
+          },
+          "target": "/shop",
+          "purpose": "Lead generation - implementation planning"
+        }
+      ],
+      "conversion_goals": [
+        "Enterprise consultation",
+        "Large-scale implementation plan",
+        "Bulk order (100k+ plants)"
+      ]
+    }
+  ],
+  "pillar_summary": {
+    "total_pages": 5,
+    "complete_pages": 2,
+    "structure_only_pages": 3,
+    "total_ctas": 19,
+    "primary_ctas": 15,
+    "secondary_ctas": 4,
+    "conversion_funnel": [
+      "Awareness: SEO traffic from efficiency/ROI keywords",
+      "Interest: Detailed ROI calculations and labor savings data",
+      "Consideration: Free consultations, audits, and calculators",
+      "Decision: Pilot tests and enterprise consultations",
+      "Action: Direct orders or implementation planning"
+    ],
+    "target_audience": [
+      "Medium to large nurseries (100k-5M plants/year)",
+      "CFOs and operations managers",
+      "Greenhouse owners focused on efficiency",
+      "Enterprise operations seeking scalability",
+      "Cost-conscious professional growers"
+    ],
+    "key_value_propositions": [
+      "40% labor savings (€15k-25k/year)",
+      "250-800% ROI first year",
+      "Break-even within 6-8 months",
+      "30% water savings",
+      "60% space efficiency improvement",
+      "Proven scalability to 5M+ plants"
+    ]
+  },
+  "tracking_metadata": {
+    "analytics_events": [
+      "cta_click",
+      "calculator_use",
+      "consultation_request",
+      "pilot_order",
+      "enterprise_inquiry"
+    ],
+    "utm_parameters": {
+      "utm_source": "seo",
+      "utm_medium": "organic",
+      "utm_campaign": "pillar3-efficiency-roi"
+    },
+    "conversion_tracking": {
+      "google_ads": "AW-CONVERSION-ID",
+      "facebook_pixel": "FB-PIXEL-ID",
+      "linkedin_insight": "LI-PARTNER-ID"
+    }
+  }
+}
