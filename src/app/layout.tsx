@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
 import GoogleAds from '@/components/GoogleAds'
+import MicrosoftClarity from '@/components/MicrosoftClarity'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
@@ -55,6 +56,9 @@ export default function RootLayout({
 
           {/* Google Ads tracking */}
           <GoogleAds />
+
+          {/* Microsoft Clarity heatmaps & analytics */}
+          <MicrosoftClarity />
 
           {/* Organization structured data */}
           <OrganizationSchema locale="nl" />
