@@ -11,23 +11,23 @@ export function generateStaticParams() {
   ]
 }
 
-// Generate metadata for Paperbus Pluggen SEO landing page
+// CTR-optimized metadata for Paperbus Pluggen SEO landing page
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   const metadata = {
     nl: {
-      title: 'Paperbus Pluggen - Duurzame Kweekoplossing | Lumora Horticulture',
-      description: 'Ontdek paperbus pluggen: 100% biologisch afbreekbaar, duurzaam en perfect voor professionele kwekerijen. FP 12+ technologie voor optimale wortelontwikkeling en geen transplantatieschok.',
-      keywords: ['paperbus pluggen', 'paper plug', 'biologisch afbreekbaar', 'duurzaam', 'propagatie pluggen', 'kweekmateriaal', 'glastuinbouw', 'transplantatieschok', 'wortelontwikkeling', 'fp 12+']
+      title: 'Paperbus Pluggen | 100% Biologisch Afbreekbaar | Gratis Verzending',
+      description: 'Duurzame paperbus pluggen met FP 12+ technologie. ✓ 100% biologisch afbreekbaar ✓ Geen transplantatieschok ✓ Gratis verzending NL/BE/DE ✓ Op voorraad. Bestel direct bij Lumora.',
+      keywords: ['paperbus pluggen', 'paperbus pluggen kopen', 'paper plug', 'biologisch afbreekbaar', 'duurzaam', 'propagatie pluggen', 'kweekmateriaal', 'glastuinbouw', 'fp 12+']
     },
     en: {
-      title: 'Paper Pot Plugs - Sustainable Growing Solution | Lumora Horticulture',
-      description: 'Discover paper pot plugs: 100% biodegradable, sustainable and perfect for professional nurseries. FP 12+ technology for optimal root development and no transplant shock.',
-      keywords: ['paper pot plugs', 'paper plug', 'biodegradable', 'sustainable', 'propagation plugs', 'cultivation media', 'greenhouse', 'transplant shock', 'root development', 'fp 12+']
+      title: 'Paper Pot Plugs | 100% Biodegradable | Free Shipping',
+      description: 'Sustainable paper pot plugs with FP 12+ technology. ✓ 100% biodegradable ✓ No transplant shock ✓ Free shipping NL/BE/DE ✓ In stock. Order directly from Lumora.',
+      keywords: ['paper pot plugs', 'buy paper pot plugs', 'paper plug', 'biodegradable', 'sustainable', 'propagation plugs', 'cultivation media', 'greenhouse', 'fp 12+']
     },
     de: {
-      title: 'Papiertopf Stecker - Nachhaltige Anbaulösung | Lumora Horticulture',
-      description: 'Entdecken Sie Papiertopf-Stecker: 100% biologisch abbaubar, nachhaltig und perfekt für professionelle Gärtnereien. FP 12+ Technologie für optimale Wurzelentwicklung ohne Transplantationsschock.',
-      keywords: ['papiertopf stecker', 'papier stecker', 'biologisch abbaubar', 'nachhaltig', 'anzucht plugs', 'anbaumedium', 'gewächshaus', 'transplantationsschock', 'wurzelentwicklung', 'fp 12+']
+      title: 'Papiertopf Plugs | 100% Biologisch Abbaubar | Kostenloser Versand',
+      description: 'Nachhaltige Papiertopf-Plugs mit FP 12+ Technologie. ✓ 100% biologisch abbaubar ✓ Kein Transplantationsschock ✓ Kostenloser Versand NL/BE/DE ✓ Auf Lager. Direkt bei Lumora bestellen.',
+      keywords: ['papiertopf plugs', 'papiertopf plugs kaufen', 'papier plugs', 'biologisch abbaubar', 'nachhaltig', 'anzucht plugs', 'anbaumedium', 'gewachshaus', 'fp 12+']
     }
   }
 

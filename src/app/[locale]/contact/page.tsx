@@ -11,23 +11,23 @@ export function generateStaticParams() {
   ]
 }
 
-// Generate metadata for contact page
+// CTR-optimized metadata for contact page
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   const metadata = {
     nl: {
-      title: 'Contact - B2B Groothandel Aanvragen',
-      description: 'Neem contact op met Lumora Horticulture voor groothandel bestellingen, offertes en B2B samenwerkingen. Direct contact met de fabrikant van steenwol pluggen en kweektrays.',
-      keywords: ['contact groothandel', 'B2B offerte', 'tuinbouw leverancier contact', 'steenwol pluggen bestellen']
+      title: 'Contact | Gratis Offerte Binnen 24u | Lumora B2B',
+      description: 'Vraag een gratis offerte aan voor steenwol pluggen en kweektrays. ✓ Reactie binnen 24 uur ✓ Persoonlijk advies ✓ B2B groothandel prijzen ✓ Direct van de fabrikant.',
+      keywords: ['contact lumora', 'offerte steenwol pluggen', 'B2B offerte', 'tuinbouw leverancier contact', 'steenwol pluggen bestellen', 'groothandel aanvraag']
     },
     en: {
-      title: 'Contact - B2B Wholesale Inquiries',
-      description: 'Contact Lumora Horticulture for wholesale orders, quotes and B2B partnerships. Direct contact with the manufacturer of rockwool plugs and growing trays.',
-      keywords: ['wholesale contact', 'B2B quote', 'horticulture supplier contact', 'order rockwool plugs']
+      title: 'Contact | Free Quote Within 24h | Lumora B2B',
+      description: 'Request a free quote for rockwool plugs and growing trays. ✓ Response within 24 hours ✓ Personal advice ✓ B2B wholesale prices ✓ Direct from manufacturer.',
+      keywords: ['contact lumora', 'rockwool plugs quote', 'B2B quote', 'horticulture supplier contact', 'order rockwool plugs', 'wholesale inquiry']
     },
     de: {
-      title: 'Kontakt - B2B Großhandel Anfragen',
-      description: 'Kontaktieren Sie Lumora Horticulture für Großhandelsbestellungen, Angebote und B2B-Partnerschaften. Direkter Kontakt zum Hersteller von Steinwollsteckern und Anzuchtschalen.',
-      keywords: ['Großhandel Kontakt', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Steinwollstecker bestellen']
+      title: 'Kontakt | Kostenloses Angebot in 24h | Lumora B2B',
+      description: 'Fordern Sie ein kostenloses Angebot fur Steinwolle-Plugs und Anzuchtschalen an. ✓ Antwort innerhalb 24 Stunden ✓ Personliche Beratung ✓ B2B-Grosshandelspreise ✓ Direkt vom Hersteller.',
+      keywords: ['kontakt lumora', 'Steinwolle Plugs Angebot', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Steinwollstecker bestellen', 'Grosshandel Anfrage']
     }
   }
   

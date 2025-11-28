@@ -11,23 +11,23 @@ export function generateStaticParams() {
   ]
 }
 
-// Generate metadata for products page
+// CTR-optimized metadata for products page
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   const metadata = {
     nl: {
-      title: 'Paperbus Steenwol Pluggen & Professionele Kweektrays',
-      description: 'Bekijk ons B2B assortiment paperbus steenwol pluggen: Ellepot FP 12+ PAPER PLUG TRAY 84/104, transportdozen en inlegvellen. Direct van de fabrikant. Groothandel prijzen voor professionele kwekers.',
-      keywords: ['paperbus steenwol pluggen', 'ellepot paper plugs', 'kweektrays', 'steenwol pluggen', 'paper plug tray', 'transportdozen tuinbouw', 'inlegvellen', 'transplant trays']
+      title: 'Producten | Paper Plug Trays 84 & 104 | FP 12+ Kwaliteit',
+      description: 'Bekijk ons complete B2B assortiment: Paper Plug Tray 84/104, transportdozen en inlegvellen. ✓ FP 12+ technologie ✓ Gratis verzending ✓ B2B prijzen ✓ Direct van fabrikant.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'paperbus steenwol pluggen', 'ellepot fp 12+', 'kweektrays B2B', 'transportdozen tuinbouw', 'professionele kweektrays']
     },
     en: {
-      title: 'Paper Plug Rockwool & Professional Growing Trays',
-      description: 'View our B2B range paper plug rockwool: Ellepot FP 12+ PAPER PLUG TRAY 84/104, transport boxes and insert sheets. Direct from manufacturer. Wholesale prices for professional growers.',
-      keywords: ['paper plug rockwool', 'ellepot paper plugs', 'growing trays', 'rockwool plugs', 'paper plug tray', 'transport boxes horticulture', 'insert sheets', 'transplant trays']
+      title: 'Products | Paper Plug Trays 84 & 104 | FP 12+ Quality',
+      description: 'View our complete B2B range: Paper Plug Tray 84/104, transport boxes and insert sheets. ✓ FP 12+ technology ✓ Free shipping ✓ B2B prices ✓ Direct from manufacturer.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'paper plug rockwool', 'ellepot fp 12+', 'growing trays B2B', 'transport boxes horticulture', 'professional growing trays']
     },
     de: {
-      title: 'Papier-Plug Steinwolle & Professionelle Anzuchtschalen',
-      description: 'Sehen Sie unser B2B-Sortiment Papier-Plug Steinwolle: Ellepot FP 12+ PAPER PLUG TRAY 84/104, Transportboxen und Einlegeblätter. Direkt vom Hersteller. Großhandelspreise für professionelle Züchter.',
-      keywords: ['Papier-Plug Steinwolle', 'Ellepot Paper Plugs', 'Anzuchtschalen', 'Steinwollstecker', 'Paper Plug Tray', 'Transportboxen Gartenbau', 'Einlegeblätter', 'Transplant Trays']
+      title: 'Produkte | Paper Plug Trays 84 & 104 | FP 12+ Qualitat',
+      description: 'Sehen Sie unser komplettes B2B-Sortiment: Paper Plug Tray 84/104, Transportboxen und Einlegeblatter. ✓ FP 12+ Technologie ✓ Kostenloser Versand ✓ B2B-Preise ✓ Direkt vom Hersteller.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'Papier-Plug Steinwolle', 'Ellepot FP 12+', 'Anzuchtschalen B2B', 'Transportboxen Gartenbau', 'professionelle Anzuchtschalen']
     }
   }
   

@@ -36,6 +36,7 @@ export const basePaths = {
   steenwolLongen: 'steenwol-longen',
   glaswolAanraken: 'glaswol-aanraken',
   levensduurSteenwol: 'levensduur-steenwol',
+  steenwolSubstraat: 'steenwol-substraat',
   // New SEO Content Categories
   propagatieTechnologie: 'propagatie-technologie',
   praktischeToepassingen: 'praktische-toepassingen',
@@ -80,6 +81,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'steenwol-longen',
     'glaswol-aanraken': 'glaswol-aanraken',
     'levensduur-steenwol': 'levensduur-steenwol',
+    'steenwol-substraat': 'steenwol-substraat',
     // New SEO Content Categories (Dutch - same as base)
     'propagatie-technologie': 'propagatie-technologie',
     'praktische-toepassingen': 'praktische-toepassingen',
@@ -104,6 +106,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'rockwool-lungs',
     'glaswol-aanraken': 'touching-fiberglass',
     'levensduur-steenwol': 'rockwool-lifespan',
+    'steenwol-substraat': 'rockwool-substrate',
     // New SEO Content Categories (English translations)
     'propagatie-technologie': 'propagation-technology',
     'praktische-toepassingen': 'practical-applications',
@@ -148,6 +151,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'steenwol-longen': 'steinwolle-lunge',
     'glaswol-aanraken': 'glaswolle-beruehren',
     'levensduur-steenwol': 'steinwolle-lebensdauer',
+    'steenwol-substraat': 'steinwolle-substrat',
     // New SEO Content Categories (German translations)
     'propagatie-technologie': 'vermehrungstechnologie',
     'praktische-toepassingen': 'praktische-anwendungen',

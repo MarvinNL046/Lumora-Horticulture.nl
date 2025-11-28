@@ -11,23 +11,23 @@ export function generateStaticParams() {
   ]
 }
 
-// Generate metadata for Steenwol Pluggen SEO landing page
+// CTR-optimized metadata for Steenwol Pluggen SEO landing page
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   const metadata = {
     nl: {
-      title: 'Steenwol Pluggen - Hydrocultuur Kweekoplossing | Lumora Horticulture',
-      description: 'Professionele steenwol pluggen voor hydrocultuur en glastuinbouw. FP 12+ technologie voor optimale wateropname, wortelontwikkeling en schimmelwerende bescherming.',
-      keywords: ['steenwol pluggen', 'rockwool plugs', 'hydrocultuur', 'glastuinbouw', 'propagatie', 'wortelontwikkeling', 'fp 12+', 'kweekmateriaal', 'professionele teelt', 'wateropname']
+      title: 'Steenwol Pluggen Kopen | FP 12+ Kwaliteit | Gratis Verzending',
+      description: 'Professionele steenwol pluggen met FP 12+ technologie. ✓ Optimale wortelontwikkeling ✓ Schimmelwerend ✓ Gratis verzending NL/BE/DE ✓ 24-48u levering. Bestel direct bij Lumora.',
+      keywords: ['steenwol pluggen', 'steenwol pluggen kopen', 'rockwool plugs', 'hydrocultuur', 'glastuinbouw', 'propagatie', 'wortelontwikkeling', 'fp 12+', 'kweekmateriaal', 'professionele teelt']
     },
     en: {
-      title: 'Rockwool Plugs - Hydroponic Growing Solution | Lumora Horticulture',
-      description: 'Professional rockwool plugs for hydroponics and greenhouse cultivation. FP 12+ technology for optimal water absorption, root development and fungal protection.',
-      keywords: ['rockwool plugs', 'hydroponics', 'greenhouse cultivation', 'propagation', 'root development', 'fp 12+', 'growing media', 'professional cultivation', 'water absorption']
+      title: 'Buy Rockwool Plugs | FP 12+ Quality | Free Shipping',
+      description: 'Professional rockwool plugs with FP 12+ technology. ✓ Optimal root development ✓ Fungal protection ✓ Free shipping NL/BE/DE ✓ 24-48h delivery. Order directly from Lumora.',
+      keywords: ['rockwool plugs', 'buy rockwool plugs', 'hydroponics', 'greenhouse cultivation', 'propagation', 'root development', 'fp 12+', 'growing media', 'professional cultivation']
     },
     de: {
-      title: 'Steinwolle Stecklinge - Hydrokultur Anbaulösung | Lumora Horticulture',
-      description: 'Professionelle Steinwolle-Stecklinge für Hydrokultur und Gewächshausanbau. FP 12+ Technologie für optimale Wasseraufnahme, Wurzelentwicklung und Pilzschutz.',
-      keywords: ['steinwolle stecklinge', 'hydrokultur', 'gewächshausanbau', 'vermehrung', 'wurzelentwicklung', 'fp 12+', 'anzuchtmedium', 'professioneller anbau', 'wasseraufnahme']
+      title: 'Steinwolle Plugs Kaufen | FP 12+ Qualitat | Kostenloser Versand',
+      description: 'Professionelle Steinwolle-Plugs mit FP 12+ Technologie. ✓ Optimale Wurzelentwicklung ✓ Pilzschutz ✓ Kostenloser Versand NL/BE/DE ✓ 24-48h Lieferung. Direkt bei Lumora bestellen.',
+      keywords: ['steinwolle plugs', 'steinwolle plugs kaufen', 'hydrokultur', 'gewachshausanbau', 'vermehrung', 'wurzelentwicklung', 'fp 12+', 'anzuchtmedium', 'professioneller anbau']
     }
   }
 

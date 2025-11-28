@@ -1,5 +1,6 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
 import HomeClient from '@/app/[locale]/HomeClient'
+import { generatePageMetadata } from '@/lib/metadata'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -8,6 +9,37 @@ export function generateStaticParams() {
     { locale: 'en' },
     { locale: 'de' }
   ]
+}
+
+// CTR-optimized metadata for homepage
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const metadata = {
+    nl: {
+      title: 'Steenwol Pluggen & Kweektrays | Gratis Verzending | Lumora',
+      description: 'Professionele steenwol pluggen en paper plug trays voor kwekers. ✓ Gratis verzending NL/BE/DE ✓ 24-48u levering ✓ B2B prijzen ✓ 15+ jaar ervaring. Bestel direct bij de specialist.',
+      keywords: ['steenwol pluggen', 'kweektrays', 'paper plug trays', 'paperbus pluggen', 'glastuinbouw', 'B2B tuinbouw', 'Ellepot', 'propagatie materiaal']
+    },
+    en: {
+      title: 'Rockwool Plugs & Growing Trays | Free Shipping | Lumora',
+      description: 'Professional rockwool plugs and paper plug trays for growers. ✓ Free shipping NL/BE/DE ✓ 24-48h delivery ✓ B2B prices ✓ 15+ years experience. Order directly from the specialist.',
+      keywords: ['rockwool plugs', 'growing trays', 'paper plug trays', 'propagation', 'greenhouse', 'B2B horticulture', 'Ellepot', 'propagation materials']
+    },
+    de: {
+      title: 'Steinwolle Plugs & Anzuchtschalen | Kostenloser Versand | Lumora',
+      description: 'Professionelle Steinwolle-Plugs und Paper-Plug-Trays für Züchter. ✓ Kostenloser Versand NL/BE/DE ✓ 24-48h Lieferung ✓ B2B-Preise ✓ 15+ Jahre Erfahrung. Direkt beim Spezialisten bestellen.',
+      keywords: ['Steinwolle Plugs', 'Anzuchtschalen', 'Paper Plug Trays', 'Vermehrung', 'Gewächshaus', 'B2B Gartenbau', 'Ellepot', 'Vermehrungsmaterial']
+    }
+  }
+
+  const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
+
+  return generatePageMetadata({
+    title: localeMeta.title,
+    description: localeMeta.description,
+    keywords: localeMeta.keywords,
+    locale: params.locale,
+    path: '/'
+  })
 }
 
 export default async function Home({ params }: { params: { locale: string } }) {
