@@ -54,16 +54,16 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosering & Gebruik',
         subtitle: 'Mengverhouding per liter water',
         levels: [
-          { amount: '5 ml/L', use: 'Preventief / Gevoelige planten', description: 'Voor regelmatige preventieve behandeling en gevoelige gewassen' },
-          { amount: '7 ml/L', use: 'Normaal gebruik', description: 'Standaard dosering voor algemene bladverzorging' },
+          { amount: '2,5 ml/L', use: 'Preventief (wekelijks)', description: 'Voor regelmatige wekelijkse preventieve behandeling' },
+          { amount: '5 ml/L', use: 'Gevoelige planten', description: 'Voor gevoelige gewassen en jonge planten' },
           { amount: '10 ml/L', use: 'Zware omstandigheden', description: 'Bij verhoogde insectendruk of intensieve verzorging' }
         ],
         yield: {
           title: 'Opbrengst per flesje',
           items: [
-            { size: '10 ml', yield: '1-2 liter spuitvloeistof' },
-            { size: '15 ml', yield: '2-3 liter spuitvloeistof' },
-            { size: '30 ml', yield: '3-6 liter spuitvloeistof' }
+            { size: '10 ml', yield: '1-4 liter spuitvloeistof' },
+            { size: '15 ml', yield: '1,5-6 liter spuitvloeistof' },
+            { size: '30 ml', yield: '3-12 liter spuitvloeistof' }
           ]
         }
       },
@@ -74,13 +74,13 @@ export default function NeemxProClient({ locale }: Props) {
         ourProduct: 'NEEMX PRO',
         standard: 'Standaard Neem',
         items: [
-          { feature: 'Concentratie', ours: 'Hooggeconcentreerd (2x sterker)', theirs: 'Vaak verdund' },
-          { feature: 'Dosering', ours: '5-10 ml per liter', theirs: '10-20 ml per liter' },
+          { feature: 'Concentratie', ours: 'Hooggeconcentreerd (4x sterker)', theirs: 'Vaak verdund' },
+          { feature: 'Dosering', ours: '2,5-10 ml per liter', theirs: '10-20 ml per liter' },
           { feature: 'Kwaliteit', ours: 'Premium botanische blend', theirs: 'Variabel' },
           { feature: 'Samenstelling', ours: '100% natuurlijk', theirs: 'Soms synthetische toevoegingen' },
           { feature: 'Prijs per behandeling', ours: 'Voordeliger door concentratie', theirs: 'Duurder per behandeling' }
         ],
-        note: 'NEEMX PRO is 2× zo sterk als standaard producten. Waar standaard producten 10 ml nodig hebben voor 1 liter water, maakt NEEMX PRO tot 2 liter spuitoplossing per 10 ml.'
+        note: 'NEEMX PRO is 4× zo sterk als standaard producten. Waar standaard producten 10 ml nodig hebben voor 1 liter water, maakt NEEMX PRO tot 4 liter spuitoplossing per 10 ml bij preventief gebruik.'
       },
 
       targets: {
@@ -110,9 +110,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Kies jouw formaat',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Premium instap / Bestseller', yield: '1-2 liter', badge: 'Populair' },
-          { size: '15 ml', price: '29,95', description: 'Beste waarde voor particulier', yield: '2-3 liter', badge: 'Beste waarde' },
-          { size: '30 ml', price: '44,95', description: 'Voor serieuze gebruikers', yield: '3-6 liter', badge: 'Professioneel' }
+          { size: '10 ml', price: '24,95', description: 'Premium instap / Bestseller', yield: '1-4 liter', badge: 'Populair' },
+          { size: '15 ml', price: '29,95', description: 'Beste waarde voor particulier', yield: '1,5-6 liter', badge: 'Beste waarde' },
+          { size: '30 ml', price: '44,95', description: 'Voor serieuze gebruikers', yield: '3-12 liter', badge: 'Professioneel' }
         ]
       },
 
@@ -137,7 +137,7 @@ export default function NeemxProClient({ locale }: Props) {
           },
           {
             q: 'Waarom is NEEMX PRO duurder dan andere neemproducten?',
-            a: 'NEEMX PRO is een hooggeconcentreerd product - 2x sterker dan standaard neemproducten. Hierdoor heeft u per behandeling minder nodig, waardoor de prijs per behandeling juist voordeliger uitvalt.'
+            a: 'NEEMX PRO is een hooggeconcentreerd product - 4x sterker dan standaard neemproducten. Hierdoor heeft u per behandeling minder nodig, waardoor de prijs per behandeling juist voordeliger uitvalt.'
           }
         ]
       },
@@ -190,16 +190,16 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosage & Application',
         subtitle: 'Mixing ratio per liter of water',
         levels: [
-          { amount: '5 ml/L', use: 'Preventive / Sensitive plants', description: 'For regular preventive treatment and sensitive crops' },
-          { amount: '7 ml/L', use: 'Normal use', description: 'Standard dosage for general leaf care' },
+          { amount: '2.5 ml/L', use: 'Preventive (weekly)', description: 'For regular weekly preventive treatment' },
+          { amount: '5 ml/L', use: 'Sensitive plants', description: 'For sensitive crops and young plants' },
           { amount: '10 ml/L', use: 'Heavy conditions', description: 'For increased insect pressure or intensive care' }
         ],
         yield: {
           title: 'Yield per bottle',
           items: [
-            { size: '10 ml', yield: '1-2 liters spray solution' },
-            { size: '15 ml', yield: '2-3 liters spray solution' },
-            { size: '30 ml', yield: '3-6 liters spray solution' }
+            { size: '10 ml', yield: '1-4 liters spray solution' },
+            { size: '15 ml', yield: '1.5-6 liters spray solution' },
+            { size: '30 ml', yield: '3-12 liters spray solution' }
           ]
         }
       },
@@ -210,13 +210,13 @@ export default function NeemxProClient({ locale }: Props) {
         ourProduct: 'NEEMX PRO',
         standard: 'Standard Neem',
         items: [
-          { feature: 'Concentration', ours: 'Highly concentrated (2x stronger)', theirs: 'Often diluted' },
-          { feature: 'Dosage', ours: '5-10 ml per liter', theirs: '10-20 ml per liter' },
+          { feature: 'Concentration', ours: 'Highly concentrated (4x stronger)', theirs: 'Often diluted' },
+          { feature: 'Dosage', ours: '2.5-10 ml per liter', theirs: '10-20 ml per liter' },
           { feature: 'Quality', ours: 'Premium botanical blend', theirs: 'Variable' },
           { feature: 'Composition', ours: '100% natural', theirs: 'Sometimes synthetic additives' },
           { feature: 'Price per treatment', ours: 'Better value due to concentration', theirs: 'More expensive per treatment' }
         ],
-        note: 'NEEMX PRO is 2× as strong as standard products. Where standard products need 10 ml for 1 liter of water, NEEMX PRO makes up to 2 liters of spray solution per 10 ml.'
+        note: 'NEEMX PRO is 4× as strong as standard products. Where standard products need 10 ml for 1 liter of water, NEEMX PRO makes up to 4 liters of spray solution per 10 ml for preventive use.'
       },
 
       targets: {
@@ -246,9 +246,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Choose your size',
         items: [
-          { size: '10 ml', price: '24.95', description: 'Premium entry / Bestseller', yield: '1-2 liters', badge: 'Popular' },
-          { size: '15 ml', price: '29.95', description: 'Best value for individuals', yield: '2-3 liters', badge: 'Best value' },
-          { size: '30 ml', price: '44.95', description: 'For serious users', yield: '3-6 liters', badge: 'Professional' }
+          { size: '10 ml', price: '24.95', description: 'Premium entry / Bestseller', yield: '1-4 liters', badge: 'Popular' },
+          { size: '15 ml', price: '29.95', description: 'Best value for individuals', yield: '1.5-6 liters', badge: 'Best value' },
+          { size: '30 ml', price: '44.95', description: 'For serious users', yield: '3-12 liters', badge: 'Professional' }
         ]
       },
 
@@ -273,7 +273,7 @@ export default function NeemxProClient({ locale }: Props) {
           },
           {
             q: 'Why is NEEMX PRO more expensive than other neem products?',
-            a: 'NEEMX PRO is a highly concentrated product - 2x stronger than standard neem products. This means you need less per treatment, making the price per treatment actually more advantageous.'
+            a: 'NEEMX PRO is a highly concentrated product - 4x stronger than standard neem products. This means you need less per treatment, making the price per treatment actually more advantageous.'
           }
         ]
       },
@@ -326,16 +326,16 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosierung & Anwendung',
         subtitle: 'Mischverhältnis pro Liter Wasser',
         levels: [
-          { amount: '5 ml/L', use: 'Präventiv / Empfindliche Pflanzen', description: 'Für regelmäßige präventive Behandlung und empfindliche Kulturen' },
-          { amount: '7 ml/L', use: 'Normale Verwendung', description: 'Standarddosierung für allgemeine Blattpflege' },
+          { amount: '2,5 ml/L', use: 'Präventiv (wöchentlich)', description: 'Für regelmäßige wöchentliche präventive Behandlung' },
+          { amount: '5 ml/L', use: 'Empfindliche Pflanzen', description: 'Für empfindliche Kulturen und junge Pflanzen' },
           { amount: '10 ml/L', use: 'Schwere Bedingungen', description: 'Bei erhöhtem Insektendruck oder intensiver Pflege' }
         ],
         yield: {
           title: 'Ertrag pro Flasche',
           items: [
-            { size: '10 ml', yield: '1-2 Liter Sprühlösung' },
-            { size: '15 ml', yield: '2-3 Liter Sprühlösung' },
-            { size: '30 ml', yield: '3-6 Liter Sprühlösung' }
+            { size: '10 ml', yield: '1-4 Liter Sprühlösung' },
+            { size: '15 ml', yield: '1,5-6 Liter Sprühlösung' },
+            { size: '30 ml', yield: '3-12 Liter Sprühlösung' }
           ]
         }
       },
@@ -346,13 +346,13 @@ export default function NeemxProClient({ locale }: Props) {
         ourProduct: 'NEEMX PRO',
         standard: 'Standard Neem',
         items: [
-          { feature: 'Konzentration', ours: 'Hochkonzentriert (2x stärker)', theirs: 'Oft verdünnt' },
-          { feature: 'Dosierung', ours: '5-10 ml pro Liter', theirs: '10-20 ml pro Liter' },
+          { feature: 'Konzentration', ours: 'Hochkonzentriert (4x stärker)', theirs: 'Oft verdünnt' },
+          { feature: 'Dosierung', ours: '2,5-10 ml pro Liter', theirs: '10-20 ml pro Liter' },
           { feature: 'Qualität', ours: 'Premium botanische Mischung', theirs: 'Variabel' },
           { feature: 'Zusammensetzung', ours: '100% natürlich', theirs: 'Manchmal synthetische Zusätze' },
           { feature: 'Preis pro Behandlung', ours: 'Besser wegen Konzentration', theirs: 'Teurer pro Behandlung' }
         ],
-        note: 'NEEMX PRO ist 2× so stark wie Standardprodukte. Wo Standardprodukte 10 ml für 1 Liter Wasser benötigen, macht NEEMX PRO bis zu 2 Liter Sprühlösung pro 10 ml.'
+        note: 'NEEMX PRO ist 4× so stark wie Standardprodukte. Wo Standardprodukte 10 ml für 1 Liter Wasser benötigen, macht NEEMX PRO bis zu 4 Liter Sprühlösung pro 10 ml bei präventiver Anwendung.'
       },
 
       targets: {
@@ -382,9 +382,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Wählen Sie Ihre Größe',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Premium Einstieg / Bestseller', yield: '1-2 Liter', badge: 'Beliebt' },
-          { size: '15 ml', price: '29,95', description: 'Bester Wert für Privatpersonen', yield: '2-3 Liter', badge: 'Bester Wert' },
-          { size: '30 ml', price: '44,95', description: 'Für ernsthafte Anwender', yield: '3-6 Liter', badge: 'Professionell' }
+          { size: '10 ml', price: '24,95', description: 'Premium Einstieg / Bestseller', yield: '1-4 Liter', badge: 'Beliebt' },
+          { size: '15 ml', price: '29,95', description: 'Bester Wert für Privatpersonen', yield: '1,5-6 Liter', badge: 'Bester Wert' },
+          { size: '30 ml', price: '44,95', description: 'Für ernsthafte Anwender', yield: '3-12 Liter', badge: 'Professionell' }
         ]
       },
 
@@ -409,7 +409,7 @@ export default function NeemxProClient({ locale }: Props) {
           },
           {
             q: 'Warum ist NEEMX PRO teurer als andere Neemprodukte?',
-            a: 'NEEMX PRO ist ein hochkonzentriertes Produkt - 2x stärker als Standard-Neemprodukte. Dadurch benötigen Sie pro Behandlung weniger, was den Preis pro Behandlung tatsächlich vorteilhafter macht.'
+            a: 'NEEMX PRO ist ein hochkonzentriertes Produkt - 4x stärker als Standard-Neemprodukte. Dadurch benötigen Sie pro Behandlung weniger, was den Preis pro Behandlung tatsächlich vorteilhafter macht.'
           }
         ]
       },
@@ -495,7 +495,7 @@ export default function NeemxProClient({ locale }: Props) {
               </div>
               {/* Floating badges */}
               <div className="absolute -top-4 -right-4 bg-amber-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform rotate-12">
-                2x {locale === 'nl' ? 'Sterker' : locale === 'de' ? 'Stärker' : 'Stronger'}
+                4x {locale === 'nl' ? 'Sterker' : locale === 'de' ? 'Stärker' : 'Stronger'}
               </div>
             </div>
           </div>
