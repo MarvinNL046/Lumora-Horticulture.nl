@@ -54,9 +54,10 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosering & Gebruik',
         subtitle: 'Mengverhouding per liter water',
         levels: [
-          { amount: '2,5 ml/L', use: 'Preventief (wekelijks)', description: 'Voor regelmatige wekelijkse preventieve behandeling' },
-          { amount: '5 ml/L', use: 'Gevoelige planten', description: 'Voor gevoelige gewassen en jonge planten' },
-          { amount: '10 ml/L', use: 'Zware omstandigheden', description: 'Bij verhoogde insectendruk of intensieve verzorging' }
+          { amount: '2,5 ml/L', use: 'Preventief (wekelijks)', description: 'Wekelijks tot einde teelt voor preventieve bescherming' },
+          { amount: '5 ml/L', use: 'Normaal gebruik', description: 'Voor standaard bladverzorging en onderhoud' },
+          { amount: '7 ml/L', use: 'Intensieve verzorging', description: 'Bij verhoogde zorg of lichte insectendruk' },
+          { amount: '10 ml/L', use: 'Professioneel / Zwaar', description: 'Bij zware insectendruk of professioneel gebruik' }
         ],
         yield: {
           title: 'Opbrengst per flesje',
@@ -190,9 +191,10 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosage & Application',
         subtitle: 'Mixing ratio per liter of water',
         levels: [
-          { amount: '2.5 ml/L', use: 'Preventive (weekly)', description: 'For regular weekly preventive treatment' },
-          { amount: '5 ml/L', use: 'Sensitive plants', description: 'For sensitive crops and young plants' },
-          { amount: '10 ml/L', use: 'Heavy conditions', description: 'For increased insect pressure or intensive care' }
+          { amount: '2.5 ml/L', use: 'Preventive (weekly)', description: 'Weekly until end of cultivation for preventive protection' },
+          { amount: '5 ml/L', use: 'Normal use', description: 'For standard leaf care and maintenance' },
+          { amount: '7 ml/L', use: 'Intensive care', description: 'For increased care or light insect pressure' },
+          { amount: '10 ml/L', use: 'Professional / Heavy', description: 'For heavy insect pressure or professional use' }
         ],
         yield: {
           title: 'Yield per bottle',
@@ -326,9 +328,10 @@ export default function NeemxProClient({ locale }: Props) {
         title: 'Dosierung & Anwendung',
         subtitle: 'Mischverhältnis pro Liter Wasser',
         levels: [
-          { amount: '2,5 ml/L', use: 'Präventiv (wöchentlich)', description: 'Für regelmäßige wöchentliche präventive Behandlung' },
-          { amount: '5 ml/L', use: 'Empfindliche Pflanzen', description: 'Für empfindliche Kulturen und junge Pflanzen' },
-          { amount: '10 ml/L', use: 'Schwere Bedingungen', description: 'Bei erhöhtem Insektendruck oder intensiver Pflege' }
+          { amount: '2,5 ml/L', use: 'Präventiv (wöchentlich)', description: 'Wöchentlich bis Ende der Kultivierung für präventiven Schutz' },
+          { amount: '5 ml/L', use: 'Normale Verwendung', description: 'Für Standard-Blattpflege und Wartung' },
+          { amount: '7 ml/L', use: 'Intensive Pflege', description: 'Bei erhöhter Pflege oder leichtem Insektendruck' },
+          { amount: '10 ml/L', use: 'Professionell / Schwer', description: 'Bei schwerem Insektendruck oder professionellem Einsatz' }
         ],
         yield: {
           title: 'Ertrag pro Flasche',
@@ -483,13 +486,13 @@ export default function NeemxProClient({ locale }: Props) {
 
             {/* Product Image */}
             <div className="relative">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+              <div className="bg-gradient-to-br from-green-900/10 to-green-800/20 rounded-3xl shadow-2xl p-4 transform lg:rotate-1 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/neemxpro/neemxpro-logo.png"
-                  alt="NEEMX PRO"
+                  src="/productAfbeeldingen/neemxpro/neemxpro-bottle.png"
+                  alt="NEEMX PRO Bottle"
                   width={500}
                   height={500}
-                  className="w-full h-auto"
+                  className="w-full h-auto rounded-2xl"
                   priority
                 />
               </div>
@@ -544,12 +547,12 @@ export default function NeemxProClient({ locale }: Props) {
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4 text-center">{t.dosage.title}</h2>
           <p className="text-lg text-gray-600 mb-12 text-center">{t.dosage.subtitle}</p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {t.dosage.levels.map((level, idx) => (
-              <div key={idx} className={`rounded-2xl p-6 text-center ${idx === 1 ? 'bg-amber-500 text-white shadow-xl scale-105' : 'bg-gray-50 border border-gray-200'}`}>
-                <div className={`text-4xl font-bold mb-2 ${idx === 1 ? 'text-white' : 'text-amber-500'}`}>{level.amount}</div>
-                <div className={`font-semibold mb-2 ${idx === 1 ? 'text-amber-100' : 'text-gray-800'}`}>{level.use}</div>
-                <p className={`text-sm ${idx === 1 ? 'text-white/90' : 'text-gray-600'}`}>{level.description}</p>
+              <div key={idx} className={`rounded-2xl p-5 text-center ${idx === 0 ? 'bg-green-600 text-white shadow-xl' : idx === 3 ? 'bg-amber-500 text-white shadow-xl' : 'bg-gray-50 border border-gray-200'}`}>
+                <div className={`text-3xl font-bold mb-2 ${idx === 0 || idx === 3 ? 'text-white' : 'text-amber-500'}`}>{level.amount}</div>
+                <div className={`font-semibold mb-2 ${idx === 0 ? 'text-green-100' : idx === 3 ? 'text-amber-100' : 'text-gray-800'}`}>{level.use}</div>
+                <p className={`text-sm ${idx === 0 || idx === 3 ? 'text-white/90' : 'text-gray-600'}`}>{level.description}</p>
               </div>
             ))}
           </div>
