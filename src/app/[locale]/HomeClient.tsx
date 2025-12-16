@@ -441,16 +441,16 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2">{locale === 'nl' ? 'Transportdoos' : locale === 'de' ? 'Transportbox' : 'Transport Box'}</p>
                 </div>
-                <Link href={localizePathForLocale('/neemx-pro', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow relative group">
-                  <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
+                <Link href={localizePathForLocale('/neemx-pro', locale)} className="bg-white rounded-xl p-2 shadow-md hover:shadow-lg transition-shadow relative group overflow-hidden">
+                  <div className="absolute -top-1 -right-1 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
                     {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
                   </div>
                   <Image
-                    src="/productAfbeeldingen/neemxpro/neemxpro-logo.png"
+                    src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
                     alt="NEEMX PRO"
                     width={200}
                     height={200}
-                    className="w-full h-auto group-hover:scale-105 transition-transform"
+                    className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2">NEEMX PRO</p>
                 </Link>
@@ -573,13 +573,13 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
                   </span>
                 </div>
-                <div className="relative h-48 bg-gradient-to-br from-amber-50 to-white flex items-center justify-center p-4">
+                <div className="relative h-48 overflow-hidden">
                   <Image
-                    src="/productAfbeeldingen/neemxpro/neemxpro-logo.png"
+                    src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp"
                     alt="NEEMX PRO"
-                    width={160}
-                    height={160}
-                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                    width={400}
+                    height={250}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-5 bg-gradient-to-r from-amber-50 to-white">

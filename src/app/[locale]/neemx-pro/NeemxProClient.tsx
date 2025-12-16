@@ -486,13 +486,13 @@ export default function NeemxProClient({ locale }: Props) {
 
             {/* Product Image */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-green-900/10 to-green-800/20 rounded-3xl shadow-2xl p-4 transform lg:rotate-1 hover:rotate-0 transition-transform duration-500">
+              <div className="rounded-3xl shadow-2xl overflow-hidden transform lg:rotate-1 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/neemxpro/neemxpro-bottle.png"
-                  alt="NEEMX PRO Bottle"
-                  width={500}
-                  height={500}
-                  className="w-full h-auto rounded-2xl"
+                  src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
+                  alt="NEEMX PRO - Premium Botanical Oil Concentrate"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
                   priority
                 />
               </div>
@@ -633,6 +633,37 @@ export default function NeemxProClient({ locale }: Props) {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Product Gallery Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
+              <Image
+                src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
+                alt="NEEMX PRO - 100% Natural Botanical Oil"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
+              <Image
+                src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp"
+                alt="NEEMX PRO - Premium Plant Care"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+          <p className="text-center text-gray-500 mt-6 text-sm">
+            {locale === 'nl' ? '100% natuurlijk botanisch olieconcentraat voor professionele bladverzorging' :
+             locale === 'de' ? '100% natürliches botanisches Ölkonzentrat für professionelle Blattpflege' :
+             '100% natural botanical oil concentrate for professional leaf care'}
+          </p>
         </div>
       </section>
 
