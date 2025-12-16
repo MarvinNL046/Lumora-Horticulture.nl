@@ -249,8 +249,8 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                  alt="Paperbus Steenwol Pluggen"
+                  src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                  alt={locale === 'nl' ? 'Paperbus Steenwol Pluggen' : locale === 'de' ? 'Paperbus Steinwolle Plugs' : 'Paperbus Rockwool Plugs'}
                   width={600}
                   height={400}
                   className={`w-full h-auto rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -335,7 +335,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             <div className="relative">
               <Image
                 src="/images/greenhouse-1.jpg"
-                alt="Professionele glastuinbouw"
+                alt={locale === 'nl' ? 'Professionele glastuinbouw' : locale === 'de' ? 'Professioneller Gewächshausanbau' : 'Professional greenhouse cultivation'}
                 width={600}
                 height={400}
                 className="rounded-2xl shadow-2xl w-full h-auto"
@@ -412,8 +412,8 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
                 <Image
-                  src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                  alt="Tray-84st Paperbus Steenwol Pluggen"
+                  src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                  alt={locale === 'nl' ? 'Tray-84st Paperbus Steenwol Pluggen' : locale === 'de' ? 'Tablett-84st Paperbus Steinwolle Plugs' : 'Tray-84pc Paperbus Rockwool Plugs'}
                   width={300}
                   height={200}
                   className="rounded-xl shadow-lg w-full h-auto"
@@ -422,8 +422,8 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
               </div>
               <div className="space-y-4">
                 <Image
-                  src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                  alt="Tray-104st Paperbus Steenwol Pluggen"
+                  src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
+                  alt={locale === 'nl' ? 'Tray-104st Paperbus Steenwol Pluggen' : locale === 'de' ? 'Tablett-104st Paperbus Steinwolle Plugs' : 'Tray-104pc Paperbus Rockwool Plugs'}
                   width={300}
                   height={200}
                   className="rounded-xl shadow-lg w-full h-auto"

@@ -154,7 +154,7 @@ export default function VoordelenNadelenClient({ t, locale }: { t: any, locale: 
 
       <section className="py-16 bg-gradient-to-r from-lumora-cream/50 to-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <Image src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp" alt="Steenwol" width={800} height={400} className="rounded-2xl shadow-2xl mx-auto mb-8" />
+          <Image src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp" alt={locale === 'nl' ? 'Steenwol' : locale === 'de' ? 'Steinwolle' : 'Rockwool'} width={800} height={400} className="rounded-2xl shadow-2xl mx-auto mb-8" />
         </div>
       </section>
 

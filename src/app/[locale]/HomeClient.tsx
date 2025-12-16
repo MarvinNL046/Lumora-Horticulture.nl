@@ -411,48 +411,54 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
 
               {/* Product Images Showcase */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-                <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow">
+                <Link href={localizePathForLocale('/shop/paper-plug-tray-84', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all group overflow-hidden">
                   <Image
-                    src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                    alt="Tray 84"
-                    width={200}
-                    height={200}
-                    className="w-full h-auto"
-                  />
-                  <p className="text-xs font-medium text-lumora-dark mt-2">Tray 84</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow">
-                  <Image
-                    src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                    alt="Tray 104"
-                    width={200}
-                    height={200}
-                    className="w-full h-auto"
-                  />
-                  <p className="text-xs font-medium text-lumora-dark mt-2">Tray 104</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow">
-                  <Image
-                    src="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
-                    alt="Transportdoos"
-                    width={200}
-                    height={200}
-                    className="w-full h-auto"
-                  />
-                  <p className="text-xs font-medium text-lumora-dark mt-2">{locale === 'nl' ? 'Transportdoos' : locale === 'de' ? 'Transportbox' : 'Transport Box'}</p>
-                </div>
-                <Link href={localizePathForLocale('/neemx-pro', locale)} className="bg-white rounded-xl p-2 shadow-md hover:shadow-lg transition-shadow relative group overflow-hidden">
-                  <div className="absolute -top-1 -right-1 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
-                    {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
-                  </div>
-                  <Image
-                    src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
-                    alt="NEEMX PRO"
+                    src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                    alt={locale === 'nl' ? 'Steenwol Pluggen Tray 84 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 84 Zellen' : 'Rockwool Plugs Tray 84 cells'}
                     width={200}
                     height={200}
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
-                  <p className="text-xs font-medium text-lumora-dark mt-2">NEEMX PRO</p>
+                  <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
+                    {locale === 'nl' ? 'Steenwol Tray 84' : locale === 'de' ? 'Steinwolle Tablett 84' : 'Rockwool Tray 84'}
+                  </p>
+                </Link>
+                <Link href={localizePathForLocale('/shop/paper-plug-tray-104', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all group overflow-hidden">
+                  <Image
+                    src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
+                    alt={locale === 'nl' ? 'Steenwol Pluggen Tray 104 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 104 Zellen' : 'Rockwool Plugs Tray 104 cells'}
+                    width={200}
+                    height={200}
+                    className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
+                  />
+                  <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
+                    {locale === 'nl' ? 'Steenwol Tray 104' : locale === 'de' ? 'Steinwolle Tablett 104' : 'Rockwool Tray 104'}
+                  </p>
+                </Link>
+                <Link href={localizePathForLocale('/shop/transportdoos-vouwdoos', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all group overflow-hidden">
+                  <Image
+                    src="/productAfbeeldingen/verpakkingsdoos/transportdoos-sfeer.webp"
+                    alt={locale === 'nl' ? 'Transportdoos voor tuinbouwproducten' : locale === 'de' ? 'Transportbox für Gartenbauprodukte' : 'Transport box for horticulture products'}
+                    width={200}
+                    height={200}
+                    className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
+                  />
+                  <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
+                    {locale === 'nl' ? 'Transportdoos' : locale === 'de' ? 'Transportbox' : 'Transport Box'}
+                  </p>
+                </Link>
+                <Link href={localizePathForLocale('/neemx-pro', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all relative group overflow-hidden">
+                  <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
+                    {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
+                  </div>
+                  <Image
+                    src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
+                    alt={locale === 'nl' ? 'NEEMX PRO natuurlijk botanisch olieconcentraat' : locale === 'de' ? 'NEEMX PRO natürliches botanisches Ölkonzentrat' : 'NEEMX PRO natural botanical oil concentrate'}
+                    width={200}
+                    height={200}
+                    className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
+                  />
+                  <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">NEEMX PRO</p>
                 </Link>
               </div>
             </div>
@@ -516,15 +522,15 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border border-lumora-cream/30">
                 <div className="relative h-48">
                   <Image
-                    src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                    alt="Tray 84"
+                    src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                    alt={locale === 'nl' ? 'Steenwol Pluggen Tray 84' : locale === 'de' ? 'Steinwolle Plugs Tablett 84' : 'Rockwool Plugs Tray 84'}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-lumora-dark mb-2">Paper Plug Tray 84</h3>
-                  <p className="text-lumora-dark/70 text-sm mb-3">84 pluggen • 3.5cm</p>
+                  <h3 className="text-lg font-bold text-lumora-dark mb-2">{locale === 'nl' ? 'Steenwol Tray 84' : locale === 'de' ? 'Steinwolle Tablett 84' : 'Rockwool Tray 84'}</h3>
+                  <p className="text-lumora-dark/70 text-sm mb-3">{locale === 'nl' ? '84 pluggen • 3.5cm' : locale === 'de' ? '84 Plugs • 3,5cm' : '84 plugs • 3.5cm'}</p>
                   <span className="text-lumora-green-500 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
                 </div>
               </div>
@@ -534,15 +540,15 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border border-lumora-cream/30">
                 <div className="relative h-48">
                   <Image
-                    src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                    alt="Tray 104"
+                    src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
+                    alt={locale === 'nl' ? 'Steenwol Pluggen Tray 104' : locale === 'de' ? 'Steinwolle Plugs Tablett 104' : 'Rockwool Plugs Tray 104'}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-lumora-dark mb-2">Paper Plug Tray 104</h3>
-                  <p className="text-lumora-dark/70 text-sm mb-3">104 pluggen • 3cm</p>
+                  <h3 className="text-lg font-bold text-lumora-dark mb-2">{locale === 'nl' ? 'Steenwol Tray 104' : locale === 'de' ? 'Steinwolle Tablett 104' : 'Rockwool Tray 104'}</h3>
+                  <p className="text-lumora-dark/70 text-sm mb-3">{locale === 'nl' ? '104 pluggen • 3cm' : locale === 'de' ? '104 Plugs • 3cm' : '104 plugs • 3cm'}</p>
                   <span className="text-lumora-green-500 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
                 </div>
               </div>
@@ -576,7 +582,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp"
-                    alt="NEEMX PRO"
+                    alt={locale === 'nl' ? 'NEEMX PRO botanisch olieconcentraat' : locale === 'de' ? 'NEEMX PRO botanisches Ölkonzentrat' : 'NEEMX PRO botanical oil concentrate'}
                     width={400}
                     height={250}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"

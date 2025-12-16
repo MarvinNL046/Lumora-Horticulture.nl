@@ -120,13 +120,21 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
   const [showAddedMessage, setShowAddedMessage] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>('');
 
+  // NEEMX PRO size variants
+  const [sizeVariants, setSizeVariants] = useState<Product[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<Product | null>(null);
+  const isNeemxPro = productSlug.startsWith('neemx-pro');
+
   useEffect(() => {
-    fetch(`/api/products/slug/${productSlug}?locale=${locale}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`/api/products/slug/${productSlug}?locale=${locale}`);
+        const data = await res.json();
+
         if (data.success) {
           setProduct(data.product);
           setSelectedImage(data.product.metadata?.images?.[0] || data.product.image_url);
+          setSelectedVariant(data.product);
 
           // Track product view in GA4
           trackViewItem({
@@ -135,25 +143,40 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
             price: parseFloat(data.product.price),
             category: 'Horticulture Products',
           });
+
+          // Fetch all NEEMX PRO variants if this is a NEEMX PRO product
+          if (productSlug.startsWith('neemx-pro')) {
+            const variantsRes = await fetch(`/api/products?locale=${locale}`);
+            const variantsData = await variantsRes.json();
+            if (variantsData.success) {
+              const neemxVariants = variantsData.products
+                .filter((p: Product) => p.slug.startsWith('neemx-pro'))
+                .sort((a: Product, b: Product) => parseFloat(a.price) - parseFloat(b.price));
+              setSizeVariants(neemxVariants);
+            }
+          }
         }
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching product:', error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProduct();
   }, [productSlug, locale]);
 
   const handleAddToCart = () => {
-    if (!product) return;
+    const cartProduct = isNeemxPro && selectedVariant ? selectedVariant : product;
+    if (!cartProduct) return;
 
     setAddingToCart(true);
 
-    const basePrice = parseFloat(product.price);
+    const basePrice = parseFloat(cartProduct.price);
 
     trackAddToCart({
-      id: product.id,
-      name: product.name,
+      id: cartProduct.id,
+      name: cartProduct.name,
       price: calculateDiscountedPrice(basePrice, quantity),
       quantity: quantity,
       category: 'Horticulture Products',
@@ -161,11 +184,11 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
     addItem(
       {
-        product_id: product.id,
-        slug: product.slug,
-        name: product.name,
+        product_id: cartProduct.id,
+        slug: cartProduct.slug,
+        name: cartProduct.name,
         price: basePrice,
-        image_url: product.image_url,
+        image_url: cartProduct.image_url,
       },
       quantity
     );
@@ -198,11 +221,21 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     );
   }
 
-  const basePrice = parseFloat(product.price);
+  // Use selectedVariant price for NEEMX PRO, otherwise use product price
+  const activeProduct = isNeemxPro && selectedVariant ? selectedVariant : product;
+  const basePrice = parseFloat(activeProduct.price);
   const discountInfo = getDiscountInfo(quantity);
   const discountedPrice = calculateDiscountedPrice(basePrice, quantity);
   const totalPrice = calculateTotalPrice(basePrice, quantity);
   const totalDiscount = (basePrice * quantity) - totalPrice;
+
+  // Helper to extract size from NEEMX PRO product name
+  const getSizeLabel = (slug: string) => {
+    if (slug.includes('10ml')) return '10 ml';
+    if (slug.includes('30ml')) return '30 ml';
+    if (slug.includes('50ml')) return '50 ml';
+    return '';
+  };
 
   // Domain based on locale
   const domain = locale === 'de' ? 'lumorahorticulture.de' : locale === 'en' ? 'lumorahorticulture.com' : 'lumorahorticulture.nl';
@@ -328,7 +361,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Product afbeelding en details */}
           <div>
             {/* Image Gallery */}
@@ -481,12 +514,51 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
           {/* Checkout formulier */}
           <div>
-            <div className="bg-white rounded-3xl shadow-soft-lg p-8 sticky top-8 border border-lumora-dark/10">
+            <div className="bg-white rounded-3xl shadow-soft-lg p-8 lg:sticky lg:top-24 border border-lumora-dark/10">
               <div className="mb-6">
                 {/* Gratis Verzending Badge - Compact */}
                 <div className="bg-gradient-to-r from-lumora-green-500 to-lumora-green-600 rounded-xl p-4 text-white mb-6 text-center shadow-soft">
                   <p className="font-bold text-lg">📦 {t.freeShipping}</p>
                 </div>
+
+                {/* NEEMX PRO Size Selector */}
+                {isNeemxPro && sizeVariants.length > 0 && (
+                  <div className="mb-6">
+                    <label className="text-lumora-dark font-medium block mb-3">
+                      {locale === 'de' ? 'Größe wählen:' : locale === 'en' ? 'Select size:' : 'Kies formaat:'}
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {sizeVariants.map((variant) => (
+                        <button
+                          key={variant.id}
+                          onClick={() => setSelectedVariant(variant)}
+                          className={`relative p-3 rounded-xl border-2 transition-all duration-200 ${
+                            selectedVariant?.id === variant.id
+                              ? 'border-amber-500 bg-amber-50 shadow-md'
+                              : 'border-lumora-dark/20 hover:border-amber-300 hover:bg-amber-50/50'
+                          }`}
+                        >
+                          {variant.slug === 'neemx-pro-30ml' && (
+                            <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                              {locale === 'de' ? 'Beliebt' : locale === 'en' ? 'Popular' : 'Populair'}
+                            </span>
+                          )}
+                          <div className="text-center">
+                            <div className={`text-lg font-bold ${selectedVariant?.id === variant.id ? 'text-amber-600' : 'text-lumora-dark'}`}>
+                              {getSizeLabel(variant.slug)}
+                            </div>
+                            <div className={`text-sm font-semibold ${selectedVariant?.id === variant.id ? 'text-amber-500' : 'text-lumora-dark/70'}`}>
+                              €{parseFloat(variant.price).toFixed(2).replace('.', ',')}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-lumora-dark/60 mt-2 text-center">
+                      {locale === 'de' ? 'Alle Größen mit Mengenrabatt' : locale === 'en' ? 'All sizes with volume discount' : 'Alle formaten met staffelkorting'}
+                    </p>
+                  </div>
+                )}
 
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-display font-semibold text-lumora-dark">

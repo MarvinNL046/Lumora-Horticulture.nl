@@ -268,7 +268,7 @@ export default function SteenwolVastzettenClient({ t, locale }: { t: any, locale
 
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <Image src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp" alt="Steenwol Pluggen" width={800} height={400} className="rounded-2xl shadow-2xl mx-auto" />
+          <Image src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp" alt={locale === 'nl' ? 'Steenwol Pluggen' : locale === 'de' ? 'Steinwolle Plugs' : 'Rockwool Plugs'} width={800} height={400} className="rounded-2xl shadow-2xl mx-auto" />
         </div>
       </section>
 

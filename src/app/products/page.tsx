@@ -60,7 +60,7 @@ export default function ProductsPage() {
             title="Tray-84st: PAPER PLUG TRAY 84"
             subtitle="Perfect voor professionele zaailingenkweek"
             description="Onze TRANSPLANT 84 tray is ontworpen voor professionele tuinbouwapplicaties, met 84 cellen voor efficiënte kweek van zaailingen. De precieze afstand en afmetingen zorgen voor optimale groeiomstandigheden. Verpakking: 8 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+            imageSrc="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
               { label: "Afmetingen", value: "52.5 x 30.5 cm" },
@@ -80,7 +80,7 @@ export default function ProductsPage() {
             title="Tray-104st: PAPER PLUG TRAY 104"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
             description="De PAPER PLUG TRAY 104 biedt uitstekende groeiomstandigheden met 104 cellen voor zaailingen. De speciaal ontworpen paper plug-technologie verbetert de wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
+            imageSrc="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
             imagePosition="right"
             specs={[
               { label: "Plug diameter", value: "3 cm" },
@@ -100,7 +100,7 @@ export default function ProductsPage() {
             title="Transportdoos (Vouwdoos)"
             subtitle="Duurzame en efficiënte oplossing voor transport"
             description="Onze transportdozen zijn ontworpen voor veilig en efficiënt transport van tuinbouwproducten. Het vouwontwerp zorgt voor gemakkelijke opslag en hantering, terwijl maximale bescherming wordt geboden. Verkocht per 25 stuks (inclusief verzendkosten)."
-            imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
+            imageSrc="/productAfbeeldingen/verpakkingsdoos/transportdoos-sfeer.webp"
             specs={[
               { label: "Afmetingen", value: "557 x 322 x 180mm" }
             ]}

@@ -11,6 +11,25 @@ interface Props {
 
 export default function NeemxProClient({ locale }: Props) {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
+  const [currentImage, setCurrentImage] = useState(0)
+
+  const galleryImages = [
+    {
+      src: '/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp',
+      alt: locale === 'nl' ? 'NEEMX PRO - 100% Natuurlijke Botanische Olie' : locale === 'de' ? 'NEEMX PRO - 100% Natürliches Botanisches Öl' : 'NEEMX PRO - 100% Natural Botanical Oil'
+    },
+    {
+      src: '/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp',
+      alt: locale === 'nl' ? 'NEEMX PRO - Premium Plantverzorging' : locale === 'de' ? 'NEEMX PRO - Premium Pflanzenpflege' : 'NEEMX PRO - Premium Plant Care'
+    },
+    {
+      src: '/productAfbeeldingen/neemxpro/neemxpro-product-moodboard.webp',
+      alt: locale === 'nl' ? 'NEEMX PRO - Product Moodboard' : locale === 'de' ? 'NEEMX PRO - Produkt Moodboard' : 'NEEMX PRO - Product Moodboard'
+    }
+  ]
+
+  const nextImage = () => setCurrentImage((prev) => (prev + 1) % galleryImages.length)
+  const prevImage = () => setCurrentImage((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
 
   const content = {
     nl: {
@@ -45,7 +64,7 @@ export default function NeemxProClient({ locale }: Props) {
           { icon: '🛡️', title: 'Preventief & Curatief', description: 'Helpt bij preventieve en curatieve gewasverzorging' },
           { icon: '💧', title: 'Beschermende Film', description: 'Vormt een beschermende oliefilm op het blad' },
           { icon: '🌱', title: 'Geschikt voor Stekken', description: 'Geschikt voor jonge planten en stekken bij juiste dosering' },
-          { icon: '⚡', title: 'Zeer Geconcentreerd', description: 'Lage dosering nodig - een beetje gaat een lange weg' },
+          { icon: '⚡', title: 'Zeer Geconcentreerd', description: 'Lage dosering nodig - zuinig in gebruik' },
           { icon: '💦', title: 'Mengbaar', description: 'Makkelijk mengbaar met water dankzij milde emulgator' }
         ]
       },
@@ -63,8 +82,8 @@ export default function NeemxProClient({ locale }: Props) {
           title: 'Opbrengst per flesje',
           items: [
             { size: '10 ml', yield: '1-4 liter spuitvloeistof' },
-            { size: '15 ml', yield: '1,5-6 liter spuitvloeistof' },
-            { size: '30 ml', yield: '3-12 liter spuitvloeistof' }
+            { size: '30 ml', yield: '3-12 liter spuitvloeistof' },
+            { size: '50 ml', yield: '5-20 liter spuitvloeistof' }
           ]
         }
       },
@@ -98,22 +117,23 @@ export default function NeemxProClient({ locale }: Props) {
 
       forWho: {
         title: 'Voor wie is NEEMX PRO?',
+        subtitle: 'Van hobbyist tot professional - voor klein én grootschalig gebruik',
         items: [
-          { icon: '🏭', title: 'Glastuinbouw', description: 'Professionele kassen en teeltbedrijven' },
+          { icon: '🏡', title: 'Thuisgebruik', description: 'Particulieren en starters met een paar planten' },
+          { icon: '🌱', title: 'Hobby Kwekers', description: 'Enthousiaste thuiskwekers en plantenliefhebbers' },
+          { icon: '🌿', title: 'Kleine Teelt', description: 'Kleinschalige kruiden- en groenteteelt' },
           { icon: '🌸', title: 'Sierteelt', description: 'Bloemen en sierplanten kwekers' },
-          { icon: '🌿', title: 'Kruidenteelt', description: 'Biologische en conventionele kruidentelers' },
-          { icon: '🌱', title: 'Opkweek & Stekken', description: 'Vermeerderingsbedrijven en stekproductie' },
-          { icon: '👨‍🌾', title: 'Professionele Kwekers', description: 'Telers die kiezen voor natuurlijke oplossingen' },
-          { icon: '🏡', title: 'Thuisgebruik', description: 'Particulieren met intensieve plantenverzorging' }
+          { icon: '🏭', title: 'Glastuinbouw', description: 'Professionele kassen en teeltbedrijven' },
+          { icon: '👨‍🌾', title: 'Grootschalige Teelt', description: 'Commerciële telers en vermeerderingsbedrijven' }
         ]
       },
 
       products: {
         title: 'Kies jouw formaat',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Premium instap / Bestseller', yield: '1-4 liter', badge: 'Populair' },
-          { size: '15 ml', price: '29,95', description: 'Beste waarde voor particulier', yield: '1,5-6 liter', badge: 'Beste waarde' },
-          { size: '30 ml', price: '44,95', description: 'Voor serieuze gebruikers', yield: '3-12 liter', badge: 'Professioneel' }
+          { size: '10 ml', price: '24,95', description: 'Ideaal om te starten', yield: '1-4 liter', badge: 'Starter' },
+          { size: '30 ml', price: '44,95', description: 'Beste prijs per ml', yield: '3-12 liter', badge: 'Beste waarde' },
+          { size: '50 ml', price: '59,95', description: 'Voor intensief gebruik', yield: '5-20 liter', badge: 'Professioneel' }
         ]
       },
 
@@ -182,7 +202,7 @@ export default function NeemxProClient({ locale }: Props) {
           { icon: '🛡️', title: 'Preventive & Curative', description: 'Helps with preventive and curative crop care' },
           { icon: '💧', title: 'Protective Film', description: 'Forms a protective oil film on the leaf' },
           { icon: '🌱', title: 'Suitable for Cuttings', description: 'Suitable for young plants and cuttings at correct dosage' },
-          { icon: '⚡', title: 'Highly Concentrated', description: 'Low dosage needed - a little goes a long way' },
+          { icon: '⚡', title: 'Highly Concentrated', description: 'Low dosage needed - economical in use' },
           { icon: '💦', title: 'Mixable', description: 'Easy to mix with water thanks to mild emulsifier' }
         ]
       },
@@ -200,8 +220,8 @@ export default function NeemxProClient({ locale }: Props) {
           title: 'Yield per bottle',
           items: [
             { size: '10 ml', yield: '1-4 liters spray solution' },
-            { size: '15 ml', yield: '1.5-6 liters spray solution' },
-            { size: '30 ml', yield: '3-12 liters spray solution' }
+            { size: '30 ml', yield: '3-12 liters spray solution' },
+            { size: '50 ml', yield: '5-20 liters spray solution' }
           ]
         }
       },
@@ -235,22 +255,23 @@ export default function NeemxProClient({ locale }: Props) {
 
       forWho: {
         title: 'Who is NEEMX PRO for?',
+        subtitle: 'From hobbyist to professional - for small and large scale use',
         items: [
-          { icon: '🏭', title: 'Greenhouse Horticulture', description: 'Professional greenhouses and cultivation companies' },
+          { icon: '🏡', title: 'Home Use', description: 'Individuals and starters with a few plants' },
+          { icon: '🌱', title: 'Hobby Growers', description: 'Enthusiastic home growers and plant lovers' },
+          { icon: '🌿', title: 'Small Scale', description: 'Small-scale herb and vegetable cultivation' },
           { icon: '🌸', title: 'Ornamental Cultivation', description: 'Flower and ornamental plant growers' },
-          { icon: '🌿', title: 'Herb Cultivation', description: 'Organic and conventional herb growers' },
-          { icon: '🌱', title: 'Propagation & Cuttings', description: 'Propagation companies and cutting production' },
-          { icon: '👨‍🌾', title: 'Professional Growers', description: 'Growers who choose natural solutions' },
-          { icon: '🏡', title: 'Home Use', description: 'Individuals with intensive plant care' }
+          { icon: '🏭', title: 'Greenhouse Horticulture', description: 'Professional greenhouses and cultivation companies' },
+          { icon: '👨‍🌾', title: 'Large Scale', description: 'Commercial growers and propagation companies' }
         ]
       },
 
       products: {
         title: 'Choose your size',
         items: [
-          { size: '10 ml', price: '24.95', description: 'Premium entry / Bestseller', yield: '1-4 liters', badge: 'Popular' },
-          { size: '15 ml', price: '29.95', description: 'Best value for individuals', yield: '1.5-6 liters', badge: 'Best value' },
-          { size: '30 ml', price: '44.95', description: 'For serious users', yield: '3-12 liters', badge: 'Professional' }
+          { size: '10 ml', price: '24.95', description: 'Ideal for starters', yield: '1-4 liters', badge: 'Starter' },
+          { size: '30 ml', price: '44.95', description: 'Best price per ml', yield: '3-12 liters', badge: 'Best value' },
+          { size: '50 ml', price: '59.95', description: 'For intensive use', yield: '5-20 liters', badge: 'Professional' }
         ]
       },
 
@@ -319,7 +340,7 @@ export default function NeemxProClient({ locale }: Props) {
           { icon: '🛡️', title: 'Präventiv & Kurativ', description: 'Hilft bei präventiver und kurativer Pflanzenpflege' },
           { icon: '💧', title: 'Schutzfilm', description: 'Bildet einen schützenden Ölfilm auf dem Blatt' },
           { icon: '🌱', title: 'Geeignet für Stecklinge', description: 'Geeignet für junge Pflanzen und Stecklinge bei richtiger Dosierung' },
-          { icon: '⚡', title: 'Hochkonzentriert', description: 'Niedrige Dosierung erforderlich - ein wenig reicht weit' },
+          { icon: '⚡', title: 'Hochkonzentriert', description: 'Niedrige Dosierung erforderlich - sparsam im Gebrauch' },
           { icon: '💦', title: 'Mischbar', description: 'Leicht mit Wasser mischbar dank mildem Emulgator' }
         ]
       },
@@ -337,8 +358,8 @@ export default function NeemxProClient({ locale }: Props) {
           title: 'Ertrag pro Flasche',
           items: [
             { size: '10 ml', yield: '1-4 Liter Sprühlösung' },
-            { size: '15 ml', yield: '1,5-6 Liter Sprühlösung' },
-            { size: '30 ml', yield: '3-12 Liter Sprühlösung' }
+            { size: '30 ml', yield: '3-12 Liter Sprühlösung' },
+            { size: '50 ml', yield: '5-20 Liter Sprühlösung' }
           ]
         }
       },
@@ -372,22 +393,23 @@ export default function NeemxProClient({ locale }: Props) {
 
       forWho: {
         title: 'Für wen ist NEEMX PRO?',
+        subtitle: 'Vom Hobbygärtner bis zum Profi - für klein- und großflächigen Einsatz',
         items: [
-          { icon: '🏭', title: 'Gewächshausgartenbau', description: 'Professionelle Gewächshäuser und Anbaubetriebe' },
+          { icon: '🏡', title: 'Heimgebrauch', description: 'Privatpersonen und Einsteiger mit wenigen Pflanzen' },
+          { icon: '🌱', title: 'Hobby-Züchter', description: 'Begeisterte Heimzüchter und Pflanzenliebhaber' },
+          { icon: '🌿', title: 'Kleinanbau', description: 'Kleinflächiger Kräuter- und Gemüseanbau' },
           { icon: '🌸', title: 'Zierpflanzenbau', description: 'Blumen- und Zierpflanzenzüchter' },
-          { icon: '🌿', title: 'Kräuteranbau', description: 'Bio- und konventionelle Kräuterzüchter' },
-          { icon: '🌱', title: 'Vermehrung & Stecklinge', description: 'Vermehrungsbetriebe und Stecklingsproduktion' },
-          { icon: '👨‍🌾', title: 'Professionelle Züchter', description: 'Züchter, die natürliche Lösungen wählen' },
-          { icon: '🏡', title: 'Heimgebrauch', description: 'Privatpersonen mit intensiver Pflanzenpflege' }
+          { icon: '🏭', title: 'Gewächshausgartenbau', description: 'Professionelle Gewächshäuser und Anbaubetriebe' },
+          { icon: '👨‍🌾', title: 'Großanbau', description: 'Kommerzielle Züchter und Vermehrungsbetriebe' }
         ]
       },
 
       products: {
         title: 'Wählen Sie Ihre Größe',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Premium Einstieg / Bestseller', yield: '1-4 Liter', badge: 'Beliebt' },
-          { size: '15 ml', price: '29,95', description: 'Bester Wert für Privatpersonen', yield: '1,5-6 Liter', badge: 'Bester Wert' },
-          { size: '30 ml', price: '44,95', description: 'Für ernsthafte Anwender', yield: '3-12 Liter', badge: 'Professionell' }
+          { size: '10 ml', price: '24,95', description: 'Ideal für Einsteiger', yield: '1-4 Liter', badge: 'Einsteiger' },
+          { size: '30 ml', price: '44,95', description: 'Bester Preis pro ml', yield: '3-12 Liter', badge: 'Bester Wert' },
+          { size: '50 ml', price: '59,95', description: 'Für intensiven Gebrauch', yield: '5-20 Liter', badge: 'Professionell' }
         ]
       },
 
@@ -489,7 +511,7 @@ export default function NeemxProClient({ locale }: Props) {
               <div className="rounded-3xl shadow-2xl overflow-hidden transform lg:rotate-1 hover:rotate-0 transition-transform duration-500">
                 <Image
                   src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
-                  alt="NEEMX PRO - Premium Botanical Oil Concentrate"
+                  alt={locale === 'nl' ? 'NEEMX PRO - Premium Botanische Olie Concentraat' : locale === 'de' ? 'NEEMX PRO - Premium Botanisches Öl-Konzentrat' : 'NEEMX PRO - Premium Botanical Oil Concentrate'}
                   width={600}
                   height={400}
                   className="w-full h-auto"
@@ -623,7 +645,8 @@ export default function NeemxProClient({ locale }: Props) {
       {/* For Who Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-12 text-center">{t.forWho.title}</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4 text-center">{t.forWho.title}</h2>
+          {'subtitle' in t.forWho && <p className="text-lg text-gray-600 mb-12 text-center">{t.forWho.subtitle}</p>}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.forWho.items.map((item, idx) => (
               <div key={idx} className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow">
@@ -636,29 +659,74 @@ export default function NeemxProClient({ locale }: Props) {
         </div>
       </section>
 
-      {/* Product Gallery Section */}
+      {/* Product Gallery Section - Carousel */}
       <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative">
+            {/* Main Image */}
+            <div className="rounded-2xl overflow-hidden shadow-xl">
               <Image
-                src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
-                alt="NEEMX PRO - 100% Natural Botanical Oil"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
+                src={galleryImages[currentImage].src}
+                alt={galleryImages[currentImage].alt}
+                width={800}
+                height={533}
+                className="w-full h-auto object-cover transition-opacity duration-300"
+                priority
               />
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
-              <Image
-                src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp"
-                alt="NEEMX PRO - Premium Plant Care"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-              />
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all hover:scale-110"
+              aria-label="Previous image"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all hover:scale-110"
+              aria-label="Next image"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Dot Indicators */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {galleryImages.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentImage(idx)}
+                  className={`w-3 h-3 rounded-full transition-all ${currentImage === idx ? 'bg-amber-500 scale-125' : 'bg-white/70 hover:bg-white'}`}
+                  aria-label={`Go to image ${idx + 1}`}
+                />
+              ))}
             </div>
           </div>
+
+          {/* Thumbnail Preview */}
+          <div className="flex justify-center gap-4 mt-6">
+            {galleryImages.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentImage(idx)}
+                className={`rounded-lg overflow-hidden transition-all ${currentImage === idx ? 'ring-2 ring-amber-500 scale-105' : 'opacity-60 hover:opacity-100'}`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  width={120}
+                  height={80}
+                  className="w-24 h-16 object-cover"
+                />
+              </button>
+            ))}
+          </div>
+
           <p className="text-center text-gray-500 mt-6 text-sm">
             {locale === 'nl' ? '100% natuurlijk botanisch olieconcentraat voor professionele bladverzorging' :
              locale === 'de' ? '100% natürliches botanisches Ölkonzentrat für professionelle Blattpflege' :

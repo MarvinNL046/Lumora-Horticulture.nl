@@ -163,7 +163,7 @@ export default function Home() {
             <ProductCard
               visible={isVisible.products}
               delay={0}
-              imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+              imageSrc="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
               altText="Tray 84"
               title="Tray-84st: TRANSPLANT 84"
               description="Plug 3.5 cm diameter, 52.5 x 30.5 cm"
@@ -174,7 +174,7 @@ export default function Home() {
             <ProductCard
               visible={isVisible.products}
               delay={1}
-              imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
+              imageSrc="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
               altText="Tray 104"
               title="Tray-104st: PAPER PLUG TRAY 104"
               description="Plug 3 cm diameter, 52.5 x 30.5 cm"
@@ -185,7 +185,7 @@ export default function Home() {
             <ProductCard 
               visible={isVisible.products}
               delay={2}
-              imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
+              imageSrc="/productAfbeeldingen/verpakkingsdoos/transportdoos-sfeer.webp"
               altText="Transport Box"
               title="Transportdoos (Vouwdoos)"
               description="557 x 322 x 180mm"

@@ -274,8 +274,8 @@ export default function SteenwolPluggenClient({ t, locale }: SteenwolPluggenClie
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                  alt="Steenwol Pluggen"
+                  src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
+                  alt={locale === 'nl' ? 'Steenwol Pluggen' : locale === 'de' ? 'Steinwolle Plugs' : 'Rockwool Plugs'}
                   width={600}
                   height={400}
                   className={`w-full h-auto rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -358,28 +358,32 @@ export default function SteenwolPluggenClient({ t, locale }: SteenwolPluggenClie
           <div className="grid md:grid-cols-2 gap-8">
             <div className="relative group">
               <Image
-                src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                alt="Paper Plug Tray 84"
+                src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                alt={locale === 'nl' ? 'Steenwol Pluggen Tray 84 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 84 Zellen' : 'Rockwool Plugs Tray 84 cells'}
                 width={500}
                 height={400}
                 className="rounded-2xl shadow-xl w-full h-auto transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-lumora-dark/90 to-transparent p-6 rounded-b-2xl">
                 <h3 className="text-white text-2xl font-bold">PAPER PLUG TRAY 84</h3>
-                <p className="text-lumora-cream">84 pluggen | 8 trays per doos</p>
+                <p className="text-lumora-cream">
+                  {locale === 'nl' ? '84 pluggen | 8 trays per doos' : locale === 'de' ? '84 Plugs | 8 Tabletts pro Karton' : '84 plugs | 8 trays per box'}
+                </p>
               </div>
             </div>
             <div className="relative group">
               <Image
-                src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                alt="Paper Plug Tray 104"
+                src="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
+                alt={locale === 'nl' ? 'Steenwol Pluggen Tray 104 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 104 Zellen' : 'Rockwool Plugs Tray 104 cells'}
                 width={500}
                 height={400}
                 className="rounded-2xl shadow-xl w-full h-auto transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-lumora-dark/90 to-transparent p-6 rounded-b-2xl">
                 <h3 className="text-white text-2xl font-bold">PAPER PLUG TRAY 104</h3>
-                <p className="text-lumora-cream">104 pluggen | 7 trays per doos</p>
+                <p className="text-lumora-cream">
+                  {locale === 'nl' ? '104 pluggen | 7 trays per doos' : locale === 'de' ? '104 Plugs | 7 Tabletts pro Karton' : '104 plugs | 7 trays per box'}
+                </p>
               </div>
             </div>
           </div>

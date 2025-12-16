@@ -274,8 +274,8 @@ export default function PaperbusPluggenClient({ t, locale }: PaperbusPluggenClie
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                  alt="Paperbus Pluggen"
+                  src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
+                  alt={locale === 'nl' ? 'Paperbus Pluggen' : locale === 'de' ? 'Papierbus Plugs' : 'Paperbus Plugs'}
                   width={600}
                   height={400}
                   className={`w-full h-auto rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}

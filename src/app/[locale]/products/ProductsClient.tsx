@@ -52,7 +52,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : locale === 'de'
         ? "Professionelles TRANSPLANT 84 Tablett mit 84 Zellen für effiziente Sämlingsanzucht. Direkt vom Hersteller. Verpackung: 8 Tabletts pro Karton."
         : "Professional TRANSPLANT 84 tray with 84 cells for efficient seedling cultivation. Direct from manufacturer. Packaging: 8 trays per box.",
-      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp",
       sku: "TRAY-84",
       price: 84.00
     },
@@ -63,7 +63,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : locale === 'de'
         ? "PAPER PLUG TRAY 104 mit 104 Zellen für optimale Wurzelentwicklung. Geeignet für professionellen Gewächshausgartenbau. Verpackung: 7 Tabletts pro Karton."
         : "PAPER PLUG TRAY 104 with 104 cells for optimal root development. Suitable for professional greenhouse horticulture. Packaging: 7 trays per box.",
-      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp",
       sku: "TRAY-104",
       price: 80.00
     },
@@ -74,7 +74,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         : locale === 'de'
         ? "Nachhaltige faltbare Transportbox für sicheren Transport von Gartenbauprodukten. Stapelbar und effizient. Verkauft pro 25 Stück (inklusive Versandkosten)."
         : "Sustainable folding transport box for safe transport of horticultural products. Stackable and efficient. Sold per 25 units (including shipping costs).",
-      image: "https://lumorahorticulture.nl/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/verpakkingsdoos/transportdoos-sfeer.webp",
       sku: "TRANSPORT-BOX",
       price: 50.00
     },
@@ -207,7 +207,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-84st: Paperbus Steenwol Pluggen (84)"
             subtitle="Perfect voor professionele zaailingenkweek"
             description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok. Verpakking: 8 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+            imageSrc="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
             specs={[
               { label: "Plug diameter", value: "3.5 cm" },
               { label: "Afmetingen", value: "52.5 x 30.5 cm" },
@@ -312,7 +312,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             title="Tray-104st: Paperbus Steenwol Pluggen (104)"
             subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
             description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
-            imageSrc="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
+            imageSrc="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
             imagePosition="right"
             specs={[
               { label: "Plug diameter", value: "3 cm" },
@@ -343,7 +343,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               : locale === 'de'
               ? 'Unsere Transportboxen sind für den sicheren und effizienten Transport von Gartenbauprodukten konzipiert. Das Faltdesign ermöglicht einfache Lagerung und Handhabung bei maximalem Schutz. Verkauft pro 25 Stück (inklusive Versandkosten).'
               : 'Our transport boxes are designed for safe and efficient transport of horticultural products. The folding design ensures easy storage and handling while providing maximum protection. Sold per 25 units (including shipping costs).'}
-            imageSrc="/productAfbeeldingen/verpakkingsdoos/lumorahorticulture-vouwdoos.jpg"
+            imageSrc="/productAfbeeldingen/verpakkingsdoos/transportdoos-sfeer.webp"
             specs={[
               { label: locale === 'nl' ? 'Afmetingen' : locale === 'de' ? 'Abmessungen' : 'Dimensions', value: "557 x 322 x 180mm" },
               { label: locale === 'nl' ? 'Per verpakking' : locale === 'de' ? 'Pro Verpackung' : 'Per package', value: locale === 'nl' ? '25 stuks' : locale === 'de' ? '25 Stück' : '25 units' }

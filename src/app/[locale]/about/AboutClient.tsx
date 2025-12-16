@@ -64,7 +64,7 @@ export default function AboutClient({ t, locale }: AboutClientProps) {
         {/* Content sections */}
         <div className="mt-12 md:mt-20 space-y-16 md:space-y-24">
           <IntroSection t={t} />
-          <OurStorySection t={t} />
+          <OurStorySection t={t} locale={locale} />
           <ProductionSection t={t} />
           <WhyUsSection t={t} />
           <CertificationsSection t={t} />
@@ -133,7 +133,7 @@ function IntroSection({ t }: { t: any }) {
 }
 
 // Our story section
-function OurStorySection({ t }: { t: any }) {
+function OurStorySection({ t, locale }: { t: any; locale: string }) {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true
@@ -159,7 +159,7 @@ function OurStorySection({ t }: { t: any }) {
       <motion.div variants={fadeIn} className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-soft-lg">
         <Image
           src="/images/greenhouse-1.jpg"
-          alt="Lumora Horticulture greenhouse"
+          alt={locale === 'nl' ? 'Lumora Horticulture glastuinbouw' : locale === 'de' ? 'Lumora Horticulture Gewächshaus' : 'Lumora Horticulture greenhouse'}
           fill
           className="object-cover"
         />
