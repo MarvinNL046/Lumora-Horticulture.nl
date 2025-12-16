@@ -274,7 +274,7 @@ export default function StekpluggenClient({ t, locale }: StekpluggenClientProps)
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+                  src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
                   alt="Stekpluggen"
                   width={600}
                   height={400}
@@ -366,7 +366,7 @@ export default function StekpluggenClient({ t, locale }: StekpluggenClientProps)
           <div className="grid md:grid-cols-2 gap-8">
             <div className="relative group">
               <Image
-                src="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+                src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
                 alt="Paper Plug Tray 84"
                 width={500}
                 height={400}
@@ -379,7 +379,7 @@ export default function StekpluggenClient({ t, locale }: StekpluggenClientProps)
             </div>
             <div className="relative group">
               <Image
-                src="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+                src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
                 alt="Paper Plug Tray 104"
                 width={500}
                 height={400}

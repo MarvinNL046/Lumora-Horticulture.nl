@@ -309,7 +309,7 @@ export default function LevensduurSteenwolClient({ t, locale }: { t: any, locale
 
       <section className="py-16 bg-gradient-to-r from-lumora-cream/50 to-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <Image src="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg" alt="Steenwol FP 12+" width={800} height={400} className="rounded-2xl shadow-2xl mx-auto" />
+          <Image src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp" alt="Steenwol FP 12+" width={800} height={400} className="rounded-2xl shadow-2xl mx-auto" />
         </div>
       </section>
 

@@ -413,7 +413,7 @@ export default function SteenwolSubstraatClient({ t, locale }: SteenwolSubstraat
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="/productAfbeeldingen/trays/tray84/lumorahorticulture-tray84.jpg"
+                  src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
                   alt="Steenwol Substraat"
                   width={600}
                   height={400}

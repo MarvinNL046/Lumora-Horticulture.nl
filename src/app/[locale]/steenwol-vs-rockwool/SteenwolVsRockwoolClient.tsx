@@ -267,7 +267,7 @@ export default function SteenwolVsRockwoolClient({ t, locale }: Props) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="/productAfbeeldingen/trays/tray104/lumorahorticulture-tray104.jpg"
+              src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
               alt="Steenwol Pluggen"
               width={1200}
               height={600}
