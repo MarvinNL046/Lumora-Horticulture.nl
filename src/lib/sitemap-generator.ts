@@ -24,6 +24,7 @@ const pageConfig: Record<string, { changefreq: string; priority: number }> = {
   '/paperbus-pluggen': { changefreq: 'weekly', priority: 0.85 },
   '/steenwol-pluggen': { changefreq: 'weekly', priority: 0.85 },
   '/stekpluggen': { changefreq: 'weekly', priority: 0.85 },
+  '/neemx-pro': { changefreq: 'weekly', priority: 0.90 }, // New product landing page
   // FAQ pages - SEO optimized content
   '/steenwol-vs-rockwool': { changefreq: 'monthly', priority: 0.75 },
   '/voordelen-nadelen-steenwol': { changefreq: 'monthly', priority: 0.75 },

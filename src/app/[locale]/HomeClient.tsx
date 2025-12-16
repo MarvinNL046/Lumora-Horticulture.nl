@@ -307,8 +307,34 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
     }
   }
 
+  // New Product Banner translations
+  const newProductBanner = {
+    text: locale === 'nl' ? 'NIEUW: NEEMX PRO - 100% Natuurlijk Botanisch Olieconcentraat'
+         : locale === 'de' ? 'NEU: NEEMX PRO - 100% Natürliches Botanisches Ölkonzentrat'
+         : 'NEW: NEEMX PRO - 100% Natural Botanical Oil Concentrate',
+    cta: locale === 'nl' ? 'Ontdek nu' : locale === 'de' ? 'Jetzt entdecken' : 'Discover now'
+  }
+
   return (
     <div className="flex flex-col">
+      {/* NEW PRODUCT BANNER */}
+      <div className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-white py-3 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvZz48L3N2Zz4=')] opacity-30" />
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-4 flex-wrap relative">
+          <div className="flex items-center gap-2">
+            <span className="animate-pulse text-xl">✨</span>
+            <span className="font-bold tracking-wide">{newProductBanner.text}</span>
+            <span className="animate-pulse text-xl">✨</span>
+          </div>
+          <Link
+            href={localizePathForLocale('/neemx-pro', locale)}
+            className="bg-white text-amber-600 hover:bg-amber-50 px-4 py-1.5 rounded-full text-sm font-bold transition-all hover:scale-105 shadow-md"
+          >
+            {newProductBanner.cta} →
+          </Link>
+        </div>
+      </div>
+
       {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
@@ -415,16 +441,19 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2">{locale === 'nl' ? 'Transportdoos' : locale === 'de' ? 'Transportbox' : 'Transport Box'}</p>
                 </div>
-                <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow">
+                <Link href={localizePathForLocale('/neemx-pro', locale)} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow relative group">
+                  <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
+                    {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
+                  </div>
                   <Image
-                    src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
-                    alt="Ellepot FP 12+"
+                    src="/productAfbeeldingen/neemxpro/neemxpro-logo.png"
+                    alt="NEEMX PRO"
                     width={200}
                     height={200}
-                    className="w-full h-auto"
+                    className="w-full h-auto group-hover:scale-105 transition-transform"
                   />
-                  <p className="text-xs font-medium text-lumora-dark mt-2">Ellepot FP 12+</p>
-                </div>
+                  <p className="text-xs font-medium text-lumora-dark mt-2">NEEMX PRO</p>
+                </Link>
               </div>
             </div>
           </div>
@@ -481,11 +510,11 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             <p className="text-xl text-lumora-dark/70 max-w-3xl mx-auto">{t.products?.subtitle || 'Paper Plug Trays met FP 12+ technologie'}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {/* Products - simplified cards */}
             <Link href={localizePathForLocale('/shop/paper-plug-tray-84', locale)} className="group">
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border border-lumora-cream/30">
-                <div className="relative h-64">
+                <div className="relative h-48">
                   <Image
                     src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
                     alt="Tray 84"
@@ -493,17 +522,17 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-lumora-dark mb-2">Paper Plug Tray 84</h3>
-                  <p className="text-lumora-dark/70 mb-4">84 pluggen • 3.5cm • 52.5 x 30.5 cm</p>
-                  <span className="text-lumora-green-500 font-semibold group-hover:underline">{t.products?.moreInfo || 'Meer info'} →</span>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-lumora-dark mb-2">Paper Plug Tray 84</h3>
+                  <p className="text-lumora-dark/70 text-sm mb-3">84 pluggen • 3.5cm</p>
+                  <span className="text-lumora-green-500 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
                 </div>
               </div>
             </Link>
 
             <Link href={localizePathForLocale('/shop/paper-plug-tray-104', locale)} className="group">
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border border-lumora-cream/30">
-                <div className="relative h-64">
+                <div className="relative h-48">
                   <Image
                     src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
                     alt="Tray 104"
@@ -511,26 +540,52 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-lumora-dark mb-2">Paper Plug Tray 104</h3>
-                  <p className="text-lumora-dark/70 mb-4">104 pluggen • 3cm • 52.5 x 30.5 cm</p>
-                  <span className="text-lumora-green-500 font-semibold group-hover:underline">{t.products?.moreInfo || 'Meer info'} →</span>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-lumora-dark mb-2">Paper Plug Tray 104</h3>
+                  <p className="text-lumora-dark/70 text-sm mb-3">104 pluggen • 3cm</p>
+                  <span className="text-lumora-green-500 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
                 </div>
               </div>
             </Link>
 
             <Link href={localizePathForLocale('/products/ellepot-fp12', locale)} className="group">
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border border-lumora-cream/30">
-                <div className="relative h-64 bg-gradient-to-br from-lumora-green-500 to-lumora-dark flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="relative h-48 bg-gradient-to-br from-lumora-green-500 to-lumora-dark flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                   <div className="text-center text-white">
-                    <div className="text-5xl font-bold mb-2">FP 12+</div>
-                    <div className="text-lg opacity-90">{locale === 'nl' ? 'Ellepot Paper Plugs' : locale === 'de' ? 'Ellepot Papiertöpfe' : 'Ellepot Paper Plugs'}</div>
+                    <div className="text-4xl font-bold mb-1">FP 12+</div>
+                    <div className="text-sm opacity-90">{locale === 'nl' ? 'Ellepot Paper Plugs' : locale === 'de' ? 'Ellepot Papiertöpfe' : 'Ellepot Paper Plugs'}</div>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-lumora-dark mb-2">Ellepot FP 12+</h3>
-                  <p className="text-lumora-dark/70 mb-4">{locale === 'nl' ? '12+ maanden stabiliteit' : locale === 'de' ? '12+ Monate Stabilität' : '12+ months stability'}</p>
-                  <span className="text-lumora-green-500 font-semibold group-hover:underline">{t.products?.moreInfo || 'Meer info'} →</span>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-lumora-dark mb-2">Ellepot FP 12+</h3>
+                  <p className="text-lumora-dark/70 text-sm mb-3">{locale === 'nl' ? '12+ maanden stabiliteit' : locale === 'de' ? '12+ Monate Stabilität' : '12+ months stability'}</p>
+                  <span className="text-lumora-green-500 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
+                </div>
+              </div>
+            </Link>
+
+            {/* NEEMX PRO - NEW PRODUCT */}
+            <Link href={localizePathForLocale('/neemx-pro', locale)} className="group">
+              <div className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 border-2 border-amber-400 relative">
+                {/* NEW Badge */}
+                <div className="absolute top-3 right-3 z-10">
+                  <span className="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
+                    {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
+                  </span>
+                </div>
+                <div className="relative h-48 bg-gradient-to-br from-amber-50 to-white flex items-center justify-center p-4">
+                  <Image
+                    src="/productAfbeeldingen/neemxpro/neemxpro-logo.png"
+                    alt="NEEMX PRO"
+                    width={160}
+                    height={160}
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-5 bg-gradient-to-r from-amber-50 to-white">
+                  <h3 className="text-lg font-bold text-gray-800 mb-2">NEEMX PRO</h3>
+                  <p className="text-gray-600 text-sm mb-3">{locale === 'nl' ? '100% Natuurlijk olieconcentraat' : locale === 'de' ? '100% Natürliches Ölkonzentrat' : '100% Natural oil concentrate'}</p>
+                  <span className="text-amber-600 font-semibold group-hover:underline text-sm">{t.products?.moreInfo || 'Meer info'} →</span>
                 </div>
               </div>
             </Link>
