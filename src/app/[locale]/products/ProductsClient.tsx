@@ -99,6 +99,17 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
       image: "https://lumorahorticulture.nl/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg",
       sku: "INSERT-SHEETS-HDPE",
       price: 42.00
+    },
+    {
+      name: "NEEMX PRO",
+      description: locale === 'nl'
+        ? "100% natuurlijk botanisch olieconcentraat voor professionele bladverzorging. Ondersteunt gezonde planten en helpt bij het voorkomen van insectendruk. 4x sterker dan standaard neemproducten."
+        : locale === 'de'
+        ? "100% natürliches botanisches Ölkonzentrat für professionelle Blattpflege. Unterstützt gesunde Pflanzen und hilft bei der Vorbeugung von Insektendruck. 4x stärker als Standard-Neemprodukte."
+        : "100% natural botanical oil concentrate for professional leaf care. Supports healthy plants and helps prevent insect pressure. 4x stronger than standard neem products.",
+      image: "https://lumorahorticulture.nl/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp",
+      sku: "NEEMX-PRO-10ML",
+      price: 24.95
     }
   ]
 
@@ -123,6 +134,121 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
         
         {/* Reduced vertical spacing on mobile */}
         <section className="mt-12 md:mt-24 space-y-16 md:space-y-32">
+
+          {/* NEEMX PRO - Featured New Product */}
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            className="relative bg-gradient-to-br from-amber-50 via-white to-green-50 rounded-3xl p-6 md:p-10 border border-amber-200 shadow-soft-lg overflow-hidden"
+          >
+            {/* Background decorations */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl -z-10" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-400/10 rounded-full blur-3xl -z-10" />
+
+            {/* NEW Badge */}
+            <div className="absolute top-4 right-4 md:top-6 md:right-6">
+              <span className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                <span className="animate-pulse">✨</span>
+                {locale === 'nl' ? 'NIEUW' : locale === 'de' ? 'NEU' : 'NEW'}
+              </span>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Image */}
+              <div className="relative group order-2 lg:order-1">
+                <div className="rounded-2xl overflow-hidden shadow-xl">
+                  <Image
+                    src="/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp"
+                    alt="NEEMX PRO - 100% Natuurlijk Botanisch Olieconcentraat"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                {/* Floating badge */}
+                <div className="absolute -bottom-3 -right-3 bg-amber-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform rotate-3">
+                  4x {locale === 'nl' ? 'Sterker' : locale === 'de' ? 'Stärker' : 'Stronger'}
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="order-1 lg:order-2">
+                <h2 className="text-4xl md:text-5xl font-bold mb-2">
+                  <span className="text-gray-800">NEEMX</span>
+                  <span className="text-amber-500">PRO</span>
+                </h2>
+                <p className="text-xl text-amber-600 font-semibold mb-4">
+                  {locale === 'nl' ? '100% Natuurlijk Botanisch Olieconcentraat' :
+                   locale === 'de' ? '100% Natürliches Botanisches Ölkonzentrat' :
+                   '100% Natural Botanical Oil Concentrate'}
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  {locale === 'nl'
+                    ? 'NEEMX PRO is een hoogwaardig, 100% natuurlijk botanisch olieconcentraat voor professionele bladverzorging. Het ondersteunt gezonde planten en helpt bij het voorkomen van insectendruk door een beschermende oliefilm op het blad.'
+                    : locale === 'de'
+                    ? 'NEEMX PRO ist ein hochwertiges, 100% natürliches botanisches Ölkonzentrat für professionelle Blattpflege. Es unterstützt gesunde Pflanzen und hilft bei der Vorbeugung von Insektendruck durch einen schützenden Ölfilm auf dem Blatt.'
+                    : 'NEEMX PRO is a high-quality, 100% natural botanical oil concentrate for professional leaf care. It supports healthy plants and helps prevent insect pressure by forming a protective oil film on the leaf.'}
+                </p>
+
+                {/* Features */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {[
+                    locale === 'nl' ? '100% Natuurlijk' : locale === 'de' ? '100% Natürlich' : '100% Natural',
+                    locale === 'nl' ? 'Zeer Geconcentreerd' : locale === 'de' ? 'Hochkonzentriert' : 'Highly Concentrated',
+                    locale === 'nl' ? 'Professionele Kwaliteit' : locale === 'de' ? 'Professionelle Qualität' : 'Professional Quality',
+                    locale === 'nl' ? 'Preventief & Curatief' : locale === 'de' ? 'Präventiv & Kurativ' : 'Preventive & Curative'
+                  ].map((feature, idx) => (
+                    <span key={idx} className="inline-flex items-center gap-1 bg-white/80 border border-amber-200 text-gray-700 px-3 py-1.5 rounded-full text-sm font-medium">
+                      <span className="text-amber-500">✓</span> {feature}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Effective against */}
+                <div className="bg-white/60 rounded-xl p-4 mb-6">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">
+                    {locale === 'nl' ? 'Effectief tegen:' : locale === 'de' ? 'Wirksam gegen:' : 'Effective against:'}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { icon: '🕷️', name: locale === 'nl' ? 'Spint' : locale === 'de' ? 'Spinnmilben' : 'Spider mites' },
+                      { icon: '🐛', name: locale === 'nl' ? 'Bladluis' : locale === 'de' ? 'Blattläuse' : 'Aphids' },
+                      { icon: '🦗', name: 'Trips' },
+                      { icon: '🪰', name: locale === 'nl' ? 'Witte vlieg' : locale === 'de' ? 'Weiße Fliege' : 'Whitefly' }
+                    ].map((target, idx) => (
+                      <span key={idx} className="inline-flex items-center gap-1 bg-red-50 border border-red-100 text-gray-600 px-2 py-1 rounded-lg text-xs">
+                        {target.icon} {target.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href={localizePathForLocale('/neemx-pro', locale || 'nl')}
+                    className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                  >
+                    {locale === 'nl' ? 'Meer informatie' : locale === 'de' ? 'Mehr Informationen' : 'Learn more'}
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Link>
+                  <Link
+                    href={localizePathForLocale('/shop', locale || 'nl')}
+                    className="inline-flex items-center bg-lumora-green-600 hover:bg-lumora-green-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    {locale === 'nl' ? 'Bekijk in Webshop' : locale === 'de' ? 'Im Webshop ansehen' : 'View in Webshop'}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Benefits Grid before first product */}
           <motion.div 
             variants={fadeIn}

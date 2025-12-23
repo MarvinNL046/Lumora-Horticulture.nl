@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/de/products/ellepot-fp12',
     '/de/applications',
     '/de/paperbus-steenwol-pluggen',
+    '/de/neemx-pro',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

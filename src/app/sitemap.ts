@@ -30,6 +30,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/nl/paperbus-steenwol-pluggen',
     '/en/paperbus-steenwol-pluggen',
     '/de/paperbus-steenwol-pluggen',
+    // NEEMX PRO landing page
+    '/nl/neemx-pro',
+    '/en/neemx-pro',
+    '/de/neemx-pro',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
