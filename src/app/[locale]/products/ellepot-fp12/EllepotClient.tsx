@@ -263,7 +263,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
   const productData = {
     name: content.title,
     description: content.description,
-    image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp",
+    image: "https://lumorahorticulture.nl/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp",
     sku: "ELLEPOT-FP12",
     price: 0.01 // Ellepot paper is included in tray price, but we need a price for schema validation
   }
@@ -319,7 +319,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                 <div className="absolute inset-0 bg-lumora-green-500/10 rounded-3xl transform group-hover:scale-[1.03] transition-transform duration-500 -z-10"></div>
                 <div className="relative h-[300px] sm:h-[350px] md:h-[400px] w-full overflow-hidden rounded-3xl shadow-soft-lg">
                   <Image
-                    src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+                    src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
                     alt={content.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 50vw"

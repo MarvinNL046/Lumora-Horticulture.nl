@@ -147,7 +147,7 @@ export default function EllepotFlyerClient() {
           <div className="mb-3 flex justify-center">
             <div className="relative w-full max-w-xs rounded-lg overflow-hidden shadow-md">
               <Image
-                src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+                src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
                 alt="Ellepot FP 12+ Steenwolpluggen"
                 width={280}
                 height={140}

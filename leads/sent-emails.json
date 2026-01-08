@@ -1,0 +1,516 @@
+{
+  "sent": [
+    {
+      "email": "kontakt@growshop-germany.de",
+      "businessName": "Growshop Germany",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:26:48.252Z"
+    },
+    {
+      "email": "mail@growshop.de",
+      "businessName": "Growshop.de Hannover",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:26:53.478Z"
+    },
+    {
+      "email": "info@growmart.de",
+      "businessName": "Growmart Hamburg",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:26:58.687Z"
+    },
+    {
+      "email": "info@grow-shop24.de",
+      "businessName": "Grow-Shop24 Regensburg",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:27:03.902Z"
+    },
+    {
+      "email": "info@growtech.eu",
+      "businessName": "Growtech",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:27:09.121Z"
+    },
+    {
+      "email": "info@growshopamsterdam.nl",
+      "businessName": "Growshop Amsterdam",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:27:14.345Z"
+    },
+    {
+      "email": "info@onlinetopgarden.com",
+      "businessName": "Online Top Garden",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:27:19.859Z"
+    },
+    {
+      "email": "info@smartshopplanet.nl",
+      "businessName": "Smartshop Planet",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:27:25.071Z"
+    },
+    {
+      "email": "support@dermicha-head.shop",
+      "businessName": "Dermicha Headshop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:27:30.280Z"
+    },
+    {
+      "email": "mail@drehandel.de",
+      "businessName": "DRE Handel Großhandel",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:27:35.516Z"
+    },
+    {
+      "email": "info@growin.de",
+      "businessName": "Growin",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:29:44.707Z"
+    },
+    {
+      "email": "b2b@growtent.eu",
+      "businessName": "Growtent B2B",
+      "country": "PL",
+      "sentAt": "2025-12-23T16:29:49.956Z"
+    },
+    {
+      "email": "info@hitecgrow.com",
+      "businessName": "Hitec Grow",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:29:55.197Z"
+    },
+    {
+      "email": "info@headshop.shop",
+      "businessName": "Headshop.shop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:00.399Z"
+    },
+    {
+      "email": "mail@drehmoment-headshop.de",
+      "businessName": "Drehmoment Headshop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:05.672Z"
+    },
+    {
+      "email": "info@buyhigh.de",
+      "businessName": "BuyHigh",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:10.902Z"
+    },
+    {
+      "email": "info@growmart.eu",
+      "businessName": "Growmart EU Wholesale",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:16.098Z"
+    },
+    {
+      "email": "bestellung@balugar.de",
+      "businessName": "Balugar Hamburg",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:21.294Z"
+    },
+    {
+      "email": "info@growlocation.de",
+      "businessName": "Growlocation Paderborn",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:26.535Z"
+    },
+    {
+      "email": "info@growfrei.de",
+      "businessName": "Growfrei Dortmund",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:30:31.736Z"
+    },
+    {
+      "email": "info@fernatrade.com",
+      "businessName": "Ferna Trade GmbH Nettetal",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:32:51.938Z"
+    },
+    {
+      "email": "info@pflanzbar.org",
+      "businessName": "Pflanzbar GbR Ellerbek",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:32:57.148Z"
+    },
+    {
+      "email": "sales@headsupplies.nl",
+      "businessName": "Head Supplies BV",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:02.364Z"
+    },
+    {
+      "email": "info@nextlevelsmart.nl",
+      "businessName": "Next Level Smart Zwolle",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:07.567Z"
+    },
+    {
+      "email": "info@microfluo.net",
+      "businessName": "MicroFluo Growshop",
+      "country": "BE",
+      "sentAt": "2025-12-23T16:33:12.796Z"
+    },
+    {
+      "email": "info@easygrowshop.be",
+      "businessName": "Easy Growshop",
+      "country": "BE",
+      "sentAt": "2025-12-23T16:33:18.007Z"
+    },
+    {
+      "email": "info@plantandflower.be",
+      "businessName": "Plant and Flower",
+      "country": "BE",
+      "sentAt": "2025-12-23T16:33:23.220Z"
+    },
+    {
+      "email": "info@saucegrowing.be",
+      "businessName": "Sauce Growing",
+      "country": "BE",
+      "sentAt": "2025-12-23T16:33:28.442Z"
+    },
+    {
+      "email": "info@sirius.nl",
+      "businessName": "Sirius Smartshop",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:33.662Z"
+    },
+    {
+      "email": "info@mcsmart.com",
+      "businessName": "McSmart Groothandel",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:38.885Z"
+    },
+    {
+      "email": "info@sjamaanwholesale.nl",
+      "businessName": "De Sjamaan Wholesale BV",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:44.098Z"
+    },
+    {
+      "email": "info@globalherbs-wholesale.com",
+      "businessName": "Globalherbs Wholesale",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:49.306Z"
+    },
+    {
+      "email": "info@houseofsmart.com",
+      "businessName": "House of Smart",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:33:54.545Z"
+    },
+    {
+      "email": "support@headshop.shop",
+      "businessName": "Headshop No.1 Bremen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:33:59.814Z"
+    },
+    {
+      "email": "mail@bloomtech.de",
+      "businessName": "Bloomtech",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:05.093Z"
+    },
+    {
+      "email": "mail@grow-depot.de",
+      "businessName": "Grow-Depot",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:10.305Z"
+    },
+    {
+      "email": "kontakt@growandstyle.de",
+      "businessName": "GrowAndStyle Overath",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:15.528Z"
+    },
+    {
+      "email": "info@grow-pro.net",
+      "businessName": "GrowPro Emmerich",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:20.771Z"
+    },
+    {
+      "email": "info@pflanz-zelt.de",
+      "businessName": "Pflanz-Zelt Jüterbog",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:26.013Z"
+    },
+    {
+      "email": "info@G4K-Handel.de",
+      "businessName": "GrowNRW-Bayern Ottobeuren",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:31.214Z"
+    },
+    {
+      "email": "info@growgreen-shop.de",
+      "businessName": "GrowGreen Pfullingen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:37.932Z"
+    },
+    {
+      "email": "info@grow24.shop",
+      "businessName": "Grow24 Bocholt",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:43.164Z"
+    },
+    {
+      "email": "info@grow4bros.de",
+      "businessName": "Grow4Bros Köln",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:48.376Z"
+    },
+    {
+      "email": "info@freakshop.de",
+      "businessName": "Freakshop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:53.591Z"
+    },
+    {
+      "email": "info@headshop-white-rabbit.de",
+      "businessName": "White Rabbit Headshop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:34:58.814Z"
+    },
+    {
+      "email": "info@elite-growshop.de",
+      "businessName": "Elite Growshop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:04.033Z"
+    },
+    {
+      "email": "info@green-phantasies.de",
+      "businessName": "Green Phantasies",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:09.242Z"
+    },
+    {
+      "email": "info@hanfnah.de",
+      "businessName": "Hanfnah",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:14.450Z"
+    },
+    {
+      "email": "lumenmax@lumenmax.de",
+      "businessName": "Lumenmax",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:19.677Z"
+    },
+    {
+      "email": "info@neardark.de",
+      "businessName": "Near Dark",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:24.875Z"
+    },
+    {
+      "email": "info@mihaonline.de",
+      "businessName": "MIHA GmbH",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:30.118Z"
+    },
+    {
+      "email": "hilfe@gbk-shop.de",
+      "businessName": "GBK Shop",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:35:35.331Z"
+    },
+    {
+      "email": "shop@growtent.eu",
+      "businessName": "Growtent Shop",
+      "country": "PL",
+      "sentAt": "2025-12-23T16:35:40.555Z"
+    },
+    {
+      "email": "webshop@sirius.nl",
+      "businessName": "Sirius Webshop",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:35:45.798Z"
+    },
+    {
+      "email": "info@flyingdutchmenstore.com",
+      "businessName": "Flying Dutchmen Store Amsterdam",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:35:50.992Z"
+    },
+    {
+      "email": "info@drsmart.nl",
+      "businessName": "Dr. Smart Rotterdam",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:35:56.200Z"
+    },
+    {
+      "email": "info@happy-nature.de",
+      "businessName": "Happy Nature Hydrokultur",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:01.475Z"
+    },
+    {
+      "email": "info@kif-kif.de",
+      "businessName": "Kif-Kif Leipzig",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:06.749Z"
+    },
+    {
+      "email": "info@rauchbombe-stuttgart.de",
+      "businessName": "Rauchbombe Stuttgart",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:11.944Z"
+    },
+    {
+      "email": "info@plantarium.nu",
+      "businessName": "Plantarium",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:36:17.139Z"
+    },
+    {
+      "email": "info@growfellas.com",
+      "businessName": "GrowFellas Utrecht",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:36:22.365Z"
+    },
+    {
+      "email": "kontakt@cscsdeutschland.de",
+      "businessName": "Cannabis Social Clubs Deutschland",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:27.582Z"
+    },
+    {
+      "email": "info@csc-ve.de",
+      "businessName": "CSC Cannabis Social Club Veerßen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:32.797Z"
+    },
+    {
+      "email": "info@cannabis-clubs.de",
+      "businessName": "Cannabis-Clubs.de",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:38.024Z"
+    },
+    {
+      "email": "b2b@kraeuterland.org",
+      "businessName": "Kraeuterland CBD Großhandel",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:43.253Z"
+    },
+    {
+      "email": "b2b@kleineknospe.de",
+      "businessName": "Kleine Knospe CBD",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:48.489Z"
+    },
+    {
+      "email": "wholesale@magu-cbd.com",
+      "businessName": "MAGU CBD Großhandel",
+      "country": "AT",
+      "sentAt": "2025-12-23T16:36:53.704Z"
+    },
+    {
+      "email": "info@b2b-headshop.de",
+      "businessName": "B2B Headshop Weyhe",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:36:58.902Z"
+    },
+    {
+      "email": "info@veilingvaassen.nl",
+      "businessName": "Veiling Vaassen",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:37:04.144Z"
+    },
+    {
+      "email": "info@menkehorst.nl",
+      "businessName": "Menkehorst Kwekerijen",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:37:09.369Z"
+    },
+    {
+      "email": "info@plantura.be",
+      "businessName": "Plantura Groothandel",
+      "country": "BE",
+      "sentAt": "2025-12-23T16:37:14.585Z"
+    },
+    {
+      "email": "info@plantion.nl",
+      "businessName": "Plantion Groothandel",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:37:19.802Z"
+    },
+    {
+      "email": "info@olaf-nijenkamp.nl",
+      "businessName": "Olaf Nijenkamp Tuinplanten",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:37:24.999Z"
+    },
+    {
+      "email": "blumen.brechneser@t-online.de",
+      "businessName": "Brechneser Blumen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:37:30.224Z"
+    },
+    {
+      "email": "info@inntal-gaertnerei.de",
+      "businessName": "Inntal Gärtnerei",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:37:35.461Z"
+    },
+    {
+      "email": "info@gaertnerei-loesslin.de",
+      "businessName": "Gärtnerei Lösslin",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:37:40.793Z"
+    },
+    {
+      "email": "service@medicgrow.com",
+      "businessName": "Medic Grow LED",
+      "country": "US",
+      "sentAt": "2025-12-23T16:37:46.004Z"
+    },
+    {
+      "email": "anne@niemann-gemuesepflanzen.de",
+      "businessName": "Gärtnerei Anne Niemann",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:37:51.231Z"
+    },
+    {
+      "email": "info@eich-jungpflanzen.de",
+      "businessName": "Eich Jungpflanzen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:37:56.436Z"
+    },
+    {
+      "email": "info@cramer-jungpflanzen.de",
+      "businessName": "Cramer Jungpflanzen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:38:01.639Z"
+    },
+    {
+      "email": "info@kientzler.eu",
+      "businessName": "Kientzler Jungpflanzen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:38:09.569Z"
+    },
+    {
+      "email": "info@youngplants.de",
+      "businessName": "Fachgruppe Jungpflanzen",
+      "country": "DE",
+      "sentAt": "2025-12-23T16:38:14.781Z"
+    },
+    {
+      "email": "wholesale@sirius.nl",
+      "businessName": "Sirius Wholesale",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:38:19.998Z"
+    },
+    {
+      "email": "info@dutchhigh.com",
+      "businessName": "Dutch High Distributor",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:38:25.543Z"
+    },
+    {
+      "email": "info@dutch-headshop.eu",
+      "businessName": "Dutch Headshop",
+      "country": "NL",
+      "sentAt": "2025-12-23T16:38:30.760Z"
+    }
+  ],
+  "failed": [],
+  "lastRun": "2025-12-23T16:38:30.760Z"
+}

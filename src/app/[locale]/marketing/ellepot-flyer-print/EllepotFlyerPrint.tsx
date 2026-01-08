@@ -108,7 +108,7 @@ export default function EllepotFlyerPrint() {
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
           }}>
             <Image
-              src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp"
+              src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
               alt="Ellepot FP 12+ Steenwolpluggen"
               width={400}
               height={200}
