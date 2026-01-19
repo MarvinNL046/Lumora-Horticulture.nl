@@ -210,6 +210,10 @@ export default function Footer() {
                 label="Ellepot FP 12+"
               />
               <FooterLink
+                href={localizePathForLocale('/neemx-pro', currentLocale)}
+                label="NEEMX PRO"
+              />
+              <FooterLink
                 href={localizePathForLocale('/shop/paper-plug-tray-84', currentLocale)}
                 label={currentLocale === 'nl' ? 'Paper Plug Tray 84' : 'Paper Plug Tray 84'}
               />
@@ -217,10 +221,37 @@ export default function Footer() {
                 href={localizePathForLocale('/shop/paper-plug-tray-104', currentLocale)}
                 label={currentLocale === 'nl' ? 'Paper Plug Tray 104' : 'Paper Plug Tray 104'}
               />
-              <FooterLink
-                href={localizePathForLocale('/marketing/ellepot-flyer', currentLocale)}
-                label={currentLocale === 'nl' ? 'Downloads & Brochures' : currentLocale === 'de' ? 'Downloads & Broschüren' : 'Downloads & Brochures'}
-              />
+            </ul>
+
+            {/* Downloads */}
+            <h3 className="text-sm font-semibold text-lumora-cream uppercase tracking-wider mb-4 mt-6">
+              {currentLocale === 'nl' ? 'Downloads' : currentLocale === 'de' ? 'Downloads' : 'Downloads'}
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
+                  download="Lumora-Ellepot-FP12-Folder.pdf"
+                  className="text-sm text-lumora-cream/70 transition-colors duration-200 hover:text-lumora-cream group flex items-center"
+                >
+                  <svg className="w-4 h-4 mr-2 text-lumora-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Ellepot FP12+ Folder (PDF)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/downloads/NEEMX-PRO-Folder.pdf"
+                  download="NEEMX-PRO-Folder.pdf"
+                  className="text-sm text-lumora-cream/70 transition-colors duration-200 hover:text-lumora-cream group flex items-center"
+                >
+                  <svg className="w-4 h-4 mr-2 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  NEEMX PRO Folder (PDF)
+                </a>
+              </li>
             </ul>
           </div>
 

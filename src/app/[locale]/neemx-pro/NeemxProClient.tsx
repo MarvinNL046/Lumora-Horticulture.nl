@@ -504,6 +504,31 @@ export default function NeemxProClient({ locale }: Props) {
                   {t.cta.contact}
                 </Link>
               </div>
+
+              {/* Download flyer link */}
+              <div className="mt-6">
+                <div className="inline-flex items-center gap-2">
+                  <a
+                    href="/downloads/NEEMX-PRO-Folder.pdf"
+                    download="NEEMX-PRO-Folder.pdf"
+                    className="inline-flex items-center text-amber-600 font-medium hover:text-amber-700 transition-all duration-300 group text-sm md:text-base"
+                  >
+                    <svg
+                      className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>{locale === 'nl' ? 'Download NEEMX PRO productfolder (PDF)' : locale === 'de' ? 'NEEMX PRO Produktbroschüre herunterladen (PDF)' : 'Download NEEMX PRO product brochure (PDF)'}</span>
+                  </a>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md animate-pulse">
+                    NEW
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* Product Image */}
