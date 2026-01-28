@@ -242,8 +242,8 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="/downloads/NEEMX-PRO-Folder.pdf"
-                  download="NEEMX-PRO-Folder.pdf"
+                  href={`/downloads/NEEMX-PRO-Folder-${currentLocale === 'de' ? 'DE' : 'NL'}.pdf`}
+                  download={`NEEMX-PRO-Folder-${currentLocale === 'de' ? 'DE' : 'NL'}.pdf`}
                   className="text-sm text-lumora-cream/70 transition-colors duration-200 hover:text-lumora-cream group flex items-center"
                 >
                   <svg className="w-4 h-4 mr-2 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

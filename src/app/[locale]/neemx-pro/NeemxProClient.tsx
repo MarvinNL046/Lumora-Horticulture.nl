@@ -505,12 +505,13 @@ export default function NeemxProClient({ locale }: Props) {
                 </Link>
               </div>
 
-              {/* Download flyer link */}
-              <div className="mt-6">
+              {/* Download links */}
+              <div className="mt-6 space-y-3">
+                {/* Product folder download */}
                 <div className="inline-flex items-center gap-2">
                   <a
-                    href="/downloads/NEEMX-PRO-Folder.pdf"
-                    download="NEEMX-PRO-Folder.pdf"
+                    href={`/downloads/NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : 'NL'}.pdf`}
+                    download={`NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : 'NL'}.pdf`}
                     className="inline-flex items-center text-amber-600 font-medium hover:text-amber-700 transition-all duration-300 group text-sm md:text-base"
                   >
                     <svg
@@ -524,7 +525,26 @@ export default function NeemxProClient({ locale }: Props) {
                     </svg>
                     <span>{locale === 'nl' ? 'Download NEEMX PRO productfolder (PDF)' : locale === 'de' ? 'NEEMX PRO Produktbroschüre herunterladen (PDF)' : 'Download NEEMX PRO product brochure (PDF)'}</span>
                   </a>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md animate-pulse">
+                </div>
+
+                {/* Spray schedule link */}
+                <div className="inline-flex items-center gap-2">
+                  <Link
+                    href={`/marketing/neemx-pro-spuitschema`}
+                    className="inline-flex items-center text-green-600 font-medium hover:text-green-700 transition-all duration-300 group text-sm md:text-base"
+                  >
+                    <svg
+                      className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                    <span>{locale === 'nl' ? 'Download spuitschema 10 weken (PDF)' : locale === 'de' ? 'Sprühplan 10 Wochen herunterladen (PDF)' : 'Download spray schedule 10 weeks (PDF)'}</span>
+                  </Link>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md animate-pulse">
                     NEW
                   </span>
                 </div>
