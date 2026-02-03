@@ -16,17 +16,17 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const metadata = {
     nl: {
       title: 'Webshop | Steenwol Pluggen & Trays | Gratis Verzending',
-      description: 'Bestel steenwol pluggen, paper plug trays en kweekmateriaal. ✓ Gratis verzending ✓ 24-48u levering ✓ Staffelkorting tot 20% ✓ Op voorraad. Direct bestellen bij Lumora.',
+      description: 'Bestel steenwol pluggen, paper plug trays en kweekmateriaal. ✓ Gratis verzending ✓ Binnen 48 uur geleverd ✓ Staffelkorting tot 20% ✓ Op voorraad. Direct bestellen bij Lumora.',
       keywords: ['steenwol pluggen kopen', 'paper plug trays bestellen', 'kweektrays webshop', 'tuinbouw benodigdheden', 'staffelkorting', 'B2B webshop']
     },
     en: {
       title: 'Shop | Rockwool Plugs & Trays | Free Shipping',
-      description: 'Order rockwool plugs, paper plug trays and growing materials. ✓ Free shipping ✓ 24-48h delivery ✓ Volume discounts up to 20% ✓ In stock. Order directly from Lumora.',
+      description: 'Order rockwool plugs, paper plug trays and growing materials. ✓ Free shipping ✓ Delivered within 48 hours ✓ Volume discounts up to 20% ✓ In stock. Order directly from Lumora.',
       keywords: ['buy rockwool plugs', 'order paper plug trays', 'growing trays shop', 'horticulture supplies', 'volume discount', 'B2B webshop']
     },
     de: {
       title: 'Webshop | Steinwolle Plugs & Trays | Kostenloser Versand',
-      description: 'Bestellen Sie Steinwolle-Plugs, Paper-Plug-Trays und Anzuchtmaterial. ✓ Kostenloser Versand ✓ 24-48h Lieferung ✓ Mengenrabatt bis 20% ✓ Auf Lager. Direkt bei Lumora bestellen.',
+      description: 'Bestellen Sie Steinwolle-Plugs, Paper-Plug-Trays und Anzuchtmaterial. ✓ Kostenloser Versand ✓ Lieferung innerhalb 48 Stunden ✓ Mengenrabatt bis 20% ✓ Auf Lager. Direkt bei Lumora bestellen.',
       keywords: ['Steinwolle Plugs kaufen', 'Paper Plug Trays bestellen', 'Anzuchtschalen Shop', 'Gartenbau Zubehör', 'Mengenrabatt', 'B2B Webshop']
     }
   }

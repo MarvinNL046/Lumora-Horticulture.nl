@@ -36,6 +36,10 @@ export default function CartSidebar() {
     router.push(localizePathForLocale('/checkout', locale));
   };
 
+  // Check if cart contains NEEMX PRO products (same day shipping) or plugs (48h)
+  const hasNeemxPro = items.some(item => item.slug?.startsWith('neemx-pro'));
+  const hasPlugsOrOther = items.some(item => !item.slug?.startsWith('neemx-pro'));
+
   return (
     <>
       {/* Overlay */}
@@ -200,14 +204,55 @@ export default function CartSidebar() {
         {/* Footer with Total and Checkout */}
         {items.length > 0 && (
           <div className="border-t border-lumora-dark/10 px-6 py-4 bg-lumora-cream/20">
+            {/* Trust Bar */}
+            <div className="bg-lumora-green-50 border border-lumora-green-200 rounded-lg p-3 mb-4">
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
+                <span className="flex items-center gap-1 text-lumora-dark">
+                  <span className="text-lumora-green-500">✓</span>
+                  {locale === 'de' ? 'Gratis Versand NL/BE/DE' : locale === 'en' ? 'Free Shipping NL/BE/DE' : 'Gratis verzending NL/BE/DE'}
+                </span>
+                {/* Show delivery time based on cart contents */}
+                {hasNeemxPro && !hasPlugsOrOther && (
+                  <span className="flex items-center gap-1 text-lumora-dark">
+                    <span className="text-lumora-green-500">🚚</span>
+                    {locale === 'de' ? 'Versand am selben Tag' : locale === 'en' ? 'Same day shipping' : 'Dezelfde dag verzonden'}
+                  </span>
+                )}
+                {hasPlugsOrOther && (
+                  <span className="flex items-center gap-1 text-lumora-dark">
+                    <span className="text-lumora-green-500">🚚</span>
+                    {locale === 'de' ? 'Innerhalb 48 Std.' : locale === 'en' ? 'Within 48h' : 'Binnen 48 uur'}
+                  </span>
+                )}
+                <span className="flex items-center gap-1 text-lumora-dark">
+                  <span className="text-lumora-green-500">↩</span>
+                  {locale === 'de' ? '14 Tage Rückgabe' : locale === 'en' ? '14 Days Return' : '14 dagen retour'}
+                </span>
+                <span className="flex items-center gap-1 text-lumora-dark">
+                  <span className="text-lumora-green-500">🔒</span>
+                  {locale === 'de' ? 'Sicher' : locale === 'en' ? 'Secure' : 'Veilig'}
+                </span>
+              </div>
+              {/* NEEMX PRO return policy note */}
+              {hasNeemxPro && (
+                <div className="mt-2 pt-2 border-t border-lumora-green-200/50">
+                  <p className="text-xs text-lumora-dark/70 text-center">
+                    {locale === 'de'
+                      ? '↩ NEEMX PRO: Rückgabe nur ungeöffnet. Versandkosten nach Prüfung erstattet.'
+                      : locale === 'en'
+                      ? '↩ NEEMX PRO: Return only if unopened. Shipping costs refunded after inspection.'
+                      : '↩ NEEMX PRO: Retour alleen ongeopend. Verzendkosten na controle terugbetaald.'
+                    }
+                  </p>
+                </div>
+              )}
+            </div>
+
             <div className="mb-4">
               <div className="flex justify-between items-center text-xl font-display font-bold mb-2">
                 <span className="text-lumora-dark">{t.total}</span>
                 <span className="text-lumora-green-500">{formatPrice(getTotalPrice())}</span>
               </div>
-              <p className="text-xs text-lumora-dark/60 text-center">
-                📦 {locale === 'de' ? 'Immer kostenloser Versand!' : locale === 'en' ? 'Always free shipping!' : 'Altijd gratis verzending!'}
-              </p>
             </div>
             <button
               onClick={handleCheckout}

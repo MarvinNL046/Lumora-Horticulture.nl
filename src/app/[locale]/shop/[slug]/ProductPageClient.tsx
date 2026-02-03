@@ -95,7 +95,8 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     b2bText: locale === 'de' ? 'Große Mengen? Kontaktieren Sie uns für maßgeschneiderte Lösungen und zusätzliche Vorteile' : locale === 'en' ? 'Large orders? Contact us for custom solutions and additional benefits' : 'Grote afname? Neem contact op voor maatwerk en extra voordeel',
     // Trust badges
     inStock: locale === 'de' ? 'Auf Lager' : locale === 'en' ? 'In Stock' : 'Op voorraad',
-    delivery: locale === 'de' ? '24-48h Lieferung' : locale === 'en' ? '24-48h Delivery' : '24-48u levering',
+    deliveryPlugs: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
+    deliveryNeemx: locale === 'de' ? 'Versand am selben Tag' : locale === 'en' ? 'Same day shipping' : 'Dezelfde dag verzonden',
     euCertified: locale === 'de' ? 'EU-Zertifiziert' : locale === 'en' ? 'EU Certified' : 'EU Gecertificeerd',
     yearsExperience: locale === 'de' ? '15+ Jahre Erfahrung' : locale === 'en' ? '15+ Years Experience' : '15+ Jaar Ervaring',
     sustainable: locale === 'de' ? '100% Nachhaltig' : locale === 'en' ? '100% Sustainable' : '100% Duurzaam',
@@ -354,7 +355,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
         <div className="bg-white rounded-xl shadow-soft p-4 mb-8 border border-lumora-dark/5">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             <TrustBadge icon="✓" text={t.inStock} />
-            <TrustBadge icon="🚚" text={t.delivery} />
+            <TrustBadge icon="🚚" text={isNeemxPro ? t.deliveryNeemx : t.deliveryPlugs} />
             <TrustBadge icon="🏆" text={t.euCertified} />
             <TrustBadge icon="⭐" text={t.yearsExperience} />
             <TrustBadge icon="♻️" text={t.sustainable} />
@@ -425,7 +426,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                 </span>
               )}
               <span className="text-sm text-lumora-dark/60">
-                🚚 {t.delivery}
+                🚚 {isNeemxPro ? t.deliveryNeemx : t.deliveryPlugs}
               </span>
             </div>
 
@@ -725,7 +726,74 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                   </p>
                 </div>
 
-                <div className="text-center mt-6">
+                {/* Trust Bar */}
+                <div className="bg-lumora-green-50 border border-lumora-green-200 rounded-xl p-3 mt-4">
+                  <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
+                    <span className="flex items-center gap-1 text-lumora-dark">
+                      <span className="text-lumora-green-500">✓</span>
+                      {locale === 'de' ? 'Gratis NL/BE/DE' : locale === 'en' ? 'Free NL/BE/DE' : 'Gratis NL/BE/DE'}
+                    </span>
+                    <span className="flex items-center gap-1 text-lumora-dark">
+                      <span className="text-lumora-green-500">🚚</span>
+                      {isNeemxPro
+                        ? (locale === 'de' ? 'Versand am selben Tag' : locale === 'en' ? 'Same day shipping' : 'Dezelfde dag verzonden')
+                        : (locale === 'de' ? 'Innerhalb 48 Std.' : locale === 'en' ? 'Within 48h' : 'Binnen 48 uur')
+                      }
+                    </span>
+                    <span className="flex items-center gap-1 text-lumora-dark">
+                      <span className="text-lumora-green-500">↩</span>
+                      {locale === 'de' ? '14 Tage Rückgabe' : locale === 'en' ? '14 Days Return' : '14 dagen retour'}
+                    </span>
+                    <span className="flex items-center gap-1 text-lumora-dark">
+                      <span className="text-lumora-green-500">🔒</span>
+                      {locale === 'de' ? 'Sicher' : locale === 'en' ? 'Secure' : 'Veilig'}
+                    </span>
+                  </div>
+                  {/* Return Policy Details for NEEMX PRO */}
+                  {isNeemxPro && (
+                    <div className="mt-2 pt-2 border-t border-lumora-green-200/50">
+                      <p className="text-xs text-lumora-dark/70 text-center">
+                        {locale === 'de'
+                          ? '↩ Rückgabe nur bei ungeöffneten Flaschen. Versandkosten werden nach Prüfung erstattet.'
+                          : locale === 'en'
+                          ? '↩ Return only for unopened bottles. Shipping costs refunded after inspection.'
+                          : '↩ Retour alleen bij ongeopende flesjes. Verzendkosten na controle terugbetaald.'
+                        }
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Help Section */}
+                <div className="bg-lumora-cream/30 border border-lumora-dark/10 rounded-xl p-3 mt-3">
+                  <p className="text-xs text-lumora-dark/70 text-center mb-2">
+                    {locale === 'de' ? 'Fragen? Wir helfen gerne!' : locale === 'en' ? 'Questions? We\'re here to help!' : 'Vragen? We helpen je graag!'}
+                  </p>
+                  <div className="flex justify-center gap-2">
+                    <a
+                      href="https://wa.me/31638382564"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 bg-green-500 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-green-600 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      </svg>
+                      WhatsApp
+                    </a>
+                    <a
+                      href="mailto:info@lumorahorticulture.nl"
+                      className="inline-flex items-center gap-1 bg-lumora-dark/10 text-lumora-dark px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-lumora-dark/20 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Email
+                    </a>
+                  </div>
+                </div>
+
+                <div className="text-center mt-4">
                   <p className="text-sm text-lumora-dark/60 mb-2">
                     {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                   </p>
@@ -747,6 +815,40 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
           </div>
         </div>
       </div>
+
+      {/* Sticky Mobile Add to Cart Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-lumora-dark/10 shadow-lg p-4 lg:hidden z-40">
+        <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
+          <div className="flex-1">
+            <div className="text-xs text-lumora-dark/60">
+              {locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal'}
+            </div>
+            <div className="text-xl font-bold text-lumora-green-500">
+              {formatPrice(totalPrice)}
+            </div>
+            {discountInfo.hasDiscount && (
+              <div className="text-xs text-lumora-green-600 font-medium">
+                -{discountInfo.currentDiscount}% {locale === 'de' ? 'Rabatt' : locale === 'en' ? 'discount' : 'korting'}
+              </div>
+            )}
+          </div>
+          <button
+            onClick={handleAddToCart}
+            disabled={addingToCart || product.availability !== 'in stock'}
+            className="flex-1 bg-lumora-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:bg-lumora-green-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            {addingToCart
+              ? '...'
+              : locale === 'de' ? 'In den Warenkorb' : locale === 'en' ? 'Add to Cart' : 'In Winkelwagen'}
+          </button>
+        </div>
+      </div>
+
+      {/* Spacer for sticky bar on mobile */}
+      <div className="h-24 lg:hidden" />
     </div>
   );
 }

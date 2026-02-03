@@ -16,17 +16,17 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const metadata = {
     nl: {
       title: 'Steenwol Pluggen & Kweektrays | Gratis Verzending | Lumora',
-      description: 'Professionele steenwol pluggen en paper plug trays voor kwekers. ✓ Gratis verzending NL/BE/DE ✓ 24-48u levering ✓ B2B prijzen ✓ 15+ jaar ervaring. Bestel direct bij de specialist.',
+      description: 'Professionele steenwol pluggen en paper plug trays voor kwekers. ✓ Gratis verzending NL/BE/DE ✓ Binnen 48 uur geleverd ✓ B2B prijzen ✓ 15+ jaar ervaring. Bestel direct bij de specialist.',
       keywords: ['steenwol pluggen', 'kweektrays', 'paper plug trays', 'paperbus pluggen', 'glastuinbouw', 'B2B tuinbouw', 'Ellepot', 'propagatie materiaal']
     },
     en: {
       title: 'Rockwool Plugs & Growing Trays | Free Shipping | Lumora',
-      description: 'Professional rockwool plugs and paper plug trays for growers. ✓ Free shipping NL/BE/DE ✓ 24-48h delivery ✓ B2B prices ✓ 15+ years experience. Order directly from the specialist.',
+      description: 'Professional rockwool plugs and paper plug trays for growers. ✓ Free shipping NL/BE/DE ✓ Delivered within 48 hours ✓ B2B prices ✓ 15+ years experience. Order directly from the specialist.',
       keywords: ['rockwool plugs', 'growing trays', 'paper plug trays', 'propagation', 'greenhouse', 'B2B horticulture', 'Ellepot', 'propagation materials']
     },
     de: {
       title: 'Steinwolle Plugs & Anzuchtschalen | Kostenloser Versand | Lumora',
-      description: 'Professionelle Steinwolle-Plugs und Paper-Plug-Trays für Züchter. ✓ Kostenloser Versand NL/BE/DE ✓ 24-48h Lieferung ✓ B2B-Preise ✓ 15+ Jahre Erfahrung. Direkt beim Spezialisten bestellen.',
+      description: 'Professionelle Steinwolle-Plugs und Paper-Plug-Trays für Züchter. ✓ Kostenloser Versand NL/BE/DE ✓ Lieferung innerhalb 48 Stunden ✓ B2B-Preise ✓ 15+ Jahre Erfahrung. Direkt beim Spezialisten bestellen.',
       keywords: ['Steinwolle Plugs', 'Anzuchtschalen', 'Paper Plug Trays', 'Vermehrung', 'Gewächshaus', 'B2B Gartenbau', 'Ellepot', 'Vermehrungsmaterial']
     }
   }

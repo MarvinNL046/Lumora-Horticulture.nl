@@ -38,15 +38,15 @@ const productMetaConfig: Record<string, {
   'paper-plug-tray-84': {
     nl: {
       titleSuffix: 'Kopen | 100% Biologisch Afbreekbaar | Gratis Verzending',
-      benefits: ['Geen transplantatieschok', 'FP 12+ technologie', '24-48u levering', 'Staffelkorting tot 20%']
+      benefits: ['Geen transplantatieschok', 'FP 12+ technologie', 'Binnen 48 uur geleverd', 'Staffelkorting tot 20%']
     },
     en: {
       titleSuffix: 'Buy Online | 100% Biodegradable | Free Shipping',
-      benefits: ['No transplant shock', 'FP 12+ technology', '24-48h delivery', 'Volume discounts up to 20%']
+      benefits: ['No transplant shock', 'FP 12+ technology', 'Delivered within 48h', 'Volume discounts up to 20%']
     },
     de: {
       titleSuffix: 'Kaufen | 100% Biologisch Abbaubar | Kostenloser Versand',
-      benefits: ['Kein Transplantationsschock', 'FP 12+ Technologie', '24-48h Lieferung', 'Mengenrabatt bis 20%']
+      benefits: ['Kein Transplantationsschock', 'FP 12+ Technologie', 'Innerhalb 48 Std. geliefert', 'Mengenrabatt bis 20%']
     }
   },
   'paper-plug-tray-104': {
@@ -66,15 +66,15 @@ const productMetaConfig: Record<string, {
   'steenwol-pluggen-paperbus-35mm': {
     nl: {
       titleSuffix: 'Kopen | Professionele Stekpluggen | Gratis Verzending',
-      benefits: ['Perfecte waterhuishouding', 'Optimale luchtcirculatie', '24-48u levering', 'Tot 20% korting']
+      benefits: ['Perfecte waterhuishouding', 'Optimale luchtcirculatie', 'Binnen 48 uur geleverd', 'Tot 20% korting']
     },
     en: {
       titleSuffix: 'Buy Online | Professional Propagation Plugs | Free Shipping',
-      benefits: ['Perfect water management', 'Optimal air circulation', '24-48h delivery', 'Up to 20% discount']
+      benefits: ['Perfect water management', 'Optimal air circulation', 'Delivered within 48h', 'Up to 20% discount']
     },
     de: {
       titleSuffix: 'Kaufen | Professionelle Stecklinge | Kostenloser Versand',
-      benefits: ['Perfekte Wasserhaltung', 'Optimale Luftzirkulation', '24-48h Lieferung', 'Bis 20% Rabatt']
+      benefits: ['Perfekte Wasserhaltung', 'Optimale Luftzirkulation', 'Innerhalb 48 Std. geliefert', 'Bis 20% Rabatt']
     }
   },
   'transportdoos-vouwdoos': {
@@ -97,15 +97,15 @@ const productMetaConfig: Record<string, {
 const defaultMetaConfig = {
   nl: {
     titleSuffix: 'Kopen | Op Voorraad | Gratis Verzending',
-    benefits: ['Direct uit voorraad leverbaar', '24-48u levering', 'Gratis verzending NL/BE/DE', 'Staffelkorting tot 20%']
+    benefits: ['Direct uit voorraad leverbaar', 'Binnen 48 uur geleverd', 'Gratis verzending NL/BE/DE', 'Staffelkorting tot 20%']
   },
   en: {
     titleSuffix: 'Buy Online | In Stock | Free Shipping',
-    benefits: ['Available from stock', '24-48h delivery', 'Free shipping NL/BE/DE', 'Volume discounts up to 20%']
+    benefits: ['Available from stock', 'Delivered within 48h', 'Free shipping NL/BE/DE', 'Volume discounts up to 20%']
   },
   de: {
     titleSuffix: 'Kaufen | Auf Lager | Kostenloser Versand',
-    benefits: ['Direkt ab Lager lieferbar', '24-48h Lieferung', 'Kostenloser Versand NL/BE/DE', 'Mengenrabatt bis 20%']
+    benefits: ['Direkt ab Lager lieferbar', 'Innerhalb 48 Std. geliefert', 'Kostenloser Versand NL/BE/DE', 'Mengenrabatt bis 20%']
   }
 };
 

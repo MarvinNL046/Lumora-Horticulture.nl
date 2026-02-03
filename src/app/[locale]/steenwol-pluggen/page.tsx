@@ -16,17 +16,17 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const metadata = {
     nl: {
       title: 'Steenwol Pluggen Kopen | FP 12+ Kwaliteit | Gratis Verzending',
-      description: 'Professionele steenwol pluggen met FP 12+ technologie. ✓ Optimale wortelontwikkeling ✓ Schimmelwerend ✓ Gratis verzending NL/BE/DE ✓ 24-48u levering. Bestel direct bij Lumora.',
+      description: 'Professionele steenwol pluggen met FP 12+ technologie. ✓ Optimale wortelontwikkeling ✓ Schimmelwerend ✓ Gratis verzending NL/BE/DE ✓ Binnen 48 uur geleverd. Bestel direct bij Lumora.',
       keywords: ['steenwol pluggen', 'steenwol pluggen kopen', 'rockwool plugs', 'hydrocultuur', 'glastuinbouw', 'propagatie', 'wortelontwikkeling', 'fp 12+', 'kweekmateriaal', 'professionele teelt']
     },
     en: {
       title: 'Buy Rockwool Plugs | FP 12+ Quality | Free Shipping',
-      description: 'Professional rockwool plugs with FP 12+ technology. ✓ Optimal root development ✓ Fungal protection ✓ Free shipping NL/BE/DE ✓ 24-48h delivery. Order directly from Lumora.',
+      description: 'Professional rockwool plugs with FP 12+ technology. ✓ Optimal root development ✓ Fungal protection ✓ Free shipping NL/BE/DE ✓ Delivered within 48 hours. Order directly from Lumora.',
       keywords: ['rockwool plugs', 'buy rockwool plugs', 'hydroponics', 'greenhouse cultivation', 'propagation', 'root development', 'fp 12+', 'growing media', 'professional cultivation']
     },
     de: {
       title: 'Steinwolle Plugs Kaufen | FP 12+ Qualitat | Kostenloser Versand',
-      description: 'Professionelle Steinwolle-Plugs mit FP 12+ Technologie. ✓ Optimale Wurzelentwicklung ✓ Pilzschutz ✓ Kostenloser Versand NL/BE/DE ✓ 24-48h Lieferung. Direkt bei Lumora bestellen.',
+      description: 'Professionelle Steinwolle-Plugs mit FP 12+ Technologie. ✓ Optimale Wurzelentwicklung ✓ Pilzschutz ✓ Kostenloser Versand NL/BE/DE ✓ Lieferung innerhalb 48 Stunden. Direkt bei Lumora bestellen.',
       keywords: ['steinwolle plugs', 'steinwolle plugs kaufen', 'hydrokultur', 'gewachshausanbau', 'vermehrung', 'wurzelentwicklung', 'fp 12+', 'anzuchtmedium', 'professioneller anbau']
     }
   }

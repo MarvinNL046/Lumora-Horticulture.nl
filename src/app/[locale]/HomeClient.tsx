@@ -174,7 +174,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
         },
         {
           icon: '🚚',
-          title: locale === 'nl' ? '24-48u Levering' : locale === 'de' ? '24-48h Lieferung' : '24-48h Delivery',
+          title: locale === 'nl' ? 'Binnen 48 uur' : locale === 'de' ? 'Innerhalb 48 Std.' : 'Within 48 hours',
           description: locale === 'nl' ? 'Snelle levering NL/BE/DE' : locale === 'de' ? 'Schnelle Lieferung NL/BE/DE' : 'Fast delivery NL/BE/DE'
         },
         {
@@ -272,10 +272,10 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
         {
           q: locale === 'nl' ? 'Hoe lang duurt de levering?' : locale === 'de' ? 'Wie lange dauert die Lieferung?' : 'How long does delivery take?',
           a: locale === 'nl'
-            ? 'Standaard levering in Nederland en België is 24-48 uur. Voor Duitsland rekenen we 2-3 werkdagen. Voor grotere bestellingen (pallets) kunnen we vaak dezelfde dag nog leveren binnen NL.'
+            ? 'Standaard levering in Nederland en België is binnen 48 uur. Voor Duitsland rekenen we 2-3 werkdagen. Voor grotere bestellingen (pallets) kunnen we vaak dezelfde dag nog leveren binnen NL.'
             : locale === 'de'
-            ? 'Die Standardlieferung in die Niederlande und Belgien dauert 24-48 Stunden. Für Deutschland rechnen wir mit 2-3 Werktagen. Für größere Bestellungen (Paletten) können wir oft noch am selben Tag innerhalb der NL liefern.'
-            : 'Standard delivery in the Netherlands and Belgium is 24-48 hours. For Germany we estimate 2-3 working days. For larger orders (pallets) we can often deliver the same day within NL.'
+            ? 'Die Standardlieferung in die Niederlande und Belgien erfolgt innerhalb von 48 Stunden. Für Deutschland rechnen wir mit 2-3 Werktagen. Für größere Bestellungen (Paletten) können wir oft noch am selben Tag innerhalb der NL liefern.'
+            : 'Standard delivery in the Netherlands and Belgium is within 48 hours. For Germany we estimate 2-3 working days. For larger orders (pallets) we can often deliver the same day within NL.'
         },
         {
           q: locale === 'nl' ? 'Zijn de paper plugs echt biologisch afbreekbaar?' : locale === 'de' ? 'Sind die Paper Plugs wirklich biologisch abbaubar?' : 'Are the paper plugs really biodegradable?',

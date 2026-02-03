@@ -48,11 +48,11 @@ export default function ShopClient({ locale }: ShopClientProps) {
     inStock: locale === 'de' ? 'Auf Lager' : locale === 'en' ? 'In Stock' : 'Op voorraad',
     outOfStock: locale === 'de' ? 'Nicht verfügbar' : locale === 'en' ? 'Out of stock' : 'Niet beschikbaar',
     viewProduct: locale === 'de' ? 'Produkt ansehen' : locale === 'en' ? 'View product' : 'Bekijk product',
-    delivery: locale === 'de' ? '24-48h Lieferung' : locale === 'en' ? '24-48h Delivery' : '24-48u levering',
+    delivery: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
     trustBadges: {
       certified: locale === 'de' ? 'EU Zertifiziert' : locale === 'en' ? 'EU Certified' : 'EU Gecertificeerd',
       years: locale === 'de' ? '15+ Jahre Erfahrung' : locale === 'en' ? '15+ Years Experience' : '15+ Jaar Ervaring',
-      delivery: locale === 'de' ? '24-48h Lieferung' : locale === 'en' ? '24-48h Delivery' : '24-48u Levering',
+      delivery: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
       sustainable: locale === 'de' ? '100% Nachhaltig' : locale === 'en' ? '100% Sustainable' : '100% Duurzaam',
     },
     volumeDiscount: locale === 'de' ? 'Mengenrabatt verfügbar' : locale === 'en' ? 'Volume discount available' : 'Staffelkorting beschikbaar',

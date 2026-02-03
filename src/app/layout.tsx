@@ -12,9 +12,10 @@ import { CartProvider } from '@/contexts/CartContext'
 import CartSidebar from '@/components/CartSidebar'
 import dynamic from 'next/dynamic'
 
-// Dynamically import WelcomeEmailTrigger and CartSync with SSR disabled
+// Dynamically import client-side components with SSR disabled
 const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
 const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
+const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false })
 
 // Initialize fonts
 const inter = Inter({ 
@@ -76,6 +77,9 @@ export default function RootLayout({
 
           {/* Shopping cart sidebar */}
           <CartSidebar />
+
+          {/* Exit intent popup for cart abandonment prevention */}
+          <ExitIntentPopup />
         </CartProvider>
       </StackTheme></StackProvider></body>
     </html>
