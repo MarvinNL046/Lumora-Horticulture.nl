@@ -97,7 +97,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     inStock: locale === 'de' ? 'Auf Lager' : locale === 'en' ? 'In Stock' : 'Op voorraad',
     deliveryPlugs: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
     deliveryNeemx: locale === 'de' ? 'Versand am selben Tag' : locale === 'en' ? 'Same day shipping' : 'Dezelfde dag verzonden',
-    euCertified: locale === 'de' ? 'EU-Zertifiziert' : locale === 'en' ? 'EU Certified' : 'EU Gecertificeerd',
+    professionalQuality: locale === 'de' ? 'Professionelle Qualität' : locale === 'en' ? 'Professional Quality' : 'Professionele Kwaliteit',
     yearsExperience: locale === 'de' ? '15+ Jahre Erfahrung' : locale === 'en' ? '15+ Years Experience' : '15+ Jaar Ervaring',
     sustainable: locale === 'de' ? '100% Nachhaltig' : locale === 'en' ? '100% Sustainable' : '100% Duurzaam',
     // Breadcrumbs
@@ -356,7 +356,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             <TrustBadge icon="✓" text={t.inStock} />
             <TrustBadge icon="🚚" text={isNeemxPro ? t.deliveryNeemx : t.deliveryPlugs} />
-            <TrustBadge icon="🏆" text={t.euCertified} />
+            <TrustBadge icon="🏆" text={t.professionalQuality} />
             <TrustBadge icon="⭐" text={t.yearsExperience} />
             <TrustBadge icon="♻️" text={t.sustainable} />
           </div>

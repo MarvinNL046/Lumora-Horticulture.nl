@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const metadata = {
     nl: {
       title: 'Biologisch Afbreekbare Kweekoplossingen: De Toekomst van Duurzame Teelt | Lumora',
-      description: 'Ontdek biologisch afbreekbare paper plug trays voor duurzame professionele teelt. 100% composteerbaar, EU-gecertificeerd, circulaire economie. Geen plastic afval, optimale wortelontwikkeling.',
+      description: 'Ontdek biologisch afbreekbare paper plug trays voor duurzame professionele teelt. 100% composteerbaar, circulaire economie. Geen plastic afval, optimale wortelontwikkeling.',
       keywords: [
         'biologisch afbreekbaar',
         'biodegradable growing',
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     en: {
       title: 'Biodegradable Growing Solutions: The Future of Sustainable Cultivation | Lumora',
-      description: 'Discover biodegradable paper plug trays for sustainable professional growing. 100% compostable, EU-certified, circular economy. No plastic waste, optimal root development.',
+      description: 'Discover biodegradable paper plug trays for sustainable professional growing. 100% compostable, circular economy. No plastic waste, optimal root development.',
       keywords: [
         'biodegradable',
         'biodegradable growing',
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     de: {
       title: 'Biologisch abbaubare Anbaulösungen: Die Zukunft des nachhaltigen Anbaus | Lumora',
-      description: 'Entdecken Sie biologisch abbaubare Paper Plug Trays für nachhaltigen professionellen Anbau. 100% kompostierbar, EU-zertifiziert, Kreislaufwirtschaft. Kein Kunststoffabfall, optimale Wurzelentwicklung.',
+      description: 'Entdecken Sie biologisch abbaubare Paper Plug Trays für nachhaltigen professionellen Anbau. 100% kompostierbar, Kreislaufwirtschaft. Kein Kunststoffabfall, optimale Wurzelentwicklung.',
       keywords: [
         'biologisch abbaubar',
         'biologisch abbaubarer anbau',

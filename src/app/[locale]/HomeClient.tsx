@@ -169,8 +169,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
       badges: [
         {
           icon: '✓',
-          title: locale === 'nl' ? 'EU Gecertificeerd' : locale === 'de' ? 'EU-Zertifiziert' : 'EU Certified',
-          description: locale === 'nl' ? 'Voldoet aan alle EU normen' : locale === 'de' ? 'Erfüllt alle EU-Normen' : 'Meets all EU standards'
+          title: locale === 'nl' ? 'Professionele Kwaliteit' : locale === 'de' ? 'Professionelle Qualität' : 'Professional Quality',
+          description: locale === 'nl' ? 'Getest en betrouwbaar' : locale === 'de' ? 'Getestet und zuverlässig' : 'Tested and reliable'
         },
         {
           icon: '🚚',

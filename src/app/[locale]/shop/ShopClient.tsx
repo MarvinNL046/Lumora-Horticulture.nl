@@ -50,7 +50,7 @@ export default function ShopClient({ locale }: ShopClientProps) {
     viewProduct: locale === 'de' ? 'Produkt ansehen' : locale === 'en' ? 'View product' : 'Bekijk product',
     delivery: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
     trustBadges: {
-      certified: locale === 'de' ? 'EU Zertifiziert' : locale === 'en' ? 'EU Certified' : 'EU Gecertificeerd',
+      quality: locale === 'de' ? 'Professionelle Qualität' : locale === 'en' ? 'Professional Quality' : 'Professionele Kwaliteit',
       years: locale === 'de' ? '15+ Jahre Erfahrung' : locale === 'en' ? '15+ Years Experience' : '15+ Jaar Ervaring',
       delivery: locale === 'de' ? 'Innerhalb 48 Std. geliefert' : locale === 'en' ? 'Delivered within 48h' : 'Binnen 48 uur geleverd',
       sustainable: locale === 'de' ? '100% Nachhaltig' : locale === 'en' ? '100% Sustainable' : '100% Duurzaam',
@@ -163,7 +163,7 @@ export default function ShopClient({ locale }: ShopClientProps) {
         {/* Trust Badges Bar */}
         <div className="bg-white rounded-xl shadow-soft p-4 mb-8 border border-lumora-dark/5">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-            <TrustBadge icon="✓" text={t.trustBadges.certified} />
+            <TrustBadge icon="✓" text={t.trustBadges.quality} />
             <TrustBadge icon="★" text={t.trustBadges.years} />
             <TrustBadge icon="🚚" text={t.trustBadges.delivery} />
             <TrustBadge icon="🌱" text={t.trustBadges.sustainable} />

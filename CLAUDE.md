@@ -121,7 +121,8 @@ The site includes **50+ SEO landing pages** organized into 10 thematic categorie
 
 **Homepage** (`src/app/[locale]/HomeClient.tsx`):
 - B2B-focused design with trust signals and conversion elements
-- Trust badges (EU certified, 15+ years, 24-48h delivery, 100% sustainable)
+- Trust badges (Professional Quality, 15+ years, 24-48h delivery, 100% sustainable)
+- **IMPORTANT**: Do NOT make EU certification claims - we have no official EU certificate
 - Social proof (testimonials with ratings, customer statistics)
 - Structured data (JSON-LD) for SEO enhancement
 - FAQ accordion, B2B benefits with ROI metrics
