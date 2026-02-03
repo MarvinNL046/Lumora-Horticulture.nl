@@ -11,10 +11,10 @@ export interface DiscountTier {
 
 export const VOLUME_DISCOUNT_TIERS: DiscountTier[] = [
   { minQuantity: 1, maxQuantity: 4, discountPercentage: 0 },
-  { minQuantity: 5, maxQuantity: 9, discountPercentage: 5 },
-  { minQuantity: 10, maxQuantity: 24, discountPercentage: 10 },
-  { minQuantity: 25, maxQuantity: 49, discountPercentage: 15 },
-  { minQuantity: 50, maxQuantity: null, discountPercentage: 20 }, // 50+ = 20% korting
+  { minQuantity: 5, maxQuantity: 9, discountPercentage: 20 },
+  { minQuantity: 10, maxQuantity: 24, discountPercentage: 25 },
+  { minQuantity: 25, maxQuantity: 49, discountPercentage: 30 },
+  { minQuantity: 50, maxQuantity: null, discountPercentage: 35 }, // 50+ = 35% korting
 ];
 
 /**

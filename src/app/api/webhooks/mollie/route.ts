@@ -7,6 +7,7 @@ import { Resend } from 'resend';
 import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
 import { AdminNotificationEmail } from '@/emails/AdminNotification';
+import { RecoverySuccessNotification } from '@/emails/RecoverySuccessNotification';
 import { trackServerSideConversion } from '@/lib/google-ads';
 import React from 'react';
 
@@ -228,6 +229,49 @@ export async function POST(request: NextRequest) {
         });
 
         console.log('Admin email sent');
+
+        // Check if this is a recovery payment and send special notification
+        const metadata = payment.metadata as { recovery?: boolean; order_id?: string } | null;
+        const recoveryAttempts = parseInt(order.recovery_attempts?.toString() || '0');
+
+        if (metadata?.recovery || recoveryAttempts > 0) {
+          console.log('🎉 This is a recovered payment! Sending recovery success notification...');
+
+          const recoveryEmailHtml = await render(
+            React.createElement(RecoverySuccessNotification, {
+              orderNumber: orderNumber || order.id,
+              orderId: order.id,
+              customerName: order.customer_name,
+              customerEmail: order.customer_email,
+              totalAmount: totalAmount,
+              recoveryAttempts: recoveryAttempts,
+              originalCreatedAt: new Date(order.created_at!).toLocaleDateString('nl-NL', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              }),
+              paidAt: new Date().toLocaleDateString('nl-NL', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              }),
+            })
+          );
+
+          await resend.emails.send({
+            from: 'Lumora Recovery System <info@lumorahorticulture.com>',
+            replyTo: 'info@lumorahorticulture.com',
+            to: 'info@lumorahorticulture.com',
+            subject: `🎉 Recovery succesvol! ${orderNumber || order.id} - €${totalAmount.toFixed(2)} teruggewonnen`,
+            html: recoveryEmailHtml,
+          });
+
+          console.log('Recovery success notification sent');
+        }
       } catch (emailError) {
         console.error('Failed to send emails:', emailError);
         // Don't fail the webhook if email fails

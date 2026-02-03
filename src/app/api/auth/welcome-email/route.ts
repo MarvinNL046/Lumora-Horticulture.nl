@@ -3,6 +3,8 @@ import { resend, EMAIL_FROM, EMAIL_NOTIFICATION_TO } from '@/lib/resend';
 import { WelcomeEmail } from '@/emails/WelcomeEmail';
 import { NewCustomerNotification } from '@/emails/NewCustomerNotification';
 import { stackServerApp } from '@/stack/server';
+import { render } from '@react-email/components';
+import React from 'react';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,6 +31,22 @@ export async function POST(request: NextRequest) {
     // Determine locale from request or default to 'nl'
     const { locale = 'nl' } = await request.json().catch(() => ({ locale: 'nl' }));
 
+    // Render email templates to HTML
+    const welcomeEmailHtml = await render(
+      React.createElement(WelcomeEmail, {
+        customerName,
+        locale: locale as 'nl' | 'en' | 'de',
+      })
+    );
+
+    const notificationEmailHtml = await render(
+      React.createElement(NewCustomerNotification, {
+        customerName,
+        customerEmail,
+        registrationDate: new Date().toISOString(),
+      })
+    );
+
     // Send welcome email to customer
     const welcomeEmailPromise = resend.emails.send({
       from: EMAIL_FROM,
@@ -38,10 +56,7 @@ export async function POST(request: NextRequest) {
         : locale === 'en'
         ? 'Welcome to Lumora Horticulture!'
         : 'Welkom bij Lumora Horticulture!',
-      react: WelcomeEmail({
-        customerName,
-        locale: locale as 'nl' | 'en' | 'de',
-      }),
+      html: welcomeEmailHtml,
     });
 
     // Send notification email to business
@@ -49,11 +64,7 @@ export async function POST(request: NextRequest) {
       from: EMAIL_FROM,
       to: EMAIL_NOTIFICATION_TO,
       subject: `Nieuwe klant geregistreerd: ${customerName}`,
-      react: NewCustomerNotification({
-        customerName,
-        customerEmail,
-        registrationDate: new Date().toISOString(),
-      }),
+      html: notificationEmailHtml,
     });
 
     // Wait for both emails to be sent

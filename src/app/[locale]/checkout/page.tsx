@@ -280,6 +280,7 @@ export default function CheckoutPage() {
             quantity: item.quantity,
           })),
           recovery_cart_id: recoveryCartId, // Track cart recovery
+          locale: locale, // Store locale for recovery emails
         }),
       });
 

@@ -2,301 +2,307 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lumorahorticulture.nl/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/over-ons/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/account/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/account/addresses/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/account/orders/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/toepassingen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/bol-handleiding/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/checkout/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/checkout/conversion/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lumorahorticulture.nl/checkout/retry/</loc>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/checkout/success/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/contact/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/duurzaamheid/carbon-footprint-kweekmateriaal/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/duurzaamheid/composteerbaarheid-praktijk/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/efficiëntie-roi/arbeidsbesparing-40-procent/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/efficiëntie-roi/roi-berekenen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/glaswol-aanraken/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/innovatie-trends/automatisering-propagatie/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/innovatie-trends/verticale-teelt-paper-plugs/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/levensduur-steenwol/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/neemx-pro/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/paperbus-pluggen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/paperbus-steenwol-pluggen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/praktische-toepassingen/paper-plugs-groenteteelt/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/praktische-toepassingen/paper-plugs-sierplanten/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/privacy/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/privacybeleid/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/producten/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/producten/ellepot-fp12/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/propagatie-technologie/biologisch-afbreekbaar/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/propagatie-technologie/fp-12-technologie/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/propagatie-technologie/wat-zijn-paper-plug-trays/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/regionale-markten/duitse-gaertnerei/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/regionale-markten/nederlandse-glastuinbouw/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/retourbeleid/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/winkel/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/steenwol-longen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/steenwol-pluggen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/steenwol-substraat/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/steenwol-vastzetten/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/steenwol-vs-rockwool/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/stekpluggen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/supply-chain/inkoop-leveranciersselectie/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/supply-chain/opslag-houdbaarheid/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/technische-specs/84-vs-104-vergelijking/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/technische-specs/celgroottes-toepassingen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/terms/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/algemene-voorwaarden/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/troubleshooting/transplantatieschok-voorkomen/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/troubleshooting/wortelvorming-optimaliseren/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lumorahorticulture.nl/voordelen-nadelen-steenwol/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

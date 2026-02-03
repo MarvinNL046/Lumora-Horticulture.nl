@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       billing_address,
       items, // Array of { product_id, quantity }
       recovery_cart_id, // Optional: ID of abandoned cart being recovered
+      locale = 'nl', // Locale for recovery emails (nl, en, de)
     } = body;
 
     // Validatie
@@ -102,6 +103,7 @@ export async function POST(request: NextRequest) {
         total_amount: totalAmount.toString(),
         status: 'pending',
         payment_status: 'pending',
+        locale: locale, // Store locale for recovery emails
       })
       .returning();
 

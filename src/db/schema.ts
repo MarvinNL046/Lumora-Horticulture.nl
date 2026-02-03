@@ -38,7 +38,10 @@ export const orders = pgTable('orders', {
   total_amount: numeric('total_amount', { precision: 10, scale: 2 }).notNull(),
   status: text('status').default('pending').notNull(), // pending, paid, processing, shipped, completed, cancelled
   payment_id: text('payment_id'), // Mollie payment ID
-  payment_status: text('payment_status').default('pending'), // pending, paid, failed, cancelled
+  payment_status: text('payment_status').default('pending'), // pending, paid, failed, cancelled, expired
+  locale: text('locale').default('nl'), // nl, en, de - for recovery emails
+  recovery_email_sent_at: timestamp('recovery_email_sent_at'), // When recovery email was sent
+  recovery_attempts: numeric('recovery_attempts', { precision: 2, scale: 0 }).default('0'), // Number of recovery emails sent
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });
