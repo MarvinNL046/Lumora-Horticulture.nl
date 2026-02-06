@@ -20,18 +20,6 @@ export default function NeemxProSpuitschemaClient({ locale }: Props) {
           margin: 0;
         }
 
-        /* Hide all website elements */
-        body > *:not(#spuitschema-container):not(script):not(style) {
-          display: none !important;
-        }
-
-        /* Also hide specific elements by tag/class */
-        header, footer, nav,
-        [class*="Header"], [class*="Footer"], [class*="Nav"],
-        [class*="Cart"], [class*="sidebar"], [class*="Sidebar"] {
-          display: none !important;
-        }
-
         /* Reset body styles for print */
         body {
           margin: 0 !important;
@@ -42,23 +30,32 @@ export default function NeemxProSpuitschemaClient({ locale }: Props) {
           color-adjust: exact;
         }
 
-        /* Make sure schedule takes full page */
+        /* Hide everything by default using visibility */
+        body * {
+          visibility: hidden !important;
+        }
+
+        /* Show the schedule container and all its children */
+        #spuitschema-container,
+        #spuitschema-container * {
+          visibility: visible !important;
+        }
+
+        /* Position the schedule at the top of the page */
         #spuitschema-container {
-          position: absolute !important;
+          position: fixed !important;
           top: 0 !important;
           left: 0 !important;
+          width: 210mm !important;
+          height: 297mm !important;
           margin: 0 !important;
           padding: 0 !important;
           box-shadow: none !important;
         }
 
-        .no-print {
+        .no-print, .no-print * {
           display: none !important;
-        }
-
-        main {
-          padding: 0 !important;
-          margin: 0 !important;
+          visibility: hidden !important;
         }
       }
 
