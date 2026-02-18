@@ -135,6 +135,39 @@ export default function CheckoutPage() {
     }
   }, [customerEmail, user]);
 
+  // Auto-save cart as abandoned when email is entered on checkout page
+  useEffect(() => {
+    if (!customerEmail || !customerEmail.includes('@') || items.length === 0) {
+      return;
+    }
+
+    // Debounce: save 3 seconds after email is entered
+    const timeoutId = setTimeout(async () => {
+      try {
+        const totalPrice = items.reduce((total, item) => {
+          return total + calculateTotalPrice(item.price, item.quantity);
+        }, 0);
+
+        await fetch('/api/cart/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customer_email: customerEmail,
+            customer_name: customerName || undefined,
+            cart_data: items,
+            total_amount: totalPrice,
+            locale,
+          }),
+        });
+        console.log('Checkout cart auto-saved for abandonment tracking');
+      } catch (error) {
+        console.error('Failed to save checkout cart:', error);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [customerEmail, items, customerName, locale]);
+
   // Fill address fields from selected saved address
   const fillAddressFields = (address: SavedAddress) => {
     setStreet(address.street);

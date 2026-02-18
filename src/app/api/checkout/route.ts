@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { orders, orderItems, products, abandonedCarts } from '@/db/schema';
 import { createPayment } from '@/lib/mollie';
-import { eq, sql } from 'drizzle-orm';
+import { eq, and, sql } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { stackServerApp } from '@/stack/server';
 
@@ -135,23 +135,26 @@ export async function POST(request: NextRequest) {
       .set({ payment_id: payment.id })
       .where(eq(orders.id, order.id));
 
-    // Mark abandoned cart as recovered if this is a cart recovery
-    if (recovery_cart_id) {
-      try {
-        await db
-          .update(abandonedCarts)
-          .set({
-            recovered: true,
-            recovered_at: sql`NOW()`,
-            recovery_order_id: order.id,
-          })
-          .where(eq(abandonedCarts.id, recovery_cart_id));
+    // Mark abandoned cart(s) as recovered for this email
+    try {
+      const result = await db
+        .update(abandonedCarts)
+        .set({
+          recovered: true,
+          recovered_at: sql`NOW()`,
+          recovery_order_id: order.id,
+        })
+        .where(
+          and(
+            eq(abandonedCarts.customer_email, customer_email),
+            eq(abandonedCarts.recovered, false)
+          )
+        );
 
-        console.log(`✅ Abandoned cart ${recovery_cart_id} marked as recovered`);
-      } catch (error) {
-        console.error('Failed to mark cart as recovered:', error);
-        // Don't fail the checkout if this fails
-      }
+      console.log(`✅ Abandoned carts for ${customer_email} marked as recovered`);
+    } catch (error) {
+      console.error('Failed to mark cart as recovered:', error);
+      // Don't fail the checkout if this fails
     }
 
     // Emails worden verzonden via de Mollie webhook na succesvolle betaling
