@@ -343,7 +343,32 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-display font-bold text-lumora-dark mb-8">{t.checkout}</h1>
+        {/* Progress Bar */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-display font-bold text-lumora-dark mb-4">{t.checkout}</h1>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-lumora-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+              <span className="text-sm font-semibold text-lumora-dark">
+                {locale === 'de' ? 'Daten eingeben' : locale === 'en' ? 'Your details' : 'Jouw gegevens'}
+              </span>
+            </div>
+            <div className="flex-1 h-0.5 bg-lumora-dark/20"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-lumora-dark/20 text-lumora-dark/50 rounded-full flex items-center justify-center font-bold text-sm">2</div>
+              <span className="text-sm text-lumora-dark/50">
+                {locale === 'de' ? 'Bezahlen' : locale === 'en' ? 'Payment' : 'Betalen'}
+              </span>
+            </div>
+            <div className="flex-1 h-0.5 bg-lumora-dark/20"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-lumora-dark/20 text-lumora-dark/50 rounded-full flex items-center justify-center font-bold text-sm">3</div>
+              <span className="text-sm text-lumora-dark/50">
+                {locale === 'de' ? 'Bestätigung' : locale === 'en' ? 'Confirmation' : 'Bevestiging'}
+              </span>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Order Summary */}
@@ -487,17 +512,30 @@ export default function CheckoutPage() {
                 </h2>
 
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      {t.name} *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={customerName}
-                      onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-lumora-dark mb-1">
+                        {t.name} *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={customerName}
+                        onChange={(e) => setCustomerName(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-lumora-dark mb-1">
+                        {t.phone}
+                      </label>
+                      <input
+                        type="tel"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -563,18 +601,6 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                   )}
-
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      {t.phone}
-                    </label>
-                    <input
-                      type="tel"
-                      value={customerPhone}
-                      onChange={(e) => setCustomerPhone(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
-                  </div>
                 </div>
               </div>
 
@@ -614,17 +640,33 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      {t.street} *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={street}
-                      onChange={(e) => setStreet(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-lumora-dark mb-1">
+                        {t.street} *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-lumora-dark mb-1">
+                        {t.country} *
+                      </label>
+                      <select
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                      >
+                        <option value="NL">Nederland</option>
+                        <option value="BE">België</option>
+                        <option value="DE">Deutschland</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -652,21 +694,6 @@ export default function CheckoutPage() {
                         className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
                       />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-lumora-dark mb-1">
-                      {t.country} *
-                    </label>
-                    <select
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                    >
-                      <option value="NL">Nederland</option>
-                      <option value="BE">België</option>
-                      <option value="DE">Duitsland</option>
-                    </select>
                   </div>
 
                   {/* Save address checkbox - only for logged-in users entering new address */}
@@ -771,31 +798,20 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <div className="text-center mt-4">
-                <p className="text-sm text-lumora-dark/60 mb-2">
-                  {locale === 'de'
-                    ? 'Sicher bezahlen mit:'
-                    : locale === 'en'
-                    ? 'Secure payment with:'
-                    : 'Veilig betalen met:'}
+              <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <p className="text-sm font-medium text-lumora-dark text-center mb-3">
+                  {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                 </p>
-                <div className="flex justify-center items-center gap-2 text-xs text-lumora-dark/70 font-medium">
-                  <span>iDEAL</span>
-                  <span>•</span>
-                  <span>Bancontact</span>
-                  <span>•</span>
-                  <span>SOFORT</span>
-                  <span>•</span>
-                  <span>Creditcard</span>
-                  <span>•</span>
-                  <span>PayPal</span>
+                <div className="flex justify-center items-center gap-3 flex-wrap">
+                  <span className="bg-[#CC0066] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
+                  <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
+                  <span className="bg-[#003087] text-white text-sm font-bold px-3 py-1 rounded-lg">PayPal</span>
+                  <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
+                  <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
+                  <span className="bg-[#E52B50] text-white text-sm font-bold px-2.5 py-1 rounded-lg">Apple Pay</span>
                 </div>
-                <p className="text-xs text-lumora-dark/50 mt-2">
-                  {locale === 'de'
-                    ? 'Gesichert durch Mollie • Versand nach DE, NL & BE problemlos'
-                    : locale === 'en'
-                    ? 'Secured by Mollie • Shipping to NL, BE & DE guaranteed'
-                    : 'Beveiligd door Mollie • Verzending naar NL, BE & DE gegarandeerd'}
+                <p className="text-xs text-lumora-dark/50 mt-3 text-center">
+                  {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}
                 </p>
               </div>
             </form>

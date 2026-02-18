@@ -510,8 +510,8 @@ export default function NeemxProClient({ locale }: Props) {
                 {/* Product folder download */}
                 <div className="inline-flex items-center gap-2">
                   <a
-                    href={`/downloads/NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : 'NL'}.pdf`}
-                    download={`NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : 'NL'}.pdf`}
+                    href={`/downloads/NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : locale === 'en' ? 'EN' : 'NL'}.pdf`}
+                    download={`NEEMX-PRO-Folder-${locale === 'de' ? 'DE' : locale === 'en' ? 'EN' : 'NL'}.pdf`}
                     className="inline-flex items-center text-amber-600 font-medium hover:text-amber-700 transition-all duration-300 group text-sm md:text-base"
                   >
                     <svg

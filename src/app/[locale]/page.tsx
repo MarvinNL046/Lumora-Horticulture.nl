@@ -1,6 +1,9 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 import HomeClient from '@/app/[locale]/HomeClient'
 import { generatePageMetadata } from '@/lib/metadata'
+
+const validLocales = ['nl', 'en', 'de'];
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -43,9 +46,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default async function Home({ params }: { params: { locale: string } }) {
+  // Validate locale - return 404 for invalid locales (bot requests, etc.)
+  if (!validLocales.includes(params.locale)) {
+    notFound();
+  }
+
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
-  
+
   // Load messages manually for static export
   const messages = (await import(`../../messages/${params.locale}/common.json`)).default
   

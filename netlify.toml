@@ -84,6 +84,28 @@
   status = 200
   conditions = {host = ["lumorahorticulture.de", "www.lumorahorticulture.de"]}
 
+# Redirect sitemap-index.xml to main sitemap
+[[redirects]]
+  from = "/sitemap-index.xml"
+  to = "/sitemap.xml"
+  status = 301
+
+# Block common bot/scanner paths
+[[redirects]]
+  from = "/*.php"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/*.asp"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/*.aspx"
+  to = "/404"
+  status = 404
+
 # Functions configuration to reduce bundle size
 [functions]
   node_bundler = "esbuild"

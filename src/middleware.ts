@@ -66,12 +66,15 @@ export function middleware(request: NextRequest) {
   const domain = extractDomain(host);
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
-  
-  console.log(`Middleware processing: Domain: ${domain}, Path: ${pathname}`);
-  
+
+  // Block requests with file extensions (bots probing for .php, .xml, .env, etc.)
+  // The matcher should catch these, but Netlify edge functions may bypass it
+  if (/\.[a-z0-9]{2,10}$/i.test(pathname)) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   // Determine locale from domain
   const locale = domainLocaleMap[domain] || 'nl';
-  console.log(`Selected locale: ${locale} for domain: ${domain}`);
   
   // Check if the path already starts with a locale
   const localeRegex = /^\/(nl|en|de)\b/;

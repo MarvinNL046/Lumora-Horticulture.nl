@@ -89,6 +89,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
       `Bestel ${qty} stuks en krijg ${discount}% korting!`,
     addToCart: locale === 'de' ? 'In den Warenkorb' : locale === 'en' ? 'Add to Cart' : 'Toevoegen aan Winkelwagen',
     addedToCart: locale === 'de' ? 'Zum Warenkorb hinzugefügt!' : locale === 'en' ? 'Added to cart!' : 'Toegevoegd aan winkelwagen!',
+    buyNow: locale === 'de' ? 'Jetzt Kaufen' : locale === 'en' ? 'Buy Now' : 'Direct Afrekenen',
     viewCart: locale === 'de' ? 'Warenkorb ansehen' : locale === 'en' ? 'View cart' : 'Bekijk winkelwagen',
     continueShopping: locale === 'de' ? 'Weiter einkaufen' : locale === 'en' ? 'Continue shopping' : 'Verder winkelen',
     b2bButton: locale === 'de' ? 'Geschäftlich Bestellen (B2B)' : locale === 'en' ? 'Business Orders (B2B)' : 'Zakelijk Bestellen (B2B)',
@@ -114,6 +115,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
   };
 
   const { addItem, setIsCartOpen } = useCart();
+  const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -204,6 +206,30 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     setTimeout(() => {
       setShowAddedMessage(false);
     }, 3000);
+  };
+
+  const handleBuyNow = () => {
+    const cartProduct = isNeemxPro && selectedVariant ? selectedVariant : product;
+    if (!cartProduct) return;
+    const basePrice = parseFloat(cartProduct.price);
+    trackAddToCart({
+      id: cartProduct.id,
+      name: cartProduct.name,
+      price: calculateDiscountedPrice(basePrice, quantity),
+      quantity: quantity,
+      category: 'Horticulture Products',
+    });
+    addItem(
+      {
+        product_id: cartProduct.id,
+        slug: cartProduct.slug,
+        name: cartProduct.name,
+        price: basePrice,
+        image_url: cartProduct.image_url,
+      },
+      quantity
+    );
+    router.push(localizePathForLocale('/checkout', locale));
   };
 
   if (loading) {
@@ -698,6 +724,17 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                   </div>
                 )}
 
+                {/* Urgency Banner */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">
+                  <p className="text-sm font-semibold text-amber-800">
+                    {locale === 'de'
+                      ? '⚡ Bestellen Sie vor 16:00 Uhr = Versand am selben Tag'
+                      : locale === 'en'
+                      ? '⚡ Order before 4:00 PM = Same day shipping'
+                      : '⚡ Bestel voor 16:00 = Vandaag nog verzonden'}
+                  </p>
+                </div>
+
                 <button
                   onClick={handleAddToCart}
                   disabled={addingToCart || product.availability !== 'in stock'}
@@ -711,6 +748,17 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                     : product.availability !== 'in stock'
                     ? (locale === 'de' ? 'Nicht verfügbar' : locale === 'en' ? 'Not available' : 'Niet beschikbaar')
                     : t.addToCart}
+                </button>
+
+                <button
+                  onClick={handleBuyNow}
+                  disabled={addingToCart || product.availability !== 'in stock'}
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-soft hover:shadow-soft-md disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  {t.buyNow}
                 </button>
 
                 {/* B2B / Zakelijk Bestellen Knop */}
@@ -793,20 +841,19 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                   </div>
                 </div>
 
-                <div className="text-center mt-4">
-                  <p className="text-sm text-lumora-dark/60 mb-2">
+                <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                  <p className="text-sm font-medium text-lumora-dark text-center mb-3">
                     {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                   </p>
-                  <div className="flex justify-center items-center gap-2 text-xs text-lumora-dark/70 font-medium">
-                    <span>iDEAL</span>
-                    <span>•</span>
-                    <span>Creditcard</span>
-                    <span>•</span>
-                    <span>Apple Pay</span>
-                    <span>•</span>
-                    <span>PayPal</span>
+                  <div className="flex justify-center items-center gap-3 flex-wrap">
+                    <span className="bg-[#CC0066] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
+                    <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
+                    <span className="bg-[#003087] text-white text-sm font-bold px-3 py-1 rounded-lg">PayPal</span>
+                    <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
+                    <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
+                    <span className="bg-[#E52B50] text-white text-sm font-bold px-2.5 py-1 rounded-lg">Apple Pay</span>
                   </div>
-                  <p className="text-xs text-lumora-dark/50 mt-2">
+                  <p className="text-xs text-lumora-dark/50 mt-3 text-center">
                     {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}
                   </p>
                 </div>
@@ -818,31 +865,41 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
       {/* Sticky Mobile Add to Cart Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-lumora-dark/10 shadow-lg p-4 lg:hidden z-40">
-        <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
-          <div className="flex-1">
+        <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
+          <div className="flex-shrink-0">
             <div className="text-xs text-lumora-dark/60">
               {locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal'}
             </div>
-            <div className="text-xl font-bold text-lumora-green-500">
+            <div className="text-lg font-bold text-lumora-green-500">
               {formatPrice(totalPrice)}
             </div>
             {discountInfo.hasDiscount && (
               <div className="text-xs text-lumora-green-600 font-medium">
-                -{discountInfo.currentDiscount}% {locale === 'de' ? 'Rabatt' : locale === 'en' ? 'discount' : 'korting'}
+                -{discountInfo.currentDiscount}%
               </div>
             )}
           </div>
           <button
             onClick={handleAddToCart}
             disabled={addingToCart || product.availability !== 'in stock'}
-            className="flex-1 bg-lumora-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:bg-lumora-green-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 border-2 border-lumora-green-500 text-lumora-green-500 py-3 px-3 rounded-xl font-semibold hover:bg-lumora-green-50 transition-all duration-300 disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             {addingToCart
               ? '...'
               : locale === 'de' ? 'In den Warenkorb' : locale === 'en' ? 'Add to Cart' : 'In Winkelwagen'}
+          </button>
+          <button
+            onClick={handleBuyNow}
+            disabled={addingToCart || product.availability !== 'in stock'}
+            className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            {t.buyNow}
           </button>
         </div>
       </div>
