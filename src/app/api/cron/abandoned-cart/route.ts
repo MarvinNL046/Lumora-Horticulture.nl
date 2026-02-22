@@ -8,13 +8,11 @@ import type { CartItem } from '@/contexts/CartContext';
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails
 
-/**
- * Vercel Cron Job: Abandoned Cart Reminders
- * Schedule: Every 6 hours (0 */6 * * *)
- *
- * Sends reminder emails for carts abandoned more than 24 hours ago
- * that haven't been reminded yet and haven't been recovered.
- */
+// Vercel Cron Job: Abandoned Cart Reminders
+// Schedule: Every 6 hours (0 */6 * * *)
+//
+// Sends reminder emails for carts abandoned more than 24 hours ago
+// that haven't been reminded yet and haven't been recovered.
 export async function GET(request: NextRequest) {
   // Verify the request is from Vercel Cron
   const authHeader = request.headers.get('authorization');

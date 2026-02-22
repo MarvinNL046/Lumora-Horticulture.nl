@@ -8,15 +8,13 @@ import { createPayment } from '@/lib/mollie';
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails
 
-/**
- * Vercel Cron Job: Payment Recovery Emails
- * Schedule: Every 2 hours at minute 30 (30 */2 * * *)
- *
- * Targets orders with expired/failed payments.
- * Email schedule:
- * - 1st email: 1 hour after payment expires
- * - 2nd email: 48 hours after 1st email (if still not paid)
- */
+// Vercel Cron Job: Payment Recovery Emails
+// Schedule: Every 2 hours at minute 30 (30 */2 * * *)
+//
+// Targets orders with expired/failed payments.
+// Email schedule:
+// - 1st email: 1 hour after payment expires
+// - 2nd email: 48 hours after 1st email (if still not paid)
 export async function GET(request: NextRequest) {
   // Verify the request is from Vercel Cron
   const authHeader = request.headers.get('authorization');
