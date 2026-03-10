@@ -6,6 +6,7 @@ import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
 import GoogleAds from '@/components/GoogleAds'
 import MicrosoftClarity from '@/components/MicrosoftClarity'
+import MetaPixel from '@/components/MetaPixel'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
@@ -60,6 +61,9 @@ export default function RootLayout({
 
           {/* Microsoft Clarity heatmaps & analytics */}
           <MicrosoftClarity />
+
+          {/* Meta (Facebook) Pixel tracking */}
+          <MetaPixel />
 
           {/* Organization structured data */}
           <OrganizationSchema locale="nl" />
