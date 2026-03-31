@@ -230,8 +230,8 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li>
                 <a
-                  href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-                  download="Lumora-Ellepot-FP12-Folder.pdf"
+                  href={`/downloads/Lumora-Ellepot-FP12-Folder${currentLocale === 'de' ? '-DE' : ''}.pdf`}
+                  download={`Lumora-Ellepot-FP12-Folder${currentLocale === 'de' ? '-DE' : ''}.pdf`}
                   className="text-sm text-lumora-cream/70 transition-colors duration-200 hover:text-lumora-cream group flex items-center"
                 >
                   <svg className="w-4 h-4 mr-2 text-lumora-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

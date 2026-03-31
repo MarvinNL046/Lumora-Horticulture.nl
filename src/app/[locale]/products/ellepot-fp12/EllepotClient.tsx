@@ -450,8 +450,8 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                   <div>
                     <div className="inline-flex items-center gap-2">
                       <a
-                        href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-                        download="Lumora-Ellepot-FP12-Folder.pdf"
+                        href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+                        download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                         className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
                       >
                         <svg 

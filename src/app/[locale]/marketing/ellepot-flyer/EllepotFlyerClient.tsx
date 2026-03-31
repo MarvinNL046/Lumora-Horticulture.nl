@@ -1,11 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import QRCode from 'react-qr-code'
 import './flyer.css'
 
 export default function EllepotFlyerClient() {
+  const { locale } = useParams()
+
   // Set up print-friendly page
   useEffect(() => {
     // Add print styles
@@ -40,8 +43,8 @@ export default function EllepotFlyerClient() {
       <div className="no-print fixed top-4 right-4 z-50">
         <div className="inline-flex items-center gap-2">
           <a
-            href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-            download="Lumora-Ellepot-FP12-Folder.pdf"
+            href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+            download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
             className="inline-block bg-lumora-dark text-lumora-cream px-6 py-3 rounded-lg shadow-lg hover:bg-lumora-dark-800 transition-colors duration-200"
           >
             Download Lumora Productfolder (PDF)

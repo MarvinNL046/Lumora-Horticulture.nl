@@ -555,11 +555,11 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               
               <div className="inline-flex items-center gap-2">
                 <a
-                  href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-                  download="Lumora-Ellepot-FP12-Folder.pdf"
-                  className="inline-flex items-center justify-center bg-lumora-green-600 text-white 
-                          hover:bg-lumora-green-700 px-6 py-3 rounded-xl shadow-soft 
-                          hover:shadow-soft-md transition-all duration-300 
+                  href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+                  download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+                  className="inline-flex items-center justify-center bg-lumora-green-600 text-white
+                          hover:bg-lumora-green-700 px-6 py-3 rounded-xl shadow-soft
+                          hover:shadow-soft-md transition-all duration-300
                           font-medium group"
                 >
                   <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -857,8 +857,8 @@ function ProductDetail({
                 <div>
                   <div className="inline-flex items-center gap-2">
                     <a
-                      href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-                      download="Lumora-Ellepot-FP12-Folder.pdf"
+                      href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+                      download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                       className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
                     >
                       <svg 

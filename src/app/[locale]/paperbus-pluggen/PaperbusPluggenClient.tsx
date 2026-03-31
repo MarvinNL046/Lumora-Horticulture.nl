@@ -263,8 +263,8 @@ export default function PaperbusPluggenClient({ t, locale }: PaperbusPluggenClie
                   {currentContent.hero.cta}
                 </Link>
                 <a
-                  href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-                  download
+                  href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+                  download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                   className="inline-flex items-center justify-center bg-lumora-gold text-white hover:bg-lumora-gold/90 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg"
                 >
                   📄 {currentContent.cta.button}
@@ -363,8 +363,8 @@ export default function PaperbusPluggenClient({ t, locale }: PaperbusPluggenClie
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
-              href="/downloads/Lumora-Ellepot-FP12-Folder.pdf"
-              download
+              href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
+              download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
               className="inline-flex items-center justify-center bg-lumora-gold text-white hover:bg-lumora-gold/90 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg"
             >
               📄 {currentContent.cta.button}

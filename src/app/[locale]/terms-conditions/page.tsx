@@ -49,7 +49,7 @@ export default function TermsConditionsPage() {
               via onze beveiligde betaalomgeving Mollie. Wij accepteren de volgende betaalmethoden:
             </p>
             <ul className="list-disc list-inside space-y-2 text-lumora-dark/70">
-              <li>iDEAL</li>
+              <li>Wero</li>
               <li>Creditcard (Visa, Mastercard)</li>
               <li>Apple Pay</li>
               <li>PayPal</li>

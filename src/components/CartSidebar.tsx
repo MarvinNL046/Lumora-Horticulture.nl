@@ -267,7 +267,7 @@ export default function CartSidebar() {
             <div className="flex items-center justify-center gap-3 mb-3 py-2 px-3 bg-gray-50 rounded-lg">
               <span className="text-xs text-lumora-dark/50">{locale === 'de' ? 'Bezahlen mit' : locale === 'en' ? 'Pay with' : 'Betaal met'}</span>
               <div className="flex items-center gap-2">
-                <span className="bg-[#CC0066] text-white text-xs font-bold px-2 py-0.5 rounded">iDEAL</span>
+                <span className="bg-[#00A4E4] text-white text-xs font-bold px-2 py-0.5 rounded">Wero</span>
                 <span className="bg-gray-800 text-white text-xs font-bold px-1.5 py-0.5 rounded">VISA</span>
                 <span className="bg-[#003087] text-white text-xs font-bold px-1.5 py-0.5 rounded">PayPal</span>
                 <span className="bg-[#FF5F00] text-white text-xs font-bold px-1.5 py-0.5 rounded text-[10px]">MC</span>

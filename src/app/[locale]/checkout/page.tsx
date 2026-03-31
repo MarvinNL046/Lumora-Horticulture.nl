@@ -836,7 +836,7 @@ export default function CheckoutPage() {
                   {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                 </p>
                 <div className="flex justify-center items-center gap-3 flex-wrap">
-                  <span className="bg-[#CC0066] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
+                  <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">Wero</span>
                   <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
                   <span className="bg-[#003087] text-white text-sm font-bold px-3 py-1 rounded-lg">PayPal</span>
                   <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
