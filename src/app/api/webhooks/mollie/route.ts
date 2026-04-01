@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
         const customerEmailHtml = await render(
           React.createElement(OrderConfirmationEmail, {
             orderNumber: order.order_number || order._id,
-            customerName: order.customer_name,
+            customerName: order.customer_name || '',
             orderDate: new Date().toLocaleDateString('nl-NL', {
               day: 'numeric',
               month: 'long',
@@ -196,7 +196,7 @@ export async function POST(request: NextRequest) {
               month: 'long',
               year: 'numeric',
             }),
-            customerName: order.customer_name,
+            customerName: order.customer_name || '',
             customerEmail: order.customer_email,
             customerPhone: order.customer_phone || 'Niet opgegeven',
             items: productDetails,
@@ -230,7 +230,7 @@ export async function POST(request: NextRequest) {
             React.createElement(RecoverySuccessNotification, {
               orderNumber: orderNumber || order._id,
               orderId: order._id,
-              customerName: order.customer_name,
+              customerName: order.customer_name || '',
               customerEmail: order.customer_email,
               totalAmount: totalAmount,
               recoveryAttempts: recoveryAttempts,

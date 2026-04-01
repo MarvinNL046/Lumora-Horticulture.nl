@@ -151,3 +151,36 @@ export const listWithOrderNumber = query({
       .sort((a, b) => b.created_at - a.created_at);
   },
 });
+
+export const listByUserWithItems = query({
+  args: { user_id: v.string() },
+  handler: async (ctx, { user_id }) => {
+    const orders = await ctx.db
+      .query("orders")
+      .filter((q) => q.eq(q.field("user_id"), user_id))
+      .order("desc")
+      .collect();
+
+    return await Promise.all(
+      orders.map(async (order) => {
+        const items = await ctx.db
+          .query("orderItems")
+          .withIndex("by_order", (q) => q.eq("order_id", order._id))
+          .collect();
+
+        const itemsWithProducts = await Promise.all(
+          items.map(async (item) => {
+            const product = await ctx.db.get(item.product_id);
+            return {
+              ...item,
+              product_name: product?.name || "Unknown",
+              product_slug: product?.slug || "",
+            };
+          })
+        );
+
+        return { ...order, items: itemsWithProducts };
+      })
+    );
+  },
+});

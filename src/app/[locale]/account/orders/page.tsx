@@ -2,46 +2,19 @@ import { redirect } from 'next/navigation'
 import { stackServerApp } from '@/stack/server'
 import Link from 'next/link'
 import { localizePathForLocale } from '@/lib/url-localizations'
-import { neon } from '@neondatabase/serverless'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '@/../convex/_generated/api'
 
 export default async function OrdersPage({ params }: { params: { locale: string } }) {
   const user = await stackServerApp.getUser()
 
-  // Redirect to login if not authenticated
   if (!user) {
     redirect('/handler/signin')
   }
 
   const locale = params.locale as 'nl' | 'en' | 'de'
 
-  // Fetch user's orders from database
-  const sql = neon(process.env.DATABASE_URL!)
-  const orders = await sql`
-    SELECT
-      o.id,
-      o.order_number,
-      o.customer_email,
-      o.customer_name,
-      o.total_amount,
-      o.status,
-      o.payment_status,
-      o.created_at,
-      json_agg(
-        json_build_object(
-          'product_id', oi.product_id,
-          'quantity', oi.quantity,
-          'price_at_purchase', oi.price_at_purchase,
-          'product_name', p.name,
-          'product_slug', p.slug
-        )
-      ) as items
-    FROM orders o
-    LEFT JOIN order_items oi ON o.id = oi.order_id
-    LEFT JOIN products p ON oi.product_id = p.id
-    WHERE o.user_id = ${user.id}
-    GROUP BY o.id
-    ORDER BY o.created_at DESC
-  `
+  const orders = await fetchQuery(api.orders.listByUserWithItems, { user_id: user.id })
 
   const t = {
     title: locale === 'de' ? 'Meine Bestellungen' : locale === 'en' ? 'My Orders' : 'Mijn Bestellingen',
@@ -93,7 +66,6 @@ export default async function OrdersPage({ params }: { params: { locale: string 
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-8">
           <Link
             href={localizePathForLocale('/account', locale)}
@@ -107,14 +79,12 @@ export default async function OrdersPage({ params }: { params: { locale: string 
           <h1 className="text-4xl font-display font-bold text-lumora-dark">{t.title}</h1>
         </div>
 
-        {/* Orders List */}
         {orders.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-soft-lg p-12 text-center">
             <svg className="w-24 h-24 mx-auto text-lumora-dark/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
             <h2 className="text-2xl font-display font-semibold text-lumora-dark mb-2">{t.noOrders}</h2>
-            <p className="text-lumora-dark/60 mb-6">Start met winkelen om je eerste bestelling te plaatsen!</p>
             <Link
               href={localizePathForLocale('/shop', locale)}
               className="inline-block bg-lumora-green-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-lumora-green-600 transition-colors shadow-soft-md hover:shadow-soft-lg"
@@ -125,13 +95,12 @@ export default async function OrdersPage({ params }: { params: { locale: string 
         ) : (
           <div className="space-y-6">
             {orders.map((order: any) => (
-              <div key={order.id} className="bg-white rounded-2xl shadow-soft-lg overflow-hidden">
-                {/* Order Header */}
+              <div key={order._id} className="bg-white rounded-2xl shadow-soft-lg overflow-hidden">
                 <div className="bg-gradient-to-r from-lumora-cream/30 to-lumora-cream/10 p-6 border-b border-lumora-dark/10">
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
                       <div className="text-sm text-lumora-dark/60 mb-1">{t.orderNumber}</div>
-                      <div className="text-lg font-semibold text-lumora-dark">{order.order_number || `#${order.id.substring(0, 8)}`}</div>
+                      <div className="text-lg font-semibold text-lumora-dark">{order.order_number || `#${order._id.substring(0, 8)}`}</div>
                     </div>
                     <div>
                       <div className="text-sm text-lumora-dark/60 mb-1">{t.date}</div>
@@ -148,13 +117,12 @@ export default async function OrdersPage({ params }: { params: { locale: string 
                     <div>
                       <div className="text-sm text-lumora-dark/60 mb-1">{t.total}</div>
                       <div className="text-2xl font-bold text-lumora-green-500">
-                        €{parseFloat(order.total_amount).toFixed(2)}
+                        €{order.total_amount.toFixed(2)}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Order Items */}
                 <div className="p-6">
                   <div className="text-sm font-semibold text-lumora-dark/60 mb-3">{t.items}</div>
                   <div className="space-y-3">
@@ -168,10 +136,10 @@ export default async function OrdersPage({ params }: { params: { locale: string 
                         </div>
                         <div className="text-right">
                           <div className="font-semibold text-lumora-dark">
-                            €{(parseFloat(item.price_at_purchase) * parseFloat(item.quantity)).toFixed(2)}
+                            €{(item.price_at_purchase * item.quantity).toFixed(2)}
                           </div>
                           <div className="text-sm text-lumora-dark/60">
-                            €{parseFloat(item.price_at_purchase).toFixed(2)} {locale === 'de' ? 'pro Stück' : locale === 'en' ? 'each' : 'per stuk'}
+                            €{item.price_at_purchase.toFixed(2)} {locale === 'de' ? 'pro Stück' : locale === 'en' ? 'each' : 'per stuk'}
                           </div>
                         </div>
                       </div>

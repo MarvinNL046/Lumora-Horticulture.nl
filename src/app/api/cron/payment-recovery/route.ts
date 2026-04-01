@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
 
         // Generate email content
         const emailContent = getPaymentRecoveryEmailContent({
-          customerName: order.customer_name,
+          customerName: order.customer_name || '',
           orderId: order._id,
           orderItems: orderItemsForEmail,
           totalAmount: order.total_amount,
