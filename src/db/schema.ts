@@ -140,6 +140,36 @@ export const ctaClicks = pgTable('cta_clicks', {
   conversion_order_id: uuid('conversion_order_id').references(() => orders.id),
 });
 
+// Blog posts table
+export const blogPosts = pgTable('blog_posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: text('slug').notNull().unique(),
+
+  // Dutch (primary)
+  title_nl: text('title_nl').notNull(),
+  excerpt_nl: text('excerpt_nl').notNull(),
+  content_nl: text('content_nl').notNull(),      // HTML
+  seo_title_nl: text('seo_title_nl'),
+  seo_description_nl: text('seo_description_nl'),
+
+  // German (translated)
+  title_de: text('title_de'),
+  excerpt_de: text('excerpt_de'),
+  content_de: text('content_de'),                 // HTML
+  seo_title_de: text('seo_title_de'),
+  seo_description_de: text('seo_description_de'),
+
+  // Metadata
+  category: text('category').notNull(),            // kweektechnieken, duurzaamheid, producten, tips
+  tags: json('tags').$type<string[]>().default([]),
+  featured_image: text('featured_image'),          // URL or path
+  author: text('author').default('Lumora Team'),
+  status: text('status').default('draft'),         // draft, published
+  published_at: timestamp('published_at'),
+  updated_at: timestamp('updated_at').defaultNow(),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
 // Types voor TypeScript
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -157,3 +187,5 @@ export type CtaQuery = typeof ctaQueries.$inferSelect;
 export type NewCtaQuery = typeof ctaQueries.$inferInsert;
 export type CtaClick = typeof ctaClicks.$inferSelect;
 export type NewCtaClick = typeof ctaClicks.$inferInsert;
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type NewBlogPost = typeof blogPosts.$inferInsert;
