@@ -1,0 +1,214 @@
+{
+  "topics": [
+    {
+      "topic": "Steenwol pluggen vs. kokos pluggen: welke kies je voor jouw kwekerij?",
+      "category": "kweektechnieken",
+      "targetKeyword": "steenwol pluggen vs kokos pluggen",
+      "searchVolume": 1200,
+      "priority": 1
+    },
+    {
+      "topic": "De complete gids voor papieren stektrays: voordelen, gebruik en duurzaamheid",
+      "category": "producten",
+      "targetKeyword": "papieren stektrays gids",
+      "searchVolume": 800,
+      "priority": 1
+    },
+    {
+      "topic": "Hoe kies je het juiste substraat voor sierteelt vermeerdering?",
+      "category": "kweektechnieken",
+      "targetKeyword": "substraat sierteelt vermeerdering",
+      "searchVolume": 600,
+      "priority": 2
+    },
+    {
+      "topic": "Duurzaam kweken: waarom steeds meer kwekers overstappen op papieren plugtrays",
+      "category": "duurzaamheid",
+      "targetKeyword": "duurzaam kweken papieren plugtrays",
+      "searchVolume": 500,
+      "priority": 2
+    },
+    {
+      "topic": "Neem olie in de tuinbouw: natuurlijke gewasbescherming die werkt",
+      "category": "producten",
+      "targetKeyword": "neem olie tuinbouw gewasbescherming",
+      "searchVolume": 1500,
+      "priority": 1
+    },
+    {
+      "topic": "Stekken bewortelen: 10 tips voor een hoger slagingspercentage",
+      "category": "kweektechnieken",
+      "targetKeyword": "stekken bewortelen tips",
+      "searchVolume": 2400,
+      "priority": 1
+    },
+    {
+      "topic": "Rockwool vs. steenwol: is er een verschil en wat is het beste voor jouw gewas?",
+      "category": "kweektechnieken",
+      "targetKeyword": "rockwool vs steenwol verschil",
+      "searchVolume": 900,
+      "priority": 2
+    },
+    {
+      "topic": "Ellepots: de voordelen van luchtgesnoeid wortelstelsel voor professionele kwekers",
+      "category": "producten",
+      "targetKeyword": "ellepots voordelen luchtgesnoeid",
+      "searchVolume": 400,
+      "priority": 2
+    },
+    {
+      "topic": "Water geven bij steenwol pluggen: de perfecte vochtbalans",
+      "category": "kweektechnieken",
+      "targetKeyword": "water geven steenwol pluggen",
+      "searchVolume": 700,
+      "priority": 2
+    },
+    {
+      "topic": "Kas klimaatbeheersing: temperatuur en luchtvochtigheid voor optimale vermeerdering",
+      "category": "kweektechnieken",
+      "targetKeyword": "kas klimaatbeheersing vermeerdering",
+      "searchVolume": 1100,
+      "priority": 2
+    },
+    {
+      "topic": "Plantenziekten voorkomen in de kwekerij: preventie boven bestrijding",
+      "category": "tips",
+      "targetKeyword": "plantenziekten voorkomen kwekerij",
+      "searchVolume": 1800,
+      "priority": 1
+    },
+    {
+      "topic": "De toekomst van duurzame tuinbouw: trends voor 2026 en verder",
+      "category": "duurzaamheid",
+      "targetKeyword": "duurzame tuinbouw trends 2026",
+      "searchVolume": 600,
+      "priority": 3
+    },
+    {
+      "topic": "EC en pH meten en bijsturen bij steenwol teelt",
+      "category": "kweektechnieken",
+      "targetKeyword": "ec ph meten steenwol teelt",
+      "searchVolume": 1300,
+      "priority": 2
+    },
+    {
+      "topic": "Biologische gewasbescherming: alternatieven voor chemische bestrijdingsmiddelen",
+      "category": "duurzaamheid",
+      "targetKeyword": "biologische gewasbescherming alternatieven",
+      "searchVolume": 2100,
+      "priority": 1
+    },
+    {
+      "topic": "Transportverpakking voor plantmateriaal: hoe bescherm je kwetsbare stekken?",
+      "category": "producten",
+      "targetKeyword": "transportverpakking plantmateriaal stekken",
+      "searchVolume": 300,
+      "priority": 3
+    },
+    {
+      "topic": "LED verlichting in de kas: kosten, opbrengst en terugverdientijd",
+      "category": "kweektechnieken",
+      "targetKeyword": "led verlichting kas kosten opbrengst",
+      "searchVolume": 1600,
+      "priority": 2
+    },
+    {
+      "topic": "Composteerbaarheid van kweekproducten: wat mag er in de groene bak?",
+      "category": "duurzaamheid",
+      "targetKeyword": "composteerbaarheid kweekproducten",
+      "searchVolume": 400,
+      "priority": 3
+    },
+    {
+      "topic": "Zaai- en stekkalender: wanneer vermeerder je welk gewas?",
+      "category": "kweektechnieken",
+      "targetKeyword": "zaai stekkalender gewas vermeerderen",
+      "searchVolume": 1900,
+      "priority": 1
+    },
+    {
+      "topic": "Wortelrot voorkomen en bestrijden bij plug vermeerdering",
+      "category": "tips",
+      "targetKeyword": "wortelrot voorkomen plug vermeerdering",
+      "searchVolume": 800,
+      "priority": 2
+    },
+    {
+      "topic": "Steenwol recyclen: mogelijkheden en kosten voor kwekerijen",
+      "category": "duurzaamheid",
+      "targetKeyword": "steenwol recyclen kwekerij",
+      "searchVolume": 500,
+      "priority": 3
+    },
+    {
+      "topic": "Automatisering in de vermeerderingskas: wat levert het op?",
+      "category": "kweektechnieken",
+      "targetKeyword": "automatisering vermeerderingskas",
+      "searchVolume": 700,
+      "priority": 3
+    },
+    {
+      "topic": "Geïntegreerde gewasbescherming (IPM) in de sierteelt",
+      "category": "tips",
+      "targetKeyword": "geïntegreerde gewasbescherming ipm sierteelt",
+      "searchVolume": 600,
+      "priority": 3
+    },
+    {
+      "topic": "De beste bemesting voor stek- en zaailingen in de eerste weken",
+      "category": "kweektechnieken",
+      "targetKeyword": "bemesting steklingen zaailingen eerste weken",
+      "searchVolume": 1000,
+      "priority": 2
+    },
+    {
+      "topic": "Hygiëne in de kwekerij: zo voorkom je kruisbesmetting",
+      "category": "tips",
+      "targetKeyword": "hygiëne kwekerij kruisbesmetting voorkomen",
+      "searchVolume": 500,
+      "priority": 3
+    },
+    {
+      "topic": "Waarom professionele kwekers kiezen voor papieren trays boven plastic",
+      "category": "producten",
+      "targetKeyword": "papieren trays vs plastic kwekers",
+      "searchVolume": 400,
+      "priority": 2
+    },
+    {
+      "topic": "Waterstofperoxide in de tuinbouw: toepassingen en risico's",
+      "category": "tips",
+      "targetKeyword": "waterstofperoxide tuinbouw toepassingen",
+      "searchVolume": 1200,
+      "priority": 2
+    },
+    {
+      "topic": "Klimaatcomputer instellingen voor optimale stekproductie",
+      "category": "kweektechnieken",
+      "targetKeyword": "klimaatcomputer instellingen stekproductie",
+      "searchVolume": 300,
+      "priority": 3
+    },
+    {
+      "topic": "Van stek tot aflevering: de complete keten van vermeerdering",
+      "category": "kweektechnieken",
+      "targetKeyword": "stek tot aflevering vermeerdering keten",
+      "searchVolume": 200,
+      "priority": 3
+    },
+    {
+      "topic": "Mycorrhiza en plantgroei: hoe schimmels je gewas versterken",
+      "category": "kweektechnieken",
+      "targetKeyword": "mycorrhiza plantgroei schimmels gewas",
+      "searchVolume": 900,
+      "priority": 2
+    },
+    {
+      "topic": "Energiebesparing in de kas: 8 maatregelen die direct resultaat opleveren",
+      "category": "duurzaamheid",
+      "targetKeyword": "energiebesparing kas maatregelen",
+      "searchVolume": 1400,
+      "priority": 2
+    }
+  ]
+}
