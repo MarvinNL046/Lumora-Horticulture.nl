@@ -92,3 +92,26 @@ export const markRecovered = mutation({
     });
   },
 });
+
+export const markRecoveredByEmail = mutation({
+  args: {
+    customer_email: v.string(),
+    recovery_order_id: v.id("orders"),
+  },
+  handler: async (ctx, { customer_email, recovery_order_id }) => {
+    const carts = await ctx.db
+      .query("abandonedCarts")
+      .withIndex("by_email", (q) => q.eq("customer_email", customer_email))
+      .collect();
+
+    for (const cart of carts) {
+      if (!cart.recovered) {
+        await ctx.db.patch(cart._id, {
+          recovered: true,
+          recovered_at: Date.now(),
+          recovery_order_id,
+        });
+      }
+    }
+  },
+});

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
 import { createPayment } from '@/lib/mollie';
-import { eq } from 'drizzle-orm';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * POST /api/orders/[id]/retry-payment
@@ -23,11 +25,9 @@ export async function POST(
     }
 
     // Find the order
-    const [order] = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.id, orderId))
-      .limit(1);
+    const order = await convex.query(api.orders.getById, {
+      id: orderId as Id<"orders">,
+    });
 
     if (!order) {
       return NextResponse.json(
@@ -59,26 +59,23 @@ export async function POST(
     // Create new Mollie payment
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://lumorahorticulture.nl';
     const payment = await createPayment({
-      amount: parseFloat(order.total_amount),
-      description: `Bestelling ${order.id}`,
-      redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order.id}`,
+      amount: order.total_amount,
+      description: `Bestelling ${order._id}`,
+      redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order._id}`,
       webhookUrl: `${baseUrl}/api/webhooks/mollie`,
       metadata: {
-        order_id: order.id,
+        order_id: order._id,
         retry: true, // Mark as a retry payment
       },
     });
 
     // Update order with new payment ID and reset status
-    await db
-      .update(orders)
-      .set({
-        payment_id: payment.id,
-        payment_status: 'pending',
-        status: 'pending',
-        updated_at: new Date(),
-      })
-      .where(eq(orders.id, orderId));
+    await convex.mutation(api.orders.update, {
+      id: orderId as Id<"orders">,
+      payment_id: payment.id,
+      payment_status: 'pending',
+      status: 'pending',
+    });
 
     console.log(`✅ New payment created for order ${orderId}: ${payment.id}`);
 
@@ -119,11 +116,9 @@ export async function GET(
       );
     }
 
-    const [order] = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.id, orderId))
-      .limit(1);
+    const order = await convex.query(api.orders.getById, {
+      id: orderId as Id<"orders">,
+    });
 
     if (!order) {
       return NextResponse.json(
@@ -136,7 +131,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       order: {
-        id: order.id,
+        id: order._id,
         customer_name: order.customer_name,
         total_amount: order.total_amount,
         status: order.status,

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/orders/[id]
@@ -25,11 +27,9 @@ export async function GET(
     }
 
     // Zoek order op basis van ID
-    const [order] = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.id, orderId))
-      .limit(1);
+    const order = await convex.query(api.orders.getById, {
+      id: orderId as Id<"orders">,
+    });
 
     if (!order) {
       return NextResponse.json(
@@ -45,7 +45,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       order: {
-        id: order.id,
+        id: order._id,
         order_number: order.order_number,
         total_amount: order.total_amount,
         payment_id: order.payment_id,

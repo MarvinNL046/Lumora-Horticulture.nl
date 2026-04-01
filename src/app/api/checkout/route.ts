@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders, orderItems, products, abandonedCarts } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
 import { createPayment } from '@/lib/mollie';
-import { eq, and, sql } from 'drizzle-orm';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { stackServerApp } from '@/stack/server';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * POST /api/checkout
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user is logged in (optional - guest checkout blijft mogelijk)
-    let userId = null;
+    let userId: string | undefined = undefined;
     try {
       const user = await stackServerApp.getUser();
       if (user) {
@@ -53,13 +55,11 @@ export async function POST(request: NextRequest) {
     const productDetails = [];
 
     for (const item of items) {
-      const product = await db
-        .select()
-        .from(products)
-        .where(eq(products.id, item.product_id))
-        .limit(1);
+      const product = await convex.query(api.products.getById, {
+        id: item.product_id as Id<"products">,
+      });
 
-      if (!product || product.length === 0) {
+      if (!product) {
         return NextResponse.json(
           {
             success: false,
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const basePrice = parseFloat(product[0].price);
+      const basePrice = product.price;
       const quantity = item.quantity;
 
       // Bereken korting op basis van aantal
@@ -78,11 +78,11 @@ export async function POST(request: NextRequest) {
 
       totalAmount += itemTotal;
       productDetails.push({
-        product_id: item.product_id,
+        product_id: item.product_id as Id<"products">,
         quantity: quantity,
         price: discountedPrice, // Prijs PER STUK na korting
         basePrice: basePrice, // Originele prijs
-        name: product[0].name,
+        name: product.name,
       });
     }
 
@@ -90,67 +90,53 @@ export async function POST(request: NextRequest) {
     // Dit voorkomt dat verlaten betalingen order nummers 'verbruiken'
 
     // Maak bestelling aan zonder order_number
-    const [order] = await db
-      .insert(orders)
-      .values({
-        order_number: null, // Wordt toegewezen in webhook na betaling
-        user_id: userId, // Koppel aan ingelogde user (null voor guest checkout)
-        customer_email,
-        customer_name,
-        customer_phone,
-        shipping_address,
-        billing_address: billing_address || shipping_address,
-        total_amount: totalAmount.toString(),
-        status: 'pending',
-        payment_status: 'pending',
-        locale: locale, // Store locale for recovery emails
-      })
-      .returning();
+    const orderId = await convex.mutation(api.orders.create, {
+      user_id: userId,
+      customer_email,
+      customer_name,
+      customer_phone,
+      shipping_address,
+      billing_address: billing_address || shipping_address,
+      total_amount: totalAmount,
+      status: 'pending',
+      payment_status: 'pending',
+      locale,
+    });
 
     // Voeg order items toe
-    for (const item of productDetails) {
-      await db.insert(orderItems).values({
-        order_id: order.id,
+    await convex.mutation(api.orderItems.createMany, {
+      items: productDetails.map((item) => ({
+        order_id: orderId,
         product_id: item.product_id,
-        quantity: item.quantity.toString(),
-        price_at_purchase: item.price.toString(),
-      });
-    }
+        quantity: item.quantity,
+        price_at_purchase: item.price,
+      })),
+    });
 
     // Maak Mollie betaling aan
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const payment = await createPayment({
       amount: totalAmount,
-      description: `Bestelling ${order.id}`,
-      redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order.id}`, // Redirect to conversion tracking page
+      description: `Bestelling ${orderId}`,
+      redirectUrl: `${baseUrl}/checkout/conversion?order_id=${orderId}`,
       webhookUrl: `${baseUrl}/api/webhooks/mollie`,
       metadata: {
-        order_id: order.id,
+        order_id: orderId,
       },
     });
 
     // Update order met payment ID
-    await db
-      .update(orders)
-      .set({ payment_id: payment.id })
-      .where(eq(orders.id, order.id));
+    await convex.mutation(api.orders.update, {
+      id: orderId,
+      payment_id: payment.id,
+    });
 
     // Mark abandoned cart(s) as recovered for this email
     try {
-      const result = await db
-        .update(abandonedCarts)
-        .set({
-          recovered: true,
-          recovered_at: sql`NOW()`,
-          recovery_order_id: order.id,
-        })
-        .where(
-          and(
-            eq(abandonedCarts.customer_email, customer_email),
-            eq(abandonedCarts.recovered, false)
-          )
-        );
-
+      await convex.mutation(api.abandonedCarts.markRecoveredByEmail, {
+        customer_email,
+        recovery_order_id: orderId,
+      });
       console.log(`✅ Abandoned carts for ${customer_email} marked as recovered`);
     } catch (error) {
       console.error('Failed to mark cart as recovered:', error);
@@ -161,7 +147,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      order_id: order.id,
+      order_id: orderId,
       payment_url: payment.getCheckoutUrl(),
       total_amount: totalAmount,
     });

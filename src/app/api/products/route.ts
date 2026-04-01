@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
-import { asc } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/products?locale=nl|en|de
@@ -12,22 +13,12 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const locale = searchParams.get('locale') || 'nl';
 
-    const allProducts = await db.select().from(products).orderBy(asc(products.display_order));
+    const allProducts = await convex.query(api.products.list, { locale });
 
-    // Map products to correct language
-    const translatedProducts = allProducts.map(product => ({
-      ...product,
-      name: locale === 'en' && product.name_en ? product.name_en :
-            locale === 'de' && product.name_de ? product.name_de :
-            product.name,
-      description: locale === 'en' && product.description_en ? product.description_en :
-                   locale === 'de' && product.description_de ? product.description_de :
-                   product.description,
-    }));
-
+    // The Convex query already handles locale translation
     return NextResponse.json({
       success: true,
-      products: translatedProducts,
+      products: allProducts,
     });
   } catch (error) {
     console.error('Error fetching products:', error);

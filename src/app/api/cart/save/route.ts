@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { abandonedCarts } from '@/db/schema';
-import { eq, and, sql } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * POST /api/cart/save
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user is logged in
-    let userId = null;
+    let userId: string | undefined = undefined;
     try {
       const user = await stackServerApp.getUser();
       if (user) {
@@ -37,58 +38,21 @@ export async function POST(request: NextRequest) {
       console.log('Guest cart save - no user logged in');
     }
 
-    // Check if there's already an abandoned cart for this email (not recovered)
-    const existingCart = await db
-      .select()
-      .from(abandonedCarts)
-      .where(
-        and(
-          eq(abandonedCarts.customer_email, customer_email),
-          eq(abandonedCarts.recovered, false)
-        )
-      )
-      .limit(1);
+    // Save or update cart (Convex mutation handles upsert logic)
+    const cartId = await convex.mutation(api.abandonedCarts.save, {
+      user_id: userId,
+      customer_email,
+      customer_name,
+      cart_data,
+      total_amount: parseFloat(total_amount.toString()),
+      locale: locale || 'nl',
+    });
 
-    if (existingCart && existingCart.length > 0) {
-      // Update existing cart
-      await db
-        .update(abandonedCarts)
-        .set({
-          user_id: userId, // Update user_id if user logged in
-          customer_name: customer_name || existingCart[0].customer_name,
-          cart_data,
-          total_amount: total_amount.toString(),
-          locale: locale || existingCart[0].locale,
-          created_at: sql`NOW()`, // Reset created_at to current time
-          reminded_at: null, // Reset reminder status
-        })
-        .where(eq(abandonedCarts.id, existingCart[0].id));
-
-      return NextResponse.json({
-        success: true,
-        message: 'Cart updated',
-        cart_id: existingCart[0].id,
-      });
-    } else {
-      // Create new abandoned cart entry
-      const [cart] = await db
-        .insert(abandonedCarts)
-        .values({
-          user_id: userId, // Link to logged in user
-          customer_email,
-          customer_name,
-          cart_data,
-          total_amount: total_amount.toString(),
-          locale: locale || 'nl',
-        })
-        .returning();
-
-      return NextResponse.json({
-        success: true,
-        message: 'Cart saved',
-        cart_id: cart.id,
-      });
-    }
+    return NextResponse.json({
+      success: true,
+      message: 'Cart saved',
+      cart_id: cartId,
+    });
   } catch (error) {
     console.error('Cart save error:', error);
     return NextResponse.json(

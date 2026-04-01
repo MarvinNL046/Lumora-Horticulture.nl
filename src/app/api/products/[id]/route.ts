@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/products/[id]
@@ -12,13 +14,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const product = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, params.id))
-      .limit(1);
+    const product = await convex.query(api.products.getById, {
+      id: params.id as Id<"products">,
+    });
 
-    if (!product || product.length === 0) {
+    if (!product) {
       return NextResponse.json(
         {
           success: false,
@@ -30,7 +30,7 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      product: product[0],
+      product,
     });
   } catch (error) {
     console.error('Error fetching product:', error);

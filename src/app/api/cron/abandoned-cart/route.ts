@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { abandonedCarts } from '@/db/schema';
-import { sql, and, isNull, lt } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getAbandonedCartEmailContent } from '@/emails/abandoned-cart-template';
 import type { CartItem } from '@/contexts/CartContext';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails
 
@@ -27,18 +28,7 @@ export async function GET(request: NextRequest) {
     // 1. Older than 24 hours
     // 2. Haven't been reminded yet (reminded_at IS NULL)
     // 3. Not recovered
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-
-    const cartsToRemind = await db
-      .select()
-      .from(abandonedCarts)
-      .where(
-        and(
-          lt(abandonedCarts.created_at, twentyFourHoursAgo),
-          isNull(abandonedCarts.reminded_at),
-          sql`${abandonedCarts.recovered} = false`
-        )
-      );
+    const cartsToRemind = await convex.query(api.abandonedCarts.getUnreminded);
 
     console.log(`Found ${cartsToRemind.length} abandoned carts to remind`);
 
@@ -64,13 +54,13 @@ export async function GET(request: NextRequest) {
 
         const checkoutPath = cart.locale === 'de' ? '/kasse' : cart.locale === 'en' ? '/checkout' : '/checkout';
 
-        const checkoutUrl = `https://${domain}/${cart.locale}${checkoutPath}?cart_recovery=${cart.id}`;
+        const checkoutUrl = `https://${domain}/${cart.locale}${checkoutPath}?cart_recovery=${cart._id}`;
 
         // Generate email content
         const emailContent = getAbandonedCartEmailContent({
           customerName: cart.customer_name || undefined,
           cartItems,
-          totalAmount: parseFloat(cart.total_amount),
+          totalAmount: cart.total_amount,
           locale: cart.locale || 'nl',
           checkoutUrl,
         });
@@ -85,10 +75,9 @@ export async function GET(request: NextRequest) {
         });
 
         // Update reminded_at timestamp
-        await db
-          .update(abandonedCarts)
-          .set({ reminded_at: sql`NOW()` })
-          .where(sql`${abandonedCarts.id} = ${cart.id}`);
+        await convex.mutation(api.abandonedCarts.markReminded, {
+          id: cart._id,
+        });
 
         successCount++;
         console.log(`Sent reminder to ${cart.customer_email}`);

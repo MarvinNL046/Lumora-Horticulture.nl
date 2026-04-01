@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders, orderItems, products } from '@/db/schema';
-import { sql, and, isNull, or, eq, lt } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getPaymentRecoveryEmailContent } from '@/emails/payment-recovery-template';
 import { createPayment } from '@/lib/mollie';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails
 
@@ -25,51 +26,11 @@ export async function GET(request: NextRequest) {
   console.log('Running payment recovery email job...');
 
   try {
-    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-    const fortyEightHoursAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    // Find orders for FIRST recovery email
+    const ordersForFirstEmail = await convex.query(api.orders.listForFirstRecovery);
 
-    // Find orders for FIRST recovery email:
-    // 1. Have expired, failed, or cancelled payment status
-    // 2. Are older than 1 hour
-    // 3. Haven't received any recovery email yet
-    const ordersForFirstEmail = await db
-      .select()
-      .from(orders)
-      .where(
-        and(
-          or(
-            eq(orders.payment_status, 'expired'),
-            eq(orders.payment_status, 'failed'),
-            eq(orders.payment_status, 'cancelled')
-          ),
-          lt(orders.created_at, oneHourAgo),
-          sql`${orders.created_at} > ${sevenDaysAgo}`,
-          isNull(orders.recovery_email_sent_at),
-          sql`COALESCE(${orders.recovery_attempts}, 0) = 0`
-        )
-      )
-      .limit(30);
-
-    // Find orders for SECOND recovery email:
-    // 1. Still have expired/failed/cancelled payment status
-    // 2. Received first email more than 48 hours ago
-    // 3. Have exactly 1 recovery attempt
-    const ordersForSecondEmail = await db
-      .select()
-      .from(orders)
-      .where(
-        and(
-          or(
-            eq(orders.payment_status, 'expired'),
-            eq(orders.payment_status, 'failed'),
-            eq(orders.payment_status, 'cancelled')
-          ),
-          sql`${orders.recovery_email_sent_at} < ${fortyEightHoursAgo}`,
-          sql`COALESCE(${orders.recovery_attempts}, 0) = 1`
-        )
-      )
-      .limit(20);
+    // Find orders for SECOND recovery email
+    const ordersForSecondEmail = await convex.query(api.orders.listForSecondRecovery);
 
     const ordersToRecover = [
       ...ordersForFirstEmail.map(o => ({ ...o, isSecondReminder: false })),
@@ -90,22 +51,15 @@ export async function GET(request: NextRequest) {
       const { isSecondReminder, ...order } = orderData;
 
       try {
-        console.log(`Processing order ${order.id} (${isSecondReminder ? '2nd' : '1st'} reminder)...`);
+        console.log(`Processing order ${order._id} (${isSecondReminder ? '2nd' : '1st'} reminder)...`);
 
         // Get order items with product details
-        const items = await db
-          .select({
-            name: products.name,
-            quantity: orderItems.quantity,
-            price: orderItems.price_at_purchase,
-            image_url: products.image_url,
-          })
-          .from(orderItems)
-          .leftJoin(products, eq(orderItems.product_id, products.id))
-          .where(eq(orderItems.order_id, order.id));
+        const itemsWithProducts = await convex.query(api.orderItems.getByOrderWithProducts, {
+          order_id: order._id,
+        });
 
-        if (items.length === 0) {
-          console.log(`No items found for order ${order.id}, skipping`);
+        if (itemsWithProducts.length === 0) {
+          console.log(`No items found for order ${order._id}, skipping`);
           continue;
         }
 
@@ -122,31 +76,28 @@ export async function GET(request: NextRequest) {
 
         // Build retry page URL for self-service
         const checkoutPath = locale === 'de' ? 'checkout' : locale === 'en' ? 'checkout' : 'checkout';
-        const retryPageUrl = `${baseUrl}/${locale}/${checkoutPath}/retry?order_id=${order.id}`;
+        const retryPageUrl = `${baseUrl}/${locale}/${checkoutPath}/retry?order_id=${order._id}`;
 
         // Create a new payment link
         const payment = await createPayment({
-          amount: parseFloat(order.total_amount),
-          description: `Bestelling ${order.id}`,
-          redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order.id}`,
+          amount: order.total_amount,
+          description: `Bestelling ${order._id}`,
+          redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order._id}`,
           webhookUrl: `${baseUrl}/api/webhooks/mollie`,
           metadata: {
-            order_id: order.id,
+            order_id: order._id,
             recovery: true,
             reminder_number: isSecondReminder ? 2 : 1,
           },
         });
 
         // Update order with new payment ID
-        await db
-          .update(orders)
-          .set({
-            payment_id: payment.id,
-            payment_status: 'pending',
-            status: 'pending',
-            updated_at: new Date(),
-          })
-          .where(eq(orders.id, order.id));
+        await convex.mutation(api.orders.update, {
+          id: order._id,
+          payment_id: payment.id,
+          payment_status: 'pending',
+          status: 'pending',
+        });
 
         const paymentUrl = payment.getCheckoutUrl();
 
@@ -154,19 +105,19 @@ export async function GET(request: NextRequest) {
         const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
         // Format order items for email
-        const orderItemsForEmail = items.map((item) => ({
-          name: item.name || 'Product',
-          quantity: parseInt(item.quantity || '1'),
-          price: parseFloat(item.price || '0'),
-          image_url: item.image_url || undefined,
+        const orderItemsForEmail = itemsWithProducts.map((item) => ({
+          name: item.product?.name || 'Product',
+          quantity: item.order_item.quantity,
+          price: item.order_item.price_at_purchase,
+          image_url: item.product?.image_url || undefined,
         }));
 
         // Generate email content
         const emailContent = getPaymentRecoveryEmailContent({
           customerName: order.customer_name,
-          orderId: order.id,
+          orderId: order._id,
           orderItems: orderItemsForEmail,
-          totalAmount: parseFloat(order.total_amount),
+          totalAmount: order.total_amount,
           locale: locale,
           paymentUrl: paymentUrl!,
           retryPageUrl: retryPageUrl,
@@ -184,20 +135,18 @@ export async function GET(request: NextRequest) {
         });
 
         // Update order to mark recovery email sent
-        const currentAttempts = parseInt(order.recovery_attempts?.toString() || '0');
-        await db
-          .update(orders)
-          .set({
-            recovery_email_sent_at: sql`NOW()`,
-            recovery_attempts: (currentAttempts + 1).toString(),
-          })
-          .where(eq(orders.id, order.id));
+        const currentAttempts = order.recovery_attempts ?? 0;
+        await convex.mutation(api.orders.update, {
+          id: order._id,
+          recovery_email_sent_at: Date.now(),
+          recovery_attempts: currentAttempts + 1,
+        });
 
         successCount++;
-        console.log(`${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order.id} to ${order.customer_email}`);
+        console.log(`${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order._id} to ${order.customer_email}`);
       } catch (error) {
         failCount++;
-        console.error(`Failed to process order ${order.id}:`, error);
+        console.error(`Failed to process order ${order._id}:`, error);
       }
     }
 

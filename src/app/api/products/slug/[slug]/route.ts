@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export async function GET(
   request: NextRequest,
@@ -12,20 +13,14 @@ export async function GET(
     const searchParams = request.nextUrl.searchParams;
     const locale = searchParams.get('locale') || 'nl';
 
-    const productResult = await db
-      .select()
-      .from(products)
-      .where(eq(products.slug, slug))
-      .limit(1);
+    const product = await convex.query(api.products.getBySlug, { slug });
 
-    if (productResult.length === 0) {
+    if (!product) {
       return NextResponse.json(
         { success: false, error: 'Product not found' },
         { status: 404 }
       );
     }
-
-    const product = productResult[0];
 
     // Map product to correct language
     const translatedProduct = {

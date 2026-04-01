@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders } from '@/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,21 +15,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if email exists in orders
-    const existingOrders = await db
-      .select({
-        customer_name: orders.customer_name,
-        customer_phone: orders.customer_phone,
-        created_at: orders.created_at,
-      })
-      .from(orders)
-      .where(eq(orders.customer_email, email))
-      .orderBy(desc(orders.created_at))
-      .limit(1);
+    // Check if email exists in orders (returns most recent order by email)
+    const mostRecentOrder = await convex.query(api.orders.getByEmail, {
+      customer_email: email,
+    });
 
-    if (existingOrders.length > 0) {
-      const mostRecentOrder = existingOrders[0];
-
+    if (mostRecentOrder) {
       return NextResponse.json({
         success: true,
         exists: true,

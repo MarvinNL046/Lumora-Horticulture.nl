@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { savedAddresses } from '@/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/addresses
@@ -20,11 +21,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch all addresses for this user
-    const addresses = await db
-      .select()
-      .from(savedAddresses)
-      .where(eq(savedAddresses.user_id, user.id))
-      .orderBy(sql`is_default DESC, created_at DESC`);
+    const addresses = await convex.query(api.savedAddresses.list, {
+      user_id: user.id,
+    });
 
     return NextResponse.json({
       success: true,
@@ -69,32 +68,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If this is set as default, unset all other default addresses
-    if (is_default) {
-      await db
-        .update(savedAddresses)
-        .set({ is_default: false })
-        .where(eq(savedAddresses.user_id, user.id));
-    }
-
-    // Create new address
-    const [address] = await db
-      .insert(savedAddresses)
-      .values({
-        user_id: user.id,
-        name,
-        street,
-        city,
-        postal_code,
-        country,
-        phone: phone || null,
-        is_default: is_default || false,
-      })
-      .returning();
+    // Create new address (Convex mutation handles unsetting other defaults)
+    const addressId = await convex.mutation(api.savedAddresses.create, {
+      user_id: user.id,
+      name,
+      street,
+      city,
+      postal_code,
+      country,
+      phone: phone || undefined,
+      is_default: is_default || false,
+    });
 
     return NextResponse.json({
       success: true,
-      address,
+      address: { _id: addressId },
     });
   } catch (error) {
     console.error('Create address error:', error);

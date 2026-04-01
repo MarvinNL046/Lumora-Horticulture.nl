@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
-import { asc } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/feed/google-shopping?locale=nl
@@ -23,11 +24,8 @@ export async function GET(request: NextRequest) {
 
     const baseUrl = domainMap[locale] || domainMap.nl;
 
-    // Haal alle producten op
-    const allProducts = await db
-      .select()
-      .from(products)
-      .orderBy(asc(products.display_order));
+    // Haal alle producten op (locale handles translation in Convex)
+    const allProducts = await convex.query(api.products.list, { locale });
 
     // Genereer XML feed
     const xml = generateGoogleShoppingXML(allProducts, locale, baseUrl);
@@ -70,20 +68,9 @@ function generateGoogleShoppingXML(
 
   // Product items
   productList.forEach((product) => {
-    // Lokalisatie: gebruik juiste naam en beschrijving
-    const productName =
-      locale === 'en' && product.name_en
-        ? product.name_en
-        : locale === 'de' && product.name_de
-        ? product.name_de
-        : product.name;
-
-    const productDescription =
-      locale === 'en' && product.description_en
-        ? product.description_en
-        : locale === 'de' && product.description_de
-        ? product.description_de
-        : product.description;
+    // Product name/description already localized by Convex query
+    const productName = product.name;
+    const productDescription = product.description;
 
     // Product URL
     const shopPath = locale === 'nl' ? 'winkel' : locale === 'de' ? 'shop' : 'shop';
@@ -107,7 +94,7 @@ function generateGoogleShoppingXML(
     const availability = availabilityMap[product.availability] || 'in_stock';
 
     xml += '    <item>\n';
-    xml += `      <g:id>${escapeXml(product.id)}</g:id>\n`;
+    xml += `      <g:id>${escapeXml(product._id)}</g:id>\n`;
     xml += `      <g:title>${escapeXml(productName)}</g:title>\n`;
     xml += `      <g:description>${escapeXml(stripHtml(productDescription))}</g:description>\n`;
     xml += `      <g:link>${escapeXml(productUrl)}</g:link>\n`;

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { savedAddresses } from '@/db/schema';
-import { eq, and, sql } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
 import { stackServerApp } from '@/stack/server';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * PUT /api/addresses/[id]
@@ -33,36 +35,20 @@ export async function PUT(
       );
     }
 
-    // If this is set as default, unset all other default addresses
-    if (is_default) {
-      await db
-        .update(savedAddresses)
-        .set({ is_default: false })
-        .where(eq(savedAddresses.user_id, user.id));
-    }
-
-    // Update address (only if it belongs to the user)
-    const [address] = await db
-      .update(savedAddresses)
-      .set({
+    // Update address (Convex mutation verifies ownership and handles default unsetting)
+    try {
+      await convex.mutation(api.savedAddresses.update, {
+        id: params.id as Id<"savedAddresses">,
+        user_id: user.id,
         name,
         street,
         city,
         postal_code,
         country,
-        phone: phone || null,
+        phone: phone || undefined,
         is_default: is_default || false,
-        updated_at: sql`NOW()`,
-      })
-      .where(
-        and(
-          eq(savedAddresses.id, params.id),
-          eq(savedAddresses.user_id, user.id)
-        )
-      )
-      .returning();
-
-    if (!address) {
+      });
+    } catch (err) {
       return NextResponse.json(
         { success: false, error: 'Address not found' },
         { status: 404 }
@@ -71,7 +57,7 @@ export async function PUT(
 
     return NextResponse.json({
       success: true,
-      address,
+      address: { _id: params.id },
     });
   } catch (error) {
     console.error('Update address error:', error);
@@ -104,18 +90,13 @@ export async function DELETE(
       );
     }
 
-    // Delete address (only if it belongs to the user)
-    const [deleted] = await db
-      .delete(savedAddresses)
-      .where(
-        and(
-          eq(savedAddresses.id, params.id),
-          eq(savedAddresses.user_id, user.id)
-        )
-      )
-      .returning();
-
-    if (!deleted) {
+    // Delete address (Convex mutation verifies ownership)
+    try {
+      await convex.mutation(api.savedAddresses.remove, {
+        id: params.id as Id<"savedAddresses">,
+        user_id: user.id,
+      });
+    } catch (err) {
       return NextResponse.json(
         { success: false, error: 'Address not found' },
         { status: 404 }

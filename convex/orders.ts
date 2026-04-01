@@ -92,3 +92,62 @@ export const listByStatus = query({
       .collect();
   },
 });
+
+export const listForFirstRecovery = query({
+  args: {},
+  handler: async (ctx) => {
+    const oneHourAgo = Date.now() - 60 * 60 * 1000;
+    const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+    const allOrders = await ctx.db.query("orders").collect();
+
+    return allOrders.filter((o) => {
+      const ps = o.payment_status;
+      return (
+        (ps === "expired" || ps === "failed" || ps === "cancelled") &&
+        o.created_at < oneHourAgo &&
+        o.created_at > sevenDaysAgo &&
+        !o.recovery_email_sent_at &&
+        (o.recovery_attempts ?? 0) === 0
+      );
+    }).slice(0, 30);
+  },
+});
+
+export const listForSecondRecovery = query({
+  args: {},
+  handler: async (ctx) => {
+    const fortyEightHoursAgo = Date.now() - 48 * 60 * 60 * 1000;
+
+    const allOrders = await ctx.db.query("orders").collect();
+
+    return allOrders.filter((o) => {
+      const ps = o.payment_status;
+      return (
+        (ps === "expired" || ps === "failed" || ps === "cancelled") &&
+        o.recovery_email_sent_at != null &&
+        o.recovery_email_sent_at < fortyEightHoursAgo &&
+        (o.recovery_attempts ?? 0) === 1
+      );
+    }).slice(0, 20);
+  },
+});
+
+export const listWithOrderNumber = query({
+  args: { year: v.number() },
+  handler: async (ctx, { year }) => {
+    const startOfYear = new Date(year, 0, 1).getTime();
+    const endOfYear = new Date(year + 1, 0, 1).getTime();
+
+    const allOrders = await ctx.db.query("orders").collect();
+
+    return allOrders
+      .filter(
+        (o) =>
+          o.order_number != null &&
+          o.created_at >= startOfYear &&
+          o.created_at < endOfYear
+      )
+      .sort((a, b) => b.created_at - a.created_at);
+  },
+});

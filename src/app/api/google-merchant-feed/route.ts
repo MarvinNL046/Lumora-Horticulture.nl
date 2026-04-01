@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * GET /api/google-merchant-feed
@@ -8,7 +10,7 @@ import { products } from '@/db/schema';
  */
 export async function GET() {
   try {
-    const allProducts = await db.select().from(products);
+    const allProducts = await convex.query(api.products.list, {});
 
     const storeName = process.env.NEXT_PUBLIC_STORE_NAME || 'Lumora Horticulture';
     const storeDomain = process.env.NEXT_PUBLIC_STORE_DOMAIN || 'https://lumora-horticulture.nl';
@@ -23,10 +25,10 @@ export async function GET() {
 ${allProducts
   .map(
     (product) => `    <item>
-      <g:id>${product.id}</g:id>
+      <g:id>${product._id}</g:id>
       <g:title>${escapeXml(product.name)}</g:title>
       <g:description>${escapeXml(product.description)}</g:description>
-      <g:link>${storeDomain}/products/${product.id}</g:link>
+      <g:link>${storeDomain}/products/${product._id}</g:link>
       <g:image_link>${storeDomain}${product.image_url}</g:image_link>
       <g:availability>${product.availability}</g:availability>
       <g:price>${product.price} EUR</g:price>

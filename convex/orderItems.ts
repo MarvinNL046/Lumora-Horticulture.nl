@@ -35,3 +35,20 @@ export const getByOrder = query({
       .collect();
   },
 });
+
+export const getByOrderWithProducts = query({
+  args: { order_id: v.id("orders") },
+  handler: async (ctx, { order_id }) => {
+    const items = await ctx.db
+      .query("orderItems")
+      .withIndex("by_order", (q) => q.eq("order_id", order_id))
+      .collect();
+
+    const result = [];
+    for (const item of items) {
+      const product = await ctx.db.get(item.product_id);
+      result.push({ order_item: item, product });
+    }
+    return result;
+  },
+});

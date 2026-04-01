@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { abandonedCarts } from '@/db/schema';
-import { eq, and, desc } from 'drizzle-orm';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 // Force dynamic rendering for this route (uses cookies for auth)
 export const dynamic = 'force-dynamic';
@@ -27,23 +28,15 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the most recent non-recovered cart for this user
-    const userCart = await db
-      .select()
-      .from(abandonedCarts)
-      .where(
-        and(
-          eq(abandonedCarts.user_id, user.id),
-          eq(abandonedCarts.recovered, false)
-        )
-      )
-      .orderBy(desc(abandonedCarts.created_at))
-      .limit(1);
+    const cart = await convex.query(api.abandonedCarts.load, {
+      user_id: user.id,
+    });
 
-    if (userCart && userCart.length > 0) {
+    if (cart) {
       return NextResponse.json({
         success: true,
-        cart: userCart[0].cart_data,
-        cart_id: userCart[0].id,
+        cart: cart.cart_data,
+        cart_id: cart._id,
       });
     }
 

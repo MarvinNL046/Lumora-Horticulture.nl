@@ -1,13 +1,12 @@
 import { Metadata } from 'next';
 import { unstable_setRequestLocale } from 'next-intl/server';
-import { db } from '@/db';
-import { products } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { fetchQuery } from 'convex/nextjs';
+import { api } from '@/../convex/_generated/api';
 import ProductPageClient from './ProductPageClient';
 
 // Generate static params for all product slugs and locales
 export async function generateStaticParams() {
-  const allProducts = await db.select({ slug: products.slug }).from(products);
+  const allProducts = await fetchQuery(api.products.list, {});
   const locales = ['nl', 'en', 'de'];
 
   return allProducts.flatMap((product) =>
@@ -20,13 +19,7 @@ export async function generateStaticParams() {
 
 // Helper to get product from database
 async function getProduct(slug: string) {
-  const productResult = await db
-    .select()
-    .from(products)
-    .where(eq(products.slug, slug))
-    .limit(1);
-
-  return productResult[0] || null;
+  return await fetchQuery(api.products.getBySlug, { slug });
 }
 
 // CTR-optimized product metadata configurations

@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
-import { db } from '@/db'
-import { products } from '@/db/schema'
-import { eq } from 'drizzle-orm'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '@/../convex/_generated/api'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lumorahorticulture.com'
@@ -28,10 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let dynamicPages: MetadataRoute.Sitemap = []
 
   try {
-    const allProducts = await db
-      .select({ slug: products.slug })
-      .from(products)
-      .where(eq(products.availability, 'in stock'))
+    const allProducts = await fetchQuery(api.products.listInStock)
 
     dynamicPages = allProducts.flatMap((product) => {
       if (!product.slug) return []

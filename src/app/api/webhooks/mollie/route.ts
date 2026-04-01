@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { orders, orderItems, products } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
+import { Id } from '@/../convex/_generated/dataModel';
 import { getPaymentStatus } from '@/lib/mollie';
-import { eq, sql } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
@@ -12,6 +12,7 @@ import { trackServerSideConversion } from '@/lib/google-ads';
 import React from 'react';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * POST /api/webhooks/mollie
@@ -37,11 +38,9 @@ export async function POST(request: NextRequest) {
     const payment = await getPaymentStatus(paymentId);
 
     // Zoek de order op basis van payment ID
-    const [order] = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.payment_id, paymentId))
-      .limit(1);
+    const order = await convex.query(api.orders.getByPaymentId, {
+      payment_id: paymentId,
+    });
 
     if (!order) {
       console.error(`Order not found for payment ${paymentId}`);
@@ -69,17 +68,12 @@ export async function POST(request: NextRequest) {
         const year = now.getFullYear();
 
         // Haal laatste order van dit jaar op om nummer te bepalen
-        const lastOrder = await db
-          .select()
-          .from(orders)
-          .where(sql`EXTRACT(YEAR FROM ${orders.created_at}) = ${year} AND ${orders.order_number} IS NOT NULL`)
-          .orderBy(sql`${orders.created_at} DESC`)
-          .limit(1);
+        const ordersThisYear = await convex.query(api.orders.listWithOrderNumber, { year });
 
         let orderCounter = 1;
-        if (lastOrder && lastOrder.length > 0 && lastOrder[0].order_number) {
+        if (ordersThisYear.length > 0 && ordersThisYear[0].order_number) {
           // Extract counter from last order number (ORD-2025-0001 -> 0001)
-          const lastNumber = parseInt(lastOrder[0].order_number.split('-').pop() || '0', 10);
+          const lastNumber = parseInt(ordersThisYear[0].order_number.split('-').pop() || '0', 10);
           orderCounter = lastNumber + 1;
         }
 
@@ -97,38 +91,33 @@ export async function POST(request: NextRequest) {
     }
 
     // Update order in database
-    await db
-      .update(orders)
-      .set({
-        order_number: orderNumber, // Wordt alleen gezet bij succesvolle betaling
-        status: orderStatus,
-        payment_status: paymentStatus,
-        updated_at: new Date(),
-      })
-      .where(eq(orders.id, order.id));
+    await convex.mutation(api.orders.update, {
+      id: order._id,
+      order_number: orderNumber || undefined,
+      status: orderStatus,
+      payment_status: paymentStatus,
+    });
 
-    console.log(`Order ${order.id} updated: ${orderStatus} / ${paymentStatus}`);
+    console.log(`Order ${order._id} updated: ${orderStatus} / ${paymentStatus}`);
 
     // Verzend emails alleen bij succesvolle betaling
     if (payment.status === 'paid') {
       // Track conversie voor Google Ads (server-side backup)
       trackServerSideConversion(
-        order.order_number || order.id,
-        parseFloat(order.total_amount),
+        order.order_number || order._id,
+        order.total_amount,
         paymentId,
         order.customer_email
       );
       try {
-        console.log(`Processing emails for paid order ${order.id}`);
+        console.log(`Processing emails for paid order ${order._id}`);
 
-        // Haal order items op
-        const items = await db
-          .select()
-          .from(orderItems)
-          .leftJoin(products, eq(orderItems.product_id, products.id))
-          .where(eq(orderItems.order_id, order.id));
+        // Haal order items op met product details
+        const itemsWithProducts = await convex.query(api.orderItems.getByOrderWithProducts, {
+          order_id: order._id,
+        });
 
-        console.log(`Found ${items.length} order items`);
+        console.log(`Found ${itemsWithProducts.length} order items`);
 
         // Parse shipping address
         const shipping_address = order.shipping_address as any;
@@ -140,19 +129,19 @@ export async function POST(request: NextRequest) {
         };
 
         // Bereken prijzen
-        const productDetails = items.map((item) => ({
-          name: item.products?.name || 'Unknown Product',
-          quantity: parseInt(item.order_items.quantity),
-          price: parseFloat(item.order_items.price_at_purchase),
-          total: parseInt(item.order_items.quantity) * parseFloat(item.order_items.price_at_purchase),
+        const productDetails = itemsWithProducts.map((item) => ({
+          name: item.product?.name || 'Unknown Product',
+          quantity: item.order_item.quantity,
+          price: item.order_item.price_at_purchase,
+          total: item.order_item.quantity * item.order_item.price_at_purchase,
         }));
 
-        const totalAmount = parseFloat(order.total_amount);
+        const totalAmount = order.total_amount;
 
         // Bereken subtotaal en korting op basis van base price uit products tabel
-        const subtotalWithoutDiscount = items.reduce((sum, item) => {
-          const basePrice = item.products ? parseFloat(item.products.price) : parseFloat(item.order_items.price_at_purchase);
-          return sum + (basePrice * parseInt(item.order_items.quantity));
+        const subtotalWithoutDiscount = itemsWithProducts.reduce((sum, item) => {
+          const basePrice = item.product ? item.product.price : item.order_item.price_at_purchase;
+          return sum + (basePrice * item.order_item.quantity);
         }, 0);
 
         const subtotal = subtotalWithoutDiscount;
@@ -161,7 +150,7 @@ export async function POST(request: NextRequest) {
         // Verzend klant bevestigingsmail
         const customerEmailHtml = await render(
           React.createElement(OrderConfirmationEmail, {
-            orderNumber: order.order_number || order.id,
+            orderNumber: order.order_number || order._id,
             customerName: order.customer_name,
             orderDate: new Date().toLocaleDateString('nl-NL', {
               day: 'numeric',
@@ -180,7 +169,7 @@ export async function POST(request: NextRequest) {
           from: 'Lumora Horticulture <info@lumorahorticulture.com>',
           replyTo: 'info@lumorahorticulture.com',
           to: order.customer_email,
-          subject: `Bevestiging bestelling ${order.order_number || order.id} - Lumora Horticulture`,
+          subject: `Bevestiging bestelling ${order.order_number || order._id} - Lumora Horticulture`,
           html: customerEmailHtml,
         });
 
@@ -201,7 +190,7 @@ export async function POST(request: NextRequest) {
         // Verzend admin notificatie
         const adminEmailHtml = await render(
           React.createElement(AdminNotificationEmail, {
-            orderNumber: order.order_number || order.id,
+            orderNumber: order.order_number || order._id,
             orderDate: new Date().toLocaleDateString('nl-NL', {
               day: 'numeric',
               month: 'long',
@@ -224,7 +213,7 @@ export async function POST(request: NextRequest) {
           from: 'Lumora Webshop <info@lumorahorticulture.com>',
           replyTo: 'info@lumorahorticulture.com',
           to: 'info@lumorahorticulture.com',
-          subject: `🔔 Nieuwe bestelling ${order.order_number || order.id} - €${totalAmount.toFixed(2)}`,
+          subject: `🔔 Nieuwe bestelling ${order.order_number || order._id} - €${totalAmount.toFixed(2)}`,
           html: adminEmailHtml,
         });
 
@@ -232,20 +221,20 @@ export async function POST(request: NextRequest) {
 
         // Check if this is a recovery payment and send special notification
         const metadata = payment.metadata as { recovery?: boolean; order_id?: string } | null;
-        const recoveryAttempts = parseInt(order.recovery_attempts?.toString() || '0');
+        const recoveryAttempts = order.recovery_attempts ?? 0;
 
         if (metadata?.recovery || recoveryAttempts > 0) {
           console.log('🎉 This is a recovered payment! Sending recovery success notification...');
 
           const recoveryEmailHtml = await render(
             React.createElement(RecoverySuccessNotification, {
-              orderNumber: orderNumber || order.id,
-              orderId: order.id,
+              orderNumber: orderNumber || order._id,
+              orderId: order._id,
               customerName: order.customer_name,
               customerEmail: order.customer_email,
               totalAmount: totalAmount,
               recoveryAttempts: recoveryAttempts,
-              originalCreatedAt: new Date(order.created_at!).toLocaleDateString('nl-NL', {
+              originalCreatedAt: new Date(order.created_at).toLocaleDateString('nl-NL', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
@@ -266,7 +255,7 @@ export async function POST(request: NextRequest) {
             from: 'Lumora Recovery System <info@lumorahorticulture.com>',
             replyTo: 'info@lumorahorticulture.com',
             to: 'info@lumorahorticulture.com',
-            subject: `🎉 Recovery succesvol! ${orderNumber || order.id} - €${totalAmount.toFixed(2)} teruggewonnen`,
+            subject: `🎉 Recovery succesvol! ${orderNumber || order._id} - €${totalAmount.toFixed(2)} teruggewonnen`,
             html: recoveryEmailHtml,
           });
 
@@ -280,7 +269,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      order_id: order.id,
+      order_id: order._id,
       status: orderStatus,
       payment_status: paymentStatus,
     });
