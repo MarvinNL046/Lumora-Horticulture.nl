@@ -5,6 +5,19 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { localizePathForLocale } from '@/lib/url-localizations'
 
+function LiteYouTube({ videoId, title }: { videoId: string; title: string }) {
+  return (
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&rel=0&controls=1`}
+      title={title}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className="absolute inset-0 w-full h-full"
+      loading="lazy"
+    />
+  )
+}
+
 interface Props {
   locale: string
 }
@@ -568,6 +581,21 @@ export default function NeemxProClient({ locale }: Props) {
                 4x {locale === 'nl' ? 'Sterker' : locale === 'de' ? 'Stärker' : 'Stronger'}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Video Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-3 text-center">
+            {locale === 'nl' ? 'Bekijk NEEMX PRO in actie' : locale === 'de' ? 'NEEMX PRO in Aktion' : 'See NEEMX PRO in action'}
+          </h2>
+          <p className="text-gray-600 text-center mb-8">
+            {locale === 'nl' ? 'Ontdek hoe NEEMX PRO werkt voor professionele gewasbescherming' : locale === 'de' ? 'Entdecken Sie, wie NEEMX PRO für professionellen Pflanzenschutz funktioniert' : 'Discover how NEEMX PRO works for professional crop protection'}
+          </p>
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
+            <LiteYouTube videoId="zMhneSPUeyQ" title="NEEMX PRO Product Video" />
           </div>
         </div>
       </section>

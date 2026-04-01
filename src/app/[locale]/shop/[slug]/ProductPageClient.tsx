@@ -234,16 +234,34 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading product...</div>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div className="aspect-square bg-gray-100 rounded-2xl animate-pulse" />
+            <div className="space-y-4">
+              <div className="h-8 bg-gray-100 rounded-lg w-3/4 animate-pulse" />
+              <div className="h-6 bg-gray-100 rounded-lg w-1/2 animate-pulse" />
+              <div className="h-24 bg-gray-100 rounded-lg animate-pulse" />
+              <div className="h-12 bg-gray-100 rounded-xl w-1/3 animate-pulse" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Product niet gevonden</div>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
+        <p className="text-lg text-gray-500">
+          {locale === 'de' ? 'Produkt nicht gefunden' : locale === 'en' ? 'Product not found' : 'Product niet gevonden'}
+        </p>
+        <Link
+          href={localizePathForLocale('/shop', locale)}
+          className="text-lumora-green-500 hover:underline font-medium"
+        >
+          {t.shop} &rarr;
+        </Link>
       </div>
     );
   }
