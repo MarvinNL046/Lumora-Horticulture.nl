@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { eq } from 'drizzle-orm';
-import { db } from '@/db';
-import { blogPosts } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 
 // -------------------------------------------------------------------
 // Types
@@ -14,7 +13,6 @@ export interface QueuedTopic {
   targetKeyword: string;
   searchVolume: number;
   priority: number;
-  scrapeUrls?: string[];
 }
 
 interface TopicQueue {
@@ -22,134 +20,83 @@ interface TopicQueue {
 }
 
 // -------------------------------------------------------------------
-// Dutch stop words — filtered out during duplicate detection
+// Dutch stop words
 // -------------------------------------------------------------------
 
 const STOP_WORDS = new Set([
   'de', 'het', 'een', 'van', 'voor', 'in', 'en', 'je', 'jouw', 'met',
-  'is', 'op', 'hoe', 'wat', 'welke', 'beste', 'gids', '2026',
+  'is', 'op', 'hoe', 'wat', 'welke', 'beste', 'gids', '2026', '2025',
+  'die', 'dat', 'aan', 'om', 'te', 'bij', 'naar', 'ook', 'nog', 'meer',
 ]);
 
 // -------------------------------------------------------------------
-// Normalization & matching helpers
+// Word normalization (basic Dutch stemming)
 // -------------------------------------------------------------------
 
-/**
- * Normalize a word for matching: strip parentheses, possessives,
- * and apply basic Dutch plural/suffix stemming.
- */
-function normalize(w: string): string {
-  let n = w.replace(/[()]/g, '').replace(/'s$/i, '');
+function normalize(word: string): string {
+  let w = word.toLowerCase().replace(/[^a-z0-9]/g, '');
   // Basic Dutch stemming
-  if (n.endsWith('ën')) n = n.slice(0, -2);        // kwekerijen → kwekerij (approx)
-  else if (n.endsWith('en') && n.length > 4) n = n.slice(0, -2);  // pluggen → plug
-  else if (n.endsWith('s') && !n.endsWith('ss') && n.length > 3) n = n.slice(0, -1);
-  return n;
+  if (w.endsWith('en') && w.length > 4) w = w.slice(0, -2);
+  else if (w.endsWith('s') && w.length > 3) w = w.slice(0, -1);
+  return w;
 }
 
-/**
- * Check if a normalized word matches any segment of a slug
- * (exact segment match only, no substring matching).
- */
-function wordMatchesSlug(word: string, slug: string): boolean {
-  const nWord = normalize(word);
-  return slug.split('-').some((seg) => normalize(seg) === nWord);
+function getSignificantWords(text: string): string[] {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .split(/\s+/)
+    .filter(w => w.length > 1 && !STOP_WORDS.has(w))
+    .map(normalize);
 }
 
 // -------------------------------------------------------------------
-// Fetch existing published slugs from Neon Postgres via Drizzle
+// Duplicate detection
 // -------------------------------------------------------------------
 
-async function getPublishedSlugs(): Promise<Set<string>> {
-  try {
-    const rows = await db
-      .select({ slug: blogPosts.slug })
-      .from(blogPosts)
-      .where(eq(blogPosts.status, 'published'));
+function isDuplicate(keyword: string, existingSlugs: string[]): boolean {
+  const topicWords = getSignificantWords(keyword);
+  if (topicWords.length === 0) return false;
 
-    return new Set(rows.map((r) => r.slug));
-  } catch (err) {
-    console.warn('[topic-queue] Failed to fetch published slugs from DB:', err);
-    return new Set();
+  for (const slug of existingSlugs) {
+    const slugSegments = slug.split('-').filter(s => s.length > 1 && !STOP_WORDS.has(s)).map(normalize);
+    const matches = topicWords.filter(w =>
+      slugSegments.some(s => s === w || s.startsWith(w) || w.startsWith(s))
+    );
+    const ratio = matches.length / topicWords.length;
+
+    if (topicWords.length <= 2 && ratio === 1) return true;
+    if (topicWords.length >= 3 && ratio >= 0.85) return true;
+    if (topicWords.length >= 4 && matches.length >= 4 && ratio >= 0.5) return true;
   }
+  return false;
 }
 
 // -------------------------------------------------------------------
-// Pick next topic from the queue
+// Pick next topic
 // -------------------------------------------------------------------
 
-/**
- * Read the topic queue JSON, compare against published blog posts in
- * the database, and return the highest-priority unpublished topic.
- *
- * Duplicate detection uses significant-word matching between the
- * topic's targetKeyword / title and existing post slugs.
- */
 export async function pickNextTopic(): Promise<QueuedTopic | null> {
-  try {
-    const queuePath = path.join(process.cwd(), 'content', 'topic-queue.json');
-    if (!fs.existsSync(queuePath)) {
-      console.warn('[topic-queue] Queue file not found:', queuePath);
-      return null;
+  // Read topic queue
+  const queuePath = path.join(process.cwd(), 'content', 'topic-queue.json');
+  const queue: TopicQueue = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+
+  // Get existing slugs from Convex
+  const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+  const existingPosts = await client.query(api.blogPosts.listPublished, {});
+  const existingSlugs = existingPosts.map((p: { slug: string }) => p.slug);
+
+  // Sort by priority (asc) then search volume (desc)
+  const sorted = [...queue.topics].sort((a, b) =>
+    a.priority !== b.priority ? a.priority - b.priority : b.searchVolume - a.searchVolume
+  );
+
+  // Find first non-duplicate topic
+  for (const topic of sorted) {
+    if (!isDuplicate(topic.targetKeyword, existingSlugs)) {
+      return topic;
     }
-
-    const queue: TopicQueue = JSON.parse(fs.readFileSync(queuePath, 'utf-8'));
-    const existingSlugs = await getPublishedSlugs();
-    const existingSlugList = Array.from(existingSlugs);
-
-    // Sort by priority (1 = highest), then by searchVolume (desc)
-    const sorted = [...queue.topics].sort((a, b) => {
-      if (a.priority !== b.priority) return a.priority - b.priority;
-      return b.searchVolume - a.searchVolume;
-    });
-
-    for (const item of sorted) {
-      // Extract significant words from targetKeyword
-      const keywordWords = item.targetKeyword
-        .toLowerCase()
-        .split(/\s+/)
-        .filter((w) => !STOP_WORDS.has(w) && w.length > 1);
-
-      // Extract significant words from topic title (broader match)
-      const topicWords = item.topic
-        .toLowerCase()
-        .split(/[\s:—\-,()]+/)
-        .filter((w) => !STOP_WORDS.has(w) && w.length > 2);
-
-      // Check if any existing slug matches this topic:
-      // - Keyword match: ALL keyword words match (exact topic duplicate)
-      // - Topic match: 4+ words AND 50%+ ratio (broader title match)
-      // - Short keywords (1-2 words): require exact match to avoid false positives
-      const alreadyPublished = existingSlugList.some((slug) => {
-        const keywordMatchCount = keywordWords.filter((word) => wordMatchesSlug(word, slug)).length;
-        const keywordMatchRatio = keywordWords.length > 0 ? keywordMatchCount / keywordWords.length : 0;
-        const topicMatchCount = topicWords.filter((word) => wordMatchesSlug(word, slug)).length;
-        const topicMatchRatio = topicWords.length > 0 ? topicMatchCount / topicWords.length : 0;
-
-        // For short keywords (1-2 words), require exact match
-        if (keywordWords.length <= 2) {
-          return keywordMatchRatio === 1.0;
-        }
-
-        return (keywordMatchRatio >= 0.85) || (topicMatchCount >= 4 && topicMatchRatio >= 0.5);
-      });
-
-      if (!alreadyPublished) {
-        console.log(
-          `[topic-queue] Next topic: "${item.topic}" (priority ${item.priority}, volume: ${item.searchVolume}, keywords: ${keywordWords.join(',')})`
-        );
-        return item;
-      } else {
-        console.log(
-          `[topic-queue] Already published: "${item.topic}" (keywords: ${keywordWords.join(',')})`
-        );
-      }
-    }
-
-    console.log('[topic-queue] All queue topics have been published');
-    return null;
-  } catch (err) {
-    console.warn('[topic-queue] Failed to read topic queue:', err);
-    return null;
   }
+
+  return null;
 }

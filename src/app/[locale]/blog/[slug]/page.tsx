@@ -1,16 +1,12 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { generatePageMetadata } from '@/lib/metadata'
-import { db } from '@/db'
-import { blogPosts } from '@/db/schema'
-import { eq } from 'drizzle-orm'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '@/../convex/_generated/api'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 
 export async function generateStaticParams() {
-  const posts = await db
-    .select({ slug: blogPosts.slug })
-    .from(blogPosts)
-    .where(eq(blogPosts.status, 'published'))
+  const posts = await fetchQuery(api.blogPosts.listPublished, {})
 
   const params: { locale: string; slug: string }[] = []
   for (const post of posts) {
@@ -25,13 +21,8 @@ export async function generateMetadata({
 }: {
   params: { locale: string; slug: string }
 }) {
-  const rows = await db
-    .select()
-    .from(blogPosts)
-    .where(eq(blogPosts.slug, params.slug))
-    .limit(1)
+  const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
 
-  const post = rows[0]
   if (!post) {
     return generatePageMetadata({
       title: 'Blog',
@@ -64,13 +55,13 @@ export async function generateMetadata({
   })
 }
 
-function formatDate(date: Date | null, locale: string): string {
-  if (!date) return ''
+function formatDate(timestamp: number | undefined, locale: string): string {
+  if (!timestamp) return ''
   return new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'nl-NL', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  }).format(date)
+  }).format(new Date(timestamp))
 }
 
 const categoryLabels: Record<string, Record<string, string>> = {
@@ -88,13 +79,8 @@ export default async function BlogDetailPage({
   unstable_setRequestLocale(params.locale)
   const locale = params.locale
 
-  const rows = await db
-    .select()
-    .from(blogPosts)
-    .where(eq(blogPosts.slug, params.slug))
-    .limit(1)
+  const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
 
-  const post = rows[0]
   if (!post || post.status !== 'published') {
     notFound()
   }
@@ -106,9 +92,8 @@ export default async function BlogDetailPage({
   const categoryLabel =
     categoryLabels[post.category]?.[locale] || post.category
   const tags = (post.tags as string[]) || []
-  const backLabel = locale === 'de' ? 'Zur\u00fcck zum Blog' : 'Terug naar blog'
+  const backLabel = locale === 'de' ? 'Zurück zum Blog' : 'Terug naar blog'
 
-  // Article structured data (JSON-LD)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -128,8 +113,8 @@ export default async function BlogDetailPage({
         url: 'https://lumorahorticulture.nl/logo/lumura-horticulture-logo.jpeg',
       },
     },
-    datePublished: post.published_at?.toISOString(),
-    dateModified: post.updated_at?.toISOString(),
+    datePublished: post.published_at ? new Date(post.published_at).toISOString() : undefined,
+    dateModified: post.updated_at ? new Date(post.updated_at).toISOString() : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://lumorahorticulture.${locale === 'de' ? 'de' : 'nl'}/blog/${post.slug}`,
@@ -138,14 +123,12 @@ export default async function BlogDetailPage({
 
   return (
     <>
-      {/* JSON-LD structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <main className="min-h-screen bg-white">
-        {/* Featured image */}
         {post.featured_image && (
           <div className="relative h-64 w-full bg-gray-100 md:h-96">
             <Image
@@ -160,7 +143,6 @@ export default async function BlogDetailPage({
         )}
 
         <article className="mx-auto max-w-3xl px-4 py-12">
-          {/* Back link */}
           <a
             href={`/${locale}/blog`}
             className="mb-6 inline-flex items-center text-sm text-green-700 hover:text-green-900"
@@ -168,35 +150,28 @@ export default async function BlogDetailPage({
             &larr; {backLabel}
           </a>
 
-          {/* Category badge */}
           <div className="mb-4">
             <span className="inline-block rounded-full bg-green-100 px-3 py-0.5 text-xs font-medium text-green-800">
               {categoryLabel}
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
             {title}
           </h1>
 
-          {/* Meta row: author, date */}
           <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-gray-500">
             {post.author && <span>{post.author}</span>}
             {post.published_at && (
-              <time dateTime={post.published_at.toISOString()}>
-                {formatDate(post.published_at, locale)}
-              </time>
+              <time>{formatDate(post.published_at, locale)}</time>
             )}
           </div>
 
-          {/* Content */}
           <div
             className="prose prose-green max-w-none prose-headings:text-gray-900 prose-a:text-green-700"
             dangerouslySetInnerHTML={{ __html: content }}
           />
 
-          {/* Tags */}
           {tags.length > 0 && (
             <div className="mt-10 border-t border-gray-200 pt-6">
               <div className="flex flex-wrap gap-2">

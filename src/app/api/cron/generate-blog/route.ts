@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { blogPosts } from '@/db/schema';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/../convex/_generated/api';
 import { generateBlogPost } from '@/lib/pipeline/content-generator';
 import { translateToGerman } from '@/lib/pipeline/translator';
 import { generateBlogImage } from '@/lib/pipeline/image-generator';
@@ -8,13 +8,6 @@ import { generateBlogImage } from '@/lib/pipeline/image-generator';
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
-// Vercel Cron Job: Automated Bilingual Blog Generation
-// Schedule: Daily (configured in vercel.json)
-//
-// 1. Generates a Dutch blog post via AI
-// 2. Translates to German
-// 3. Generates a header image
-// 4. Inserts into database as published
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get('authorization');
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -27,6 +20,9 @@ export async function GET(request: NextRequest) {
     // Step 1: Generate Dutch blog post
     console.log('Generating Dutch blog post...');
     const post = await generateBlogPost();
+    if (!post) {
+      return NextResponse.json({ message: 'No new topics available' }, { status: 200 });
+    }
     console.log(`Generated post: "${post.title}" (${post.slug})`);
 
     // Step 2: Translate to German
@@ -45,9 +41,10 @@ export async function GET(request: NextRequest) {
     const imagePath = await generateBlogImage(post.slug, post.title, post.category);
     console.log(`Image: ${imagePath || '(skipped)'}`);
 
-    // Step 4: Insert into database
-    console.log('Inserting into database...');
-    await db.insert(blogPosts).values({
+    // Step 4: Insert into Convex
+    console.log('Inserting into Convex...');
+    const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+    await client.mutation(api.blogPosts.create, {
       slug: post.slug,
       title_nl: post.title,
       excerpt_nl: post.excerpt,
@@ -61,10 +58,7 @@ export async function GET(request: NextRequest) {
       seo_description_de: german.seo_description_de,
       category: post.category,
       tags: post.tags,
-      featured_image: imagePath,
-      author: 'Lumora Team',
-      status: 'published',
-      published_at: new Date(),
+      featured_image: imagePath || undefined,
     });
 
     console.log(`Blog post "${post.slug}" published successfully`);
