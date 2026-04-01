@@ -36,7 +36,7 @@ async function loadSitemapLinks(): Promise<string[]> {
     });
     if (!res.ok) return FALLBACK_INTERNAL_LINKS;
     const xml = await res.text();
-    const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    const urls = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g))
       .map((m) => m[1])
       .filter((url) => {
         // Only keep Dutch (/nl/) content pages
