@@ -12,6 +12,21 @@ declare global {
       params?: Record<string, any>
     ) => void;
     dataLayer?: any[];
+    fbq?: (...args: any[]) => void;
+  }
+}
+
+// Meta Pixel: fbq('track', ...) fires on all initialized pixels automatically.
+function fbqTrack(event: string, params?: Record<string, any>) {
+  if (typeof window === 'undefined' || typeof window.fbq !== 'function') return;
+  try {
+    if (params) {
+      window.fbq('track', event, params);
+    } else {
+      window.fbq('track', event);
+    }
+  } catch (err) {
+    console.warn('fbq track failed:', err);
   }
 }
 
@@ -61,6 +76,14 @@ export function trackPurchase(
     ],
   });
 
+  fbqTrack('Purchase', {
+    value,
+    currency: 'EUR',
+    content_type: 'product',
+    order_id: orderId,
+    transaction_id: transactionId || orderId,
+  });
+
   console.log('Purchase conversion tracked:', {
     orderId,
     value,
@@ -92,6 +115,15 @@ export function trackViewItem(product: Product) {
     ],
   });
 
+  fbqTrack('ViewContent', {
+    content_type: 'product',
+    content_ids: [product.id],
+    content_name: product.name,
+    content_category: product.category || 'Horticulture Products',
+    value: product.price,
+    currency: 'EUR',
+  });
+
   console.log('Product view tracked:', product.name);
 }
 
@@ -116,6 +148,19 @@ export function trackBeginCheckout(products: Product[], totalValue: number) {
       quantity: product.quantity || 1,
       item_category: product.category || 'Horticulture Products',
     })),
+  });
+
+  fbqTrack('InitiateCheckout', {
+    content_type: 'product',
+    content_ids: products.map((p) => p.id),
+    contents: products.map((p) => ({
+      id: p.id,
+      quantity: p.quantity || 1,
+      item_price: p.price,
+    })),
+    num_items: products.reduce((sum, p) => sum + (p.quantity || 1), 0),
+    value: totalValue,
+    currency: 'EUR',
   });
 
   console.log('Begin checkout tracked:', { products, totalValue });
@@ -143,6 +188,17 @@ export function trackAddToCart(product: Product) {
         item_category: product.category || 'Horticulture Products',
       },
     ],
+  });
+
+  const qty = product.quantity || 1;
+  fbqTrack('AddToCart', {
+    content_type: 'product',
+    content_ids: [product.id],
+    content_name: product.name,
+    content_category: product.category || 'Horticulture Products',
+    contents: [{ id: product.id, quantity: qty, item_price: product.price }],
+    value: product.price * qty,
+    currency: 'EUR',
   });
 
   console.log('Add to cart tracked:', product.name);
