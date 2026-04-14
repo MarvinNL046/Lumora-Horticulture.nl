@@ -12,7 +12,9 @@ import crypto from 'node:crypto';
  */
 
 const GRAPH_API_VERSION = 'v21.0';
-const DEFAULT_PIXEL_ID = '1537235201740065';
+// Both datasets receive server-side events so either can be used in Ads Manager
+// campaigns. Browser pixel also inits both (see src/components/MetaPixel.tsx).
+const DEFAULT_PIXEL_IDS = ['1537235201740065', '2680887955624246'];
 
 function sha256(value: string): string {
   return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
@@ -76,7 +78,11 @@ export async function sendCapiEvent(event: CapiEvent): Promise<void> {
     return;
   }
 
-  const pixelId = process.env.META_PIXEL_ID || DEFAULT_PIXEL_ID;
+  // Support comma-separated list in META_PIXEL_ID; fall back to defaults.
+  const pixelIds = (process.env.META_PIXEL_ID || DEFAULT_PIXEL_IDS.join(','))
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   const testEventCode = process.env.META_CAPI_TEST_EVENT_CODE;
 
   const payload: Record<string, unknown> = {
@@ -94,23 +100,26 @@ export async function sendCapiEvent(event: CapiEvent): Promise<void> {
   };
   if (testEventCode) payload.test_event_code = testEventCode;
 
-  const url = `https://graph.facebook.com/${GRAPH_API_VERSION}/${pixelId}/events?access_token=${encodeURIComponent(token)}`;
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      cache: 'no-store',
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      console.error(`CAPI ${event.eventName} failed (${res.status}):`, text);
-      return;
-    }
-    const json = await res.json();
-    console.log(`CAPI ${event.eventName} sent:`, json);
-  } catch (err) {
-    console.error(`CAPI ${event.eventName} error:`, err);
-  }
+  await Promise.all(
+    pixelIds.map(async (pixelId) => {
+      const url = `https://graph.facebook.com/${GRAPH_API_VERSION}/${pixelId}/events?access_token=${encodeURIComponent(token)}`;
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          cache: 'no-store',
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          console.error(`CAPI ${event.eventName} → ${pixelId} failed (${res.status}):`, text);
+          return;
+        }
+        const json = await res.json();
+        console.log(`CAPI ${event.eventName} → ${pixelId}:`, json);
+      } catch (err) {
+        console.error(`CAPI ${event.eventName} → ${pixelId} error:`, err);
+      }
+    })
+  );
 }
