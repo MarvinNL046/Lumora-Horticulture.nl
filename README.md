@@ -17,7 +17,7 @@ A professional website for Lumora Horticulture, showcasing sustainable and profe
 - Tailwind CSS
 - next-intl for internationalization
 - Framer Motion for animations
-- Deployed on Netlify
+- Deployed on Vercel
 
 ## Development
 
@@ -49,15 +49,7 @@ npm run build
 
 ### Deployment
 
-This project is configured for Netlify deployment:
-
-```bash
-# Deploy to Netlify (preview)
-npm run netlify:deploy
-
-# Deploy to production
-npm run netlify:deploy:prod
-```
+This project is deployed on Vercel with automatic deploys from the `main` branch. Pushes to `main` trigger a production build; branch pushes create preview deployments.
 
 ## Contact
 

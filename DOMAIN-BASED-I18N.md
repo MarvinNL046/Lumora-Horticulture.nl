@@ -25,12 +25,12 @@ The middleware (`src/middleware.ts`) is configured to detect the domain and auto
 | Transport Box | https://lumorahorticulture.nl/producten/transportdoos/ | https://lumorahorticulture.com/products/transportbox/ | https://lumorahorticulture.de/produkte/transportbox/ |
 | Insert Sheets | https://lumorahorticulture.nl/producten/inlegvellen/ | https://lumorahorticulture.com/products/insertsheets/ | https://lumorahorticulture.de/produkte/einlegebogen/ |
 
-## Netlify Configuration
+## Vercel Configuration
 
-In Netlify, you'll need to configure all three domains to point to the same site:
+In Vercel, configure all three domains to point to the same project:
 
-1. Go to Netlify dashboard → Your site → Domain settings
-2. Add custom domains:
+1. Go to Vercel dashboard → Project → Settings → Domains
+2. Add domains:
    - lumorahorticulture.nl (primary domain)
    - lumorahorticulture.com
    - lumorahorticulture.de
@@ -75,7 +75,7 @@ Each domain will automatically show content in the correct language based on the
 
 ## Fallback for Development
 
-The Netlify preview URL (lumorahorticulture.netlify.app) is configured to default to Dutch (nl) for simplicity.
+Vercel preview URLs (*.vercel.app) are configured to default to Dutch (nl) for simplicity.
 
 ## Sitemap and SEO
 

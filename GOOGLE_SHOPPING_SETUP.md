@@ -248,7 +248,7 @@ Automatisch toegevoegd voor:
 
 ### **Feed Technische Problemen:**
 - Test feed URL in browser: `/api/feed/google-shopping?locale=nl`
-- Check Netlify deployment logs
+- Check Vercel deployment logs
 - Verify database connectivity
 
 ---

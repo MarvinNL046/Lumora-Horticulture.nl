@@ -248,30 +248,24 @@ Voorbeelden:
 
 ---
 
-## 🚢 Deployment naar Netlify
+## 🚢 Deployment naar Vercel
 
 ### Stap 1: Environment Variables
-Voeg deze toe in Netlify dashboard (Site settings > Environment variables):
+Voeg deze toe in Vercel dashboard (Project → Settings → Environment Variables), of via `vercel env add`:
 - `DATABASE_URL`
 - `MOLLIE_API_KEY`
 - `NEXT_PUBLIC_BASE_URL`
 - `NEXT_PUBLIC_STORE_NAME`
 - `NEXT_PUBLIC_STORE_DOMAIN`
 
-### Stap 2: Build Settings
-```
-Build command: npm run build
-Publish directory: .next
-```
-
-### Stap 3: Deploy
+### Stap 2: Deploy
 ```bash
 git add .
 git commit -m "Add e-commerce functionality"
 git push origin main
 ```
 
-Netlify zal automatisch deployen.
+Vercel deployt automatisch bij pushes naar `main`.
 
 ---
 
@@ -291,7 +285,7 @@ toevoegen aan je Mollie webhook handler.
 - ✅ Database credentials in `.env.local` (niet in git)
 - ✅ Mollie webhook signature verificatie (al geïmplementeerd)
 - ✅ Input validatie op alle API endpoints
-- ✅ HTTPS verplicht voor productie (Netlify doet dit automatisch)
+- ✅ HTTPS verplicht voor productie (Vercel doet dit automatisch)
 
 ---
 

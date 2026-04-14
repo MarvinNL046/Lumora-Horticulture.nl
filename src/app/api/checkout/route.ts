@@ -6,6 +6,8 @@ import { createPayment } from '@/lib/mollie';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { stackServerApp } from '@/stack/server';
 
+export const dynamic = 'force-dynamic';
+
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**

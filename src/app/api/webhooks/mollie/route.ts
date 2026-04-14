@@ -11,6 +11,8 @@ import { RecoverySuccessNotification } from '@/emails/RecoverySuccessNotificatio
 import { trackServerSideConversion } from '@/lib/google-ads';
 import React from 'react';
 
+export const dynamic = 'force-dynamic';
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 

@@ -5,6 +5,8 @@ import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getPaymentRecoveryEmailContent } from '@/emails/payment-recovery-template';
 import { createPayment } from '@/lib/mollie';
 
+export const dynamic = 'force-dynamic';
+
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails

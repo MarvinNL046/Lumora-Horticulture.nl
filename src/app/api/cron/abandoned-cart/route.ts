@@ -5,6 +5,8 @@ import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getAbandonedCartEmailContent } from '@/emails/abandoned-cart-template';
 import type { CartItem } from '@/contexts/CartContext';
 
+export const dynamic = 'force-dynamic';
+
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Lumora Horticulture is a multilingual B2B e-commerce website for professional horticulture products, built with Next.js 14 and deployed on Netlify. The site features a direct checkout flow optimized for B2B customers who know exactly what they want to order.
+Lumora Horticulture is a multilingual B2B e-commerce website for professional horticulture products, built with Next.js 14 and deployed on Vercel. The site features a direct checkout flow optimized for B2B customers who know exactly what they want to order.
 
 ## Tech Stack
 
@@ -13,7 +13,7 @@ Lumora Horticulture is a multilingual B2B e-commerce website for professional ho
 - **Payment**: Mollie integration
 - **Styling**: Tailwind CSS with custom brand colors
 - **i18n**: next-intl with domain-based routing (lumorahorticulture.nl, .com, .de)
-- **Deployment**: Netlify with automatic deploys from `main` branch
+- **Deployment**: Vercel with automatic deploys from `main` branch
 
 ## Development Commands
 
@@ -211,7 +211,7 @@ description: locale === 'en' && product.description_en
 
 ### Deployment
 
-- **Auto-deploy**: Pushes to `main` branch trigger Netlify builds
+- **Auto-deploy**: Pushes to `main` branch trigger Vercel builds
 - **Build process**: Automatically generates localized sitemaps for all domains
 - **Static assets**: Product images in `/public/productAfbeeldingen/`
 
