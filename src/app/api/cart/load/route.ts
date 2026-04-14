@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ConvexHttpClient } from 'convex/browser';
+import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
-
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 // Force dynamic rendering for this route (uses cookies for auth)
 export const dynamic = 'force-dynamic';

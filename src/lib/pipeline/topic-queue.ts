@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { ConvexHttpClient } from 'convex/browser';
+import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 
 // -------------------------------------------------------------------
@@ -82,8 +82,7 @@ export async function pickNextTopic(): Promise<QueuedTopic | null> {
   const queue: TopicQueue = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
 
   // Get existing slugs from Convex
-  const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-  const existingPosts = await client.query(api.blogPosts.listPublished, {});
+  const existingPosts = await convex.query(api.blogPosts.listPublished, {});
   const existingSlugs = existingPosts.map((p: { slug: string }) => p.slug);
 
   // Sort by priority (asc) then search volume (desc)

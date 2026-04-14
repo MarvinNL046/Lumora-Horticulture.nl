@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ConvexHttpClient } from 'convex/browser';
+import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
 import { createPayment } from '@/lib/mollie';
 
 export const dynamic = 'force-dynamic';
-
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 /**
  * POST /api/orders/[id]/retry-payment

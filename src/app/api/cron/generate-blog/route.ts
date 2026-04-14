@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ConvexHttpClient } from 'convex/browser';
+import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { generateBlogPost } from '@/lib/pipeline/content-generator';
 import { translateToGerman } from '@/lib/pipeline/translator';
@@ -43,8 +43,7 @@ export async function GET(request: NextRequest) {
 
     // Step 4: Insert into Convex
     console.log('Inserting into Convex...');
-    const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-    await client.mutation(api.blogPosts.create, {
+    await convex.mutation(api.blogPosts.create, {
       slug: post.slug,
       title_nl: post.title,
       excerpt_nl: post.excerpt,

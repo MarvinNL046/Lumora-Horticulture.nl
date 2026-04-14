@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ConvexHttpClient } from 'convex/browser';
+import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
 import { getPaymentStatus } from '@/lib/mollie';
@@ -14,8 +14,6 @@ import React from 'react';
 export const dynamic = 'force-dynamic';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-
 /**
  * POST /api/webhooks/mollie
  * Mollie webhook voor betaling updates
