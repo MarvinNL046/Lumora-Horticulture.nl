@@ -15,10 +15,12 @@ export async function GET(request: NextRequest) {
 
     const allProducts = await convex.query(api.products.list, { locale });
 
-    // The Convex query already handles locale translation
+    // Map Convex _id to id for frontend compatibility
+    const products = allProducts.map((p: any) => ({ ...p, id: p._id }));
+
     return NextResponse.json({
       success: true,
-      products: allProducts,
+      products,
     });
   } catch (error) {
     console.error('Error fetching products:', error);

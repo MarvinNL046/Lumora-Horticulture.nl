@@ -38,6 +38,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Filter invalid items (missing product_id or legacy UUID format)
+    const validItems = (items as Array<{ product_id?: unknown; quantity?: unknown }>).filter(
+      (i) =>
+        typeof i?.product_id === 'string' &&
+        i.product_id.length > 0 &&
+        !i.product_id.includes('-') &&
+        typeof i?.quantity === 'number' &&
+        i.quantity > 0
+    ) as Array<{ product_id: string; quantity: number }>;
+
+    if (validItems.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Cart contains no valid items. Please refresh and try again.',
+          code: 'INVALID_CART',
+        },
+        { status: 400 }
+      );
+    }
+
     // Check if user is logged in (optional - guest checkout blijft mogelijk)
     let userId: string | undefined = undefined;
     try {
@@ -54,7 +75,7 @@ export async function POST(request: NextRequest) {
     let totalAmount = 0;
     const productDetails = [];
 
-    for (const item of items) {
+    for (const item of validItems) {
       const product = await convex.query(api.products.getById, {
         id: item.product_id as Id<"products">,
       });

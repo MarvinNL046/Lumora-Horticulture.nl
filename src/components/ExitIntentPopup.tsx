@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
 import { formatPrice } from '@/lib/volume-discount';
 import Link from 'next/link';
@@ -9,7 +9,12 @@ import { localizePathForLocale } from '@/lib/url-localizations';
 
 export default function ExitIntentPopup() {
   const params = useParams();
+  const pathname = usePathname() || '';
   const locale = (params?.locale as string) || 'nl';
+
+  // Don't run on checkout or product-detail pages (kills conversion flow)
+  const isSuppressedRoute =
+    /\/(checkout|afrekenen|kasse|shop\/[^/]+|winkel\/[^/]+)(\/|$)/.test(pathname);
   const { items, getTotalPrice, getTotalItems, setIsCartOpen } = useCart();
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
@@ -62,6 +67,7 @@ export default function ExitIntentPopup() {
 
   // Detect exit intent (mouse leaving viewport at top)
   const handleMouseLeave = useCallback((e: MouseEvent) => {
+    if (isSuppressedRoute) return;
     if (e.clientY <= 0 && !hasShown && !isVisible) {
       // Check if popup was already shown this session
       const popupShown = sessionStorage.getItem('exitPopupShown');
@@ -71,7 +77,7 @@ export default function ExitIntentPopup() {
         sessionStorage.setItem('exitPopupShown', 'true');
       }
     }
-  }, [hasShown, isVisible]);
+  }, [hasShown, isVisible, isSuppressedRoute]);
 
   // Also trigger on back button / page unload for mobile
   useEffect(() => {
@@ -140,7 +146,7 @@ export default function ExitIntentPopup() {
     setIsVisible(false);
   };
 
-  if (!isVisible) return null;
+  if (isSuppressedRoute || !isVisible) return null;
 
   return (
     <>

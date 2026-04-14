@@ -34,6 +34,26 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = 'lumora-cart';
 const EMAIL_STORAGE_KEY = 'lumora-cart-email';
 
+function isValidCartItem(item: unknown): item is CartItem {
+  if (!item || typeof item !== 'object') return false;
+  const i = item as Partial<CartItem>;
+  return (
+    typeof i.product_id === 'string' &&
+    i.product_id.length > 0 &&
+    !i.product_id.includes('-') && // exclude legacy Postgres UUIDs
+    typeof i.quantity === 'number' &&
+    i.quantity > 0 &&
+    typeof i.price === 'number' &&
+    typeof i.name === 'string' &&
+    typeof i.slug === 'string'
+  );
+}
+
+function sanitizeCartItems(raw: unknown): CartItem[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(isValidCartItem);
+}
+
 export function CartProvider({ children }: { children: React.ReactNode}) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -59,14 +79,14 @@ export function CartProvider({ children }: { children: React.ReactNode}) {
 
         if (localCart) {
           try {
-            localItems = JSON.parse(localCart);
+            localItems = sanitizeCartItems(JSON.parse(localCart));
           } catch (error) {
             console.error('Failed to parse local cart:', error);
           }
         }
 
         // Merge carts: if product exists in both, keep the higher quantity
-        const mergedCart = [...data.cart];
+        const mergedCart = sanitizeCartItems(data.cart);
         localItems.forEach(localItem => {
           const existingIndex = mergedCart.findIndex(
             (item: CartItem) => item.product_id === localItem.product_id
@@ -100,9 +120,14 @@ export function CartProvider({ children }: { children: React.ReactNode}) {
     if (storedCart) {
       try {
         const parsed = JSON.parse(storedCart);
-        setItems(parsed);
+        const sanitized = sanitizeCartItems(parsed);
+        setItems(sanitized);
+        if (Array.isArray(parsed) && sanitized.length !== parsed.length) {
+          localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(sanitized));
+        }
       } catch (error) {
         console.error('Failed to parse cart from localStorage:', error);
+        localStorage.removeItem(CART_STORAGE_KEY);
       }
     }
 

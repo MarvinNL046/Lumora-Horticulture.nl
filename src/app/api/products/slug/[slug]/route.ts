@@ -25,6 +25,7 @@ export async function GET(
     // Map product to correct language
     const translatedProduct = {
       ...product,
+      id: product._id,
       name: locale === 'en' && product.name_en ? product.name_en :
             locale === 'de' && product.name_de ? product.name_de :
             product.name,
