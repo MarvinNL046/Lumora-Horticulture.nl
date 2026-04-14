@@ -130,6 +130,17 @@ export const seedProducts = mutation({
           targets: ["spider mites", "sucking insects", "mildew"],
           suitable_for: ["home use", "small gardens", "indoor plants"],
           eco_friendly: true,
+          spray_coverage_m2: {
+            min: 5,
+            max: 40,
+            basis: "0.1-0.2 L spray per m²",
+            breakdown: [
+              { dosage: "2.5 ml/L", spray_liters: 4, m2_range: "20-40" },
+              { dosage: "5 ml/L", spray_liters: 2, m2_range: "10-20" },
+              { dosage: "7 ml/L", spray_liters: 1.4, m2_range: "7-14" },
+              { dosage: "10 ml/L", spray_liters: 1, m2_range: "5-10" },
+            ],
+          },
           images: [
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp",
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp",
@@ -153,7 +164,7 @@ export const seedProducts = mutation({
         product_type: "Business & Industrial > Agriculture > Plant Care",
         display_order: 12,
         metadata: {
-          volume: "50ml",
+          volume: "30ml",
           type: "Botanical oil concentrate",
           natural: true,
           concentrated: true,
@@ -162,6 +173,17 @@ export const seedProducts = mutation({
           suitable_for: ["professional use", "greenhouses", "nurseries", "intensive care"],
           eco_friendly: true,
           professional: true,
+          spray_coverage_m2: {
+            min: 15,
+            max: 120,
+            basis: "0.1-0.2 L spray per m²",
+            breakdown: [
+              { dosage: "2.5 ml/L", spray_liters: 12, m2_range: "60-120" },
+              { dosage: "5 ml/L", spray_liters: 6, m2_range: "30-60" },
+              { dosage: "7 ml/L", spray_liters: 4.3, m2_range: "21-43" },
+              { dosage: "10 ml/L", spray_liters: 3, m2_range: "15-30" },
+            ],
+          },
           images: [
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp",
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp",
@@ -194,6 +216,17 @@ export const seedProducts = mutation({
           suitable_for: ["professional use", "greenhouses", "nurseries", "intensive care"],
           eco_friendly: true,
           professional: true,
+          spray_coverage_m2: {
+            min: 25,
+            max: 200,
+            basis: "0.1-0.2 L spray per m²",
+            breakdown: [
+              { dosage: "2.5 ml/L", spray_liters: 20, m2_range: "100-200" },
+              { dosage: "5 ml/L", spray_liters: 10, m2_range: "50-100" },
+              { dosage: "7 ml/L", spray_liters: 7.1, m2_range: "35-71" },
+              { dosage: "10 ml/L", spray_liters: 5, m2_range: "25-50" },
+            ],
+          },
           images: [
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp",
             "/productAfbeeldingen/neemxpro/neemxpro-sfeer-2.webp",

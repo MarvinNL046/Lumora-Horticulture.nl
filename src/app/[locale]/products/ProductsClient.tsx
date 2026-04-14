@@ -205,6 +205,27 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                   ))}
                 </div>
 
+                {/* Spray coverage */}
+                <div className="bg-gradient-to-r from-green-50 to-amber-50 border border-green-200 rounded-xl p-4 mb-4">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">
+                    {locale === 'nl' ? 'Spuitoppervlakte per flesje:' : locale === 'de' ? 'Sprühfläche pro Flasche:' : 'Spray coverage per bottle:'}
+                  </p>
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="bg-white/70 rounded-lg p-2">
+                      <div className="text-xs text-gray-500">10 ml</div>
+                      <div className="text-sm font-bold text-green-700">± 5-40 m²</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
+                      <div className="text-xs text-gray-500">30 ml</div>
+                      <div className="text-sm font-bold text-green-700">± 15-120 m²</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
+                      <div className="text-xs text-gray-500">50 ml</div>
+                      <div className="text-sm font-bold text-green-700">± 25-200 m²</div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Effective against */}
                 <div className="bg-white/60 rounded-xl p-4 mb-6">
                   <p className="text-sm font-semibold text-gray-700 mb-2">

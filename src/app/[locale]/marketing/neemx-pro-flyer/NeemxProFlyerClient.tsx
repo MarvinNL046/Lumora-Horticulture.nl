@@ -127,9 +127,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Opbrengst per flesje',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 liter spuitvloeistof' },
-        { size: '30 ml', yield: '3-12 liter spuitvloeistof' },
-        { size: '50 ml', yield: '5-20 liter spuitvloeistof' }
+        { size: '10 ml', yield: '1-4 liter spuitvloeistof', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: '3-12 liter spuitvloeistof', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: '5-20 liter spuitvloeistof', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Effectief tegen:',
       effectiveItems: [
@@ -174,9 +174,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Yield per bottle',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 liters spray solution' },
-        { size: '30 ml', yield: '3-12 liters spray solution' },
-        { size: '50 ml', yield: '5-20 liters spray solution' }
+        { size: '10 ml', yield: '1-4 liters spray solution', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: '3-12 liters spray solution', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: '5-20 liters spray solution', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Effective against:',
       effectiveItems: [
@@ -221,9 +221,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Ertrag pro Flasche',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 Liter Sprühlösung' },
-        { size: '30 ml', yield: '3-12 Liter Sprühlösung' },
-        { size: '50 ml', yield: '5-20 Liter Sprühlösung' }
+        { size: '10 ml', yield: '1-4 Liter Sprühlösung', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: '3-12 Liter Sprühlösung', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: '5-20 Liter Sprühlösung', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Wirksam gegen:',
       effectiveItems: [
@@ -384,6 +384,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
               <div key={idx} className="bg-gradient-to-br from-green-50 to-amber-50 rounded-lg p-2 text-center border border-amber-200">
                 <div className="text-lg font-bold text-amber-600 mb-0.5">{item.size}</div>
                 <div className="text-[10px] text-gray-600">{item.yield}</div>
+                <div className="text-[10px] font-bold text-green-700 mt-0.5">{item.coverage}</div>
               </div>
             ))}
           </div>

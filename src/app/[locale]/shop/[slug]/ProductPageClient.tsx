@@ -538,6 +538,51 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
               </div>
             </div>
 
+            {product.metadata?.spray_coverage_m2 && (
+              <div className="bg-gradient-to-r from-green-50 to-amber-50 rounded-2xl p-6 border border-green-200">
+                <h3 className="text-xl font-display font-semibold text-lumora-dark mb-2">
+                  {locale === 'de' ? 'Sprühfläche' : locale === 'en' ? 'Spray coverage' : 'Spuitoppervlakte'}
+                </h3>
+                <p className="text-lumora-dark mb-4">
+                  <span className="font-bold text-green-700 text-2xl">
+                    ± {product.metadata.spray_coverage_m2.min}–{product.metadata.spray_coverage_m2.max} m²
+                  </span>
+                  <span className="text-sm text-lumora-dark/70 ml-2">
+                    ({locale === 'de' ? 'je nach Dosierung' : locale === 'en' ? 'depending on dosage' : 'afhankelijk van dosering'})
+                  </span>
+                </p>
+                {Array.isArray(product.metadata.spray_coverage_m2.breakdown) && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-left border-b border-lumora-dark/10">
+                          <th className="py-2 pr-4 font-medium text-lumora-dark/70">
+                            {locale === 'de' ? 'Dosierung' : locale === 'en' ? 'Dosage' : 'Dosering'}
+                          </th>
+                          <th className="py-2 pr-4 font-medium text-lumora-dark/70">
+                            {locale === 'de' ? 'Sprühlösung' : locale === 'en' ? 'Spray solution' : 'Spuitvloeistof'}
+                          </th>
+                          <th className="py-2 font-medium text-lumora-dark/70">m²</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.metadata.spray_coverage_m2.breakdown.map((row: any, i: number) => (
+                          <tr key={i} className="border-b border-lumora-dark/5">
+                            <td className="py-2 pr-4 font-medium text-lumora-dark">{row.dosage}</td>
+                            <td className="py-2 pr-4 text-lumora-dark">{row.spray_liters} L</td>
+                            <td className="py-2 font-semibold text-green-700">± {row.m2_range}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <p className="text-xs text-lumora-dark/60 mt-3">
+                      {locale === 'de' ? 'Basis: 0,1–0,2 L Sprühlösung pro m²' : locale === 'en' ? 'Based on: 0.1–0.2 L spray solution per m²' : 'Op basis van: 0,1–0,2 L spuitvloeistof per m²'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
             {product.metadata?.specifications && Object.keys(product.metadata.specifications).length > 0 && (
               <div className="bg-lumora-cream/30 rounded-2xl p-6 border border-lumora-dark/10">
                 <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4">
