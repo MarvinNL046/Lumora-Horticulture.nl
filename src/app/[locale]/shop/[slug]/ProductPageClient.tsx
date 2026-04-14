@@ -74,6 +74,8 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
       `Bij ${qty} stuks krijg je ${discount}% korting!`,
     pricePerPiece: locale === 'de' ? 'Preis pro Stück:' : locale === 'en' ? 'Price per piece:' : 'Prijs per stuk:',
     pricePerPackage: locale === 'de' ? 'Preis pro 25 Stück:' : locale === 'en' ? 'Price per 25 units:' : 'Prijs per 25 stuks:',
+    pricePerBox: locale === 'de' ? 'Preis pro Karton:' : locale === 'en' ? 'Price per box:' : 'Prijs per doos:',
+    quantityBoxes: locale === 'de' ? 'Anzahl Kartons:' : locale === 'en' ? 'Number of boxes:' : 'Aantal dozen:',
     discount: locale === 'de' ? 'Rabatt' : locale === 'en' ? 'discount' : 'korting',
     quantity: locale === 'de' ? 'Anzahl:' : locale === 'en' ? 'Quantity:' : 'Aantal:',
     quantityPackages: locale === 'de' ? 'Anzahl Verpackungen:' : locale === 'en' ? 'Number of packages:' : 'Aantal verpakkingen:',
@@ -652,7 +654,11 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-display font-semibold text-lumora-dark">
-                    {productSlug === 'transportdoos-vouwdoos' ? t.pricePerPackage : t.pricePerPiece}
+                    {productSlug === 'transportdoos-vouwdoos'
+                      ? t.pricePerPackage
+                      : productSlug === 'paper-plug-tray-84' || productSlug === 'paper-plug-tray-104'
+                      ? t.pricePerBox
+                      : t.pricePerPiece}
                   </span>
                   <div className="text-right">
                     {discountInfo.hasDiscount ? (
@@ -677,7 +683,11 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
                 <div className="mb-4">
                   <label className="text-lumora-dark font-medium block mb-2">
-                    {productSlug === 'transportdoos-vouwdoos' ? t.quantityPackages : t.quantity}
+                    {productSlug === 'transportdoos-vouwdoos'
+                      ? t.quantityPackages
+                      : productSlug === 'paper-plug-tray-84' || productSlug === 'paper-plug-tray-104'
+                      ? t.quantityBoxes
+                      : t.quantity}
                   </label>
                   <div className="flex items-center gap-2">
                     <button

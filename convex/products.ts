@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { query } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const list = query({
   args: {
@@ -46,6 +46,28 @@ export const getById = query({
   args: { id: v.id("products") },
   handler: async (ctx, { id }) => {
     return await ctx.db.get(id);
+  },
+});
+
+export const updateBySlug = mutation({
+  args: {
+    slug: v.string(),
+    price: v.optional(v.number()),
+    description: v.optional(v.string()),
+    description_en: v.optional(v.string()),
+    description_de: v.optional(v.string()),
+  },
+  handler: async (ctx, { slug, ...patch }) => {
+    const product = await ctx.db
+      .query("products")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .first();
+    if (!product) throw new Error(`Product not found: ${slug}`);
+    const clean = Object.fromEntries(
+      Object.entries(patch).filter(([, v]) => v !== undefined)
+    );
+    await ctx.db.patch(product._id, clean);
+    return product._id;
   },
 });
 
