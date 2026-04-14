@@ -171,9 +171,7 @@ export async function generateAllSitemaps(): Promise<void> {
     
     try {
       const sitemap = await generateSitemapForLocale(locale, domain);
-      const filename = domain === 'lumorahorticulture.netlify.app' 
-        ? 'sitemap-netlify.xml' 
-        : `sitemap-${domain}.xml`;
+      const filename = `sitemap-${domain}.xml`;
       
       await fs.promises.writeFile(
         path.join(publicDir, filename),

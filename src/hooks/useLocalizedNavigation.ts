@@ -79,7 +79,7 @@ export function useLocalizedNavigation() {
     const localizedPath = localizePathForLocale(basePath, locale);
     
     // For local development, use locale in path
-    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))) {
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.includes('vercel.app'))) {
       return `/${locale}${localizedPath}`;
     }
     

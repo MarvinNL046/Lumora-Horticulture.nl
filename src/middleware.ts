@@ -24,10 +24,6 @@ const intlMiddleware = createMiddleware({
     {
       domain: 'lumorahorticulture.de',
       defaultLocale: 'de',
-    },
-    {
-      domain: 'lumorahorticulture.netlify.app',
-      defaultLocale: 'nl',
     }
   ]
 });
@@ -52,7 +48,6 @@ function extractDomain(host: string): string {
   if (domain.includes('lumorahorticulture.nl')) return 'lumorahorticulture.nl';
   if (domain.includes('lumorahorticulture.com')) return 'lumorahorticulture.com';
   if (domain.includes('lumorahorticulture.de')) return 'lumorahorticulture.de';
-  if (domain.includes('lumorahorticulture.netlify.app')) return 'lumorahorticulture.netlify.app';
   
   // Default fallback
   return domain;
@@ -68,7 +63,6 @@ export function middleware(request: NextRequest) {
   const pathname = url.pathname;
 
   // Block requests with file extensions (bots probing for .php, .xml, .env, etc.)
-  // The matcher should catch these, but Netlify edge functions may bypass it
   if (/\.[a-z0-9]{2,10}$/i.test(pathname)) {
     return new NextResponse(null, { status: 404 });
   }
@@ -84,7 +78,7 @@ export function middleware(request: NextRequest) {
   // 1. Development/localhost: Use locale prefixes in URLs
   // 2. Production domains: No locale prefixes in URLs, but internally we need them
   
-  if (domain === 'localhost' || domain.includes('netlify.app')) {
+  if (domain === 'localhost' || domain.includes('vercel.app')) {
     // In development/preview, handle localized URLs
     if (!hasLocalePrefix) {
       // Check if this is a localized path that needs to be converted to base path

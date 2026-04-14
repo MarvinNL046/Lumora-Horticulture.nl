@@ -2,8 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true, // Important for static image serving with Netlify
-    domains: ['lumorahorticulture.netlify.app'], // Add Netlify domain
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,14 +19,8 @@ const nextConfig = {
         hostname: 'lumorahorticulture.com',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'lumorahorticulture.netlify.app',
-        pathname: '/**',
-      },
     ],
   },
-  // Remove trailing slash to work better with Netlify
   trailingSlash: false,
   
   // Optimize for serverless deployment

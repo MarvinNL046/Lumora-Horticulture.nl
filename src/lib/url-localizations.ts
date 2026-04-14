@@ -171,7 +171,6 @@ export const domainLocaleMap: Record<string, string> = {
   'lumorahorticulture.nl': 'nl',
   'lumorahorticulture.com': 'en',
   'lumorahorticulture.de': 'de',
-  'lumorahorticulture.netlify.app': 'nl', // Default to Dutch for Netlify previews
   'localhost': 'nl', // Default for local development
 }
 
