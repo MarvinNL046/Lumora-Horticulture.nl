@@ -13,7 +13,7 @@ export default function MetaPixel() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1650628802947817');
+          fbq('init', '1537235201740065');
           fbq('track', 'PageView');
         `}
       </Script>
@@ -22,7 +22,7 @@ export default function MetaPixel() {
           height="1"
           width="1"
           style={{ display: 'none' }}
-          src="https://www.facebook.com/tr?id=1650628802947817&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=1537235201740065&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>
