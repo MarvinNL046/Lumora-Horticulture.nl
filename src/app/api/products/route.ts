@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
+import { isHiddenProductSlug } from '@/lib/hidden-products';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,8 +16,10 @@ export async function GET(request: NextRequest) {
 
     const allProducts = await convex.query(api.products.list, { locale });
 
-    // Map Convex _id to id for frontend compatibility
-    const products = allProducts.map((p: any) => ({ ...p, id: p._id }));
+    // Map Convex _id to id for frontend compatibility; exclude hidden products
+    const products = allProducts
+      .filter((p: any) => !isHiddenProductSlug(p.slug))
+      .map((p: any) => ({ ...p, id: p._id }));
 
     return NextResponse.json({
       success: true,

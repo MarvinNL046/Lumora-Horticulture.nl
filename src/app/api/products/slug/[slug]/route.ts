@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
+import { isHiddenProductSlug } from '@/lib/hidden-products';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,6 +13,13 @@ export async function GET(
     const { slug } = params;
     const searchParams = request.nextUrl.searchParams;
     const locale = searchParams.get('locale') || 'nl';
+
+    if (isHiddenProductSlug(slug)) {
+      return NextResponse.json(
+        { success: false, error: 'Product not found' },
+        { status: 404 }
+      );
+    }
 
     const product = await convex.query(api.products.getBySlug, { slug });
 

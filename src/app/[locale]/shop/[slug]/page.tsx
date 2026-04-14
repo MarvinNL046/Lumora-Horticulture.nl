@@ -1,20 +1,24 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/../convex/_generated/api';
 import ProductPageClient from './ProductPageClient';
+import { isHiddenProductSlug } from '@/lib/hidden-products';
 
 // Generate static params for all product slugs and locales
 export async function generateStaticParams() {
   const allProducts = await fetchQuery(api.products.list, {});
   const locales = ['nl', 'en', 'de'];
 
-  return allProducts.flatMap((product) =>
-    locales.map((locale) => ({
-      locale,
-      slug: product.slug,
-    }))
-  );
+  return allProducts
+    .filter((product) => !isHiddenProductSlug(product.slug))
+    .flatMap((product) =>
+      locales.map((locale) => ({
+        locale,
+        slug: product.slug,
+      }))
+    );
 }
 
 // Helper to get product from database
@@ -235,6 +239,10 @@ export default async function ProductPage({
   params: { locale: string; slug: string }
 }) {
   unstable_setRequestLocale(params.locale);
+
+  if (isHiddenProductSlug(params.slug)) {
+    notFound();
+  }
 
   return <ProductPageClient locale={params.locale} productSlug={params.slug} />;
 }

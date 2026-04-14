@@ -5,6 +5,7 @@ import { Id } from '@/../convex/_generated/dataModel';
 import { createPayment } from '@/lib/mollie';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { stackServerApp } from '@/stack/server';
+import { isHiddenProductSlug } from '@/lib/hidden-products';
 
 export const dynamic = 'force-dynamic';
 
@@ -80,11 +81,11 @@ export async function POST(request: NextRequest) {
         id: item.product_id as Id<"products">,
       });
 
-      if (!product) {
+      if (!product || isHiddenProductSlug(product.slug)) {
         return NextResponse.json(
           {
             success: false,
-            error: `Product ${item.product_id} not found`,
+            error: `Product ${item.product_id} not available`,
           },
           { status: 404 }
         );
