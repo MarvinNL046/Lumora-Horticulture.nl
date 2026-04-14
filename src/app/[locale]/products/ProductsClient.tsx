@@ -30,7 +30,129 @@ const staggerContainer = {
 }
 
 // Product page component with modern styling
+// Localized strings shared across product cards on this page
+function getPc(locale: string) {
+  const nl = {
+    tray84Title: 'Tray-84st: Paperbus Steenwol Pluggen (84)',
+    tray84Subtitle: 'Perfect voor professionele zaailingenkweek',
+    tray84Desc:
+      'Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok. Verpakking: 8 trays per doos.',
+    tray104Title: 'Tray-104st: Paperbus Steenwol Pluggen (104)',
+    tray104Subtitle: 'Geavanceerde trays voor optimale wortelontwikkeling',
+    tray104Desc:
+      'Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos.',
+    ldpeTitle: 'Inlegvellen 60x80cm LDPE',
+    ldpeSubtitle: 'Extra bescherming voor uw producten',
+    ldpeDesc:
+      'Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks.',
+    ldpeBadges: ['Transparant', 'Lichtgewicht', 'LDPE'],
+    hdpeTitle: 'Inlegvellen 40x60cm HDPE',
+    hdpeSubtitle: 'Duurzame en stevige bescherming',
+    hdpeDesc:
+      'Onze HDPE inlegvellen bieden extra stevigheid en bescherming voor uw producten tijdens transport. Perfect voor zwaardere producten. Afmetingen: 40 x 60 cm, HDPE kwaliteit. Verkocht per 500 stuks.',
+    hdpeBadges: ['Transparant', 'Stevig', 'HDPE'],
+    specs: {
+      plugDiameter: 'Plug diameter',
+      dimensions: 'Afmetingen',
+      height: 'Hoogte',
+      cellsPerM2: 'Cellen per m²',
+      plugsPerTray: 'Pluggen per tray',
+      traysPerBox: 'Trays per doos',
+      plugsPerBox: 'Pluggen per doos',
+      boxesPerPallet: 'Dozen per pallet',
+      traysPerPallet: 'Trays per pallet',
+      plugsPerPallet: 'Pluggen per pallet',
+      bottomHoles: 'Bodemgaten',
+      lxw: 'l x b',
+      materialType: 'Materiaal type',
+      lockType: 'Hengelslot',
+    },
+    orderNow: 'Bestel nu',
+    b2b: 'Zakelijk Bestellen (B2B)',
+  };
+  const de = {
+    tray84Title: 'Tray-84: Papier-Plug Steinwolle (84)',
+    tray84Subtitle: 'Perfekt für professionelle Sämlingsanzucht',
+    tray84Desc:
+      'Unsere Papier-Plug Steinwolle-Tray mit 84 Zellen ist für professionelle Gartenbauanwendungen konzipiert. Jeder Plug ist in Ellepot FP 12+ Papier eingepackt für optimale Wurzelentwicklung und einfaches Auspflanzen ohne Transplantationsschock. Verpackung: 8 Trays pro Karton.',
+    tray104Title: 'Tray-104: Papier-Plug Steinwolle (104)',
+    tray104Subtitle: 'Fortschrittliche Trays für optimale Wurzelentwicklung',
+    tray104Desc:
+      'Unsere Papier-Plug Steinwolle-Tray mit 104 Zellen bietet hervorragende Wachstumsbedingungen für Sämlinge. Jeder Plug ist in Ellepot FP 12+ Papier eingepackt für optimale Wurzelentwicklung und erfolgreiches Umpflanzen. Verpackung: 7 Trays pro Karton.',
+    ldpeTitle: 'Einlegeblätter 60x80 cm LDPE',
+    ldpeSubtitle: 'Extra Schutz für Ihre Produkte',
+    ldpeDesc:
+      'Unsere transparenten Einlegeblätter bieten zusätzlichen Schutz und Ordnung in unseren Transportboxen. Sie helfen beim Trennen von Produktlagen und sorgen für Stabilität während des Transports. Abmessungen: 60 x 80 cm, 20 µ LDPE-Qualität. Verkauft pro 500 Stück.',
+    ldpeBadges: ['Transparent', 'Leicht', 'LDPE'],
+    hdpeTitle: 'Einlegeblätter 40x60 cm HDPE',
+    hdpeSubtitle: 'Nachhaltiger und robuster Schutz',
+    hdpeDesc:
+      'Unsere HDPE-Einlegeblätter bieten zusätzliche Festigkeit und Schutz für Ihre Produkte während des Transports. Perfekt für schwerere Produkte. Abmessungen: 40 x 60 cm, HDPE-Qualität. Verkauft pro 500 Stück.',
+    hdpeBadges: ['Transparent', 'Robust', 'HDPE'],
+    specs: {
+      plugDiameter: 'Plug-Durchmesser',
+      dimensions: 'Abmessungen',
+      height: 'Höhe',
+      cellsPerM2: 'Zellen pro m²',
+      plugsPerTray: 'Plugs pro Tray',
+      traysPerBox: 'Trays pro Karton',
+      plugsPerBox: 'Plugs pro Karton',
+      boxesPerPallet: 'Kartons pro Palette',
+      traysPerPallet: 'Trays pro Palette',
+      plugsPerPallet: 'Plugs pro Palette',
+      bottomHoles: 'Bodenlöcher',
+      lxw: 'L x B',
+      materialType: 'Materialart',
+      lockType: 'Verriegelung',
+    },
+    orderNow: 'Jetzt bestellen',
+    b2b: 'Geschäftlich Bestellen (B2B)',
+  };
+  const en = {
+    tray84Title: 'Tray-84: Paper-Wrapped Rockwool Plugs (84)',
+    tray84Subtitle: 'Perfect for professional seedling cultivation',
+    tray84Desc:
+      'Our paper-wrapped rockwool plug tray with 84 cells is designed for professional horticulture applications. Each plug is wrapped in Ellepot FP 12+ paper for optimal root development and easy planting without transplant shock. Packaging: 8 trays per box.',
+    tray104Title: 'Tray-104: Paper-Wrapped Rockwool Plugs (104)',
+    tray104Subtitle: 'Advanced trays for optimal root development',
+    tray104Desc:
+      'Our paper-wrapped rockwool plug tray with 104 cells provides excellent growing conditions for seedlings. Each plug is wrapped in Ellepot FP 12+ paper for optimal root development and successful transplanting. Packaging: 7 trays per box.',
+    ldpeTitle: 'Insert Sheets 60x80 cm LDPE',
+    ldpeSubtitle: 'Extra protection for your products',
+    ldpeDesc:
+      'Our transparent insert sheets are designed to provide extra protection and organisation in our transport boxes. They help separate layers of products and ensure stability during transport. Dimensions: 60 x 80 cm, 20 µ LDPE quality. Sold per 500 units.',
+    ldpeBadges: ['Transparent', 'Lightweight', 'LDPE'],
+    hdpeTitle: 'Insert Sheets 40x60 cm HDPE',
+    hdpeSubtitle: 'Durable and sturdy protection',
+    hdpeDesc:
+      'Our HDPE insert sheets provide extra rigidity and protection for your products during transport. Perfect for heavier products. Dimensions: 40 x 60 cm, HDPE quality. Sold per 500 units.',
+    hdpeBadges: ['Transparent', 'Sturdy', 'HDPE'],
+    specs: {
+      plugDiameter: 'Plug diameter',
+      dimensions: 'Dimensions',
+      height: 'Height',
+      cellsPerM2: 'Cells per m²',
+      plugsPerTray: 'Plugs per tray',
+      traysPerBox: 'Trays per box',
+      plugsPerBox: 'Plugs per box',
+      boxesPerPallet: 'Boxes per pallet',
+      traysPerPallet: 'Trays per pallet',
+      plugsPerPallet: 'Plugs per pallet',
+      bottomHoles: 'Bottom holes',
+      lxw: 'L x W',
+      materialType: 'Material type',
+      lockType: 'Lock type',
+    },
+    orderNow: 'Order now',
+    b2b: 'Business Orders (B2B)',
+  };
+  if (locale === 'de') return de;
+  if (locale === 'en') return en;
+  return nl;
+}
+
 export default function ProductsClient({ t, locale }: { t: any, locale: string }) {
+  const pc = getPc(locale);
   // Breadcrumb data
   const breadcrumbItems = [
     {
@@ -351,26 +473,26 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
           <ProductDetail
             t={t}
             id="tray84"
-            title="Tray-84st: Paperbus Steenwol Pluggen (84)"
-            subtitle="Perfect voor professionele zaailingenkweek"
-            description="Onze paperbus steenwol pluggen tray met 84 cellen is ontworpen voor professionele tuinbouwapplicaties. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en gemakkelijk uitplanten zonder transplantatieschok. Verpakking: 8 trays per doos."
+            title={pc.tray84Title}
+            subtitle={pc.tray84Subtitle}
+            description={pc.tray84Desc}
             imageSrc="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
             specs={[
-              { label: "Plug diameter", value: "3.5 cm" },
-              { label: "Afmetingen", value: "52.5 x 30.5 cm" },
-              { label: "Hoogte", value: "4 cm" },
+              { label: pc.specs.plugDiameter, value: "3.5 cm" },
+              { label: pc.specs.dimensions, value: "52.5 x 30.5 cm" },
+              { label: pc.specs.height, value: "4 cm" },
               { label: "CC", value: "48 cc" },
-              { label: "Cellen per m²", value: "525" },
-              { label: "Pluggen per tray", value: "84" },
-              { label: "Trays per doos", value: "8" },
-              { label: "Pluggen per doos", value: "672" },
-              { label: "Dozen per pallet", value: "30" },
-              { label: "Trays per pallet", value: "240" },
-              { label: "Pluggen per pallet", value: "20.160" },
-              { label: "Bodemgaten", value: "1 x 9" },
-              { label: "l x b", value: "7 x 12" },
-              { label: "Materiaal type", value: "PS" },
-              { label: "Hengelslot", value: "Straight 25" }
+              { label: pc.specs.cellsPerM2, value: "525" },
+              { label: pc.specs.plugsPerTray, value: "84" },
+              { label: pc.specs.traysPerBox, value: "8" },
+              { label: pc.specs.plugsPerBox, value: "672" },
+              { label: pc.specs.boxesPerPallet, value: "30" },
+              { label: pc.specs.traysPerPallet, value: "240" },
+              { label: pc.specs.plugsPerPallet, value: "20.160" },
+              { label: pc.specs.bottomHoles, value: "1 x 9" },
+              { label: pc.specs.lxw, value: "7 x 12" },
+              { label: pc.specs.materialType, value: "PS" },
+              { label: pc.specs.lockType, value: "Straight 25" }
             ]}
             locale={locale}
           />
@@ -456,26 +578,26 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
           <ProductDetail
             t={t}
             id="tray104"
-            title="Tray-104st: Paperbus Steenwol Pluggen (104)"
-            subtitle="Geavanceerde trays voor optimale wortelontwikkeling"
-            description="Onze paperbus steenwol pluggen tray met 104 cellen biedt uitstekende groeiomstandigheden voor zaailingen. Elke plug is verpakt in Ellepot FP 12+ papier voor optimale wortelontwikkeling en het succes bij het overplanten. Verpakking: 7 trays per doos."
+            title={pc.tray104Title}
+            subtitle={pc.tray104Subtitle}
+            description={pc.tray104Desc}
             imageSrc="/productAfbeeldingen/trays/tray104/steenwolplug-104tray-sfeer.webp"
             imagePosition="right"
             specs={[
-              { label: "Plug diameter", value: "3 cm" },
-              { label: "Afmetingen", value: "52.5 x 30.5 cm" },
-              { label: "Hoogte", value: "4 cm" },
+              { label: pc.specs.plugDiameter, value: "3 cm" },
+              { label: pc.specs.dimensions, value: "52.5 x 30.5 cm" },
+              { label: pc.specs.height, value: "4 cm" },
               { label: "CC", value: "34 cc" },
-              { label: "Cellen per m²", value: "649" },
-              { label: "Pluggen per tray", value: "104" },
-              { label: "Trays per doos", value: "7" },
-              { label: "Pluggen per doos", value: "728" },
-              { label: "Dozen per pallet", value: "30" },
-              { label: "Trays per pallet", value: "210" },
-              { label: "Pluggen per pallet", value: "21.840" },
-              { label: "Bodemgaten", value: "1 x 11" },
-              { label: "l x b", value: "8 x 13" },
-              { label: "Materiaal type", value: "PS" }
+              { label: pc.specs.cellsPerM2, value: "649" },
+              { label: pc.specs.plugsPerTray, value: "104" },
+              { label: pc.specs.traysPerBox, value: "7" },
+              { label: pc.specs.plugsPerBox, value: "728" },
+              { label: pc.specs.boxesPerPallet, value: "30" },
+              { label: pc.specs.traysPerPallet, value: "210" },
+              { label: pc.specs.plugsPerPallet, value: "21.840" },
+              { label: pc.specs.bottomHoles, value: "1 x 11" },
+              { label: pc.specs.lxw, value: "8 x 13" },
+              { label: pc.specs.materialType, value: "PS" }
             ]}
             locale={locale}
           />
@@ -502,25 +624,25 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
           <ProductDetail
             t={t}
             id="insertsheets-ldpe"
-            title="Inlegvellen 60x80cm LDPE"
-            subtitle="Extra bescherming voor uw producten"
-            description="Onze transparante inlegvellen zijn ontworpen om extra bescherming en organisatie te bieden in onze transportdozen. Ze helpen bij het scheiden van lagen producten en zorgen voor stabiliteit tijdens transport. Afmetingen: 60 x 80 cm, 20 mu LDPE kwaliteit. Verkocht per 500 stuks."
+            title={pc.ldpeTitle}
+            subtitle={pc.ldpeSubtitle}
+            description={pc.ldpeDesc}
             imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             imagePosition="right"
             showSpecs={false}
-            badges={["Transparant", "Lichtgewicht", "LDPE"]}
+            badges={pc.ldpeBadges}
             locale={locale}
           />
 
           <ProductDetail
             t={t}
             id="insertsheets-hdpe"
-            title="Inlegvellen 40x60cm HDPE"
-            subtitle="Duurzame en stevige bescherming"
-            description="Onze HDPE inlegvellen bieden extra stevigheid en bescherming voor uw producten tijdens transport. Perfect voor zwaardere producten. Afmetingen: 40 x 60 cm, HDPE kwaliteit. Verkocht per 500 stuks."
+            title={pc.hdpeTitle}
+            subtitle={pc.hdpeSubtitle}
+            description={pc.hdpeDesc}
             imageSrc="/productAfbeeldingen/inlegvellen/lumorahorticulture-inlegvellen-transparant.jpg"
             showSpecs={false}
-            badges={["Transparant", "Stevig", "HDPE"]}
+            badges={pc.hdpeBadges}
             locale={locale}
           />
           
@@ -853,14 +975,14 @@ function ProductDetail({
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  Bestel nu
+                  {locale === 'de' ? 'Jetzt bestellen' : locale === 'en' ? 'Order now' : 'Bestel nu'}
                 </Link>
 
                 <Link
                   href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(title)}`}
                   className="inline-flex items-center justify-center px-6 py-3 text-white font-semibold bg-lumora-dark hover:bg-lumora-dark/90 transition-all duration-300 group text-sm md:text-base border-2 border-lumora-dark rounded-lg shadow-soft hover:shadow-soft-md"
                 >
-                  <span>🏢 Zakelijk Bestellen (B2B)</span>
+                  <span>🏢 {locale === 'de' ? 'Geschäftlich Bestellen (B2B)' : locale === 'en' ? 'Business Orders (B2B)' : 'Zakelijk Bestellen (B2B)'}</span>
                   <svg
                     className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -951,7 +1073,7 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
                       hover:shadow-soft-md transition-all duration-300
                       font-semibold text-base sm:text-lg group"
             >
-              <span>🏢 Zakelijk Bestellen (B2B)</span>
+              <span>🏢 {locale === 'de' ? 'Geschäftlich Bestellen (B2B)' : locale === 'en' ? 'Business Orders (B2B)' : 'Zakelijk Bestellen (B2B)'}</span>
               <svg className="ml-2 -mr-1 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
