@@ -9,6 +9,7 @@ import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
 import { AdminNotificationEmail } from '@/emails/AdminNotification';
 import { RecoverySuccessNotification } from '@/emails/RecoverySuccessNotification';
 import { trackServerSideConversion } from '@/lib/google-ads';
+import { sendCapiEvent } from '@/lib/meta-capi';
 import React from 'react';
 
 export const dynamic = 'force-dynamic';
@@ -109,6 +110,37 @@ export async function POST(request: NextRequest) {
         paymentId,
         order.customer_email
       );
+
+      // Meta Conversions API — Purchase event (dedup via event_id = order._id)
+      try {
+        const shipping = order.shipping_address as any;
+        const [firstName, ...rest] = (order.customer_name || '').split(' ');
+        const lastName = rest.join(' ') || undefined;
+        await sendCapiEvent({
+          eventName: 'Purchase',
+          eventId: `purchase_${order._id}`,
+          eventSourceUrl: process.env.NEXT_PUBLIC_BASE_URL
+            ? `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/conversion?order_id=${order._id}`
+            : undefined,
+          userData: {
+            email: order.customer_email,
+            phone: order.customer_phone || undefined,
+            firstName: firstName || undefined,
+            lastName,
+            city: shipping?.city,
+            zip: shipping?.postal_code || shipping?.postalCode,
+            country: (shipping?.country || 'nl').slice(0, 2).toLowerCase(),
+          },
+          customData: {
+            currency: 'EUR',
+            value: order.total_amount,
+            order_id: order.order_number || order._id,
+            transaction_id: paymentId,
+          },
+        });
+      } catch (err) {
+        console.error('Meta CAPI Purchase failed (non-blocking):', err);
+      }
       try {
         console.log(`Processing emails for paid order ${order._id}`);
 

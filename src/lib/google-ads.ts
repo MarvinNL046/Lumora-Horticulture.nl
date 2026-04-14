@@ -17,10 +17,14 @@ declare global {
 }
 
 // Meta Pixel: fbq('track', ...) fires on all initialized pixels automatically.
-function fbqTrack(event: string, params?: Record<string, any>) {
+// When eventId is provided it is passed as the 4th arg so Meta can deduplicate
+// this event against the matching server-side Conversions API event.
+function fbqTrack(event: string, params?: Record<string, any>, eventId?: string) {
   if (typeof window === 'undefined' || typeof window.fbq !== 'function') return;
   try {
-    if (params) {
+    if (eventId) {
+      window.fbq('track', event, params ?? {}, { eventID: eventId });
+    } else if (params) {
       window.fbq('track', event, params);
     } else {
       window.fbq('track', event);
@@ -76,13 +80,19 @@ export function trackPurchase(
     ],
   });
 
-  fbqTrack('Purchase', {
-    value,
-    currency: 'EUR',
-    content_type: 'product',
-    order_id: orderId,
-    transaction_id: transactionId || orderId,
-  });
+  fbqTrack(
+    'Purchase',
+    {
+      value,
+      currency: 'EUR',
+      content_type: 'product',
+      order_id: orderId,
+      transaction_id: transactionId || orderId,
+    },
+    // event_id must match the server-side CAPI event for deduplication.
+    // CAPI uses `purchase_${order._id}` — conversion page passes order_id as orderId.
+    `purchase_${orderId}`
+  );
 
   console.log('Purchase conversion tracked:', {
     orderId,
