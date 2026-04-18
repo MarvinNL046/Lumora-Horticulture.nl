@@ -3,7 +3,7 @@ import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
 import { getPaymentStatus } from '@/lib/mollie';
-import { Resend } from 'resend';
+import { resend, EMAIL_FROM, EMAIL_REPLY_TO, EMAIL_NOTIFICATION_TO } from '@/lib/resend';
 import { render } from '@react-email/components';
 import { OrderConfirmationEmail } from '@/emails/OrderConfirmation';
 import { AdminNotificationEmail } from '@/emails/AdminNotification';
@@ -13,8 +13,6 @@ import { sendCapiEvent } from '@/lib/meta-capi';
 import React from 'react';
 
 export const dynamic = 'force-dynamic';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 /**
  * POST /api/webhooks/mollie
  * Mollie webhook voor betaling updates
@@ -198,8 +196,8 @@ export async function POST(request: NextRequest) {
         );
 
         await resend.emails.send({
-          from: 'Lumora Horticulture <info@lumorahorticulture.com>',
-          replyTo: 'info@lumorahorticulture.com',
+          from: EMAIL_FROM,
+          replyTo: EMAIL_REPLY_TO,
           to: order.customer_email,
           subject: `Bevestiging bestelling ${order.order_number || order._id} - Lumora Horticulture`,
           html: customerEmailHtml,
@@ -242,9 +240,9 @@ export async function POST(request: NextRequest) {
         );
 
         await resend.emails.send({
-          from: 'Lumora Webshop <info@lumorahorticulture.com>',
-          replyTo: 'info@lumorahorticulture.com',
-          to: 'info@lumorahorticulture.com',
+          from: EMAIL_FROM,
+          replyTo: EMAIL_REPLY_TO,
+          to: EMAIL_NOTIFICATION_TO,
           subject: `🔔 Nieuwe bestelling ${order.order_number || order._id} - €${totalAmount.toFixed(2)}`,
           html: adminEmailHtml,
         });
@@ -284,9 +282,9 @@ export async function POST(request: NextRequest) {
           );
 
           await resend.emails.send({
-            from: 'Lumora Recovery System <info@lumorahorticulture.com>',
-            replyTo: 'info@lumorahorticulture.com',
-            to: 'info@lumorahorticulture.com',
+            from: EMAIL_FROM,
+            replyTo: EMAIL_REPLY_TO,
+            to: EMAIL_NOTIFICATION_TO,
             subject: `🎉 Recovery succesvol! ${orderNumber || order._id} - €${totalAmount.toFixed(2)} teruggewonnen`,
             html: recoveryEmailHtml,
           });
