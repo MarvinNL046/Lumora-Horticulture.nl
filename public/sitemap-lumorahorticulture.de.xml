@@ -31,6 +31,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://lumorahorticulture.de/admin/metrics/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://lumorahorticulture.de/anwendungen/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
