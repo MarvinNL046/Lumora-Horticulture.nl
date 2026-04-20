@@ -492,6 +492,46 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
               </div>
             )}
 
+            {/* Grower testimonials — placed right where hesitation sets in
+                (after "why choose" claims but before pricing). Social proof
+                on the PDP is the single highest-converting addition for a
+                B2B product page. Copy matches the homepage testimonials so
+                we don't introduce new unverified claims. */}
+            <div className="bg-white rounded-xl p-5 mb-6 border border-lumora-dark/10">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex text-amber-400 text-sm">★★★★★</div>
+                <span className="text-sm font-semibold text-lumora-dark">
+                  {locale === 'de' ? '4,92 — vertraut von 500+ Gärtnern' : locale === 'en' ? '4.92 — trusted by 500+ growers' : '4,92 — vertrouwd door 500+ kwekers'}
+                </span>
+              </div>
+              <div className="space-y-3">
+                <figure className="border-l-2 border-lumora-green-500 pl-3 py-1">
+                  <blockquote className="text-sm text-lumora-dark/80 italic leading-relaxed">
+                    {locale === 'de'
+                      ? '„Seit dem Wechsel zu Lumora Paper Plugs brauchen wir 40% weniger Arbeitszeit beim Umtopfen. Qualität ist konsistent und die Anwachsrate ist hervorragend."'
+                      : locale === 'en'
+                      ? '"Since switching to Lumora Paper Plugs, we need 40% less labor time for potting. Quality is consistent and strike rate is excellent."'
+                      : '"Sinds we overgestapt zijn op Lumora Paper Plugs hebben we 40% minder arbeidstijd nodig voor het oppotten. Kwaliteit is consistent en het aanslagpercentage is uitstekend."'}
+                  </blockquote>
+                  <figcaption className="text-xs text-lumora-dark/60 mt-1">
+                    — Jan van der Berg, Tomato Nursery Westland
+                  </figcaption>
+                </figure>
+                <figure className="border-l-2 border-lumora-green-500 pl-3 py-1">
+                  <blockquote className="text-sm text-lumora-dark/80 italic leading-relaxed">
+                    {locale === 'de'
+                      ? '„FP 12+ ist perfekt für unseren langen Anbauzyklus. Keine Schimmel, keine Probleme. Spitzenqualität zu fairem Preis."'
+                      : locale === 'en'
+                      ? '"FP 12+ technology is perfect for our long growing cycle. No mold, no problems. Top quality for a fair price."'
+                      : '"FP 12+ technologie is perfect voor onze lange teeltcyclus. Geen schimmel, geen problemen. Topkwaliteit voor een eerlijke prijs."'}
+                  </blockquote>
+                  <figcaption className="text-xs text-lumora-dark/60 mt-1">
+                    — Klaus Müller, Baumschule Müller
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
             {/* Staffelkorting Tabel */}
             <div className="bg-gradient-to-br from-lumora-green-500/10 to-lumora-green-600/5 rounded-2xl p-6 border-2 border-lumora-green-500/20 mb-6">
               <h3 className="text-xl font-display font-semibold text-lumora-dark mb-4 flex items-center gap-2">
