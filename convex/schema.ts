@@ -67,12 +67,20 @@ export default defineSchema({
     locale: v.optional(v.string()),
     recovery_email_sent_at: v.optional(v.number()),
     recovery_attempts: v.optional(v.number()),
+    delivery_preference: v.optional(v.any()),
+    shipment_id: v.optional(v.string()),
+    tracking_code: v.optional(v.string()),
+    tracking_url: v.optional(v.string()),
+    shipment_status: v.optional(v.string()),
+    shipped_at: v.optional(v.number()),
+    delivered_at: v.optional(v.number()),
     created_at: v.number(),
     updated_at: v.number(),
   })
     .index("by_payment_id", ["payment_id"])
     .index("by_email", ["customer_email"])
-    .index("by_status", ["status"]),
+    .index("by_status", ["status"])
+    .index("by_shipment_id", ["shipment_id"]),
 
   // ─── Order Items ────────────────────────────────────────────
   orderItems: defineTable({

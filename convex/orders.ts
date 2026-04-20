@@ -15,6 +15,7 @@ export const create = mutation({
     payment_id: v.optional(v.string()),
     payment_status: v.optional(v.string()),
     locale: v.optional(v.string()),
+    delivery_preference: v.optional(v.any()),
   },
   handler: async (ctx, args) => {
     const now = Date.now();
@@ -42,6 +43,13 @@ export const update = mutation({
     locale: v.optional(v.string()),
     recovery_email_sent_at: v.optional(v.number()),
     recovery_attempts: v.optional(v.number()),
+    delivery_preference: v.optional(v.any()),
+    shipment_id: v.optional(v.string()),
+    tracking_code: v.optional(v.string()),
+    tracking_url: v.optional(v.string()),
+    shipment_status: v.optional(v.string()),
+    shipped_at: v.optional(v.number()),
+    delivered_at: v.optional(v.number()),
   },
   handler: async (ctx, { id, ...fields }) => {
     // Remove undefined fields
@@ -68,6 +76,16 @@ export const getByPaymentId = query({
     return await ctx.db
       .query("orders")
       .withIndex("by_payment_id", (q) => q.eq("payment_id", payment_id))
+      .first();
+  },
+});
+
+export const getByShipmentId = query({
+  args: { shipment_id: v.string() },
+  handler: async (ctx, { shipment_id }) => {
+    return await ctx.db
+      .query("orders")
+      .withIndex("by_shipment_id", (q) => q.eq("shipment_id", shipment_id))
       .first();
   },
 });

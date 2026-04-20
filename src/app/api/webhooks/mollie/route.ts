@@ -10,6 +10,7 @@ import { AdminNotificationEmail } from '@/emails/AdminNotification';
 import { RecoverySuccessNotification } from '@/emails/RecoverySuccessNotification';
 import { trackServerSideConversion } from '@/lib/google-ads';
 import { sendCapiEvent } from '@/lib/meta-capi';
+import { createShipment, splitStreetNumber, getShipment, trackingUrl } from '@/lib/myparcel';
 import React from 'react';
 
 export const dynamic = 'force-dynamic';
@@ -101,6 +102,90 @@ export async function POST(request: NextRequest) {
 
     // Verzend emails alleen bij succesvolle betaling
     if (payment.status === 'paid') {
+      // Auto-label via MyParcel — non-blocking so email flow always runs even
+      // if the shipping API is flapping or the delivery_preference is absent.
+      try {
+        if (!order.shipment_id && process.env.MYPARCEL_API_KEY) {
+          const shipping = order.shipping_address as any;
+          const prefRaw = (order as any).delivery_preference as any;
+          const cc = String(shipping?.country || 'NL').slice(0, 2).toUpperCase() as 'NL' | 'BE' | 'DE';
+
+          // Fall back to today + standard delivery if picker was skipped. That
+          // still creates a draft MyParcel shipment the shop owner can review
+          // before franking, rather than losing the order silently.
+          const delivery = prefRaw
+            ? {
+                kind: (prefRaw.kind ?? 'home') as 'home' | 'pickup',
+                carrier: (prefRaw.carrier ?? 'postnl') as 'postnl' | 'dpd' | 'dhl' | 'dhlforyou',
+                date: (prefRaw.date ?? '') as string,
+                timeType: (prefRaw.time_type ?? prefRaw.timeType ?? 2) as 1 | 2 | 3,
+                pickup: prefRaw.pickup
+                  ? {
+                      locationName: prefRaw.pickup.locationName ?? prefRaw.pickup.location_name ?? '',
+                      locationCode: prefRaw.pickup.locationCode ?? prefRaw.pickup.location_code ?? '',
+                      street: prefRaw.pickup.street ?? '',
+                      number: prefRaw.pickup.number ?? '',
+                      postalCode: prefRaw.pickup.postalCode ?? prefRaw.pickup.postal_code ?? '',
+                      city: prefRaw.pickup.city ?? '',
+                      retailNetworkId: prefRaw.pickup.retailNetworkId ?? prefRaw.pickup.retail_network_id,
+                    }
+                  : undefined,
+              }
+            : { kind: 'home' as const, carrier: 'postnl' as const, date: '', timeType: 2 as const };
+
+          const rawStreet = String(shipping?.street || '');
+          const rawNumber = shipping?.houseNumber ?? shipping?.number ?? shipping?.house_number;
+          const split = rawNumber ? { street: rawStreet, number: String(rawNumber), suffix: undefined } : splitStreetNumber(rawStreet);
+
+          const shipment = await createShipment({
+            orderNumber: orderNumber || String(order._id),
+            recipient: {
+              cc,
+              postalCode: String(shipping?.postalCode || shipping?.postal_code || ''),
+              city: String(shipping?.city || ''),
+              street: split.street,
+              number: split.number,
+              numberSuffix: split.suffix,
+              person: order.customer_name || order.customer_email,
+              phone: order.customer_phone || undefined,
+              email: order.customer_email,
+            },
+            delivery,
+          });
+
+          // Fetch barcode in a follow-up call. If MyParcel hasn't assigned one
+          // yet (label not printed), we save shipment_id now and let the
+          // status webhook backfill tracking once the label exists.
+          let trackUrl: string | undefined;
+          let trackCode: string | undefined;
+          try {
+            const detail = await getShipment(shipment.id);
+            if (detail.barcode) {
+              trackCode = detail.barcode;
+              trackUrl = trackingUrl(
+                detail.barcode,
+                String(shipping?.postalCode || shipping?.postal_code || ''),
+                cc,
+                (order.locale as 'nl' | 'en' | 'de') || 'nl',
+              );
+            }
+          } catch (e) {
+            console.warn('MyParcel getShipment after create (barcode not ready yet):', e);
+          }
+
+          await convex.mutation(api.orders.update, {
+            id: order._id,
+            shipment_id: String(shipment.id),
+            tracking_code: trackCode,
+            tracking_url: trackUrl,
+            shipment_status: 'created',
+          });
+          console.log(`MyParcel shipment ${shipment.id} created for order ${order._id}`);
+        }
+      } catch (shipErr) {
+        console.error('MyParcel auto-label failed (non-blocking):', shipErr);
+      }
+
       // Track conversie voor Google Ads (server-side backup)
       trackServerSideConversion(
         order.order_number || order._id,
