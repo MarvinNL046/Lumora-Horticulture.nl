@@ -38,6 +38,11 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
   verification: {
     google: 'SpcTizFlTiNDDn9CpPqJ6O5Xjz2ivcEWKt3QHtxQgpQ',
+    other: {
+      // Facebook domain verification (.com via meta tag).
+      // .nl is verified via DNS TXT (Vercel DNS) and .de can be added here too.
+      'facebook-domain-verification': 'smn9gxgs2xuwrlx034u33s9srn94z8',
+    },
   },
 }
 
