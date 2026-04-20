@@ -923,27 +923,18 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                   </p>
                 </div>
 
-                {/* Trust Bar */}
+                {/* Trust bar — shipping speed lives in the urgency banner
+                    above, payment security lives in the method badges below,
+                    so this row only carries the facts not stated elsewhere. */}
                 <div className="bg-lumora-green-50 border border-lumora-green-200 rounded-xl p-3 mt-4">
-                  <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
+                  <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs">
                     <span className="flex items-center gap-1 text-lumora-dark">
                       <span className="text-lumora-green-500">✓</span>
-                      {locale === 'de' ? 'Gratis NL/BE/DE' : locale === 'en' ? 'Free NL/BE/DE' : 'Gratis NL/BE/DE'}
-                    </span>
-                    <span className="flex items-center gap-1 text-lumora-dark">
-                      <span className="text-lumora-green-500">🚚</span>
-                      {isNeemxPro
-                        ? (locale === 'de' ? 'Versand am selben Tag' : locale === 'en' ? 'Same day shipping' : 'Dezelfde dag verzonden')
-                        : (locale === 'de' ? 'Innerhalb 48 Std.' : locale === 'en' ? 'Within 48h' : 'Binnen 48 uur')
-                      }
+                      {locale === 'de' ? 'Gratis Versand NL/BE/DE' : locale === 'en' ? 'Free shipping NL/BE/DE' : 'Gratis verzending NL/BE/DE'}
                     </span>
                     <span className="flex items-center gap-1 text-lumora-dark">
                       <span className="text-lumora-green-500">↩</span>
-                      {locale === 'de' ? '14 Tage Rückgabe' : locale === 'en' ? '14 Days Return' : '14 dagen retour'}
-                    </span>
-                    <span className="flex items-center gap-1 text-lumora-dark">
-                      <span className="text-lumora-green-500">🔒</span>
-                      {locale === 'de' ? 'Sicher' : locale === 'en' ? 'Secure' : 'Veilig'}
+                      {locale === 'de' ? '14 Tage Rückgabe' : locale === 'en' ? '14 days return' : '14 dagen retour'}
                     </span>
                   </div>
                   {/* Return Policy Details for NEEMX PRO */}

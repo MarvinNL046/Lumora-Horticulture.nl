@@ -17,6 +17,7 @@ import dynamic from 'next/dynamic'
 const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
 const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
 const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false })
+const InAppBrowserBanner = dynamic(() => import('@/components/InAppBrowserBanner'), { ssr: false })
 
 // Initialize fonts
 const inter = Inter({ 
@@ -55,6 +56,11 @@ export default function RootLayout({
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans"><StackProvider app={stackClientApp}><StackTheme>
         <CartProvider>
+          {/* Warn Meta-ads traffic landing in the FB/IG in-app webview that
+              iDEAL / Apple Pay won't work there, and offer an "Open in
+              browser" jump-out. Invisible for normal browsers. */}
+          <InAppBrowserBanner />
+
           {/* Welcome email trigger for new users */}
           <WelcomeEmailTrigger />
 
