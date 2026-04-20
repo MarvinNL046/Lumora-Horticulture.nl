@@ -2,7 +2,10 @@ import Script from 'next/script'
 
 export default function MicrosoftClarity() {
   return (
-    <Script id="microsoft-clarity" strategy="afterInteractive">
+    // lazyOnload: Clarity's session recording is non-critical for first paint.
+    // Deferring frees ~200–400ms of main-thread work which was tanking INP
+    // (Clarity showed 2276ms; target <200ms).
+    <Script id="microsoft-clarity" strategy="lazyOnload">
       {`
         (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
