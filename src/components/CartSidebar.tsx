@@ -3,8 +3,6 @@
 import { useCart } from '@/contexts/CartContext';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useQuery } from 'convex/react';
-import { api } from '@/../convex/_generated/api';
 import { localizePathForLocale } from '@/lib/url-localizations';
 import {
   calculateDiscountedPrice,
@@ -14,12 +12,44 @@ import {
 } from '@/lib/volume-discount';
 import CartEmailPrompt from './CartEmailPrompt';
 
+// Static cross-sell candidates — the app has no ConvexProvider at layout
+// level (everything uses server-side fetchQuery elsewhere), so the cart
+// drawer needs self-contained product refs. Data matches the current Convex
+// seed; re-sync this block if prices/images change on the 4 relevant SKUs.
+const CROSSSELL_CATALOG: Record<string, {
+  product_id: string;
+  slug: string;
+  name: string;
+  name_en: string;
+  name_de: string;
+  price: number;
+  image_url: string;
+}> = {
+  'neemx-pro-10ml': {
+    product_id: 'jx7dpmbbm8q29wq3m55x2w5t85841z98',
+    slug: 'neemx-pro-10ml',
+    name: 'NEEMX PRO 10ml',
+    name_en: 'NEEMX PRO 10ml',
+    name_de: 'NEEMX PRO 10ml',
+    price: 24.95,
+    image_url: '/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp',
+  },
+  'paper-plug-tray-84': {
+    product_id: 'jx76b4wt3bt54fqr9111spngk5840sqm',
+    slug: 'paper-plug-tray-84',
+    name: 'Paper Plug Tray 84',
+    name_en: 'Paper Plug Tray 84',
+    name_de: 'Paper Plug Tray 84',
+    price: 84,
+    image_url: '/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp',
+  },
+};
+
 export default function CartSidebar() {
   const { items, addItem, removeItem, updateQuantity, getTotalItems, getTotalPrice, isCartOpen, setIsCartOpen } = useCart();
   const params = useParams();
   const router = useRouter();
   const locale = (params?.locale as string) || 'nl';
-  const allProducts = useQuery(api.products.list, {});
 
   const t = {
     cart: locale === 'de' ? 'Warenkorb' : locale === 'en' ? 'Shopping Cart' : 'Winkelwagen',
@@ -61,7 +91,7 @@ export default function CartSidebar() {
     }
     return cartSlugs.has(candidate) ? null : candidate;
   })();
-  const crossSellProduct = allProducts?.find((p) => p.slug === crossSellSlug) ?? null;
+  const crossSellProduct = crossSellSlug ? CROSSSELL_CATALOG[crossSellSlug] ?? null : null;
 
   return (
     <>
@@ -276,8 +306,8 @@ export default function CartSidebar() {
                   onClick={() => setIsCartOpen(false)}
                   className="block text-sm font-semibold text-lumora-dark hover:text-lumora-green-500 truncate"
                 >
-                  {locale === 'de' && crossSellProduct.name_de ? crossSellProduct.name_de :
-                   locale === 'en' && crossSellProduct.name_en ? crossSellProduct.name_en :
+                  {locale === 'de' ? crossSellProduct.name_de :
+                   locale === 'en' ? crossSellProduct.name_en :
                    crossSellProduct.name}
                 </Link>
                 <div className="text-xs text-lumora-dark/60">
@@ -288,7 +318,7 @@ export default function CartSidebar() {
                 onClick={() =>
                   addItem(
                     {
-                      product_id: crossSellProduct._id as string,
+                      product_id: crossSellProduct.product_id,
                       slug: crossSellProduct.slug,
                       name: crossSellProduct.name,
                       price: crossSellProduct.price,
