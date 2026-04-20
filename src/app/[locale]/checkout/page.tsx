@@ -23,6 +23,7 @@ import {
 } from '@/lib/volume-discount';
 import { trackBeginCheckout } from '@/lib/google-ads';
 import { useUser } from '@stackframe/stack';
+import DeliveryPicker, { type DeliverySelection } from '@/components/DeliveryPicker';
 
 interface SavedAddress {
   id: string
@@ -52,6 +53,15 @@ export default function CheckoutPage() {
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('NL');
+  const [delivery, setDelivery] = useState<DeliverySelection | null>(null);
+
+  // MyParcel accepts NL / BE / DE. We split 'Straat en huisnummer' into a
+  // leading street and trailing house number for the API — keep the original
+  // state as the single canonical input but derive the number for the picker.
+  const houseNumberFromStreet = (s: string): string => {
+    const m = s.match(/(\d+[a-zA-Z]?)\s*$/);
+    return m ? m[1] : '';
+  };
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [recoveryCartId, setRecoveryCartId] = useState<string | null>(null);
 
@@ -320,6 +330,22 @@ export default function CheckoutPage() {
             postal_code: postalCode,
             country,
           },
+          // Delivery preference from the MyParcel picker. Null means the
+          // user didn't interact with the picker — the backend falls back to
+          // next-available standard shipping when creating the MyParcel label.
+          delivery_preference: delivery
+            ? {
+                kind: delivery.kind,
+                carrier: delivery.carrier,
+                date: delivery.date || null,
+                time_start: delivery.timeStart || null,
+                time_end: delivery.timeEnd || null,
+                time_type: delivery.timeType,
+                price_cents: delivery.priceCents,
+                label: delivery.label,
+                pickup: delivery.pickup ?? null,
+              }
+            : null,
           items: items.map((item) => ({
             product_id: item.product_id,
             quantity: item.quantity,
@@ -739,6 +765,21 @@ export default function CheckoutPage() {
                         className="w-full px-4 py-2 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
                       />
                     </div>
+                  </div>
+
+                  {/* MyParcel delivery picker — surfaces available dates,
+                      morning/evening upgrades, and pickup points based on the
+                      address. Hidden until postcode + house number are valid
+                      so the API isn't hammered mid-typing. */}
+                  <div className="pt-2">
+                    <DeliveryPicker
+                      postalCode={postalCode}
+                      houseNumber={houseNumberFromStreet(street)}
+                      countryCode={(country as 'NL' | 'BE' | 'DE') ?? 'NL'}
+                      locale={locale as 'nl' | 'en' | 'de'}
+                      value={delivery}
+                      onChange={setDelivery}
+                    />
                   </div>
 
                   {/* Save address checkbox - only for logged-in users entering new address */}
