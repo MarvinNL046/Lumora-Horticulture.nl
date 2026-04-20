@@ -154,8 +154,12 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
   const translations = {
     hero: {
       badge: locale === 'nl' ? '15+ Jaar Betrouwbare Partner' : locale === 'de' ? '15+ Jahre Zuverlässiger Partner' : '15+ Years Trusted Partner',
-      title: locale === 'nl' ? 'Professionele Paper Plug Trays' : locale === 'de' ? 'Professionelle Paper Plug Trays' : 'Professional Paper Plug Trays',
-      subtitle: locale === 'nl' ? 'Voor de moderne teler die kiest voor kwaliteit' : locale === 'de' ? 'Für den modernen Züchter, der Qualität wählt' : 'For the modern grower who chooses quality',
+      // Rewritten to lead with a concrete grower outcome (95% strike rate) and
+      // a sharp second line, instead of a category label + filler tagline.
+      // Ready for A/B test against the original if desired — swap by reverting
+      // this edit only.
+      title: locale === 'nl' ? 'Paper plugs die 95% slagen.' : locale === 'de' ? 'Paper Plugs mit 95% Anwachsrate.' : 'The paper plug with a 95% strike rate.',
+      subtitle: locale === 'nl' ? 'Biologisch afbreekbaar. Binnen 48u geleverd.' : locale === 'de' ? 'Biologisch abbaubar. In 48 Std. geliefert.' : 'Biodegradable. Delivered in 48h.',
       description: locale === 'nl'
         ? 'Ellepot FP 12+ technologie met 12+ maanden stabiliteit. Biologisch afbreekbaar, schimmelwerend en zonder transplantatieschok. Vertrouwd door 500+ professionele kwekers in Nederland, België en Duitsland.'
         : locale === 'de'
