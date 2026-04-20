@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       items, // Array of { product_id, quantity }
       recovery_cart_id, // Optional: ID of abandoned cart being recovered
       locale = 'nl', // Locale for recovery emails (nl, en, de)
+      delivery_preference, // From DeliveryPicker: kind/carrier/date/timeType/pickup
     } = body;
 
     // Validatie
@@ -123,6 +124,7 @@ export async function POST(request: NextRequest) {
       status: 'pending',
       payment_status: 'pending',
       locale,
+      delivery_preference: delivery_preference ?? undefined,
     });
 
     // Voeg order items toe
