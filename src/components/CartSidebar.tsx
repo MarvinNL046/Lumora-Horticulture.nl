@@ -189,6 +189,31 @@ export default function CartSidebar() {
                             {formatPrice(itemTotal)}
                           </div>
                         </div>
+
+                        {/* Next-tier nudge — AOV lever.
+                            Shows the user exactly how many more pieces unlock
+                            the next bulk discount tier AND how much extra they
+                            save, so stacking quantity becomes the obvious move. */}
+                        {discountInfo.nextTier && (() => {
+                          const piecesToNext = discountInfo.nextTier.quantity - item.quantity;
+                          const nextTierPrice = item.price * (1 - discountInfo.nextTier.discount / 100);
+                          const savedAtNextTier = (item.price * discountInfo.nextTier.quantity) - (nextTierPrice * discountInfo.nextTier.quantity);
+                          const extraSavings = savedAtNextTier - itemDiscount;
+                          const copy =
+                            locale === 'de'
+                              ? `Noch ${piecesToNext} hinzufügen → ${discountInfo.nextTier.discount}% Rabatt (${formatPrice(extraSavings)} extra sparen)`
+                              : locale === 'en'
+                                ? `Add ${piecesToNext} more → ${discountInfo.nextTier.discount}% off (save ${formatPrice(extraSavings)} extra)`
+                                : `Nog ${piecesToNext} erbij → ${discountInfo.nextTier.discount}% korting (${formatPrice(extraSavings)} extra besparen)`;
+                          return (
+                            <button
+                              onClick={() => updateQuantity(item.product_id, discountInfo.nextTier!.quantity)}
+                              className="mt-2 w-full text-left text-xs bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-medium rounded-md px-2 py-1.5 transition-colors"
+                            >
+                              {copy}
+                            </button>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
