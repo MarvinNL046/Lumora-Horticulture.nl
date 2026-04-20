@@ -6,7 +6,7 @@ type Locale = 'nl' | 'en' | 'de';
 
 export interface DeliverySelection {
   kind: 'home' | 'pickup';
-  carrier: 'postnl';
+  carrier: 'postnl' | 'dpd' | 'dhl' | 'ups';
   date: string;          // YYYY-MM-DD
   timeStart: string;     // HH:MM:SS
   timeEnd: string;       // HH:MM:SS
@@ -30,7 +30,7 @@ interface Props {
   countryCode: 'NL' | 'BE' | 'DE';
   locale: Locale;
   value: DeliverySelection | null;
-  onChange: (value: DeliverySelection) => void;
+  onChange: (value: DeliverySelection | null) => void;
 }
 
 interface DeliveryTime {
@@ -60,6 +60,8 @@ const COPY: Record<Locale, Record<string, string>> = {
     loading: 'Bezorgopties ophalen…',
     missing: 'Vul postcode en huisnummer in om bezorgopties te zien.',
     error: 'Bezorgopties konden niet geladen worden. Standaard verzending wordt gebruikt.',
+    carrierLabel: 'Vervoerder',
+    carrierUnavailable: 'Deze vervoerder is niet beschikbaar voor dit adres.',
     home: 'Thuisbezorging',
     pickup: 'Afhaalpunt',
     free: 'Gratis',
@@ -76,6 +78,8 @@ const COPY: Record<Locale, Record<string, string>> = {
     loading: 'Loading delivery options…',
     missing: 'Enter postcode and house number to see delivery options.',
     error: "Delivery options couldn't be loaded. Standard shipping will be used.",
+    carrierLabel: 'Carrier',
+    carrierUnavailable: "This carrier isn't available for this address.",
     home: 'Home delivery',
     pickup: 'Pickup point',
     free: 'Free',
@@ -92,6 +96,8 @@ const COPY: Record<Locale, Record<string, string>> = {
     loading: 'Lieferoptionen werden geladen…',
     missing: 'Bitte Postleitzahl und Hausnummer eingeben, um Lieferoptionen zu sehen.',
     error: 'Lieferoptionen konnten nicht geladen werden. Standardversand wird verwendet.',
+    carrierLabel: 'Paketdienst',
+    carrierUnavailable: 'Dieser Paketdienst ist für diese Adresse nicht verfügbar.',
     home: 'Haustürlieferung',
     pickup: 'Abholpunkt',
     free: 'Kostenlos',
@@ -104,6 +110,18 @@ const COPY: Record<Locale, Record<string, string>> = {
     awayText: 'km',
   },
 };
+
+type Carrier = 'postnl' | 'dpd' | 'dhl' | 'ups';
+
+// MyParcel's active carrier set for this account. PostNL first (default for
+// NL, biggest pickup network), DHL second (speed), DPD third (BE/DE), UPS
+// fourth (EU-wide B2B).
+const CARRIERS: Array<{ id: Carrier; label: string; color: string }> = [
+  { id: 'postnl', label: 'PostNL', color: '#EC6608' },
+  { id: 'dhl', label: 'DHL', color: '#D40511' },
+  { id: 'dpd', label: 'DPD', color: '#DC0032' },
+  { id: 'ups', label: 'UPS', color: '#351C15' },
+];
 
 const formatDate = (iso: string, locale: Locale) => {
   try {
@@ -123,6 +141,15 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
   const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
   const [delivery, setDelivery] = useState<DeliveryDate[]>([]);
   const [pickups, setPickups] = useState<PickupPoint[]>([]);
+  const [carrier, setCarrier] = useState<Carrier>('postnl');
+
+  // Clear the current selection when the carrier changes — the stored
+  // carrier on `value` would otherwise be out of sync with what we're
+  // displaying and the POSTed preference would ship via the wrong courier.
+  useEffect(() => {
+    if (value && value.carrier !== carrier) onChange(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carrier]);
 
   const inputsValid = useMemo(() => {
     if (!postalCode || !houseNumber) return false;
@@ -143,7 +170,7 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
       postal_code: postalCode,
       number: houseNumber,
       cc: countryCode,
-      carrier: 'postnl',
+      carrier,
     });
     fetch(`/api/delivery-options?${qs}`)
       .then(async (res) => {
@@ -161,7 +188,7 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
         setStatus('error');
       });
     return () => { cancelled = true; };
-  }, [inputsValid, postalCode, houseNumber, countryCode]);
+  }, [inputsValid, postalCode, houseNumber, countryCode, carrier]);
 
   const homeSlots = useMemo(() => {
     // Flatten first 5 days of delivery options into a selectable list.
@@ -179,20 +206,6 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
       </div>
     );
   }
-  if (status === 'loading') {
-    return (
-      <div className="bg-lumora-cream/40 rounded-xl p-4 text-sm text-lumora-dark/70 border border-lumora-dark/10">
-        {t.loading}
-      </div>
-    );
-  }
-  if (status === 'error') {
-    return (
-      <div className="bg-amber-50 rounded-xl p-4 text-sm text-amber-900 border border-amber-200">
-        {t.error}
-      </div>
-    );
-  }
 
   const labelForSlot = (slot: DeliveryTime): string => {
     if (slot.type === 1) return t.morning;
@@ -203,8 +216,50 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
 
   return (
     <div className="space-y-4">
-      <h3 className="text-base font-semibold text-lumora-dark">{t.heading}</h3>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h3 className="text-base font-semibold text-lumora-dark">{t.heading}</h3>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-lumora-dark/60 hidden sm:inline">{t.carrierLabel}</span>
+          <div className="inline-flex rounded-xl bg-lumora-cream/40 p-1 border border-lumora-dark/10">
+            {CARRIERS.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setCarrier(c.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  carrier === c.id
+                    ? 'bg-white text-lumora-dark shadow-sm'
+                    : 'text-lumora-dark/60 hover:text-lumora-dark'
+                }`}
+                style={carrier === c.id ? { borderBottom: `2px solid ${c.color}` } : {}}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
+      {status === 'loading' && (
+        <div className="bg-lumora-cream/40 rounded-xl p-4 text-sm text-lumora-dark/70 border border-lumora-dark/10">
+          {t.loading}
+        </div>
+      )}
+
+      {status === 'error' && (
+        <div className="bg-amber-50 rounded-xl p-4 text-sm text-amber-900 border border-amber-200">
+          {t.carrierUnavailable}
+        </div>
+      )}
+
+      {status === 'ready' && homeSlots.length === 0 && pickups.length === 0 && (
+        <div className="bg-amber-50 rounded-xl p-4 text-sm text-amber-900 border border-amber-200">
+          {t.carrierUnavailable}
+        </div>
+      )}
+
+      {status === 'ready' && homeSlots.length > 0 && (
+      <>
       {/* Home delivery slots */}
       <fieldset className="border border-lumora-dark/10 rounded-xl bg-white divide-y divide-lumora-dark/5">
         <legend className="px-3 text-xs font-mono uppercase tracking-wider text-lumora-dark/60">{t.home}</legend>
@@ -227,7 +282,7 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
                 onChange={() =>
                   onChange({
                     kind: 'home',
-                    carrier: 'postnl',
+                    carrier,
                     date,
                     timeStart: slot.start,
                     timeEnd: slot.end,
@@ -253,9 +308,11 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
           );
         })}
       </fieldset>
+      </>
+      )}
 
       {/* Pickup points — only show first 5 by distance */}
-      {pickups.length > 0 && (
+      {status === 'ready' && pickups.length > 0 && (
         <fieldset className="border border-lumora-dark/10 rounded-xl bg-white divide-y divide-lumora-dark/5">
           <legend className="px-3 text-xs font-mono uppercase tracking-wider text-lumora-dark/60">{t.pickup}</legend>
           {pickups.slice(0, 5).map((pp, idx) => {
@@ -273,7 +330,7 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
                   onChange={() =>
                     onChange({
                       kind: 'pickup',
-                      carrier: 'postnl',
+                      carrier,
                       date: '',
                       timeStart: '',
                       timeEnd: '',

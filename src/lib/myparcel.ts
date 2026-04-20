@@ -66,7 +66,7 @@ export async function getDeliveryOptions(params: {
   postalCode: string;
   houseNumber: string;
   countryCode?: 'NL' | 'BE' | 'DE';
-  carrier?: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou';
+  carrier?: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou' | 'ups';
 }): Promise<DeliveryDate[]> {
   const qs = new URLSearchParams({
     platform: 'myparcel',
@@ -105,7 +105,7 @@ export async function getPickupPoints(params: {
   postalCode: string;
   houseNumber: string;
   countryCode?: 'NL' | 'BE' | 'DE';
-  carrier?: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou';
+  carrier?: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou' | 'ups';
 }): Promise<DropOffPoint[]> {
   const qs = new URLSearchParams({
     platform: 'myparcel',
@@ -122,11 +122,12 @@ export async function getPickupPoints(params: {
 // MyParcel expects a vendor-specific content-type on this endpoint.
 const SHIPMENT_CT = 'application/vnd.shipment+json;version=1.1;charset=utf-8';
 
-const CARRIER_ID: Record<'postnl' | 'dpd' | 'dhl' | 'dhlforyou', number> = {
+const CARRIER_ID: Record<'postnl' | 'dpd' | 'dhl' | 'dhlforyou' | 'ups', number> = {
   postnl: 1,
   dpd: 3,
   dhl: 8,
   dhlforyou: 8,
+  ups: 13,
 };
 
 export interface CreateShipmentInput {
@@ -144,7 +145,7 @@ export interface CreateShipmentInput {
   };
   delivery: {
     kind: 'home' | 'pickup';
-    carrier: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou';
+    carrier: 'postnl' | 'dpd' | 'dhl' | 'dhlforyou' | 'ups';
     date: string;       // YYYY-MM-DD
     timeType: 1 | 2 | 3;
     pickup?: {

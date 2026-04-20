@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const postalCode = url.searchParams.get('postal_code')?.trim() ?? '';
   const houseNumber = url.searchParams.get('number')?.trim() ?? '';
   const cc = (url.searchParams.get('cc') ?? 'NL').toUpperCase() as 'NL' | 'BE' | 'DE';
-  const carrier = (url.searchParams.get('carrier') ?? 'postnl') as 'postnl' | 'dpd' | 'dhl' | 'dhlforyou';
+  const carrier = (url.searchParams.get('carrier') ?? 'postnl') as 'postnl' | 'dpd' | 'dhl' | 'dhlforyou' | 'ups';
 
   // Basic input sanity
   const isValidNL = cc === 'NL' && /^[0-9]{4}\s?[A-Za-z]{2}$/.test(postalCode);

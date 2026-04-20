@@ -12,6 +12,7 @@ const CARRIER_LABEL: Record<string, string> = {
   dpd: 'DPD',
   dhl: 'DHL',
   dhlforyou: 'DHL for You',
+  ups: 'UPS',
 };
 
 const SHIPPED_SUBJECT: Record<'nl' | 'en' | 'de', (n: string) => string> = {
