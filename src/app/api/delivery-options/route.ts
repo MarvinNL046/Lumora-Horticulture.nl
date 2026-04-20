@@ -27,10 +27,39 @@ export async function GET(req: Request) {
 
   try {
     // Fire both in parallel — MyParcel allows concurrent requests per key.
-    const [delivery, pickups] = await Promise.all([
+    const [delivery, rawPickups] = await Promise.all([
       getDeliveryOptions({ postalCode, houseNumber, countryCode: cc, carrier }),
       getPickupPoints({ postalCode, houseNumber, countryCode: cc, carrier }).catch(() => []),
     ]);
+
+    // MyParcel's pickup schema changed between v2.x: the display name can be
+    // `location`, `location_name`, or nested under `address`, and `distance`
+    // sometimes ships as a string. Normalise here so the DeliveryPicker
+    // doesn't have to know.
+    const pickups = (rawPickups as any[]).map((p) => {
+      const addr = (p && p.address) || {};
+      const street = p.street ?? addr.street ?? '';
+      const number = p.number ?? addr.number ?? '';
+      const number_suffix = p.number_suffix ?? addr.number_suffix ?? '';
+      const postal_code = p.postal_code ?? addr.postal_code ?? '';
+      const city = p.city ?? addr.city ?? '';
+      const name = p.location_name ?? p.location ?? p.name ?? '';
+      const distRaw = p.distance ?? p.distance_m ?? 0;
+      const distance = typeof distRaw === 'number'
+        ? distRaw
+        : Number(String(distRaw).replace(/[^\d.]/g, '')) || 0;
+      return {
+        location_code: p.location_code ?? p.id ?? '',
+        location_name: name,
+        street,
+        number: String(number) + (number_suffix ? number_suffix : ''),
+        postal_code,
+        city,
+        distance,
+        retail_network_id: p.retail_network_id,
+      };
+    });
+
     return NextResponse.json(
       { delivery, pickups },
       // Cache for 10 min at the edge; cutoff times shift slowly but 10 min is

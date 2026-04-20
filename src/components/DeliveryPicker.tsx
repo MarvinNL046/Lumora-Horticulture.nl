@@ -293,9 +293,14 @@ export default function DeliveryPicker({ postalCode, houseNumber, countryCode, l
                   }
                 />
                 <div className="flex-1 text-sm">
-                  <div className="font-medium text-lumora-dark">{pp.location_name}</div>
+                  <div className="font-medium text-lumora-dark">
+                    {pp.location_name || `${pp.street} ${pp.number}`.trim() || pp.city || '—'}
+                  </div>
                   <div className="text-xs text-lumora-dark/60">
-                    {pp.street} {pp.number}, {pp.city} · {(pp.distance / 1000).toFixed(1)} {t.awayText}
+                    {pp.street} {pp.number}{pp.street || pp.number ? ',' : ''} {pp.city}
+                    {Number.isFinite(pp.distance) && pp.distance > 0
+                      ? ` · ${(pp.distance / 1000).toFixed(1)} ${t.awayText}`
+                      : ''}
                   </div>
                 </div>
                 <div className="text-sm font-semibold text-lumora-green-600">{t.free}</div>
