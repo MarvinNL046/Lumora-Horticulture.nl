@@ -902,19 +902,19 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                 <button
                   onClick={handleBuyNow}
                   disabled={addingToCart || product.availability !== 'in stock'}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-soft hover:shadow-soft-md disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full border border-lumora-dark/20 text-lumora-dark py-3 rounded-xl font-medium hover:bg-lumora-dark/5 transition-all duration-300 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
                   {t.buyNow}
                 </button>
 
-                {/* B2B / Zakelijk Bestellen Knop */}
+                {/* B2B link — de-emphasised. Ad traffic is B2C; the big dark
+                    'Zakelijk Bestellen' button was out-shouting the actual
+                    buy CTA and confusing single-unit buyers. Keep it reachable
+                    for real wholesale but visually tertiary. */}
                 <div className="pt-4 border-t border-lumora-dark/10">
                   <Link
                     href={localizePathForLocale('/contact', locale)}
-                    className="block w-full bg-gradient-to-r from-lumora-dark to-lumora-dark/90 text-white py-4 rounded-xl font-semibold text-lg hover:from-lumora-dark/90 hover:to-lumora-dark transition-all duration-300 shadow-soft hover:shadow-soft-md text-center"
+                    className="block text-center text-sm text-lumora-dark/60 hover:text-lumora-dark underline underline-offset-4"
                   >
                     {t.b2bButton}
                   </Link>
@@ -1028,10 +1028,15 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
               </div>
             )}
           </div>
+          {/* Swap primary/secondary: cart-first puts users through the
+              drawer where the next-tier discount nudge + "Growers also add"
+              cross-sell live → protects AOV. The orange "Direct Afrekenen"
+              was previously the visually dominant CTA, siphoning single-unit
+              checkouts past all the up-sell surfaces. */}
           <button
             onClick={handleAddToCart}
             disabled={addingToCart || product.availability !== 'in stock'}
-            className="flex-1 border-2 border-lumora-green-500 text-lumora-green-500 py-3 px-3 rounded-xl font-semibold hover:bg-lumora-green-50 transition-all duration-300 disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm"
+            className="flex-[2] bg-lumora-green-500 text-white py-3 px-3 rounded-xl font-semibold hover:bg-lumora-green-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm shadow-soft"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -1043,11 +1048,8 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
           <button
             onClick={handleBuyNow}
             disabled={addingToCart || product.availability !== 'in stock'}
-            className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm"
+            className="flex-1 border border-lumora-dark/20 text-lumora-dark py-3 px-3 rounded-xl font-medium hover:bg-lumora-dark/5 transition-all duration-300 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
             {t.buyNow}
           </button>
         </div>

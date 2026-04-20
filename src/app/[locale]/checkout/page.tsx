@@ -2,6 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+
+// Runtime title fix — /checkout inherits the homepage title from root layout
+// because this is a client component (generateMetadata can't live here).
+// Setting document.title client-side keeps GA4 page_title attribution correct
+// and stops the checkout being logged as a homepage pageview in analytics.
+const applyTitle = (locale: string) => {
+  if (typeof document === 'undefined') return;
+  const base = 'Lumora Horticulture';
+  document.title = locale === 'de' ? `Kasse · ${base}` : locale === 'en' ? `Checkout · ${base}` : `Afrekenen · ${base}`;
+};
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 import { localizePathForLocale } from '@/lib/url-localizations';
@@ -32,6 +42,8 @@ export default function CheckoutPage() {
   const locale = (params?.locale as string) || 'nl';
   const { items, getTotalPrice, clearCart, updateQuantity, removeItem } = useCart();
   const user = useUser();
+
+  useEffect(() => { applyTitle(locale); }, [locale]);
 
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -835,13 +847,19 @@ export default function CheckoutPage() {
                 <p className="text-sm font-medium text-lumora-dark text-center mb-3">
                   {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                 </p>
+                {/* Payment badges reflect methods actually enabled in the
+                    Mollie dashboard — PayPal + Apple Pay were advertised but
+                    not configured, so users landing on Mollie saw fewer
+                    options than promised (trust killer, silent bounce).
+                    Verified 2026-04-20 from a live test order: iDEAL/Wero,
+                    Card (Visa/MC/Amex), Bancontact, KBC/CBC. */}
                 <div className="flex justify-center items-center gap-3 flex-wrap">
+                  <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
                   <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">Wero</span>
                   <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
-                  <span className="bg-[#003087] text-white text-sm font-bold px-3 py-1 rounded-lg">PayPal</span>
                   <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
                   <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
-                  <span className="bg-[#E52B50] text-white text-sm font-bold px-2.5 py-1 rounded-lg">Apple Pay</span>
+                  <span className="bg-[#007ACC] text-white text-sm font-bold px-3 py-1 rounded-lg">KBC/CBC</span>
                 </div>
                 <p className="text-xs text-lumora-dark/50 mt-3 text-center">
                   {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}
