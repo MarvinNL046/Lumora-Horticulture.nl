@@ -50,6 +50,7 @@ export const update = mutation({
     shipment_status: v.optional(v.string()),
     shipped_at: v.optional(v.number()),
     delivered_at: v.optional(v.number()),
+    shipped_email_sent_at: v.optional(v.number()),
   },
   handler: async (ctx, { id, ...fields }) => {
     // Remove undefined fields

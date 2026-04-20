@@ -214,9 +214,15 @@ export async function createShipment(input: CreateShipmentInput): Promise<Create
                   city: delivery.pickup.city,
                   street: delivery.pickup.street,
                   number: delivery.pickup.number,
-                  location_code: delivery.pickup.locationCode,
-                  location: delivery.pickup.locationName,
-                  retail_network_id: delivery.pickup.retailNetworkId ?? 'PNPNL-01',
+                  location_name: delivery.pickup.locationName,
+                  // location_code + retail_network_id are required for BE;
+                  // NL pickups identify by location_name + address only.
+                  ...(recipient.cc === 'BE'
+                    ? {
+                        location_code: delivery.pickup.locationCode,
+                        retail_network_id: delivery.pickup.retailNetworkId ?? 'LD-01',
+                      }
+                    : {}),
                 },
               }
             : {}),

@@ -321,6 +321,29 @@ export async function POST(request: NextRequest) {
             shippingAddress: shippingAddressObj,
             billingAddress: billingAddressObj,
             paymentId: paymentId,
+            deliveryPreference: ((order as any).delivery_preference
+              ? {
+                  kind: (order as any).delivery_preference.kind,
+                  carrier: (order as any).delivery_preference.carrier,
+                  date: (order as any).delivery_preference.date,
+                  timeStart: (order as any).delivery_preference.time_start,
+                  timeEnd: (order as any).delivery_preference.time_end,
+                  label: (order as any).delivery_preference.label,
+                  pickup: (order as any).delivery_preference.pickup
+                    ? {
+                        locationName:
+                          (order as any).delivery_preference.pickup.locationName ??
+                          (order as any).delivery_preference.pickup.location_name,
+                        street: (order as any).delivery_preference.pickup.street,
+                        number: (order as any).delivery_preference.pickup.number,
+                        postalCode:
+                          (order as any).delivery_preference.pickup.postalCode ??
+                          (order as any).delivery_preference.pickup.postal_code,
+                        city: (order as any).delivery_preference.pickup.city,
+                      }
+                    : null,
+                }
+              : null) as any,
           })
         );
 

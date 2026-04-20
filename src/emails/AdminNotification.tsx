@@ -42,6 +42,21 @@ interface AdminNotificationEmailProps {
     country: string;
   };
   paymentId?: string;
+  deliveryPreference?: {
+    kind: 'home' | 'pickup';
+    carrier: string;
+    date?: string | null;
+    timeStart?: string | null;
+    timeEnd?: string | null;
+    label?: string;
+    pickup?: {
+      locationName: string;
+      street: string;
+      number: string;
+      postalCode: string;
+      city: string;
+    } | null;
+  } | null;
 }
 
 export const AdminNotificationEmail = ({
@@ -69,6 +84,7 @@ export const AdminNotificationEmail = ({
   },
   billingAddress,
   paymentId = 'tr_12345abcde',
+  deliveryPreference,
 }: AdminNotificationEmailProps) => {
   return (
     <Html>
@@ -235,6 +251,44 @@ export const AdminNotificationEmail = ({
               </Text>
             </div>
           </Section>
+
+          {/* Bezorgvoorkeur van klant (MyParcel) */}
+          {deliveryPreference && (
+            <Section style={section} className="mobile-padding">
+              <Heading style={sectionTitle} className="mobile-heading">
+                📦 Door klant gekozen bezorgoptie
+              </Heading>
+              <div style={addressBox}>
+                <Text style={addressText}>
+                  <strong>
+                    {deliveryPreference.kind === 'pickup' ? 'Afhaalpunt' : 'Thuisbezorging'}
+                  </strong>{' '}
+                  ({deliveryPreference.carrier?.toUpperCase()})
+                  <br />
+                  {deliveryPreference.label || ''}
+                  {deliveryPreference.date && (
+                    <>
+                      <br />Datum: {deliveryPreference.date}
+                    </>
+                  )}
+                  {deliveryPreference.timeStart && deliveryPreference.timeEnd && (
+                    <>
+                      <br />Tijdsvak: {deliveryPreference.timeStart.slice(0, 5)}–{deliveryPreference.timeEnd.slice(0, 5)}
+                    </>
+                  )}
+                  {deliveryPreference.kind === 'pickup' && deliveryPreference.pickup && (
+                    <>
+                      <br />
+                      <strong>{deliveryPreference.pickup.locationName}</strong>
+                      <br />
+                      {deliveryPreference.pickup.street} {deliveryPreference.pickup.number},{' '}
+                      {deliveryPreference.pickup.postalCode} {deliveryPreference.pickup.city}
+                    </>
+                  )}
+                </Text>
+              </div>
+            </Section>
+          )}
 
           {/* Billing Address (if different) */}
           {billingAddress &&

@@ -74,6 +74,7 @@ export default defineSchema({
     shipment_status: v.optional(v.string()),
     shipped_at: v.optional(v.number()),
     delivered_at: v.optional(v.number()),
+    shipped_email_sent_at: v.optional(v.number()),
     created_at: v.number(),
     updated_at: v.number(),
   })

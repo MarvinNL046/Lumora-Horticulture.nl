@@ -32,6 +32,8 @@ export default async function OrdersPage({ params }: { params: { locale: string 
     shipped: locale === 'de' ? 'Versendet' : locale === 'en' ? 'Shipped' : 'Verzonden',
     completed: locale === 'de' ? 'Abgeschlossen' : locale === 'en' ? 'Completed' : 'Voltooid',
     cancelled: locale === 'de' ? 'Storniert' : locale === 'en' ? 'Cancelled' : 'Geannuleerd',
+    trackParcel: locale === 'de' ? 'Paket verfolgen' : locale === 'en' ? 'Track parcel' : 'Volg je pakket',
+    deliveryChoice: locale === 'de' ? 'Gewählte Lieferung' : locale === 'en' ? 'Chosen delivery' : 'Gekozen bezorgoptie',
   }
 
   const getStatusLabel = (status: string) => {
@@ -124,6 +126,26 @@ export default async function OrdersPage({ params }: { params: { locale: string 
                 </div>
 
                 <div className="p-6">
+                  {(order.tracking_url || order.delivery_preference) && (
+                    <div className="mb-5 p-4 bg-lumora-cream/40 rounded-xl border border-lumora-dark/10">
+                      {order.delivery_preference?.label && (
+                        <div className="mb-3">
+                          <div className="text-xs font-mono uppercase tracking-wider text-lumora-dark/60 mb-1">{t.deliveryChoice}</div>
+                          <div className="text-sm text-lumora-dark">{order.delivery_preference.label}</div>
+                        </div>
+                      )}
+                      {order.tracking_url && (
+                        <a
+                          href={order.tracking_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-lumora-green-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-lumora-green-600 transition-colors"
+                        >
+                          {t.trackParcel} →
+                        </a>
+                      )}
+                    </div>
+                  )}
                   <div className="text-sm font-semibold text-lumora-dark/60 mb-3">{t.items}</div>
                   <div className="space-y-3">
                     {order.items.map((item: any, index: number) => (
