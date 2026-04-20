@@ -5,7 +5,10 @@ const PIXEL_IDS = ['1537235201740065', '2680887955624246'] as const
 export default function MetaPixel() {
   return (
     <>
-      <Script id="meta-pixel" strategy="afterInteractive">
+      {/* lazyOnload: fires once page is idle, keeps main thread free for INP.
+          PageView events queue on fbq (it's a stub that stores calls until
+          the real pixel loads), so we don't lose the initial PageView. */}
+      <Script id="meta-pixel" strategy="lazyOnload">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
