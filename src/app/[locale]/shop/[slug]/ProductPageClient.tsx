@@ -995,12 +995,14 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                     {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                   </p>
                   <div className="flex justify-center items-center gap-3 flex-wrap">
+                    <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
+                    <span className="bg-black text-white text-sm font-bold px-3 py-1 rounded-lg"> Pay</span>
+                    <span className="bg-white border border-gray-300 text-gray-800 text-sm font-bold px-3 py-1 rounded-lg">G Pay</span>
+                    <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
+                    <span className="bg-[#E30613] text-white text-sm font-bold px-3 py-1 rounded-lg">Belfius</span>
                     <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">Wero</span>
                     <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
-                    <span className="bg-[#003087] text-white text-sm font-bold px-3 py-1 rounded-lg">PayPal</span>
                     <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
-                    <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
-                    <span className="bg-[#E52B50] text-white text-sm font-bold px-2.5 py-1 rounded-lg">Apple Pay</span>
                   </div>
                   <p className="text-xs text-lumora-dark/50 mt-3 text-center">
                     {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}

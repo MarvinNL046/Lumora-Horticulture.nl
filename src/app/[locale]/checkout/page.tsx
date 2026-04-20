@@ -888,19 +888,18 @@ export default function CheckoutPage() {
                 <p className="text-sm font-medium text-lumora-dark text-center mb-3">
                   {locale === 'de' ? 'Sicher bezahlen mit:' : locale === 'en' ? 'Secure payment with:' : 'Veilig betalen met:'}
                 </p>
-                {/* Payment badges reflect methods actually enabled in the
-                    Mollie dashboard — PayPal + Apple Pay were advertised but
-                    not configured, so users landing on Mollie saw fewer
-                    options than promised (trust killer, silent bounce).
-                    Verified 2026-04-20 from a live test order: iDEAL/Wero,
-                    Card (Visa/MC/Amex), Bancontact, KBC/CBC. */}
+                {/* Payment badges must mirror methods actually enabled in
+                    Mollie — missing ones after click-through = trust killer. */}
                 <div className="flex justify-center items-center gap-3 flex-wrap">
                   <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">iDEAL</span>
+                  <span className="bg-black text-white text-sm font-bold px-3 py-1 rounded-lg"> Pay</span>
+                  <span className="bg-white border border-gray-300 text-gray-800 text-sm font-bold px-3 py-1 rounded-lg">G Pay</span>
+                  <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
+                  <span className="bg-[#E30613] text-white text-sm font-bold px-3 py-1 rounded-lg">Belfius</span>
+                  <span className="bg-[#007ACC] text-white text-sm font-bold px-3 py-1 rounded-lg">KBC/CBC</span>
                   <span className="bg-[#00A4E4] text-white text-sm font-bold px-3 py-1 rounded-lg">Wero</span>
                   <span className="bg-gray-800 text-white text-sm font-bold px-3 py-1 rounded-lg">VISA</span>
                   <span className="bg-[#FF5F00] text-white text-sm font-bold px-3 py-1 rounded-lg">Mastercard</span>
-                  <span className="bg-[#005B9A] text-white text-sm font-bold px-3 py-1 rounded-lg">Bancontact</span>
-                  <span className="bg-[#007ACC] text-white text-sm font-bold px-3 py-1 rounded-lg">KBC/CBC</span>
                 </div>
                 <p className="text-xs text-lumora-dark/50 mt-3 text-center">
                   {locale === 'de' ? 'Gesichert durch Mollie' : locale === 'en' ? 'Secured by Mollie' : 'Beveiligd door Mollie'}

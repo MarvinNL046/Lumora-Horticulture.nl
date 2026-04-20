@@ -400,19 +400,20 @@ export default function CartSidebar() {
                 : '⚡ Voor 16:00 besteld = Vandaag verzonden'}
             </p>
 
-            {/* Payment methods — only the ones actually enabled in Mollie.
-                PayPal was shown but not available at checkout (verified
-                2026-04-20), which caused users to bounce at the Mollie
-                method-select screen. */}
-            <div className="flex items-center justify-center gap-3 mb-3 py-2 px-3 bg-gray-50 rounded-lg">
-              <span className="text-xs text-lumora-dark/50">{locale === 'de' ? 'Bezahlen mit' : locale === 'en' ? 'Pay with' : 'Betaal met'}</span>
-              <div className="flex items-center gap-2">
-                <span className="bg-[#00A4E4] text-white text-xs font-bold px-2 py-0.5 rounded">iDEAL</span>
-                <span className="bg-[#00A4E4] text-white text-xs font-bold px-2 py-0.5 rounded">Wero</span>
-                <span className="bg-gray-800 text-white text-xs font-bold px-1.5 py-0.5 rounded">VISA</span>
-                <span className="bg-[#FF5F00] text-white text-xs font-bold px-1.5 py-0.5 rounded text-[10px]">MC</span>
-                <span className="bg-[#005B9A] text-white text-xs font-bold px-1.5 py-0.5 rounded">Bancontact</span>
-              </div>
+            {/* Payment methods — mirror what's actually enabled in Mollie.
+                Apple/Google Pay advertised here raise mobile conversion; they
+                only show on the Mollie method-select screen for supported
+                devices, so we're safe to list them for every visitor. */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-3 py-2 px-3 bg-gray-50 rounded-lg">
+              <span className="text-xs text-lumora-dark/50 mr-1">{locale === 'de' ? 'Bezahlen mit' : locale === 'en' ? 'Pay with' : 'Betaal met'}</span>
+              <span className="bg-[#00A4E4] text-white text-xs font-bold px-2 py-0.5 rounded">iDEAL</span>
+              <span className="bg-black text-white text-xs font-bold px-2 py-0.5 rounded"> Pay</span>
+              <span className="bg-white border border-gray-300 text-gray-800 text-xs font-bold px-2 py-0.5 rounded">G Pay</span>
+              <span className="bg-[#005B9A] text-white text-xs font-bold px-1.5 py-0.5 rounded">Bancontact</span>
+              <span className="bg-[#E30613] text-white text-xs font-bold px-1.5 py-0.5 rounded">Belfius</span>
+              <span className="bg-[#00A4E4] text-white text-xs font-bold px-2 py-0.5 rounded">Wero</span>
+              <span className="bg-gray-800 text-white text-xs font-bold px-1.5 py-0.5 rounded">VISA</span>
+              <span className="bg-[#FF5F00] text-white text-xs font-bold px-1.5 py-0.5 rounded text-[10px]">MC</span>
             </div>
 
             <button
