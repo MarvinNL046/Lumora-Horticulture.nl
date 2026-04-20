@@ -34,6 +34,54 @@ function fbqTrack(event: string, params?: Record<string, any>, eventId?: string)
   }
 }
 
+// Read Meta's fbp/fbc cookies from document.cookie for CAPI match quality.
+function readFbCookies(): { fbp?: string; fbc?: string } {
+  if (typeof document === 'undefined') return {};
+  const out: { fbp?: string; fbc?: string } = {};
+  for (const raw of document.cookie.split('; ')) {
+    const idx = raw.indexOf('=');
+    if (idx <= 0) continue;
+    const key = raw.slice(0, idx);
+    const val = decodeURIComponent(raw.slice(idx + 1));
+    if (key === '_fbp') out.fbp = val;
+    else if (key === '_fbc') out.fbc = val;
+  }
+  return out;
+}
+
+// Mirror a client-side Meta Pixel event to the server-side Conversions API so
+// iOS/Safari/ad-blocker users are still counted. Uses the same event_id as the
+// pixel call so Meta deduplicates the two events. Non-blocking, fire-and-forget.
+function sendCapiMirror(
+  eventName: 'ViewContent' | 'AddToCart' | 'InitiateCheckout' | 'Lead' | 'CompleteRegistration' | 'Subscribe',
+  eventId: string,
+  customData: Record<string, unknown>,
+  extraUserData?: Record<string, string>,
+) {
+  if (typeof window === 'undefined') return;
+  const { fbp, fbc } = readFbCookies();
+  const userData: Record<string, string> = { ...(extraUserData || {}) };
+  if (fbp) userData.fbp = fbp;
+  if (fbc) userData.fbc = fbc;
+
+  try {
+    fetch('/api/track/meta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName,
+        eventId,
+        customData,
+        userData,
+        eventSourceUrl: window.location.href,
+      }),
+      keepalive: true,
+    }).catch((err) => console.warn('CAPI mirror failed:', err));
+  } catch (err) {
+    console.warn('CAPI mirror throw:', err);
+  }
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -125,14 +173,18 @@ export function trackViewItem(product: Product) {
     ],
   });
 
-  fbqTrack('ViewContent', {
+  const eventId = `vc_${product.id}_${Date.now()}`;
+  const viewData = {
     content_type: 'product',
     content_ids: [product.id],
     content_name: product.name,
     content_category: product.category || 'Horticulture Products',
     value: product.price,
     currency: 'EUR',
-  });
+  };
+
+  fbqTrack('ViewContent', viewData, eventId);
+  sendCapiMirror('ViewContent', eventId, viewData);
 
   console.log('Product view tracked:', product.name);
 }
@@ -160,7 +212,8 @@ export function trackBeginCheckout(products: Product[], totalValue: number) {
     })),
   });
 
-  fbqTrack('InitiateCheckout', {
+  const eventId = `ic_${Date.now()}_${products.map((p) => p.id).join('-').slice(0, 40)}`;
+  const checkoutData = {
     content_type: 'product',
     content_ids: products.map((p) => p.id),
     contents: products.map((p) => ({
@@ -171,7 +224,10 @@ export function trackBeginCheckout(products: Product[], totalValue: number) {
     num_items: products.reduce((sum, p) => sum + (p.quantity || 1), 0),
     value: totalValue,
     currency: 'EUR',
-  });
+  };
+
+  fbqTrack('InitiateCheckout', checkoutData, eventId);
+  sendCapiMirror('InitiateCheckout', eventId, checkoutData);
 
   console.log('Begin checkout tracked:', { products, totalValue });
 }
@@ -201,7 +257,8 @@ export function trackAddToCart(product: Product) {
   });
 
   const qty = product.quantity || 1;
-  fbqTrack('AddToCart', {
+  const eventId = `atc_${product.id}_${qty}_${Date.now()}`;
+  const atcData = {
     content_type: 'product',
     content_ids: [product.id],
     content_name: product.name,
@@ -209,7 +266,10 @@ export function trackAddToCart(product: Product) {
     contents: [{ id: product.id, quantity: qty, item_price: product.price }],
     value: product.price * qty,
     currency: 'EUR',
-  });
+  };
+
+  fbqTrack('AddToCart', atcData, eventId);
+  sendCapiMirror('AddToCart', eventId, atcData);
 
   console.log('Add to cart tracked:', product.name);
 }
