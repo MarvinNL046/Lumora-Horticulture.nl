@@ -5,6 +5,7 @@ import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/../convex/_generated/api';
 import ProductPageClient from './ProductPageClient';
 import { isHiddenProductSlug } from '@/lib/hidden-products';
+import { ShopProductSchema, ShopBreadcrumbSchema } from '@/components/StructuredData';
 
 // Generate static params for all product slugs and locales
 export async function generateStaticParams() {
@@ -244,5 +245,50 @@ export default async function ProductPage({
     notFound();
   }
 
-  return <ProductPageClient locale={params.locale} productSlug={params.slug} />;
+  const product = await getProduct(params.slug);
+  if (!product) notFound();
+
+  const domains = {
+    nl: 'https://lumorahorticulture.nl',
+    en: 'https://lumorahorticulture.com',
+    de: 'https://lumorahorticulture.de',
+  } as const;
+  const shopPaths = {
+    nl: '/winkel/',
+    en: '/shop/',
+    de: '/shop/',
+  } as const;
+  const domain = domains[params.locale as keyof typeof domains] ?? domains.nl;
+  const shopPath = shopPaths[params.locale as keyof typeof shopPaths] ?? shopPaths.nl;
+  const productUrl = `${domain}${shopPath}${params.slug}`;
+
+  // Matches the volume-discount tiers rendered on the PDP (see ProductPageClient).
+  // Feeds AggregateOffer lowPrice so Google shows the "from €X" rich result.
+  const volumeTiers = [
+    { minQty: 5, discountPct: 20 },
+    { minQty: 10, discountPct: 25 },
+    { minQty: 25, discountPct: 30 },
+    { minQty: 50, discountPct: 35 },
+  ];
+
+  const shopName =
+    params.locale === 'de' ? 'Shop' : params.locale === 'en' ? 'Shop' : 'Winkel';
+  const productName =
+    params.locale === 'en' && product.name_en ? product.name_en :
+    params.locale === 'de' && product.name_de ? product.name_de :
+    product.name;
+
+  return (
+    <>
+      <ShopProductSchema product={product} locale={params.locale} url={productUrl} volumeTiers={volumeTiers} />
+      <ShopBreadcrumbSchema
+        items={[
+          { name: 'Home', url: domain + '/' },
+          { name: shopName, url: `${domain}${shopPath}` },
+          { name: productName, url: productUrl },
+        ]}
+      />
+      <ProductPageClient locale={params.locale} productSlug={params.slug} />
+    </>
+  );
 }

@@ -9,6 +9,7 @@
  */
 
 import type * as abandonedCarts from "../abandonedCarts.js";
+import type * as analytics from "../analytics.js";
 import type * as blogPosts from "../blogPosts.js";
 import type * as orderItems from "../orderItems.js";
 import type * as orders from "../orders.js";
@@ -24,6 +25,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   abandonedCarts: typeof abandonedCarts;
+  analytics: typeof analytics;
   blogPosts: typeof blogPosts;
   orderItems: typeof orderItems;
   orders: typeof orders;
