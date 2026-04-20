@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import InfoPageCommercialCTA from '@/components/InfoPageCommercialCTA'
 
 export default function LevensduurSteenwolClient({ t, locale }: { t: any, locale: string }) {
   const content = {
@@ -313,14 +314,7 @@ export default function LevensduurSteenwolClient({ t, locale }: { t: any, locale
         </div>
       </section>
 
-      <section className="py-20 bg-lumora-dark text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">{c.cta.title}</h2>
-          <Link href={`/${locale}/steenwol-pluggen`} className="inline-flex items-center justify-center bg-lumora-green text-black hover:bg-lumora-green/90 px-8 py-4 rounded-xl shadow-lg transition-all font-semibold text-lg">
-            {c.cta.button}
-          </Link>
-        </div>
-      </section>
+      <InfoPageCommercialCTA locale={locale} />
     </div>
   )
 }

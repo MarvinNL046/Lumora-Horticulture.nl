@@ -12,8 +12,41 @@ import {
 } from '@/lib/volume-discount';
 import CartEmailPrompt from './CartEmailPrompt';
 
+// Static cross-sell candidates — the app has no ConvexProvider at layout
+// level (everything uses server-side fetchQuery elsewhere), so the cart
+// drawer needs self-contained product refs. Data matches the current Convex
+// seed; re-sync this block if prices/images change on the 4 relevant SKUs.
+const CROSSSELL_CATALOG: Record<string, {
+  product_id: string;
+  slug: string;
+  name: string;
+  name_en: string;
+  name_de: string;
+  price: number;
+  image_url: string;
+}> = {
+  'neemx-pro-10ml': {
+    product_id: 'jx7dpmbbm8q29wq3m55x2w5t85841z98',
+    slug: 'neemx-pro-10ml',
+    name: 'NEEMX PRO 10ml',
+    name_en: 'NEEMX PRO 10ml',
+    name_de: 'NEEMX PRO 10ml',
+    price: 24.95,
+    image_url: '/productAfbeeldingen/neemxpro/neemxpro-sfeer-1.webp',
+  },
+  'paper-plug-tray-84': {
+    product_id: 'jx76b4wt3bt54fqr9111spngk5840sqm',
+    slug: 'paper-plug-tray-84',
+    name: 'Paper Plug Tray 84',
+    name_en: 'Paper Plug Tray 84',
+    name_de: 'Paper Plug Tray 84',
+    price: 84,
+    image_url: '/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp',
+  },
+};
+
 export default function CartSidebar() {
-  const { items, removeItem, updateQuantity, getTotalItems, getTotalPrice, isCartOpen, setIsCartOpen } = useCart();
+  const { items, addItem, removeItem, updateQuantity, getTotalItems, getTotalPrice, isCartOpen, setIsCartOpen } = useCart();
   const params = useParams();
   const router = useRouter();
   const locale = (params?.locale as string) || 'nl';
@@ -39,6 +72,26 @@ export default function CartSidebar() {
   // Check if cart contains NEEMX PRO products (same day shipping) or plugs (48h)
   const hasNeemxPro = items.some(item => item.slug?.startsWith('neemx-pro'));
   const hasPlugsOrOther = items.some(item => !item.slug?.startsWith('neemx-pro'));
+
+  // Pick a cross-sell candidate based on cart contents. Rules:
+  //   - Cart has trays (no NEEMX) → suggest NEEMX PRO 10ml (leaf care for crops)
+  //   - Cart has NEEMX only → suggest Paper Plug Tray 84 (bestseller)
+  //   - Cart has transport box → suggest Paper Plug Tray 84
+  //   - Otherwise → NEEMX PRO 10ml as a small low-commitment add-on
+  // Excludes products already in cart.
+  const crossSellSlug = (() => {
+    const cartSlugs = new Set(items.map((i) => i.slug));
+    const hasTray = items.some((i) => i.slug?.includes('paper-plug-tray'));
+    const hasOnlyNeemx = hasNeemxPro && !hasPlugsOrOther;
+    let candidate = 'neemx-pro-10ml';
+    if (hasOnlyNeemx || items.some((i) => i.slug?.startsWith('transportdoos'))) {
+      candidate = 'paper-plug-tray-84';
+    } else if (hasTray && !hasNeemxPro) {
+      candidate = 'neemx-pro-10ml';
+    }
+    return cartSlugs.has(candidate) ? null : candidate;
+  })();
+  const crossSellProduct = crossSellSlug ? CROSSSELL_CATALOG[crossSellSlug] ?? null : null;
 
   return (
     <>
@@ -189,6 +242,31 @@ export default function CartSidebar() {
                             {formatPrice(itemTotal)}
                           </div>
                         </div>
+
+                        {/* Next-tier nudge — AOV lever.
+                            Shows the user exactly how many more pieces unlock
+                            the next bulk discount tier AND how much extra they
+                            save, so stacking quantity becomes the obvious move. */}
+                        {discountInfo.nextTier && (() => {
+                          const piecesToNext = discountInfo.nextTier.quantity - item.quantity;
+                          const nextTierPrice = item.price * (1 - discountInfo.nextTier.discount / 100);
+                          const savedAtNextTier = (item.price * discountInfo.nextTier.quantity) - (nextTierPrice * discountInfo.nextTier.quantity);
+                          const extraSavings = savedAtNextTier - itemDiscount;
+                          const copy =
+                            locale === 'de'
+                              ? `Noch ${piecesToNext} hinzufügen → ${discountInfo.nextTier.discount}% Rabatt (${formatPrice(extraSavings)} extra sparen)`
+                              : locale === 'en'
+                                ? `Add ${piecesToNext} more → ${discountInfo.nextTier.discount}% off (save ${formatPrice(extraSavings)} extra)`
+                                : `Nog ${piecesToNext} erbij → ${discountInfo.nextTier.discount}% korting (${formatPrice(extraSavings)} extra besparen)`;
+                          return (
+                            <button
+                              onClick={() => updateQuantity(item.product_id, discountInfo.nextTier!.quantity)}
+                              className="mt-2 w-full text-left text-xs bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-medium rounded-md px-2 py-1.5 transition-colors"
+                            >
+                              {copy}
+                            </button>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -197,6 +275,65 @@ export default function CartSidebar() {
             </div>
           )}
         </div>
+
+        {/* Cross-sell — AOV lever. Shows ONE complementary product based on
+            what's already in the cart, with a single-tap add button. */}
+        {items.length > 0 && crossSellProduct && (
+          <div className="px-6 py-3 border-t border-lumora-dark/10 bg-white">
+            <div className="text-xs font-mono uppercase tracking-wider text-lumora-dark/50 mb-2">
+              {locale === 'de'
+                ? 'Wird auch mitbestellt'
+                : locale === 'en'
+                  ? 'Growers also add'
+                  : 'Kwekers kopen er ook bij'}
+            </div>
+            <div className="flex items-center gap-3">
+              <Link
+                href={localizePathForLocale(`/shop/${crossSellProduct.slug}`, locale)}
+                onClick={() => setIsCartOpen(false)}
+                className="flex-shrink-0"
+              >
+                <img
+                  src={crossSellProduct.image_url}
+                  alt={crossSellProduct.name}
+                  className="w-14 h-14 object-cover rounded-lg"
+                  onError={(e) => ((e.target as HTMLImageElement).src = '/placeholder-product.jpg')}
+                />
+              </Link>
+              <div className="flex-1 min-w-0">
+                <Link
+                  href={localizePathForLocale(`/shop/${crossSellProduct.slug}`, locale)}
+                  onClick={() => setIsCartOpen(false)}
+                  className="block text-sm font-semibold text-lumora-dark hover:text-lumora-green-500 truncate"
+                >
+                  {locale === 'de' ? crossSellProduct.name_de :
+                   locale === 'en' ? crossSellProduct.name_en :
+                   crossSellProduct.name}
+                </Link>
+                <div className="text-xs text-lumora-dark/60">
+                  {formatPrice(crossSellProduct.price)}
+                </div>
+              </div>
+              <button
+                onClick={() =>
+                  addItem(
+                    {
+                      product_id: crossSellProduct.product_id,
+                      slug: crossSellProduct.slug,
+                      name: crossSellProduct.name,
+                      price: crossSellProduct.price,
+                      image_url: crossSellProduct.image_url,
+                    },
+                    1,
+                  )
+                }
+                className="flex-shrink-0 bg-lumora-green-500 hover:bg-lumora-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                {locale === 'de' ? 'Hinzufügen' : locale === 'en' ? 'Add' : 'Toevoegen'}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Email Prompt for Cart Saving */}
         {items.length > 0 && <CartEmailPrompt />}

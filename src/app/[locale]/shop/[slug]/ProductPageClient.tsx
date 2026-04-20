@@ -478,6 +478,42 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
 
             <p className="text-lg text-lumora-dark/70 mb-6 leading-relaxed">{product.description}</p>
 
+            {/* NEEMX coverage highlight — the single most answered question
+                on these bottles is "how far does it go?". Surface it RIGHT
+                after the description, before pricing, as a numeric stat
+                grower can self-qualify on. Full breakdown still renders
+                lower down (spray_coverage_m2 block). */}
+            {isNeemxPro && product.metadata?.spray_coverage_m2 && (
+              <div className="bg-gradient-to-br from-lumora-green-500 to-lumora-green-600 text-white rounded-2xl p-6 mb-6 shadow-soft-lg">
+                <div className="flex items-baseline gap-3 mb-2">
+                  <span className="text-sm font-mono uppercase tracking-wider opacity-80">
+                    {locale === 'de' ? 'Ergiebigkeit' : locale === 'en' ? 'Coverage' : 'Opbrengst'}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-2 mb-3">
+                  <span className="text-4xl md:text-5xl font-display font-bold">
+                    {product.metadata.spray_coverage_m2.min}–{product.metadata.spray_coverage_m2.max}&nbsp;m²
+                  </span>
+                  <span className="text-sm opacity-80">
+                    {locale === 'de' ? 'pro Flasche' : locale === 'en' ? 'per bottle' : 'per flesje'}
+                  </span>
+                </div>
+                <p className="text-sm opacity-90 leading-relaxed">
+                  {locale === 'de'
+                    ? 'Deckt eine gesamte kleine Gewächshaus-Anbaufläche mit einer einzigen Flasche ab. Dosierung 2,5 ml/L (präventiv) bis 10 ml/L (professionell).'
+                    : locale === 'en'
+                    ? 'Covers an entire small greenhouse section on a single bottle. Dosage 2.5 ml/L (preventive) to 10 ml/L (professional).'
+                    : 'Eén flesje dekt een complete kleine kasafdeling. Dosering 2,5 ml/L (preventief) tot 10 ml/L (professioneel).'}
+                </p>
+                <a
+                  href="#spray-coverage"
+                  className="inline-flex items-center gap-1 mt-3 text-sm font-semibold underline underline-offset-4 hover:opacity-80"
+                >
+                  {locale === 'de' ? 'Volle Dosiertabelle ansehen' : locale === 'en' ? 'See full dosage table' : 'Bekijk volledige doseringstabel'} ↓
+                </a>
+              </div>
+            )}
+
             {/* USP Checklist - Only for Tray products */}
             {(productSlug.includes('paper-plug-tray') || productSlug.includes('tray')) && (
               <div className="bg-lumora-cream/50 rounded-xl p-5 mb-6 border border-lumora-dark/10">
@@ -491,6 +527,46 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                 </div>
               </div>
             )}
+
+            {/* Grower testimonials — placed right where hesitation sets in
+                (after "why choose" claims but before pricing). Social proof
+                on the PDP is the single highest-converting addition for a
+                B2B product page. Copy matches the homepage testimonials so
+                we don't introduce new unverified claims. */}
+            <div className="bg-white rounded-xl p-5 mb-6 border border-lumora-dark/10">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex text-amber-400 text-sm">★★★★★</div>
+                <span className="text-sm font-semibold text-lumora-dark">
+                  {locale === 'de' ? '4,92 — vertraut von 500+ Gärtnern' : locale === 'en' ? '4.92 — trusted by 500+ growers' : '4,92 — vertrouwd door 500+ kwekers'}
+                </span>
+              </div>
+              <div className="space-y-3">
+                <figure className="border-l-2 border-lumora-green-500 pl-3 py-1">
+                  <blockquote className="text-sm text-lumora-dark/80 italic leading-relaxed">
+                    {locale === 'de'
+                      ? '„Seit dem Wechsel zu Lumora Paper Plugs brauchen wir 40% weniger Arbeitszeit beim Umtopfen. Qualität ist konsistent und die Anwachsrate ist hervorragend."'
+                      : locale === 'en'
+                      ? '"Since switching to Lumora Paper Plugs, we need 40% less labor time for potting. Quality is consistent and strike rate is excellent."'
+                      : '"Sinds we overgestapt zijn op Lumora Paper Plugs hebben we 40% minder arbeidstijd nodig voor het oppotten. Kwaliteit is consistent en het aanslagpercentage is uitstekend."'}
+                  </blockquote>
+                  <figcaption className="text-xs text-lumora-dark/60 mt-1">
+                    — Jan van der Berg, Tomato Nursery Westland
+                  </figcaption>
+                </figure>
+                <figure className="border-l-2 border-lumora-green-500 pl-3 py-1">
+                  <blockquote className="text-sm text-lumora-dark/80 italic leading-relaxed">
+                    {locale === 'de'
+                      ? '„FP 12+ ist perfekt für unseren langen Anbauzyklus. Keine Schimmel, keine Probleme. Spitzenqualität zu fairem Preis."'
+                      : locale === 'en'
+                      ? '"FP 12+ technology is perfect for our long growing cycle. No mold, no problems. Top quality for a fair price."'
+                      : '"FP 12+ technologie is perfect voor onze lange teeltcyclus. Geen schimmel, geen problemen. Topkwaliteit voor een eerlijke prijs."'}
+                  </blockquote>
+                  <figcaption className="text-xs text-lumora-dark/60 mt-1">
+                    — Klaus Müller, Baumschule Müller
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
 
             {/* Staffelkorting Tabel */}
             <div className="bg-gradient-to-br from-lumora-green-500/10 to-lumora-green-600/5 rounded-2xl p-6 border-2 border-lumora-green-500/20 mb-6">
@@ -541,7 +617,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
             </div>
 
             {product.metadata?.spray_coverage_m2 && (
-              <div className="bg-gradient-to-r from-green-50 to-amber-50 rounded-2xl p-6 border border-green-200">
+              <div id="spray-coverage" className="bg-gradient-to-r from-green-50 to-amber-50 rounded-2xl p-6 border border-green-200 scroll-mt-24">
                 <h3 className="text-xl font-display font-semibold text-lumora-dark mb-2">
                   {locale === 'de' ? 'Sprühfläche' : locale === 'en' ? 'Spray coverage' : 'Spuitoppervlakte'}
                 </h3>

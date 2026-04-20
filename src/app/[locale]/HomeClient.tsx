@@ -154,15 +154,19 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
   const translations = {
     hero: {
       badge: locale === 'nl' ? '15+ Jaar Betrouwbare Partner' : locale === 'de' ? '15+ Jahre Zuverlässiger Partner' : '15+ Years Trusted Partner',
-      title: locale === 'nl' ? 'Professionele Paper Plug Trays' : locale === 'de' ? 'Professionelle Paper Plug Trays' : 'Professional Paper Plug Trays',
-      subtitle: locale === 'nl' ? 'Voor de moderne teler die kiest voor kwaliteit' : locale === 'de' ? 'Für den modernen Züchter, der Qualität wählt' : 'For the modern grower who chooses quality',
+      // Rewritten to lead with a concrete grower outcome (95% strike rate) and
+      // a sharp second line, instead of a category label + filler tagline.
+      // Ready for A/B test against the original if desired — swap by reverting
+      // this edit only.
+      title: locale === 'nl' ? 'Paper plugs die 95% slagen.' : locale === 'de' ? 'Paper Plugs mit 95% Anwachsrate.' : 'The paper plug with a 95% strike rate.',
+      subtitle: locale === 'nl' ? 'Biologisch afbreekbaar. Binnen 48u geleverd.' : locale === 'de' ? 'Biologisch abbaubar. In 48 Std. geliefert.' : 'Biodegradable. Delivered in 48h.',
       description: locale === 'nl'
         ? 'Ellepot FP 12+ technologie met 12+ maanden stabiliteit. Biologisch afbreekbaar, schimmelwerend en zonder transplantatieschok. Vertrouwd door 500+ professionele kwekers in Nederland, België en Duitsland.'
         : locale === 'de'
         ? 'Ellepot FP 12+ Technologie mit 12+ Monaten Stabilität. Biologisch abbaubar, pilzhemmend und ohne Transplantationsschock. Vertraut von 500+ professionellen Züchtern in den Niederlanden, Belgien und Deutschland.'
         : 'Ellepot FP 12+ technology with 12+ months stability. Biodegradable, fungicide-resistant and without transplant shock. Trusted by 500+ professional growers in the Netherlands, Belgium and Germany.',
-      cta1: locale === 'nl' ? '🛒 Bekijk Producten' : locale === 'de' ? '🛒 Produkte Anzeigen' : '🛒 View Products',
-      cta2: locale === 'nl' ? '📞 Neem Contact Op' : locale === 'de' ? '📞 Kontakt Aufnehmen' : '📞 Get in Touch',
+      cta1: locale === 'nl' ? 'Bekijk producten' : locale === 'de' ? 'Produkte ansehen' : 'View products',
+      cta2: locale === 'nl' ? 'Neem contact op' : locale === 'de' ? 'Kontakt aufnehmen' : 'Get in touch',
     },
     trust: {
       title: locale === 'nl' ? 'Waarom 500+ Professionele Telers Voor Lumora Kiezen' : locale === 'de' ? 'Warum 500+ Professionelle Züchter Lumora Wählen' : 'Why 500+ Professional Growers Choose Lumora',
@@ -302,8 +306,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
         : locale === 'de'
         ? 'Schließen Sie sich 500+ professionellen Züchtern an, die bereits von Lumora Paper Plug Trays profitieren. Bestellen Sie noch heute oder fordern Sie ein kostenloses Angebot an.'
         : 'Join 500+ professional growers already benefiting from Lumora Paper Plug Trays. Order today or request a free quote.',
-      button1: locale === 'nl' ? '🛒 Naar Webshop' : locale === 'de' ? '🛒 Zum Webshop' : '🛒 Go To Webshop',
-      button2: locale === 'nl' ? '✉️ Offerte Aanvragen' : locale === 'de' ? '✉️ Angebot Anfordern' : '✉️ Request Quote'
+      button1: locale === 'nl' ? 'Naar de webshop' : locale === 'de' ? 'Zum Webshop' : 'Go to webshop',
+      button2: locale === 'nl' ? 'Offerte aanvragen' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'
     }
   }
 
@@ -387,11 +391,14 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 {translations.hero.description}
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {/* CTA — single primary action to kill decision paralysis.
+                  Volume-order buyers land on the shop (with volume discount
+                  visibility); a small secondary text link keeps the offline
+                  channel discoverable without competing for the main click. */}
+              <div className="flex flex-col items-center gap-3 mb-12">
                 <Link
                   href={localizePathForLocale('/shop', locale)}
-                  className="inline-flex items-center bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+                  className="inline-flex items-center bg-lumora-green-500 hover:bg-lumora-green-600 text-white font-semibold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
                 >
                   {translations.hero.cta1}
                   <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -400,12 +407,9 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                 </Link>
                 <Link
                   href={localizePathForLocale('/contact', locale)}
-                  className="inline-flex items-center bg-white hover:bg-lumora-cream border-2 border-lumora-dark/10 text-lumora-dark font-semibold px-8 py-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 text-lg"
+                  className="text-sm text-lumora-dark/60 hover:text-lumora-dark underline underline-offset-4"
                 >
-                  {translations.hero.cta2}
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+                  {locale === 'nl' ? 'Groothandel? Vraag een offerte aan' : locale === 'de' ? 'Großhandel? Angebot anfordern' : 'Wholesale? Request a quote'}
                 </Link>
               </div>
 
@@ -650,10 +654,10 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
           <h2 className="text-4xl font-bold mb-6">{translations.cta.title}</h2>
           <p className="text-xl mb-10 opacity-90">{translations.cta.description}</p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col items-center gap-3">
             <Link
               href={localizePathForLocale('/shop', locale)}
-              className="inline-flex items-center bg-white text-lumora-green-600 hover:bg-lumora-cream font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+              className="inline-flex items-center bg-white text-lumora-green-600 hover:bg-lumora-cream font-semibold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
             >
               {translations.cta.button1}
               <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -662,12 +666,9 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
             </Link>
             <Link
               href={localizePathForLocale('/contact', locale)}
-              className="inline-flex items-center bg-lumora-dark hover:bg-lumora-dark-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+              className="text-sm text-white/80 hover:text-white underline underline-offset-4"
             >
               {translations.cta.button2}
-              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
             </Link>
           </div>
         </div>
