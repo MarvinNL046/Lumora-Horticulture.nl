@@ -9,7 +9,8 @@ Lumora Horticulture is a multilingual B2B e-commerce website for professional ho
 ## Tech Stack
 
 - **Framework**: Next.js 14 with App Router and TypeScript
-- **Database**: Neon PostgreSQL with Drizzle ORM
+- **Backend / Database**: Convex (products, orders, blog posts, abandoned carts, analytics)
+- **Email**: Resend (order confirmations + business notifications)
 - **Payment**: Mollie integration
 - **Styling**: Tailwind CSS with custom brand colors
 - **i18n**: next-intl with domain-based routing (lumorahorticulture.nl, .com, .de)
@@ -19,22 +20,17 @@ Lumora Horticulture is a multilingual B2B e-commerce website for professional ho
 
 ```bash
 # Development
-npm run dev                    # Start development server
+npm run dev                    # Start development server (Next.js)
+npx convex dev                 # Start Convex dev (separate terminal)
 
-# Database (Drizzle ORM + Neon PostgreSQL)
-npm run db:studio             # Open Drizzle Studio (database GUI)
-npm run db:push               # Push schema changes to database
-npm run db:generate           # Generate migrations
-npm run db:migrate            # Run migrations
+# Convex
+npx convex dashboard           # Open Convex dashboard (data browser + logs)
+npx convex run products:list   # Run a query/mutation from the CLI
+npx convex deploy              # Deploy Convex functions to production
 
 # Production Build
 npm run build                 # Build + generate sitemaps
 npm run generate-sitemaps     # Manually regenerate sitemaps
-
-# Database Setup/Updates
-node scripts/setup-database.js                    # Initial database setup
-node scripts/update-transportdoos-description.js  # Update Transportdoos product
-node scripts/update-tray-descriptions.js          # Update Tray products
 ```
 
 ## Architecture
@@ -57,15 +53,21 @@ URL paths are localized per domain:
 
 ### Database Schema
 
-**Products Table** (`src/db/schema.ts`):
+All data lives in **Convex** (`convex/schema.ts`). Key tables:
+
+**`products`** — defined in `convex/products.ts`:
 - Multilingual fields: `name`, `name_en`, `name_de`, `description`, `description_en`, `description_de`
-- `slug` - SEO-friendly unique identifier (used in URLs)
-- `metadata` - JSON field for product specifications (dimensions, packaging info, etc.)
-- `display_order` - Controls product ordering on shop pages
+- `slug` - SEO-friendly unique identifier (used in URLs), indexed via `by_slug`
+- `metadata` - object field for product specs (dimensions, packaging, `spray_coverage_m2`, `dosage_table`)
+- `display_order` - controls product ordering on shop pages
 
-**Orders & OrderItems**: Full e-commerce flow with Mollie payment integration
+**`orders` + `orderItems`** — full e-commerce flow with Mollie payment integration (`convex/orders.ts`, `convex/orderItems.ts`)
 
-**Database Connection**: Uses Neon serverless PostgreSQL via `DATABASE_URL` in `.env.local`
+**Other tables**: `blogPosts`, `abandonedCarts`, `analytics`, `savedAddresses`
+
+**Connection**: Server-side via `@/lib/convex` helper (`convex.query` / `convex.mutation`). Frontend uses `ConvexProvider` from `convex/react`. Deployment URL is `NEXT_PUBLIC_CONVEX_URL`.
+
+**Important**: Always read `convex/_generated/ai/guidelines.md` before writing/editing Convex code.
 
 ### E-commerce Flow
 
@@ -161,9 +163,11 @@ if (productSlug === 'paper-plug-tray-84') {
 
 Required in `.env.local`:
 ```bash
-DATABASE_URL=          # Neon PostgreSQL connection string
-MOLLIE_API_KEY=       # Mollie payment API key
-NEXT_PUBLIC_SITE_URL= # Production URL for sitemap generation
+NEXT_PUBLIC_CONVEX_URL=    # Convex deployment URL
+CONVEX_DEPLOY_KEY=         # Convex deploy key (CI / prod deploys)
+MOLLIE_API_KEY=            # Mollie payment API key
+RESEND_API_KEY=            # Resend email API key
+NEXT_PUBLIC_SITE_URL=      # Production URL for sitemap generation
 ```
 
 ## Important Development Notes
