@@ -143,6 +143,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
         { size: '30 ml', yield: 'tot 12 liter spuitoplossing', coverage: '± 15-120 m²' },
         { size: '50 ml', yield: 'tot 20 liter spuitoplossing', coverage: '± 25-200 m²' }
       ],
+      bulkNote: 'Ook leverbaar in bulkverpakking 1L · 5L · 10L tot 1000L IBC — vraag offerte aan',
       effectiveTitle: 'Effectief tegen:',
       effectiveItems: [
         { icon: '🕷️', name: 'Spint' },
@@ -190,6 +191,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
         { size: '30 ml', yield: 'up to 12 liters spray solution', coverage: '± 15-120 m²' },
         { size: '50 ml', yield: 'up to 20 liters spray solution', coverage: '± 25-200 m²' }
       ],
+      bulkNote: 'Also available in bulk packaging 1L · 5L · 10L up to 1000L IBC — request a quote',
       effectiveTitle: 'Effective against:',
       effectiveItems: [
         { icon: '🕷️', name: 'Spider mites' },
@@ -237,6 +239,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
         { size: '30 ml', yield: 'bis zu 12 Liter Sprühlösung', coverage: '± 15-120 m²' },
         { size: '50 ml', yield: 'bis zu 20 Liter Sprühlösung', coverage: '± 25-200 m²' }
       ],
+      bulkNote: 'Auch in Großverpackung erhältlich 1L · 5L · 10L bis 1000L IBC — Angebot anfordern',
       effectiveTitle: 'Wirksam gegen:',
       effectiveItems: [
         { icon: '🕷️', name: 'Spinnmilben' },
@@ -400,6 +403,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
               </div>
             ))}
           </div>
+          <p className="text-[10px] text-center text-gray-700 italic mt-1.5 px-2">
+            {t.bulkNote}
+          </p>
         </div>
 
         {/* Effective Against Section */}
