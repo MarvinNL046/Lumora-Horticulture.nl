@@ -111,8 +111,11 @@ function FAQItem({ question, answer, isOpen, onClick }: FAQItemProps) {
 }
 
 export default function HomeClient({ locale, t }: { locale: string, t: any }) {
+  // Hero starts visible to keep the LCP element paintable on first byte —
+  // the previous opacity-0/translate-y-10 initial state delayed LCP until
+  // hydration. Below-the-fold sections still fade in via IntersectionObserver.
   const [isVisible, setIsVisible] = useState({
-    hero: false,
+    hero: true,
     trust: false,
     benefits: false,
     products: false,
@@ -123,10 +126,6 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsVisible(prev => ({ ...prev, hero: true }))
-    }, 100)
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -421,6 +420,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     alt={locale === 'nl' ? 'Steenwol Pluggen Tray 84 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 84 Zellen' : 'Rockwool Plugs Tray 84 cells'}
                     width={200}
                     height={200}
+                    sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
+                    priority
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
@@ -433,6 +434,8 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     alt={locale === 'nl' ? 'Steenwol Pluggen Tray 104 cellen' : locale === 'de' ? 'Steinwolle Plugs Tablett 104 Zellen' : 'Rockwool Plugs Tray 104 cells'}
                     width={200}
                     height={200}
+                    sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
+                    priority
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
@@ -445,6 +448,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     alt={locale === 'nl' ? 'Transportdoos voor tuinbouwproducten' : locale === 'de' ? 'Transportbox für Gartenbauprodukte' : 'Transport box for horticulture products'}
                     width={200}
                     height={200}
+                    sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
@@ -460,6 +464,7 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     alt={locale === 'nl' ? 'NEEMX PRO natuurlijk botanisch olieconcentraat' : locale === 'de' ? 'NEEMX PRO natürliches botanisches Ölkonzentrat' : 'NEEMX PRO natural botanical oil concentrate'}
                     width={200}
                     height={200}
+                    sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">NEEMX PRO</p>
