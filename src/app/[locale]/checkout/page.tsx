@@ -258,8 +258,9 @@ export default function CheckoutPage() {
     continueShopping: locale === 'de' ? 'Weiter einkaufen' : locale === 'en' ? 'Continue shopping' : 'Verder winkelen',
     closeCheckout: locale === 'de' ? 'Schließen' : locale === 'en' ? 'Close' : 'Sluiten',
     subtotal: locale === 'de' ? 'Zwischensumme' : locale === 'en' ? 'Subtotal' : 'Subtotaal',
-    discount: locale === 'de' ? 'Rabatt' : locale === 'en' ? 'Discount' : 'Korting',
+    discount: locale === 'de' ? 'Mengenrabatt' : locale === 'en' ? 'Volume discount' : 'Volumekorting',
     promo2plus1: locale === 'de' ? '2+1 Aktion · 1 Flasche gratis' : locale === 'en' ? '2+1 promo · 1 bottle free' : '2+1 actie · 1 flesje gratis',
+    couponLabel: locale === 'de' ? 'Coupon' : locale === 'en' ? 'Coupon' : 'Couponcode',
     total: locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal',
     freeShipping: locale === 'de' ? 'Kostenloser Versand' : locale === 'en' ? 'Free Shipping' : 'Gratis Verzending',
     showOrder: locale === 'de' ? 'Bestellung anzeigen' : locale === 'en' ? 'Show order' : 'Bestelling tonen',
@@ -554,9 +555,17 @@ export default function CheckoutPage() {
           </div>
         )}
         {promoCalc.eligible && (
-          <div className="flex justify-between text-lumora-green-600 font-medium">
-            <span>{t.promo2plus1}</span>
-            <span>-{formatPrice(promoCalc.discount)}</span>
+          <div className="flex justify-between items-start gap-3 text-lumora-green-600 font-medium">
+            <span className="flex flex-col gap-1">
+              <span className="inline-flex items-center gap-1.5">
+                <span aria-hidden>🎁</span>
+                {t.promo2plus1}
+              </span>
+              <span className="inline-flex items-center gap-1 self-start text-[10px] font-mono uppercase tracking-wider bg-lumora-green-600 text-white px-1.5 py-0.5 rounded">
+                {t.couponLabel}: NEEMX2PLUS1
+              </span>
+            </span>
+            <span className="whitespace-nowrap">-{formatPrice(promoCalc.discount)}</span>
           </div>
         )}
         <div className="flex justify-between text-lumora-green-600">
