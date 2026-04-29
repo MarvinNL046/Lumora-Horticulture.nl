@@ -268,7 +268,7 @@ export default function SizePicker({ id }: Props) {
           {submitting
             ? 'Bezig…'
             : isValid
-              ? `Voeg toe & ontvang goedkoopste gratis →`
+              ? `Voeg toe & ontvang 1 flesje gratis →`
               : `Selecteer nog ${3 - totalBottles} flesje${3 - totalBottles === 1 ? '' : 's'}`}
         </button>
 
