@@ -77,6 +77,7 @@ export default defineSchema({
     shipped_email_sent_at: v.optional(v.number()),
     created_at: v.number(),
     updated_at: v.number(),
+    metadata: v.optional(v.any()),
   })
     .index("by_payment_id", ["payment_id"])
     .index("by_email", ["customer_email"])

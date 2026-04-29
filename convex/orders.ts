@@ -16,6 +16,7 @@ export const create = mutation({
     payment_status: v.optional(v.string()),
     locale: v.optional(v.string()),
     delivery_preference: v.optional(v.any()),
+    metadata: v.optional(v.any()),
   },
   handler: async (ctx, args) => {
     const now = Date.now();
