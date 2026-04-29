@@ -11,6 +11,11 @@ import {
   getDiscountInfo,
   formatPrice,
 } from '@/lib/volume-discount';
+import {
+  NEEMX_PROMO_COOKIE_NAME,
+  isPromoCookieActive,
+  calculateNeemxPromoDiscount,
+} from '@/lib/neemx-promo';
 import { trackBeginCheckout } from '@/lib/google-ads';
 import { useUser } from '@stackframe/stack';
 import DeliveryPicker, { type DeliverySelection } from '@/components/DeliveryPicker';
@@ -254,6 +259,7 @@ export default function CheckoutPage() {
     closeCheckout: locale === 'de' ? 'Schließen' : locale === 'en' ? 'Close' : 'Sluiten',
     subtotal: locale === 'de' ? 'Zwischensumme' : locale === 'en' ? 'Subtotal' : 'Subtotaal',
     discount: locale === 'de' ? 'Rabatt' : locale === 'en' ? 'Discount' : 'Korting',
+    promo2plus1: locale === 'de' ? '2+1 Aktion · 1 Flasche gratis' : locale === 'en' ? '2+1 promo · 1 bottle free' : '2+1 actie · 1 flesje gratis',
     total: locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal',
     freeShipping: locale === 'de' ? 'Kostenloser Versand' : locale === 'en' ? 'Free Shipping' : 'Gratis Verzending',
     showOrder: locale === 'de' ? 'Bestellung anzeigen' : locale === 'en' ? 'Show order' : 'Bestelling tonen',
@@ -302,9 +308,26 @@ export default function CheckoutPage() {
   };
 
   const totalWithoutDiscounts = items.reduce((t, i) => t + i.price * i.quantity, 0);
-  const totalPrice = getTotalPrice();
-  const totalDiscounts = totalWithoutDiscounts - totalPrice;
+  const totalPriceBeforePromo = getTotalPrice();
+  const totalDiscounts = totalWithoutDiscounts - totalPriceBeforePromo;
   const hasNeemxPro = items.some((i) => i.slug?.startsWith('neemx-pro'));
+
+  // 2+1 promo discount preview — client-side mirror of the server check in
+  // /api/checkout. The server is still authoritative; this is purely so the
+  // customer sees the discount before clicking pay.
+  const [promoActive, setPromoActive] = useState(false);
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const match = document.cookie.match(new RegExp(`(?:^|; )${NEEMX_PROMO_COOKIE_NAME}=([^;]+)`));
+    setPromoActive(isPromoCookieActive(match?.[1]));
+  }, []);
+  const promoCalc = useMemo(() => {
+    if (!promoActive) return { discount: 0, freeItemSlug: null, eligible: false };
+    return calculateNeemxPromoDiscount(
+      items.map((i) => ({ slug: i.slug, unitPrice: i.price, quantity: i.quantity }))
+    );
+  }, [promoActive, items]);
+  const totalPrice = Math.max(0, totalPriceBeforePromo - promoCalc.discount);
 
   // Step validation — Next button is disabled until the minimum fields are
   // present AND valid-shaped (postal code regex matches country).
@@ -528,6 +551,12 @@ export default function CheckoutPage() {
           <div className="flex justify-between text-lumora-green-600 font-medium">
             <span>{t.discount}</span>
             <span>-{formatPrice(totalDiscounts)}</span>
+          </div>
+        )}
+        {promoCalc.eligible && (
+          <div className="flex justify-between text-lumora-green-600 font-medium">
+            <span>{t.promo2plus1}</span>
+            <span>-{formatPrice(promoCalc.discount)}</span>
           </div>
         )}
         <div className="flex justify-between text-lumora-green-600">
