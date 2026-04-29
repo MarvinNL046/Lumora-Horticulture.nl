@@ -150,6 +150,26 @@ export default function NeemxProClient({ locale }: Props) {
         ]
       },
 
+      bulk: {
+        badge: 'B2B & Grootverbruik',
+        title: 'Grootverbruiker? Vanaf 1L tot 1000L IBC',
+        subtitle: 'Voor commerciële kwekers, glastuinbouw en wederverkopers',
+        description: 'NEEMX PRO is ook leverbaar in grootverpakking. Hoe groter de afname, hoe scherper de prijs per ml — vraag een persoonlijke offerte aan en ontvang doorgaans binnen 24 uur antwoord.',
+        sizesLabel: 'Beschikbare bulkmaten',
+        sizes: ['1 L', '5 L', '10 L', '25 L', '200 L vat', '1000 L IBC'],
+        otherSizes: 'Andere maten op aanvraag',
+        benefitsLabel: 'Wat krijg je?',
+        benefits: [
+          'Scherpere prijs per ml bij grotere volumes',
+          'Vaste leveringsafspraken mogelijk',
+          'Eigen labeling op aanvraag (private label)',
+          'Persoonlijk contactpersoon',
+        ],
+        ctaButton: 'Vraag offerte aan',
+        ctaPhoneLabel: 'Of bel direct',
+        phone: '+31 6 38382564',
+      },
+
       faq: {
         title: 'Veelgestelde vragen',
         items: [
@@ -288,6 +308,26 @@ export default function NeemxProClient({ locale }: Props) {
         ]
       },
 
+      bulk: {
+        badge: 'B2B & Bulk',
+        title: 'Bulk buyer? From 1L up to 1000L IBC',
+        subtitle: 'For commercial growers, greenhouse cultivation and resellers',
+        description: 'NEEMX PRO is also available in large packaging. The larger the order, the sharper the price per ml — request a personal quote and typically receive a reply within 24 hours.',
+        sizesLabel: 'Available bulk sizes',
+        sizes: ['1 L', '5 L', '10 L', '25 L', '200 L drum', '1000 L IBC'],
+        otherSizes: 'Other sizes on request',
+        benefitsLabel: 'What you get',
+        benefits: [
+          'Better price per ml on larger volumes',
+          'Fixed delivery agreements possible',
+          'Private labeling on request',
+          'Personal account manager',
+        ],
+        ctaButton: 'Request quote',
+        ctaPhoneLabel: 'Or call directly',
+        phone: '+31 6 38382564',
+      },
+
       faq: {
         title: 'Frequently asked questions',
         items: [
@@ -424,6 +464,26 @@ export default function NeemxProClient({ locale }: Props) {
           { size: '30 ml', price: '44,95', description: 'Bester Preis pro ml', yield: 'bis zu 12 Liter', coverage: '± 15-120 m²', badge: 'Bester Wert' },
           { size: '50 ml', price: '59,95', description: 'Für intensiven Gebrauch', yield: 'bis zu 20 Liter', coverage: '± 25-200 m²', badge: 'Professionell' }
         ]
+      },
+
+      bulk: {
+        badge: 'B2B & Großverbrauch',
+        title: 'Großbedarf? Ab 1L bis 1000L IBC',
+        subtitle: 'Für kommerzielle Züchter, Gewächshäuser und Wiederverkäufer',
+        description: 'NEEMX PRO ist auch in Großverpackungen erhältlich. Je größer die Abnahme, desto schärfer der Preis pro ml — fordern Sie ein persönliches Angebot an, Antwort meist innerhalb von 24 Stunden.',
+        sizesLabel: 'Verfügbare Bulk-Größen',
+        sizes: ['1 L', '5 L', '10 L', '25 L', '200 L Fass', '1000 L IBC'],
+        otherSizes: 'Andere Größen auf Anfrage',
+        benefitsLabel: 'Was Sie bekommen',
+        benefits: [
+          'Besserer Preis pro ml bei größeren Volumen',
+          'Feste Lieferabsprachen möglich',
+          'Private Labeling auf Anfrage',
+          'Persönlicher Ansprechpartner',
+        ],
+        ctaButton: 'Angebot anfordern',
+        ctaPhoneLabel: 'Oder direkt anrufen',
+        phone: '+31 6 38382564',
       },
 
       faq: {
@@ -857,6 +917,92 @@ export default function NeemxProClient({ locale }: Props) {
                 </Link>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bulk / B2B Section */}
+      <section className="py-20 bg-gradient-to-br from-lumora-dark to-lumora-dark/90 text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="inline-block bg-lumora-gold text-lumora-dark text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4">
+              {t.bulk.badge}
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-3">{t.bulk.title}</h2>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">{t.bulk.subtitle}</p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-sm">
+            <p className="text-base md:text-lg text-white/90 leading-relaxed mb-8 text-center max-w-3xl mx-auto">
+              {t.bulk.description}
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-10">
+              {/* Sizes */}
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-lumora-gold mb-3">
+                  {t.bulk.sizesLabel}
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {t.bulk.sizes.map((size) => (
+                    <span
+                      key={size}
+                      className="bg-white/10 border border-white/20 px-3 py-1.5 rounded-lg text-sm font-semibold"
+                    >
+                      {size}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-white/60 italic">{t.bulk.otherSizes}</p>
+              </div>
+
+              {/* Benefits */}
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-lumora-gold mb-3">
+                  {t.bulk.benefitsLabel}
+                </h3>
+                <ul className="space-y-2">
+                  {t.bulk.benefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-2 text-sm md:text-base">
+                      <svg
+                        className="w-5 h-5 text-lumora-gold flex-shrink-0 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-white/10">
+              <Link
+                href={localizePathForLocale('/contact', locale)}
+                className="inline-flex items-center gap-2 bg-lumora-gold hover:bg-lumora-gold/90 text-lumora-dark font-bold px-8 py-4 rounded-xl shadow-lg text-lg transition-all hover:shadow-xl"
+              >
+                {t.bulk.ctaButton}
+                <span aria-hidden>→</span>
+              </Link>
+              <div className="text-sm text-white/70 text-center sm:text-left">
+                <span className="block sm:inline">{t.bulk.ctaPhoneLabel}:</span>{' '}
+                <a
+                  href={`tel:${t.bulk.phone.replace(/\s/g, '')}`}
+                  className="font-semibold text-white hover:text-lumora-gold transition-colors"
+                >
+                  {t.bulk.phone}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
