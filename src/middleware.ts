@@ -119,5 +119,5 @@ export const config = {
   // Skip all paths that should not be internationalized
   // Also skip Stack Auth handler routes and the standalone /lumora-premium
   // design demo (which ships its own chrome and isn't locale-routed).
-  matcher: ['/((?!api|_next|_vercel|handler|lumora-premium|.*\\..*).*)']
+  matcher: ['/((?!api|_next|_vercel|handler|lumora-premium|neemxpro-2-plus-1-gratis|.*\\..*).*)']
 };
