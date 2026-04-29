@@ -7,6 +7,9 @@ import SizePicker from './components/SizePicker';
 import BenefitCards from './components/BenefitCards';
 import Testimonials from './components/Testimonials';
 import HowItWorks from './components/HowItWorks';
+import FAQ from './components/FAQ';
+import LandingFooter from './components/LandingFooter';
+import StickyMobileCta from './components/StickyMobileCta';
 
 const PROMO_STOCK_REMAINING = parseInt(
   process.env.NEXT_PUBLIC_NEEMX_PROMO_STOCK ?? '47',
@@ -15,8 +18,12 @@ const PROMO_STOCK_REMAINING = parseInt(
 const SIZE_PICKER_ID = 'size-picker';
 
 export default function LandingClient() {
+  const handleSecondaryCta = () => {
+    document.getElementById(SIZE_PICKER_ID)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <main className="min-h-screen bg-lumora-dark text-white">
+    <main className="min-h-screen bg-lumora-dark text-white pb-24 md:pb-0">
       <PromoBar setsRemaining={PROMO_STOCK_REMAINING} />
       <Hero ctaTargetId={SIZE_PICKER_ID} />
       <TrustStrip />
@@ -24,6 +31,29 @@ export default function LandingClient() {
       <BenefitCards />
       <Testimonials />
       <HowItWorks />
+      <FAQ />
+
+      <section className="bg-lumora-dark border-t border-white/10 py-12 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+          <p className="font-display text-2xl md:text-3xl font-bold text-lumora-gold mb-2">
+            Nog {PROMO_STOCK_REMAINING} sets beschikbaar
+          </p>
+          <p className="text-white/80 mb-6">
+            Tijdelijke 2+1-actie — wees er snel bij.
+          </p>
+          <button
+            type="button"
+            onClick={handleSecondaryCta}
+            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg text-lg"
+          >
+            Bestel je 2+1 nu
+            <span aria-hidden>→</span>
+          </button>
+        </div>
+      </section>
+
+      <LandingFooter />
+      <StickyMobileCta targetId={SIZE_PICKER_ID} />
     </main>
   );
 }
