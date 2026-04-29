@@ -2,6 +2,7 @@
 
 import PromoBar from './components/PromoBar';
 import Hero from './components/Hero';
+import SizePicker from './components/SizePicker';
 
 const PROMO_STOCK_REMAINING = parseInt(
   process.env.NEXT_PUBLIC_NEEMX_PROMO_STOCK ?? '47',
@@ -14,7 +15,7 @@ export default function LandingClient() {
     <main className="min-h-screen bg-lumora-dark text-white">
       <PromoBar setsRemaining={PROMO_STOCK_REMAINING} />
       <Hero ctaTargetId={SIZE_PICKER_ID} />
-      {/* Following sections come in next tasks */}
+      <SizePicker id={SIZE_PICKER_ID} />
     </main>
   );
 }
