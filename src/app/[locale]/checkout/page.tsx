@@ -61,7 +61,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const locale = (params?.locale as string) || 'nl';
-  const { items, getTotalPrice, clearCart, updateQuantity, removeItem } = useCart();
+  const { items, getTotalPrice, clearCart, updateQuantity, removeItem, addItem } = useCart();
   const user = useUser();
 
   useEffect(() => { applyTitle(locale); }, [locale]);
@@ -149,10 +149,46 @@ export default function CheckoutPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  // Cart-recovery parameter (email campaigns)
+  // Cart-recovery parameter (email campaigns).
+  // Restores the abandoned cart contents from Convex so the user lands
+  // on a populated checkout instead of an empty cart.
   useEffect(() => {
     const id = searchParams.get('cart_recovery');
-    if (id) setRecoveryCartId(id);
+    if (!id) return;
+    setRecoveryCartId(id);
+
+    let cancelled = false;
+    fetch(`/api/cart/recover/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (cancelled || !data?.success) return;
+        const recovered = Array.isArray(data.cart) ? data.cart : [];
+        if (recovered.length === 0) return;
+
+        clearCart();
+        for (const item of recovered) {
+          if (!item?.product_id) continue;
+          addItem(
+            {
+              product_id: item.product_id,
+              slug: item.slug,
+              name: item.name,
+              price: item.price,
+              image_url: item.image_url ?? '',
+            },
+            item.quantity ?? 1
+          );
+        }
+
+        if (data.customer_email && !customerEmail) setCustomerEmail(data.customer_email);
+        if (data.customer_name && !customerName) setCustomerName(data.customer_name);
+      })
+      .catch((err) => console.error('Cart recovery failed:', err));
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Email recognition for guest users (800 ms debounce)

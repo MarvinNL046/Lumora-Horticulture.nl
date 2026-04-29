@@ -40,6 +40,13 @@ export const save = mutation({
   },
 });
 
+export const getById = query({
+  args: { id: v.id("abandonedCarts") },
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
+  },
+});
+
 export const load = query({
   args: { user_id: v.string() },
   handler: async (ctx, { user_id }) => {

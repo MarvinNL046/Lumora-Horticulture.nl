@@ -44,7 +44,9 @@ export async function GET(request: NextRequest) {
       try {
         const cartItems: CartItem[] = cart.cart_data as any;
 
-        // Determine checkout URL based on locale
+        // Determine checkout URL based on locale.
+        // Production uses domain-based locale (no /[locale] prefix in public URLs)
+        // and /checkout is the same path across all locales.
         const domain =
           cart.locale === 'en'
             ? 'lumorahorticulture.com'
@@ -52,9 +54,7 @@ export async function GET(request: NextRequest) {
             ? 'lumorahorticulture.de'
             : 'lumorahorticulture.nl';
 
-        const checkoutPath = cart.locale === 'de' ? '/kasse' : cart.locale === 'en' ? '/checkout' : '/checkout';
-
-        const checkoutUrl = `https://${domain}/${cart.locale}${checkoutPath}?cart_recovery=${cart._id}`;
+        const checkoutUrl = `https://${domain}/checkout?cart_recovery=${cart._id}`;
 
         // Generate email content
         const emailContent = getAbandonedCartEmailContent({
