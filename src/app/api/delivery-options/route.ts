@@ -32,31 +32,44 @@ export async function GET(req: Request) {
       getPickupPoints({ postalCode, houseNumber, countryCode: cc, carrier }).catch(() => []),
     ]);
 
-    // MyParcel's pickup schema changed between v2.x: the display name can be
-    // `location`, `location_name`, or nested under `address`, and `distance`
-    // sometimes ships as a string. Normalise here so the DeliveryPicker
-    // doesn't have to know.
+    // MyParcel's pickup schema is unstable. We've now seen three variants:
+    //   1. flat with `location_name` as a string
+    //   2. address fields nested under `address`
+    //   3. metadata (the real name + location_code + retail_network_id +
+    //      lat/lng/opening_hours) nested INSIDE the `location_name` field
+    //      as an object — top-level `location_code` is then empty
+    // Detect (3) and unwrap, otherwise fall back to (1)/(2). Without this
+    // the DeliveryPicker renders an object as a React child → error #31.
     const pickups = (rawPickups as any[]).map((p) => {
+      const nested =
+        p && typeof p.location_name === 'object' && p.location_name !== null
+          ? p.location_name
+          : null;
       const addr = (p && p.address) || {};
       const street = p.street ?? addr.street ?? '';
       const number = p.number ?? addr.number ?? '';
       const number_suffix = p.number_suffix ?? addr.number_suffix ?? '';
       const postal_code = p.postal_code ?? addr.postal_code ?? '';
       const city = p.city ?? addr.city ?? '';
-      const name = p.location_name ?? p.location ?? p.name ?? '';
-      const distRaw = p.distance ?? p.distance_m ?? 0;
+      const name =
+        nested?.location_name ??
+        (typeof p.location_name === 'string' ? p.location_name : '') ??
+        p.location ??
+        p.name ??
+        '';
+      const distRaw = p.distance ?? p.distance_m ?? nested?.distance ?? 0;
       const distance = typeof distRaw === 'number'
         ? distRaw
         : Number(String(distRaw).replace(/[^\d.]/g, '')) || 0;
       return {
-        location_code: p.location_code ?? p.id ?? '',
-        location_name: name,
+        location_code: p.location_code || nested?.location_code || p.id || '',
+        location_name: typeof name === 'string' ? name : '',
         street,
         number: String(number) + (number_suffix ? number_suffix : ''),
         postal_code,
         city,
         distance,
-        retail_network_id: p.retail_network_id,
+        retail_network_id: p.retail_network_id ?? nested?.retail_network_id,
       };
     });
 
