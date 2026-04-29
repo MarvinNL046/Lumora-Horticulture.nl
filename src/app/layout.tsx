@@ -2,21 +2,18 @@ import '@/styles/globals.css'
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "../stack/client";
 import type { Metadata } from 'next'
-import HeaderNav from '@/components/HeaderNav'
-import Footer from '@/components/Footer'
 import GoogleAds from '@/components/GoogleAds'
 import MicrosoftClarity from '@/components/MicrosoftClarity'
 import MetaPixel from '@/components/MetaPixel'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
-import CartSidebar from '@/components/CartSidebar'
+import SiteChrome from '@/components/SiteChrome'
 import dynamic from 'next/dynamic'
 
 // Dynamically import client-side components with SSR disabled
 const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
 const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
-const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false })
 const InAppBrowserBanner = dynamic(() => import('@/components/InAppBrowserBanner'), { ssr: false })
 
 // Initialize fonts
@@ -79,22 +76,10 @@ export default function RootLayout({
           {/* Organization structured data */}
           <OrganizationSchema locale="nl" />
 
-          {/* Fixed header with transparent background that becomes solid on scroll */}
-          <HeaderNav />
-
-          {/* Main content with padding top to account for fixed header */}
-          <main className="flex-grow pt-24">
-            {children}
-          </main>
-
-          {/* Enhanced footer with modern design */}
-          <Footer />
-
-          {/* Shopping cart sidebar */}
-          <CartSidebar />
-
-          {/* Exit intent popup for cart abandonment prevention */}
-          <ExitIntentPopup />
+          {/* Header / main / footer / cart / exit-intent. SiteChrome
+              hides the global Lumora chrome on standalone routes such as
+              the /lumora-premium design demo so they can ship their own. */}
+          <SiteChrome>{children}</SiteChrome>
         </CartProvider>
       </StackTheme></StackProvider></body>
     </html>

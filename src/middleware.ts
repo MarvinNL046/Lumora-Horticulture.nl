@@ -117,6 +117,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Skip all paths that should not be internationalized
-  // Also skip Stack Auth handler routes
-  matcher: ['/((?!api|_next|_vercel|handler|.*\\..*).*)']
+  // Also skip Stack Auth handler routes and the standalone /lumora-premium
+  // design demo (which ships its own chrome and isn't locale-routed).
+  matcher: ['/((?!api|_next|_vercel|handler|lumora-premium|.*\\..*).*)']
 };
