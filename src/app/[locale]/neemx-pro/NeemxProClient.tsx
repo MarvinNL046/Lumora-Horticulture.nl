@@ -94,9 +94,9 @@ export default function NeemxProClient({ locale }: Props) {
         yield: {
           title: 'Opbrengst per flesje',
           items: [
-            { size: '10 ml', yield: '1-4 liter spuitvloeistof', coverage: '± 5-40 m² spuitoppervlakte' },
-            { size: '30 ml', yield: '3-12 liter spuitvloeistof', coverage: '± 15-120 m² spuitoppervlakte' },
-            { size: '50 ml', yield: '5-20 liter spuitvloeistof', coverage: '± 25-200 m² spuitoppervlakte' }
+            { size: '10 ml', yield: 'tot 4 liter spuitoplossing', coverage: '± 5-40 m² spuitoppervlakte' },
+            { size: '30 ml', yield: 'tot 12 liter spuitoplossing', coverage: '± 15-120 m² spuitoppervlakte' },
+            { size: '50 ml', yield: 'tot 20 liter spuitoplossing', coverage: '± 25-200 m² spuitoppervlakte' }
           ]
         }
       },
@@ -144,9 +144,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Kies jouw formaat',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Ideaal om te starten', yield: '1-4 liter', coverage: '± 5-40 m²', badge: 'Starter' },
-          { size: '30 ml', price: '44,95', description: 'Beste prijs per ml', yield: '3-12 liter', coverage: '± 15-120 m²', badge: 'Beste waarde' },
-          { size: '50 ml', price: '59,95', description: 'Voor intensief gebruik', yield: '5-20 liter', coverage: '± 25-200 m²', badge: 'Professioneel' }
+          { size: '10 ml', price: '24,95', description: 'Ideaal om te starten', yield: 'tot 4 liter', coverage: '± 5-40 m²', badge: 'Starter' },
+          { size: '30 ml', price: '44,95', description: 'Beste prijs per ml', yield: 'tot 12 liter', coverage: '± 15-120 m²', badge: 'Beste waarde' },
+          { size: '50 ml', price: '59,95', description: 'Voor intensief gebruik', yield: 'tot 20 liter', coverage: '± 25-200 m²', badge: 'Professioneel' }
         ]
       },
 
@@ -232,9 +232,9 @@ export default function NeemxProClient({ locale }: Props) {
         yield: {
           title: 'Yield per bottle',
           items: [
-            { size: '10 ml', yield: '1-4 liters spray solution', coverage: '± 5-40 m² spray coverage' },
-            { size: '30 ml', yield: '3-12 liters spray solution', coverage: '± 15-120 m² spray coverage' },
-            { size: '50 ml', yield: '5-20 liters spray solution', coverage: '± 25-200 m² spray coverage' }
+            { size: '10 ml', yield: 'up to 4 liters spray solution', coverage: '± 5-40 m² spray coverage' },
+            { size: '30 ml', yield: 'up to 12 liters spray solution', coverage: '± 15-120 m² spray coverage' },
+            { size: '50 ml', yield: 'up to 20 liters spray solution', coverage: '± 25-200 m² spray coverage' }
           ]
         }
       },
@@ -282,9 +282,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Choose your size',
         items: [
-          { size: '10 ml', price: '24.95', description: 'Ideal for starters', yield: '1-4 liters', coverage: '± 5-40 m²', badge: 'Starter' },
-          { size: '30 ml', price: '44.95', description: 'Best price per ml', yield: '3-12 liters', coverage: '± 15-120 m²', badge: 'Best value' },
-          { size: '50 ml', price: '59.95', description: 'For intensive use', yield: '5-20 liters', coverage: '± 25-200 m²', badge: 'Professional' }
+          { size: '10 ml', price: '24.95', description: 'Ideal for starters', yield: 'up to 4 liters', coverage: '± 5-40 m²', badge: 'Starter' },
+          { size: '30 ml', price: '44.95', description: 'Best price per ml', yield: 'up to 12 liters', coverage: '± 15-120 m²', badge: 'Best value' },
+          { size: '50 ml', price: '59.95', description: 'For intensive use', yield: 'up to 20 liters', coverage: '± 25-200 m²', badge: 'Professional' }
         ]
       },
 
@@ -370,9 +370,9 @@ export default function NeemxProClient({ locale }: Props) {
         yield: {
           title: 'Ertrag pro Flasche',
           items: [
-            { size: '10 ml', yield: '1-4 Liter Sprühlösung', coverage: '± 5-40 m² Sprühfläche' },
-            { size: '30 ml', yield: '3-12 Liter Sprühlösung', coverage: '± 15-120 m² Sprühfläche' },
-            { size: '50 ml', yield: '5-20 Liter Sprühlösung', coverage: '± 25-200 m² Sprühfläche' }
+            { size: '10 ml', yield: 'bis zu 4 Liter Sprühlösung', coverage: '± 5-40 m² Sprühfläche' },
+            { size: '30 ml', yield: 'bis zu 12 Liter Sprühlösung', coverage: '± 15-120 m² Sprühfläche' },
+            { size: '50 ml', yield: 'bis zu 20 Liter Sprühlösung', coverage: '± 25-200 m² Sprühfläche' }
           ]
         }
       },
@@ -420,9 +420,9 @@ export default function NeemxProClient({ locale }: Props) {
       products: {
         title: 'Wählen Sie Ihre Größe',
         items: [
-          { size: '10 ml', price: '24,95', description: 'Ideal für Einsteiger', yield: '1-4 Liter', coverage: '± 5-40 m²', badge: 'Einsteiger' },
-          { size: '30 ml', price: '44,95', description: 'Bester Preis pro ml', yield: '3-12 Liter', coverage: '± 15-120 m²', badge: 'Bester Wert' },
-          { size: '50 ml', price: '59,95', description: 'Für intensiven Gebrauch', yield: '5-20 Liter', coverage: '± 25-200 m²', badge: 'Professionell' }
+          { size: '10 ml', price: '24,95', description: 'Ideal für Einsteiger', yield: 'bis zu 4 Liter', coverage: '± 5-40 m²', badge: 'Einsteiger' },
+          { size: '30 ml', price: '44,95', description: 'Bester Preis pro ml', yield: 'bis zu 12 Liter', coverage: '± 15-120 m²', badge: 'Bester Wert' },
+          { size: '50 ml', price: '59,95', description: 'Für intensiven Gebrauch', yield: 'bis zu 20 Liter', coverage: '± 25-200 m²', badge: 'Professionell' }
         ]
       },
 

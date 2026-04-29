@@ -139,9 +139,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Opbrengst per flesje',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 liter spuitvloeistof', coverage: '± 5-40 m²' },
-        { size: '30 ml', yield: '3-12 liter spuitvloeistof', coverage: '± 15-120 m²' },
-        { size: '50 ml', yield: '5-20 liter spuitvloeistof', coverage: '± 25-200 m²' }
+        { size: '10 ml', yield: 'tot 4 liter spuitoplossing', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: 'tot 12 liter spuitoplossing', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: 'tot 20 liter spuitoplossing', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Effectief tegen:',
       effectiveItems: [
@@ -186,9 +186,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Yield per bottle',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 liters spray solution', coverage: '± 5-40 m²' },
-        { size: '30 ml', yield: '3-12 liters spray solution', coverage: '± 15-120 m²' },
-        { size: '50 ml', yield: '5-20 liters spray solution', coverage: '± 25-200 m²' }
+        { size: '10 ml', yield: 'up to 4 liters spray solution', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: 'up to 12 liters spray solution', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: 'up to 20 liters spray solution', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Effective against:',
       effectiveItems: [
@@ -233,9 +233,9 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       yieldTitle: 'Ertrag pro Flasche',
       yieldItems: [
-        { size: '10 ml', yield: '1-4 Liter Sprühlösung', coverage: '± 5-40 m²' },
-        { size: '30 ml', yield: '3-12 Liter Sprühlösung', coverage: '± 15-120 m²' },
-        { size: '50 ml', yield: '5-20 Liter Sprühlösung', coverage: '± 25-200 m²' }
+        { size: '10 ml', yield: 'bis zu 4 Liter Sprühlösung', coverage: '± 5-40 m²' },
+        { size: '30 ml', yield: 'bis zu 12 Liter Sprühlösung', coverage: '± 15-120 m²' },
+        { size: '50 ml', yield: 'bis zu 20 Liter Sprühlösung', coverage: '± 25-200 m²' }
       ],
       effectiveTitle: 'Wirksam gegen:',
       effectiveItems: [

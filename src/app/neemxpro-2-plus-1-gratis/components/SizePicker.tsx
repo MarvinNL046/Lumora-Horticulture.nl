@@ -28,9 +28,9 @@ interface SizeMeta {
 }
 
 const SIZE_META: SizeMeta[] = [
-  { slug: 'neemx-pro-10ml', label: '10 ml', yieldText: '1–4 L spuitvloeistof', badge: 'Starter' },
-  { slug: 'neemx-pro-30ml', label: '30 ml', yieldText: '3–12 L spuitvloeistof', badge: 'Beste waarde' },
-  { slug: 'neemx-pro-50ml', label: '50 ml', yieldText: '5–20 L spuitvloeistof', badge: 'Voor intensief gebruik' },
+  { slug: 'neemx-pro-10ml', label: '10 ml', yieldText: 'tot 4 L spuitoplossing', badge: 'Starter' },
+  { slug: 'neemx-pro-30ml', label: '30 ml', yieldText: 'tot 12 L spuitoplossing', badge: 'Beste waarde' },
+  { slug: 'neemx-pro-50ml', label: '50 ml', yieldText: 'tot 20 L spuitoplossing', badge: 'Voor intensief gebruik' },
 ];
 
 interface Props {

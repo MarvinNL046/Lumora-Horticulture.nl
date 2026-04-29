@@ -17,7 +17,7 @@ const FAQS = [
   },
   {
     q: 'Hoeveel water kan ik ermee maken?',
-    a: '10ml = 1–4 liter spuitoplossing · 30ml = 3–12 liter · 50ml = 5–20 liter. Dosering tussen 2,5–10 ml per liter water afhankelijk van behoefte (preventief of bij intensieve plaagdruk).',
+    a: '10ml = tot 4 liter spuitoplossing · 30ml = tot 12 liter · 50ml = tot 20 liter. Dosering 2,5 ml per liter water bij preventief gebruik.',
   },
 ];
 
