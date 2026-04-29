@@ -145,7 +145,10 @@ export async function POST(request: NextRequest) {
     // Dit voorkomt dat verlaten betalingen order nummers 'verbruiken'
 
     // Maak bestelling aan zonder order_number
-    const orderId = await convex.mutation(api.orders.create, {
+    // Graceful fallback: if Convex prod schema doesn't yet have the
+    // `metadata` field, retry without it. This keeps checkout working
+    // even if `npx convex deploy` hasn't been run for the schema update.
+    const baseOrderArgs = {
       user_id: userId,
       customer_email,
       customer_name,
@@ -157,8 +160,22 @@ export async function POST(request: NextRequest) {
       payment_status: 'pending',
       locale,
       delivery_preference: delivery_preference ?? undefined,
-      metadata: promoMetadata ?? undefined,
-    });
+    };
+    let orderId;
+    try {
+      orderId = await convex.mutation(api.orders.create, {
+        ...baseOrderArgs,
+        metadata: promoMetadata ?? undefined,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes('extra field `metadata`')) {
+        console.warn('⚠️ Convex prod schema missing `metadata` field — order created without promo attribution. Run `npx convex deploy` to enable.');
+        orderId = await convex.mutation(api.orders.create, baseOrderArgs);
+      } else {
+        throw err;
+      }
+    }
 
     // Voeg order items toe
     await convex.mutation(api.orderItems.createMany, {
