@@ -1,10 +1,24 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, type ComponentType } from 'react'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
-import QRCode from 'react-qr-code'
+import QRCodeRaw from 'react-qr-code'
 import './flyer.css'
+
+// react-qr-code's published types have shifted between minor versions —
+// without package-lock pinning Vercel sometimes pulls a build whose default
+// export's TS shape isn't a JSX-callable. Cast once so the JSX call sites
+// don't have to care.
+const QRCode = QRCodeRaw as unknown as ComponentType<{
+  size?: number
+  value: string
+  viewBox?: string
+  bgColor?: string
+  fgColor?: string
+  level?: 'L' | 'M' | 'H' | 'Q'
+  style?: React.CSSProperties
+}>
 
 export default function EllepotFlyerClient() {
   const { locale } = useParams()

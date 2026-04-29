@@ -1,8 +1,20 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, type ComponentType } from 'react'
 import Image from 'next/image'
-import QRCode from 'react-qr-code'
+import QRCodeRaw from 'react-qr-code'
+
+// See ellepot-flyer/EllepotFlyerClient.tsx — react-qr-code's TS shape drifts
+// between minor versions; cast once so JSX call sites are version-agnostic.
+const QRCode = QRCodeRaw as unknown as ComponentType<{
+  size?: number
+  value: string
+  viewBox?: string
+  bgColor?: string
+  fgColor?: string
+  level?: 'L' | 'M' | 'H' | 'Q'
+  style?: React.CSSProperties
+}>
 
 interface Props {
   locale: string
