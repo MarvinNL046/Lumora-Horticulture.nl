@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import PromoBar from './components/PromoBar';
 import Hero from './components/Hero';
 import TrustStrip from './components/TrustStrip';
@@ -18,6 +19,20 @@ const PROMO_STOCK_REMAINING = parseInt(
 const SIZE_PICKER_ID = 'size-picker';
 
 export default function LandingClient() {
+  // Capture UTM params on landing for downstream attribution.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const utm: Record<string, string> = {};
+    for (const key of ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term']) {
+      const v = params.get(key);
+      if (v) utm[key] = v;
+    }
+    if (Object.keys(utm).length > 0) {
+      sessionStorage.setItem('lumora_utm', JSON.stringify(utm));
+    }
+  }, []);
+
   const handleSecondaryCta = () => {
     document.getElementById(SIZE_PICKER_ID)?.scrollIntoView({ behavior: 'smooth' });
   };

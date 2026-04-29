@@ -132,6 +132,24 @@ export default function SizePicker({ id }: Props) {
         );
       }
 
+      // Fire Meta Pixel AddToCart event. fbq is queued globally by MetaPixel.tsx
+      // in the root layout — calls before the script loads are buffered.
+      if (typeof window !== 'undefined' && (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq) {
+        const fbq = (window as unknown as { fbq: (...args: unknown[]) => void }).fbq;
+        fbq('track', 'AddToCart', {
+          content_type: 'product',
+          content_ids: NEEMX_SLUGS.filter((s) => counts[s] > 0).map((s) => products[s]?._id).filter(Boolean),
+          value: finalTotal,
+          currency: 'EUR',
+          contents: NEEMX_SLUGS
+            .filter((s) => counts[s] > 0)
+            .map((s) => ({
+              id: products[s]?._id,
+              quantity: counts[s],
+            })),
+        });
+      }
+
       // Set the hidden promo cookie. The server reads this in /api/checkout
       // via next/headers cookies() and re-validates eligibility from cart contents.
       document.cookie = `${NEEMX_PROMO_COOKIE_NAME}=${NEEMX_PROMO_CODE}; Max-Age=${NEEMX_PROMO_COOKIE_MAX_AGE_SECONDS}; Path=/; SameSite=Lax${
