@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
@@ -6,6 +7,12 @@ import { createPayment } from '@/lib/mollie';
 import { calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 import { stackServerApp } from '@/stack/server';
 import { isHiddenProductSlug } from '@/lib/hidden-products';
+import {
+  NEEMX_PROMO_COOKIE_NAME,
+  NEEMX_PROMO_CODE,
+  isPromoCookieActive,
+  calculateNeemxPromoDiscount,
+} from '@/lib/neemx-promo';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,7 +113,32 @@ export async function POST(request: NextRequest) {
         price: discountedPrice, // Prijs PER STUK na korting
         basePrice: basePrice, // Originele prijs
         name: product.name,
+        slug: product.slug,
       });
+    }
+
+    // ─── 2+1 GRATIS promo (FB landing) ─────────────────────────────────
+    // Only applied when the hidden cookie is set AND the cart contains
+    // ≥3 NEEMX items. Discount = price of the cheapest individual bottle.
+    let promoMetadata: { promoCode: string; promoDiscount: number; freeItemSlug: string } | null = null;
+    const promoCookie = cookies().get(NEEMX_PROMO_COOKIE_NAME)?.value;
+    if (isPromoCookieActive(promoCookie)) {
+      const promo = calculateNeemxPromoDiscount(
+        productDetails.map((p) => ({
+          slug: p.slug,
+          unitPrice: p.basePrice,
+          quantity: p.quantity,
+        }))
+      );
+      if (promo.eligible && promo.freeItemSlug) {
+        totalAmount = Math.max(0, totalAmount - promo.discount);
+        promoMetadata = {
+          promoCode: NEEMX_PROMO_CODE,
+          promoDiscount: promo.discount,
+          freeItemSlug: promo.freeItemSlug,
+        };
+        console.log(`✅ NEEMX 2+1 promo applied: -€${promo.discount.toFixed(2)} (${promo.freeItemSlug})`);
+      }
     }
 
     // Order nummer wordt pas toegewezen na succesvolle betaling (in webhook)
@@ -125,6 +157,7 @@ export async function POST(request: NextRequest) {
       payment_status: 'pending',
       locale,
       delivery_preference: delivery_preference ?? undefined,
+      metadata: promoMetadata ?? undefined,
     });
 
     // Voeg order items toe
