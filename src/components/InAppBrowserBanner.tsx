@@ -61,8 +61,16 @@ export default function InAppBrowserBanner({ locale }: Props) {
     const detected = detectInAppBrowser(ua);
     if (!detected) return;
 
-    // Allow dismiss-per-session, but re-surface on a fresh page load so users
-    // who dismissed on the PDP still get warned before they hit checkout.
+    // Only nudge users when iDEAL/Apple Pay actually matters: on the
+    // checkout flow. The landing/PDP pages don't need the warning — it just
+    // looks alarming and tanks conversion before the user has even decided
+    // to buy. Mollie's checkout itself also handles a lot of in-app cases.
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+    const isCheckoutContext =
+      /\/checkout(\b|\/)/.test(path) || /\/(kasse|afrekenen)(\b|\/)/.test(path);
+    if (!isCheckoutContext) return;
+
+    // Allow dismiss-per-session.
     const sessionDismissed =
       typeof window !== 'undefined' && window.sessionStorage.getItem(DISMISS_KEY) === '1';
 
