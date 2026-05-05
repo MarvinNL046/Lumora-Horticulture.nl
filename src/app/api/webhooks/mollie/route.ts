@@ -90,12 +90,15 @@ export async function POST(request: NextRequest) {
       paymentStatus = 'expired';
     }
 
-    // Update order in database
+    // Update order in database. On paid, also close the recovery state
+    // machine so the cron stops considering this order forever (defense in
+    // depth — the queries already exclude paid orders via payment_status).
     await convex.mutation(api.orders.update, {
       id: order._id,
       order_number: orderNumber || undefined,
       status: orderStatus,
       payment_status: paymentStatus,
+      recovery_state: payment.status === 'paid' ? 'recovered' : undefined,
     });
 
     console.log(`Order ${order._id} updated: ${orderStatus} / ${paymentStatus}`);

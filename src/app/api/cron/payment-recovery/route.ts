@@ -3,21 +3,42 @@ import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getPaymentRecoveryEmailContent } from '@/emails/payment-recovery-template';
-import { createPayment } from '@/lib/mollie';
 
 export const dynamic = 'force-dynamic';
 
-export const maxDuration = 60; // Allow up to 60 seconds for processing multiple emails
+export const maxDuration = 60;
 
 // Vercel Cron Job: Payment Recovery Emails
 // Schedule: Every 2 hours at minute 30 (30 */2 * * *)
 //
-// Targets orders with expired/failed payments.
-// Email schedule:
+// Sends up to 2 reminder emails per abandoned order:
 // - 1st email: 1 hour after payment expires
-// - 2nd email: 48 hours after 1st email (if still not paid)
+// - 2nd email: 48 hours after the 1st (final reminder)
+//
+// The cron does NOT pre-create Mollie payments. Each email links to
+// /checkout/retry?order_id=... which mints a fresh payment on click via
+// /api/orders/[id]/retry-payment. This avoids polluting the Mollie dashboard
+// with dozens of expired payments and lets the customer pay even if the
+// previous link expired. Mirrors how Shopify, Stripe Checkout, and Klaviyo
+// do abandoned-cart recovery.
+//
+// State machine on the order (recovery_state):
+//   none → reminder_1_sent → reminder_2_sent → given_up
+// Transition is claimed atomically BEFORE sending email so retries/races
+// can never double-send.
+
+function isSkippableEmail(email: string): boolean {
+  const e = email.toLowerCase().trim();
+  // RFC-reserved test domains
+  if (/@(example\.(com|org|net)|test\.com|invalid|localhost)$/.test(e)) return true;
+  // Common test-account patterns
+  if (/^(test|noreply|no-reply|donotreply)@/.test(e)) return true;
+  // Plus-addressed test variants
+  if (/\+test@|\+spam@/.test(e)) return true;
+  return false;
+}
+
 export async function GET(request: NextRequest) {
-  // Verify the request is from Vercel Cron
   const authHeader = request.headers.get('authorization');
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -26,18 +47,17 @@ export async function GET(request: NextRequest) {
   console.log('Running payment recovery email job...');
 
   try {
-    // Find orders for FIRST recovery email
     const ordersForFirstEmail = await convex.query(api.orders.listForFirstRecovery);
-
-    // Find orders for SECOND recovery email
     const ordersForSecondEmail = await convex.query(api.orders.listForSecondRecovery);
 
     const ordersToRecover = [
-      ...ordersForFirstEmail.map(o => ({ ...o, isSecondReminder: false })),
-      ...ordersForSecondEmail.map(o => ({ ...o, isSecondReminder: true })),
+      ...ordersForFirstEmail.map((o) => ({ ...o, isSecondReminder: false })),
+      ...ordersForSecondEmail.map((o) => ({ ...o, isSecondReminder: true })),
     ];
 
-    console.log(`Found ${ordersForFirstEmail.length} orders for 1st email, ${ordersForSecondEmail.length} for 2nd email`);
+    console.log(
+      `Found ${ordersForFirstEmail.length} orders for 1st email, ${ordersForSecondEmail.length} for 2nd email`
+    );
 
     if (ordersToRecover.length === 0) {
       return NextResponse.json({ message: 'No orders to recover' });
@@ -45,25 +65,57 @@ export async function GET(request: NextRequest) {
 
     let successCount = 0;
     let failCount = 0;
+    let skippedCount = 0;
 
-    // Process each order
     for (const orderData of ordersToRecover) {
       const { isSecondReminder, ...order } = orderData;
+      const expectedFrom = isSecondReminder ? 'reminder_1_sent' : 'none';
+      const nextState = isSecondReminder ? 'reminder_2_sent' : 'reminder_1_sent';
+      const finalState = isSecondReminder ? 'given_up' : nextState;
 
       try {
-        console.log(`Processing order ${order._id} (${isSecondReminder ? '2nd' : '1st'} reminder)...`);
+        // Skip junk/test emails — claim "given_up" so we never look at this
+        // order again.
+        if (isSkippableEmail(order.customer_email)) {
+          await convex.mutation(api.orders.markRecoveryState, {
+            id: order._id,
+            expected_from: expectedFrom,
+            to: 'given_up',
+          });
+          skippedCount++;
+          console.log(`Skipped order ${order._id}: test/invalid email ${order.customer_email}`);
+          continue;
+        }
 
-        // Get order items with product details
+        // CLAIM BEFORE WORK. If another cron instance / retry already moved
+        // this order forward, the claim returns false and we skip.
+        const claimed = await convex.mutation(api.orders.markRecoveryState, {
+          id: order._id,
+          expected_from: expectedFrom,
+          to: nextState,
+          set_email_sent_at: true,
+        });
+
+        if (!claimed) {
+          skippedCount++;
+          console.log(`Skipped order ${order._id}: state already advanced (race or duplicate run)`);
+          continue;
+        }
+
         const itemsWithProducts = await convex.query(api.orderItems.getByOrderWithProducts, {
           order_id: order._id,
         });
 
         if (itemsWithProducts.length === 0) {
-          console.log(`No items found for order ${order._id}, skipping`);
+          console.log(`No items found for order ${order._id}, marking given_up`);
+          await convex.mutation(api.orders.markRecoveryState, {
+            id: order._id,
+            to: 'given_up',
+          });
+          skippedCount++;
           continue;
         }
 
-        // Determine base URL based on locale
         const locale = order.locale || 'nl';
         const domain =
           locale === 'en'
@@ -71,40 +123,13 @@ export async function GET(request: NextRequest) {
             : locale === 'de'
             ? 'lumorahorticulture.de'
             : 'lumorahorticulture.nl';
-
         const baseUrl = `https://${domain}`;
 
-        // Build retry page URL for self-service
-        const checkoutPath = locale === 'de' ? 'checkout' : locale === 'en' ? 'checkout' : 'checkout';
-        const retryPageUrl = `${baseUrl}/${locale}/${checkoutPath}/retry?order_id=${order._id}`;
+        // Single CTA: a stable retry URL. /checkout/retry creates the Mollie
+        // payment on click via /api/orders/[id]/retry-payment, so we don't
+        // pre-create anything here.
+        const retryPageUrl = `${baseUrl}/${locale}/checkout/retry?order_id=${order._id}`;
 
-        // Create a new payment link
-        const payment = await createPayment({
-          amount: order.total_amount,
-          description: `Bestelling ${order._id}`,
-          redirectUrl: `${baseUrl}/checkout/conversion?order_id=${order._id}`,
-          webhookUrl: `${baseUrl}/api/webhooks/mollie`,
-          metadata: {
-            order_id: order._id,
-            recovery: true,
-            reminder_number: isSecondReminder ? 2 : 1,
-          },
-        });
-
-        // Update order with new payment ID
-        await convex.mutation(api.orders.update, {
-          id: order._id,
-          payment_id: payment.id,
-          payment_status: 'pending',
-          status: 'pending',
-        });
-
-        const paymentUrl = payment.getCheckoutUrl();
-
-        // Calculate expiry time (Mollie default is 15 minutes, but we show 24 hours for UX)
-        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-        // Format order items for email
         const orderItemsForEmail = itemsWithProducts.map((item) => ({
           name: item.product?.name || 'Product',
           quantity: item.order_item.quantity,
@@ -112,20 +137,19 @@ export async function GET(request: NextRequest) {
           image_url: item.product?.image_url || undefined,
         }));
 
-        // Generate email content
         const emailContent = getPaymentRecoveryEmailContent({
           customerName: order.customer_name || '',
           orderId: order._id,
           orderItems: orderItemsForEmail,
           totalAmount: order.total_amount,
-          locale: locale,
-          paymentUrl: paymentUrl!,
-          retryPageUrl: retryPageUrl,
-          expiresAt,
+          locale,
+          // Both CTAs point to the on-demand retry page. No pre-created Mollie
+          // payment, so no expiresAt either.
+          paymentUrl: retryPageUrl,
+          retryPageUrl,
           isSecondReminder,
         });
 
-        // Send email via Resend
         await resend.emails.send({
           from: EMAIL_FROM,
           to: order.customer_email,
@@ -134,27 +158,32 @@ export async function GET(request: NextRequest) {
           html: emailContent.html,
         });
 
-        // Update order to mark recovery email sent
-        const currentAttempts = order.recovery_attempts ?? 0;
-        await convex.mutation(api.orders.update, {
-          id: order._id,
-          recovery_email_sent_at: Date.now(),
-          recovery_attempts: currentAttempts + 1,
-        });
+        // After the 2nd reminder there's nowhere to go — close the loop.
+        if (isSecondReminder) {
+          await convex.mutation(api.orders.markRecoveryState, {
+            id: order._id,
+            to: finalState,
+          });
+        }
 
         successCount++;
-        console.log(`${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order._id} to ${order.customer_email}`);
+        console.log(
+          `${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order._id} to ${order.customer_email}`
+        );
       } catch (error) {
         failCount++;
         console.error(`Failed to process order ${order._id}:`, error);
       }
     }
 
-    console.log(`Recovery job completed: ${successCount} succeeded, ${failCount} failed`);
+    console.log(
+      `Recovery job completed: ${successCount} sent, ${skippedCount} skipped, ${failCount} failed`
+    );
 
     return NextResponse.json({
       message: 'Payment recovery emails processed',
       success: successCount,
+      skipped: skippedCount,
       failed: failCount,
       total: ordersToRecover.length,
     });

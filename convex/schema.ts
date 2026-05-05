@@ -67,6 +67,9 @@ export default defineSchema({
     locale: v.optional(v.string()),
     recovery_email_sent_at: v.optional(v.number()),
     recovery_attempts: v.optional(v.number()),
+    // State machine: "none" | "reminder_1_sent" | "reminder_2_sent" | "given_up" | "recovered"
+    // Replaces the brittle counter-based recovery flow that caused runaway loops.
+    recovery_state: v.optional(v.string()),
     delivery_preference: v.optional(v.any()),
     shipment_id: v.optional(v.string()),
     tracking_code: v.optional(v.string()),
