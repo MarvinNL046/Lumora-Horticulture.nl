@@ -8,10 +8,6 @@
     {
       "path": "/api/cron/payment-recovery",
       "schedule": "30 */2 * * *"
-    },
-    {
-      "path": "/api/cron/generate-blog",
-      "schedule": "0 7 * * 1,4"
     }
   ]
 }
