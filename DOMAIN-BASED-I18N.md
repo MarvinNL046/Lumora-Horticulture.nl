@@ -1,82 +1,49 @@
-# Domain-Based Internationalization Setup
+# Multilingual URL and domain setup
 
-This project is configured to use domain-based internationalization, where each language is served from a separate domain with localized URL paths:
+`https://lumorahorticulture.nl` is the only canonical origin.
 
-- Dutch (nl): https://lumorahorticulture.nl
-- English (en): https://lumorahorticulture.com
-- German (de): https://lumorahorticulture.de
+- Dutch: `https://lumorahorticulture.nl/`
+- English: `https://lumorahorticulture.nl/en`
+- German: `https://lumorahorticulture.nl/de`
 
-## How It Works
+Paths are localized where mappings exist. For example:
 
-The middleware (`src/middleware.ts`) is configured to detect the domain and automatically serve content in the appropriate language with localized URL paths. This means:
+| Page | Dutch | English | German |
+| --- | --- | --- | --- |
+| Home | `/` | `/en` | `/de` |
+| Products | `/producten` | `/en/products` | `/de/produkte` |
+| Contact | `/contact` | `/en/contact` | `/de/kontakt` |
 
-1. No `/nl`, `/en`, or `/de` prefixes in URLs
-2. Each domain serves content in a specific language
-3. URL paths are translated to match the language of each domain:
+The routing source of truth is:
 
-| Page          | Dutch (nl)                      | English (en)                     | German (de)                      |
-|---------------|----------------------------------|----------------------------------|----------------------------------|
-| Home          | https://lumorahorticulture.nl/   | https://lumorahorticulture.com/  | https://lumorahorticulture.de/   |
-| Products      | https://lumorahorticulture.nl/producten/ | https://lumorahorticulture.com/products/ | https://lumorahorticulture.de/produkte/ |
-| Contact       | https://lumorahorticulture.nl/contact/ | https://lumorahorticulture.com/contact/ | https://lumorahorticulture.de/kontakt/ |
-| **Individual Product Pages** |                   |                                  |                                  |
-| Tray84        | https://lumorahorticulture.nl/producten/tray84/ | https://lumorahorticulture.com/products/tray84/ | https://lumorahorticulture.de/produkte/tray84/ |
-| Tray104       | https://lumorahorticulture.nl/producten/tray104/ | https://lumorahorticulture.com/products/tray104/ | https://lumorahorticulture.de/produkte/tray104/ |
-| Transport Box | https://lumorahorticulture.nl/producten/transportdoos/ | https://lumorahorticulture.com/products/transportbox/ | https://lumorahorticulture.de/produkte/transportbox/ |
-| Insert Sheets | https://lumorahorticulture.nl/producten/inlegvellen/ | https://lumorahorticulture.com/products/insertsheets/ | https://lumorahorticulture.de/produkte/einlegebogen/ |
+- `src/i18n/routing.ts` for supported locales and prefix behavior.
+- `src/lib/url-localizations.ts` for translated path segments.
+- `src/proxy.ts` for canonical redirects and internal locale rewrites.
 
-## Vercel Configuration
+Always generate internal links with `localizePathForLocale`. Do not add new
+absolute `.com` or `.de` storefront URLs.
 
-In Vercel, configure all three domains to point to the same project:
+## Legacy domains
 
-1. Go to Vercel dashboard → Project → Settings → Domains
-2. Add domains:
-   - lumorahorticulture.nl (primary domain)
-   - lumorahorticulture.com
-   - lumorahorticulture.de
+Keep `lumorahorticulture.com`, `www.lumorahorticulture.com`,
+`lumorahorticulture.de`, and `www.lumorahorticulture.de` attached to the same
+Vercel project. They exist only to preserve old links:
 
-## Local Testing
+- `.com/<path>` permanently redirects to `.nl/en/<localized-path>`.
+- `.de/<path>` permanently redirects to `.nl/de/<localized-path>`.
+- `www.lumorahorticulture.nl` permanently redirects to the `.nl` apex.
 
-To test the domain-based routing locally, you'll need to modify your hosts file to create local domain aliases. This allows you to test different domains on your local machine.
+Do not configure domain-level forwarding at the registrar if it drops paths or
+query strings. The application proxy performs the path-aware 308 redirects.
 
-### Windows:
+## Local verification
 
-1. Open Notepad as administrator
-2. Open the file `C:\Windows\System32\drivers\etc\hosts`
-3. Add the following lines:
-   ```
-   127.0.0.1 lumorahorticulture.nl
-   127.0.0.1 lumorahorticulture.com
-   127.0.0.1 lumorahorticulture.de
-   ```
-4. Save the file
+Run `npm run dev` and send requests with a legacy `Host` header to verify the
+redirects. You do not need to change the hosts file for automated checks.
 
-### Mac/Linux:
+## Sitemap and robots
 
-1. Open Terminal
-2. Run `sudo nano /etc/hosts`
-3. Add the following lines:
-   ```
-   127.0.0.1 lumorahorticulture.nl
-   127.0.0.1 lumorahorticulture.com
-   127.0.0.1 lumorahorticulture.de
-   ```
-4. Save (Ctrl+O, then Enter) and exit (Ctrl+X)
-
-### Using with Next.js Development Server:
-
-When running the Next.js development server with `npm run dev`, you can now access your application using:
-
-- http://lumorahorticulture.nl:3000 (Dutch)
-- http://lumorahorticulture.com:3000 (English)
-- http://lumorahorticulture.de:3000 (German)
-
-Each domain will automatically show content in the correct language based on the domain being used.
-
-## Fallback for Development
-
-Vercel preview URLs (*.vercel.app) are configured to default to Dutch (nl) for simplicity.
-
-## Sitemap and SEO
-
-The sitemap.xml is generated during build and includes URLs for all domains. The robots.txt file references all three sitemaps to ensure proper crawling across all domains.
+Next.js generates one sitemap at
+`https://lumorahorticulture.nl/sitemap.xml`. It contains the canonical NL, EN,
+and DE URLs with hreflang alternates. `public/robots.txt` references only that
+sitemap.

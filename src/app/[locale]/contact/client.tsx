@@ -8,8 +8,8 @@ import { LocalBusinessSchema, BreadcrumbSchema } from '@/components/StructuredDa
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
@@ -36,11 +36,11 @@ export default function ContactPageClient({ t, form, locale = 'nl' }: ClientComp
   const breadcrumbItems = [
     {
       name: locale === 'nl' ? 'Home' : locale === 'de' ? 'Startseite' : 'Home',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.nl/de' : 'https://lumorahorticulture.nl/en'
     },
     {
       name: locale === 'nl' ? 'Contact' : locale === 'de' ? 'Kontakt' : 'Contact',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl/contact/' : locale === 'de' ? 'https://lumorahorticulture.de/kontakt/' : 'https://lumorahorticulture.com/contact/'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/contact/' : locale === 'de' ? 'https://lumorahorticulture.nl/de/kontakt/' : 'https://lumorahorticulture.nl/en/contact/'
     }
   ]
 
@@ -56,16 +56,16 @@ export default function ContactPageClient({ t, form, locale = 'nl' }: ClientComp
         <div className="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-lumora-gold/10 mix-blend-multiply blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-full h-[20vh] bg-gradient-to-t from-lumora-dark/5 to-transparent"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
         <PageHeader t={t} />
-        
+
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             {/* Contact Information */}
             <ContactInfo t={t} />
-            
+
             {/* Form container */}
             <div className="lg:w-2/3">
               {form}
@@ -83,16 +83,16 @@ function PageHeader({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="max-w-4xl mx-auto text-center mb-16 md:mb-24"
     >
-      <motion.span 
+      <motion.span
         className="inline-block text-lumora-dark mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream"
       >
         {t.title.tag}
@@ -113,9 +113,9 @@ function ContactInfo({ t }: { t: any }) {
     threshold: 0.2,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={staggerContainer}
       initial="hidden"
@@ -126,10 +126,10 @@ function ContactInfo({ t }: { t: any }) {
         {/* Decorative elements */}
         <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-lumora-dark/30 mix-blend-overlay blur-xl"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-xl"></div>
-        
+
         <motion.div variants={fadeIn} className="relative z-10">
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">Lumora Horticulture</h2>
-          
+
           <div className="space-y-8">
             <motion.div variants={fadeIn} className="flex items-start">
               <div className="flex-shrink-0 h-10 w-10 rounded-full bg-lumora-cream/20 flex items-center justify-center mr-4">
@@ -139,15 +139,15 @@ function ContactInfo({ t }: { t: any }) {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">{t.info.email.title}</h3>
-                <a 
-                  href="mailto:info@lumorahorticulture.com" 
+                <a
+                  href="mailto:info@lumorahorticulture.com"
                   className="text-white/90 hover:text-white transition-colors duration-300"
                 >
                   info@lumorahorticulture.com
                 </a>
               </div>
             </motion.div>
-            
+
             <motion.div variants={fadeIn} className="flex items-start">
               <div className="flex-shrink-0 h-10 w-10 rounded-full bg-lumora-cream/20 flex items-center justify-center mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,8 +156,8 @@ function ContactInfo({ t }: { t: any }) {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">{t.info.web.title}</h3>
-                <a 
-                  href="https://lumorahorticulture.nl" 
+                <a
+                  href="https://lumorahorticulture.nl"
                   className="text-white/90 hover:text-white transition-colors duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -166,7 +166,7 @@ function ContactInfo({ t }: { t: any }) {
                 </a>
               </div>
             </motion.div>
-            
+
             <motion.div variants={fadeIn} className="flex items-start">
               <div className="flex-shrink-0 h-10 w-10 rounded-full bg-lumora-cream/20 flex items-center justify-center mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -175,8 +175,8 @@ function ContactInfo({ t }: { t: any }) {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">{t.info.whatsapp.title}</h3>
-                <a 
-                  href="https://wa.me/31638382564" 
+                <a
+                  href="https://wa.me/31638382564"
                   className="text-white/90 hover:text-white transition-colors duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -186,7 +186,7 @@ function ContactInfo({ t }: { t: any }) {
               </div>
             </motion.div>
           </div>
-          
+
           <motion.div variants={fadeIn} className="mt-12 pt-12 border-t border-white/10">
             <h3 className="font-display text-xl font-semibold text-white mb-4">{t.info.collaboration.title}</h3>
             <p className="text-white/80 leading-relaxed">

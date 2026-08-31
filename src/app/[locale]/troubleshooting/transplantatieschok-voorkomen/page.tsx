@@ -1,35 +1,63 @@
-import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { generatePageMetadata } from '@/lib/metadata';
 import { localizePathForLocale } from '@/lib/url-localizations';
-
-export const metadata: Metadata = {
-  title: 'Transplantatieschok Voorkomen bij Stekken | Expert Gids 2025',
-  description: 'Voorkom transplantatieschok effectief met paper plug trays. Complete gids met 7 praktische strategieën, expert tips en bewezen technieken voor sterke wortelvorming.',
-  keywords: 'transplantatieschok voorkomen, stekken verplanten, wortelschok, paper plug tray, steenwol pluggen, transplantatie stress, wortelvorming, zaailing verzorging',
-  openGraph: {
-    title: 'Transplantatieschok Voorkomen: 7 Bewezen Strategieën | Lumora',
-    description: 'Verminder transplantatieschok met 85% door paper plug trays te gebruiken. Expert gids met praktische tips voor succesvolle verplanting.',
-    type: 'article',
-    images: ['/productAfbeeldingen/paper-plug-tray-hero.jpg'],
-  },
-  alternates: {
-    canonical: '/troubleshooting/transplantatieschok-voorkomen',
-    languages: {
-      'nl': '/troubleshooting/transplantatieschok-voorkomen',
-      'en': '/en/troubleshooting/prevent-transplant-shock',
-      'de': '/de/troubleshooting/umpflanzschock-verhindern',
-    },
-  },
-};
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+const PAGE_PATH = '/troubleshooting/transplantatieschok-voorkomen';
+const PAGE_LOCALES = ['nl', 'en', 'de'] as const;
+type PageLocale = (typeof PAGE_LOCALES)[number];
+
+function isPageLocale(locale: string): locale is PageLocale {
+  return PAGE_LOCALES.includes(locale as PageLocale);
+}
+
+export function generateStaticParams() {
+  return PAGE_LOCALES.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { locale } = await params;
+  if (!isPageLocale(locale)) {
+    notFound();
+  }
+
+  const metadata = {
+    nl: {
+      title: 'Transplantatieschok Voorkomen bij Stekken',
+      description: 'Voorkom transplantatieschok met zeven praktische strategieën voor sterke wortelvorming en een succesvolle verplanting met paper plug trays.',
+      keywords: ['transplantatieschok voorkomen', 'stekken verplanten', 'wortelschok', 'paper plug trays', 'wortelvorming'],
+    },
+    en: {
+      title: 'Prevent Transplant Shock in Cuttings',
+      description: 'Prevent transplant shock with seven practical strategies for healthy root development and successful transplanting with paper plug trays.',
+      keywords: ['prevent transplant shock', 'transplant cuttings', 'root shock', 'paper plug trays', 'root development'],
+    },
+    de: {
+      title: 'Umpflanzschock bei Stecklingen Verhindern',
+      description: 'Verhindern Sie Umpflanzschock mit sieben praktischen Strategien für gesunde Wurzelbildung und erfolgreiches Umpflanzen mit Paper Plug Trays.',
+      keywords: ['Umpflanzschock verhindern', 'Stecklinge umpflanzen', 'Wurzelschock', 'Paper Plug Trays', 'Wurzelbildung'],
+    },
+  }[locale];
+
+  return generatePageMetadata({
+    ...metadata,
+    locale,
+    path: PAGE_PATH,
+    availableLocales: PAGE_LOCALES,
+  });
+}
+
 export default async function TransplantatieschokVoorkomenPage(props: PageProps) {
   const params = await props.params;
   const { locale } = params;
+  if (!isPageLocale(locale)) {
+    notFound();
+  }
 
   // Translations
   const t = {

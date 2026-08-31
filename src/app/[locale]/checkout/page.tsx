@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 import { localizePathForLocale } from '@/lib/url-localizations';
@@ -41,6 +41,47 @@ interface SavedAddress {
 
 type Step = 1 | 2 | 3;
 
+function StepDot({
+  n,
+  label,
+  current,
+  done,
+}: {
+  n: number;
+  label: string;
+  current: boolean;
+  done: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-2 min-w-0">
+      <div
+        className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs flex-shrink-0 ${
+          done
+            ? 'bg-lumora-green-500 text-white'
+            : current
+            ? 'bg-lumora-dark text-white ring-4 ring-lumora-dark/10'
+            : 'bg-lumora-dark/10 text-lumora-dark/50'
+        }`}
+      >
+        {done ? (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+          </svg>
+        ) : (
+          n
+        )}
+      </div>
+      <span
+        className={`text-sm font-medium truncate ${
+          current ? 'text-lumora-dark' : done ? 'text-lumora-dark/70' : 'text-lumora-dark/40'
+        }`}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
 // Form state is persisted across refreshes. Mollie-side errors sometimes bounce
 // users back here and retyping the whole thing was part of our 95% abandonment.
 const LS_KEY = 'lumora-checkout-form-v1';
@@ -76,7 +117,6 @@ interface PersistedForm {
 
 export default function CheckoutPage() {
   const params = useParams();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const locale = (params?.locale as string) || 'nl';
   const { items, getTotalPrice, clearCart, updateQuantity, removeItem, addItem } = useCart();
@@ -101,6 +141,14 @@ export default function CheckoutPage() {
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
   const [saveAddressForFuture, setSaveAddressForFuture] = useState(false);
+
+  const fillAddressFields = (address: SavedAddress) => {
+    setStreet(address.street);
+    setCity(address.city);
+    setPostalCode(address.postal_code);
+    setCountry(address.country);
+    if (address.phone) setCustomerPhone(address.phone);
+  };
 
   // First paint: restore saved form state so a refresh mid-checkout doesn't
   // lose everything. Step is restored too — but clamped to 1 if cart is empty.
@@ -230,14 +278,6 @@ export default function CheckoutPage() {
   const houseNumberFromStreet = (s: string): string => {
     const m = s.match(/(\d+[a-zA-Z]?)\s*$/);
     return m ? m[1] : '';
-  };
-
-  const fillAddressFields = (address: SavedAddress) => {
-    setStreet(address.street);
-    setCity(address.city);
-    setPostalCode(address.postal_code);
-    setCountry(address.country);
-    if (address.phone) setCustomerPhone(address.phone);
   };
 
   const handleAddressSelect = (id: string) => {
@@ -457,38 +497,6 @@ export default function CheckoutPage() {
     if (step === 3) setStep(2);
     else if (step === 2) setStep(1);
   };
-
-  // ──────────────────────────────────────────────────────────
-  // Shared bits
-  // ──────────────────────────────────────────────────────────
-  const StepDot = ({ n, label, current, done }: { n: number; label: string; current: boolean; done: boolean }) => (
-    <div className="flex items-center gap-2 min-w-0">
-      <div
-        className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs flex-shrink-0 ${
-          done
-            ? 'bg-lumora-green-500 text-white'
-            : current
-            ? 'bg-lumora-dark text-white ring-4 ring-lumora-dark/10'
-            : 'bg-lumora-dark/10 text-lumora-dark/50'
-        }`}
-      >
-        {done ? (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-          </svg>
-        ) : (
-          n
-        )}
-      </div>
-      <span
-        className={`text-sm font-medium truncate ${
-          current ? 'text-lumora-dark' : done ? 'text-lumora-dark/70' : 'text-lumora-dark/40'
-        }`}
-      >
-        {label}
-      </span>
-    </div>
-  );
 
   const orderSummary = (
     <div className="space-y-5">

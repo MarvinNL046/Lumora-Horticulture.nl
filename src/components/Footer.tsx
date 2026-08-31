@@ -1,52 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
-  domainLocaleMap,
   localizePathForLocale,
   basePathFromLocalizedPath
 } from '@/lib/url-localizations'
 
-// Define the locales we support directly in this file and their corresponding domains
-const localeMap = {
-  nl: 'lumorahorticulture.nl',
-  en: 'lumorahorticulture.com',
-  de: 'lumorahorticulture.de'
-}
-
 const defaultLocale = 'nl'
 
-// Helper function to get current locale from domain
-const getLocaleFromDomain = (domain?: string): string => {
-  if (!domain) return defaultLocale;
-  return domainLocaleMap[domain] || defaultLocale;
-}
-
-// Helper function to create a link for a different locale
-// isLocalDev parameter is passed from component to ensure hydration-safe rendering
-const createLocalizedUrl = (locale: string, pathname: string, isLocalDev: boolean = false): string => {
-  // Get the domain for this locale
-  const domain = localeMap[locale as keyof typeof localeMap];
-
-  // First get the base path (in case this is already a localized path)
-  const currentLocale = getCurrentLocaleFromPath(pathname);
-  const basePath = basePathFromLocalizedPath(pathname, currentLocale);
-
-  // Then localize it for the target locale
-  const localizedPath = localizePathForLocale(basePath, locale);
-
-  // For local development, use locale in path (only when isLocalDev is explicitly true)
-  if (isLocalDev) {
-    return `/${locale}${localizedPath}`;
-  }
-
-  // For production, use full domain
-  return `https://${domain}${localizedPath}`;
-}
+const createLocalizedUrl = (locale: string, basePath: string): string =>
+  localizePathForLocale(basePath, locale)
 
 // Helper to get current locale from pathname
 const getCurrentLocaleFromPath = (pathname: string): string => {
@@ -60,71 +26,27 @@ export default function Footer() {
 
   const pathname = usePathname() || ''
   const params = useParams()
-
-  // Track if component is mounted (for hydration-safe rendering)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // Get current locale from URL or domain
-  const getCurrentLocale = (): string => {
-    // If we have a locale in the URL params, use that
-    if (params?.locale) {
-      return params.locale as string;
-    }
-
-    // Otherwise try to determine from domain (only after mount to avoid hydration issues)
-    if (isMounted && typeof window !== 'undefined') {
-      return getLocaleFromDomain(window.location.hostname);
-    }
-
-    return defaultLocale;
-  }
-
-  // Get the current locale
-  const currentLocale = getCurrentLocale()
-
-  // Determine if we're in local development (hydration-safe)
-  const isLocalDev = isMounted && typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))
+  const currentLocale =
+    typeof params?.locale === 'string'
+      ? params.locale
+      : getCurrentLocaleFromPath(pathname)
+  const t = useTranslations('site')
 
   // Get the path without the locale prefix
   const getPathWithoutLocale = (): string => {
+    let visiblePath = pathname
     if (pathname.startsWith('/' + currentLocale + '/')) {
-      return pathname.substring(('/' + currentLocale).length);
+      visiblePath = pathname.substring(('/' + currentLocale).length)
+    } else if (pathname === '/' + currentLocale) {
+      visiblePath = '/'
     }
-    return pathname;
+    return basePathFromLocalizedPath(visiblePath, currentLocale)
   }
 
   const pathWithoutLocale = getPathWithoutLocale()
 
-  // Get translations for the current locale, or use fallbacks
-  const getDescription = () => {
-    try {
-      const t = useTranslations('site');
-      return t('description');
-    } catch (error) {
-      return currentLocale === 'nl' ? 'Professionele tuinbouw oplossingen voor de moderne teler' :
-             currentLocale === 'en' ? 'Professional horticulture solutions for the modern grower' :
-             'Professionelle Gartenbaulösungen für den modernen Anbauer';
-    }
-  }
-
-  const getCopyright = () => {
-    try {
-      const t = useTranslations('site');
-      return t('copyright', { year: currentYear });
-    } catch (error) {
-      return currentLocale === 'nl' ? `© ${currentYear} Lumora Horticulture. Alle rechten voorbehouden.` :
-             currentLocale === 'en' ? `© ${currentYear} Lumora Horticulture. All rights reserved.` :
-             `© ${currentYear} Lumora Horticulture. Alle Rechte vorbehalten.`;
-    }
-  }
-
-  const description = getDescription();
-  const copyright = getCopyright();
+  const description = t('description')
+  const copyright = t('copyright', {year: currentYear})
 
   return (
     <footer className="relative bg-lumora-dark text-lumora-cream border-t border-lumora-cream/10 pt-16 pb-8 mt-16 overflow-hidden">
@@ -299,11 +221,11 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2.5 mb-6">
               <FooterLink
-                href={localizePathForLocale('/privacy-policy', currentLocale)}
+                href={localizePathForLocale('/privacy', currentLocale)}
                 label={currentLocale === 'nl' ? 'Privacybeleid' : currentLocale === 'de' ? 'Datenschutz' : 'Privacy Policy'}
               />
               <FooterLink
-                href={localizePathForLocale('/terms-conditions', currentLocale)}
+                href={localizePathForLocale('/terms', currentLocale)}
                 label={currentLocale === 'nl' ? 'Algemene Voorwaarden' : currentLocale === 'de' ? 'AGB' : 'Terms & Conditions'}
               />
               <FooterLink
@@ -321,21 +243,18 @@ export default function Footer() {
                 label="🇳🇱 Nederlands"
                 active={currentLocale === 'nl'}
                 path={pathWithoutLocale}
-                isLocalDev={isLocalDev}
               />
               <FooterLangLink
                 locale="en"
                 label="🇬🇧 English"
                 active={currentLocale === 'en'}
                 path={pathWithoutLocale}
-                isLocalDev={isLocalDev}
               />
               <FooterLangLink
                 locale="de"
                 label="🇩🇪 Deutsch"
                 active={currentLocale === 'de'}
                 path={pathWithoutLocale}
-                isLocalDev={isLocalDev}
               />
             </ul>
           </div>
@@ -416,11 +335,11 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 }
 
 // Footer language link component
-function FooterLangLink({ locale, label, active, path, isLocalDev }: { locale: string; label: string; active: boolean; path: string; isLocalDev: boolean }) {
+function FooterLangLink({ locale, label, active, path }: { locale: string; label: string; active: boolean; path: string }) {
   return (
     <li>
       <a
-        href={createLocalizedUrl(locale, path, isLocalDev)}
+        href={createLocalizedUrl(locale, path)}
         className={`text-sm transition-colors duration-200 flex items-center ${
           active ? 'text-lumora-cream font-medium' : 'text-lumora-cream/70 hover:text-lumora-cream'
         }`}

@@ -12,8 +12,8 @@ import { localizePathForLocale } from '@/lib/url-localizations'
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
@@ -247,15 +247,15 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
   const breadcrumbItems = [
     {
       name: content.breadcrumbHome,
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.nl/de' : 'https://lumorahorticulture.nl/en'
     },
     {
       name: content.breadcrumbProducts,
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/' : locale === 'de' ? 'https://lumorahorticulture.de/produkte/' : 'https://lumorahorticulture.com/products/'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/' : locale === 'de' ? 'https://lumorahorticulture.nl/de/produkte/' : 'https://lumorahorticulture.nl/en/products/'
     },
     {
       name: content.breadcrumbEllepot,
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/ellepot-fp12/' : locale === 'de' ? 'https://lumorahorticulture.de/produkte/ellepot-fp12/' : 'https://lumorahorticulture.com/products/ellepot-fp12/'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/ellepot-fp12/' : locale === 'de' ? 'https://lumorahorticulture.nl/de/produkte/ellepot-fp12/' : 'https://lumorahorticulture.nl/en/products/ellepot-fp12/'
     }
   ]
 
@@ -273,7 +273,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
       {/* Structured data */}
       <BreadcrumbSchema items={breadcrumbItems} />
       <ProductSchema product={productData} locale={locale} />
-      
+
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>
@@ -284,14 +284,14 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
         {/* Header */}
-        <motion.div 
+        <motion.div
           ref={headerRef}
           variants={fadeIn}
           initial="hidden"
           animate={headerInView ? "visible" : "hidden"}
           className="max-w-4xl mx-auto text-center mb-12 md:mb-16"
         >
-          <motion.span 
+          <motion.span
             className="inline-block text-lumora-dark mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream"
           >
             {content.tag}
@@ -305,7 +305,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
         </motion.div>
 
         {/* Main product section */}
-        <motion.div 
+        <motion.div
           ref={productRef}
           variants={fadeIn}
           initial="hidden"
@@ -324,10 +324,10 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
+                    preload
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl opacity-60"></div>
-                  
+
                   {/* Product badges */}
                   <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
                     <span className="inline-block text-white text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-full bg-lumora-green-600/80 backdrop-blur-sm">
@@ -340,7 +340,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                 </div>
               </div>
             </div>
-            
+
             {/* Product Info */}
             <div className="w-full lg:w-1/2">
               <motion.div
@@ -352,7 +352,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                 <motion.p variants={fadeIn} className="text-lumora-dark/80 leading-relaxed text-sm md:text-base">
                   {content.description}
                 </motion.p>
-                
+
                 {/* Tabs */}
                 <motion.div variants={fadeIn} className="mt-4 md:mt-8">
                   <Tab.Group onChange={setActiveTab}>
@@ -379,7 +379,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                     <Tab.Panels>
                       <Tab.Panel>
                         <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
-                          <motion.table 
+                          <motion.table
                             className="min-w-full"
                             variants={staggerContainer}
                             initial="hidden"
@@ -387,7 +387,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                           >
                             <tbody>
                               {content.specs.map((spec, index) => (
-                                <motion.tr 
+                                <motion.tr
                                   key={index}
                                   variants={fadeIn}
                                   className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
@@ -406,7 +406,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                       </Tab.Panel>
                       <Tab.Panel>
                         <div className="overflow-hidden rounded-2xl bg-white shadow-soft p-4 md:p-6">
-                          <motion.ul 
+                          <motion.ul
                             className="space-y-3 md:space-y-4"
                             variants={staggerContainer}
                             initial="hidden"
@@ -428,24 +428,24 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                     </Tab.Panels>
                   </Tab.Group>
                 </motion.div>
-                
+
                 <motion.div variants={fadeIn} className="pt-4 md:pt-6 space-y-3">
                   <Link
                     href={`${localizePathForLocale('/contact', locale || 'nl')}?product=${encodeURIComponent(content.title)}`}
                     className="inline-flex items-center text-lumora-dark font-medium hover:text-lumora-gold transition-all duration-300 group text-sm md:text-base"
                   >
                     <span>{t.products?.detail?.requestQuote || 'Vraag offerte aan'}</span>
-                    <svg 
+                    <svg
                       className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
-                      xmlns="http://www.w3.org/2000/svg" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </Link>
-                  
+
                   {/* Download flyer link */}
                   <div>
                     <div className="inline-flex items-center gap-2">
@@ -454,11 +454,11 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                         download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                         className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
                       >
-                        <svg 
+                        <svg
                           className="mr-2 w-4 h-4 md:w-5 md:h-5"
-                          xmlns="http://www.w3.org/2000/svg" 
-                          fill="none" 
-                          viewBox="0 0 24 24" 
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -477,7 +477,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
         </motion.div>
 
         {/* Features section */}
-        <motion.div 
+        <motion.div
           ref={featuresRef}
           variants={fadeIn}
           initial="hidden"
@@ -487,7 +487,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
           <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-lumora-dark mb-8 md:mb-12 text-center">
             {content.features.title}
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {content.features.items.map((feature, index) => (
               <motion.div
@@ -514,7 +514,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
         </motion.div>
 
         {/* What is transplant shock section */}
-        <motion.div 
+        <motion.div
           variants={fadeIn}
           initial="hidden"
           animate={featuresInView ? "visible" : "hidden"}
@@ -529,7 +529,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
         </motion.div>
 
         {/* Applications section */}
-        <motion.div 
+        <motion.div
           variants={fadeIn}
           initial="hidden"
           animate={featuresInView ? "visible" : "hidden"}
@@ -540,7 +540,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
           </h3>
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             {content.applications.items.map((item, index) => (
-              <span 
+              <span
                 key={index}
                 className="inline-block text-lumora-dark font-medium px-4 py-2 rounded-full bg-lumora-green-50 border border-lumora-green-100"
               >
@@ -551,7 +551,7 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
         </motion.div>
 
         {/* Contact CTA */}
-        <motion.div 
+        <motion.div
           variants={fadeIn}
           initial="hidden"
           animate={featuresInView ? "visible" : "hidden"}
@@ -564,9 +564,9 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
             <div className="absolute -top-20 -right-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-dark/30 mix-blend-overlay blur-3xl"></div>
             <div className="absolute -bottom-20 -left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-3xl"></div>
           </div>
-          
+
           <div className="glass-dark rounded-3xl p-6 sm:p-8 md:p-16 shadow-soft-lg backdrop-blur-md relative">
-            <motion.div 
+            <motion.div
               className="max-w-3xl mx-auto text-center"
               variants={staggerContainer}
               initial="hidden"
@@ -579,11 +579,11 @@ export default function EllepotClient({ t, locale }: { t: any, locale: string })
                 {content.cta.description}
               </motion.p>
               <motion.div variants={fadeIn}>
-                <Link 
+                <Link
                   href={localizePathForLocale('/contact', locale || 'nl')}
-                  className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark 
-                          hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft 
-                          hover:shadow-soft-md transition-all duration-300 
+                  className="inline-flex items-center justify-center bg-lumora-cream text-lumora-dark
+                          hover:bg-lumora-cream/90 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-soft
+                          hover:shadow-soft-md transition-all duration-300
                           font-medium text-base sm:text-lg group"
                 >
                   <span>{content.cta.button}</span>

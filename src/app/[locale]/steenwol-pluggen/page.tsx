@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import SteenwolPluggenClient from './SteenwolPluggenClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -51,7 +50,6 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 // SEO Landing page for Steenwol Pluggen
 export default async function SteenwolPluggenPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
   const t = messages

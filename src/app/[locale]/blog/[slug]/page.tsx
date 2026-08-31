@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import { generatePageMetadata } from '@/lib/metadata'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
@@ -6,16 +5,37 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { blogHtmlToPlainText } from '@/lib/blog-content'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
+import { localizePathForLocale } from '@/lib/url-localizations'
+
+const BLOG_LOCALES = ['nl', 'de'] as const
+type BlogLocale = (typeof BLOG_LOCALES)[number]
+
+function isBlogLocale(locale: string): locale is BlogLocale {
+  return BLOG_LOCALES.includes(locale as BlogLocale)
+}
+
+function hasGermanTranslation(post: {
+  title_de?: string
+  content_de?: string
+}): boolean {
+  return Boolean(post.title_de?.trim() && post.content_de?.trim())
+}
 
 export async function generateStaticParams() {
-  const posts = await fetchQuery(api.blogPosts.listPublished, {})
-
-  const params: { locale: string; slug: string }[] = []
-  for (const post of posts) {
-    params.push({ locale: 'nl', slug: post.slug })
-    params.push({ locale: 'de', slug: post.slug })
+  try {
+    const posts = await fetchQuery(api.blogPosts.listPublished, {})
+    const params: { locale: string; slug: string }[] = []
+    for (const post of posts) {
+      params.push({ locale: 'nl', slug: post.slug })
+      if (hasGermanTranslation(post)) {
+        params.push({ locale: 'de', slug: post.slug })
+      }
+    }
+    return params
+  } catch (error) {
+    console.error('Skipping static blog paths because Convex is unavailable:', error)
+    return []
   }
-  return params
 }
 
 export async function generateMetadata(
@@ -24,30 +44,32 @@ export async function generateMetadata(
   }
 ) {
   const params = await props.params;
+  if (!isBlogLocale(params.locale)) {
+    notFound()
+  }
+
   const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
 
-  if (!post) {
-    return generatePageMetadata({
-      title: 'Blog',
-      description: '',
-      locale: params.locale,
-      path: `/blog/${params.slug}`,
-    })
+  if (
+    !post ||
+    post.status !== 'published' ||
+    (params.locale === 'de' && !hasGermanTranslation(post))
+  ) {
+    notFound()
   }
 
   const locale = params.locale
   const title =
-    locale === 'de' && post.seo_title_de
-      ? post.seo_title_de
-      : locale === 'de' && post.title_de
-        ? post.title_de
-        : post.seo_title_nl || post.title_nl
+    locale === 'de'
+      ? post.seo_title_de || post.title_de!
+      : post.seo_title_nl || post.title_nl
   const description =
-    locale === 'de' && post.seo_description_de
-      ? post.seo_description_de
-      : locale === 'de' && post.excerpt_de
-        ? post.excerpt_de
-        : post.seo_description_nl || post.excerpt_nl
+    locale === 'de'
+      ? post.seo_description_de || post.excerpt_de || post.title_de!
+      : post.seo_description_nl || post.excerpt_nl
+  const availableLocales = hasGermanTranslation(post)
+    ? BLOG_LOCALES
+    : (['nl'] as const)
 
   return generatePageMetadata({
     title,
@@ -55,6 +77,7 @@ export async function generateMetadata(
     locale,
     path: `/blog/${post.slug}`,
     ogImage: post.featured_image || undefined,
+    availableLocales,
   })
 }
 
@@ -80,19 +103,25 @@ export default async function BlogDetailPage(
   }
 ) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
   const locale = params.locale
+  if (!isBlogLocale(locale)) {
+    notFound()
+  }
 
   const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
 
-  if (!post || post.status !== 'published') {
+  if (
+    !post ||
+    post.status !== 'published' ||
+    (locale === 'de' && !hasGermanTranslation(post))
+  ) {
     notFound()
   }
 
   const title =
-    locale === 'de' && post.title_de ? post.title_de : post.title_nl
+    locale === 'de' ? post.title_de! : post.title_nl
   const content =
-    locale === 'de' && post.content_de ? post.content_de : post.content_nl
+    locale === 'de' ? post.content_de! : post.content_nl
   const plainContent = blogHtmlToPlainText(content)
   const categoryLabel =
     categoryLabels[post.category]?.[locale] || post.category
@@ -104,7 +133,7 @@ export default async function BlogDetailPage(
     '@type': 'Article',
     headline: title,
     description:
-      locale === 'de' && post.excerpt_de ? post.excerpt_de : post.excerpt_nl,
+      locale === 'de' ? post.excerpt_de || post.title_de! : post.excerpt_nl,
     image: post.featured_image || undefined,
     author: {
       '@type': 'Organization',
@@ -122,7 +151,7 @@ export default async function BlogDetailPage(
     dateModified: post.updated_at ? new Date(post.updated_at).toISOString() : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://lumorahorticulture.${locale === 'de' ? 'de' : 'nl'}/blog/${post.slug}`,
+      '@id': `https://lumorahorticulture.nl${localizePathForLocale(`/blog/${post.slug}`, locale)}`,
     },
   }
 
@@ -142,14 +171,14 @@ export default async function BlogDetailPage(
               fill
               className="object-cover"
               sizes="100vw"
-              priority
+              preload
             />
           </div>
         )}
 
         <article className="mx-auto max-w-3xl px-4 py-12">
           <a
-            href={`/${locale}/blog`}
+            href={localizePathForLocale('/blog', locale)}
             className="mb-6 inline-flex items-center text-sm text-green-700 hover:text-green-900"
           >
             &larr; {backLabel}

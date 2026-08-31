@@ -1,20 +1,18 @@
 import '@/styles/globals.css'
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "../stack/client";
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import TrackingScripts from '@/components/TrackingScripts'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
 import SiteChrome from '@/components/SiteChrome'
-import dynamic from 'next/dynamic'
-
-// Dynamically import client-side components with SSR disabled
-const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 
 // Initialize fonts
-const inter = Inter({ 
-  subsets: ['latin'], 
+const inter = Inter({
+  subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
@@ -26,10 +24,10 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://lumorahorticulture.nl'),
   title: 'Lumora Horticulture | B2B Leverancier Paperbus Steenwol Pluggen & Kweektrays',
   description: 'Lumora Horticulture - B2B leverancier van paperbus steenwol pluggen, kweektrays en tuinbouw verpakkingen. Ellepot FP 12+ paper plugs met 12+ maanden stabiliteit. Directe fabrikant voor groothandel en professionele kwekers.',
   keywords: 'paperbus steenwol pluggen, steenwol pluggen groothandel, ellepot paper plugs, kweektrays B2B, tuinbouw verpakkingen, professionele kweektrays, glastuinbouw benodigdheden, paperpot trays, rockwool paper plugs, horticulture wholesale, transplant trays',
-  viewport: 'width=device-width, initial-scale=1',
   verification: {
     google: 'SpcTizFlTiNDDn9CpPqJ6O5Xjz2ivcEWKt3QHtxQgpQ',
     other: {
@@ -40,30 +38,40 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [locale, messages] = await Promise.all([getLocale(), getMessages()])
+
   return (
-    <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen flex flex-col bg-white antialiased font-sans"><StackProvider app={stackClientApp}><StackTheme>
-        <CartProvider>
-          {/* Cart sync temporarily disabled - causing SSR issues */}
-          {/* <CartSync /> */}
+    <html lang={locale} className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
+      <body className="min-h-screen flex flex-col bg-white antialiased font-sans">
+        <NextIntlClientProvider messages={{site: messages.site}}>
+          <StackProvider app={stackClientApp}>
+            <StackTheme>
+              <CartProvider>
+                {/* Third-party tracking is suppressed on credential-bearing routes. */}
+                <TrackingScripts />
 
-          {/* Third-party tracking is suppressed on credential-bearing routes. */}
-          <TrackingScripts />
+                {/* Organization structured data */}
+                <OrganizationSchema locale={locale} />
 
-          {/* Organization structured data */}
-          <OrganizationSchema locale="nl" />
-
-          {/* Header / main / footer / cart / exit-intent. SiteChrome
-              hides the global Lumora chrome on standalone routes such as
-              the /lumora-premium design demo so they can ship their own. */}
-          <SiteChrome>{children}</SiteChrome>
-        </CartProvider>
-      </StackTheme></StackProvider></body>
+                {/* Header / main / footer / cart / exit-intent. SiteChrome
+                    hides the global Lumora chrome on standalone routes such as
+                    the /lumora-premium design demo so they can ship their own. */}
+                <SiteChrome>{children}</SiteChrome>
+              </CartProvider>
+            </StackTheme>
+          </StackProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   )
 }

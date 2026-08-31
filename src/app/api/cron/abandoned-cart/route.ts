@@ -5,6 +5,7 @@ import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
 import { getAbandonedCartEmailContent } from '@/emails/abandoned-cart-template';
 import type { CartItem } from '@/contexts/CartContext';
 import { isAuthorizedCronRequest } from '@/lib/cron-auth';
+import { localizePathForLocale } from '@/lib/url-localizations';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,17 +56,8 @@ export async function GET(request: NextRequest) {
       try {
         const cartItems: CartItem[] = cart.cart_data as any;
 
-        // Determine checkout URL based on locale.
-        // Production uses domain-based locale (no /[locale] prefix in public URLs)
-        // and /checkout is the same path across all locales.
-        const domain =
-          cart.locale === 'en'
-            ? 'lumorahorticulture.com'
-            : cart.locale === 'de'
-            ? 'lumorahorticulture.de'
-            : 'lumorahorticulture.nl';
-
-        const checkoutUrl = `https://${domain}/checkout?cart_recovery=${cart._id}`;
+        const checkoutPath = localizePathForLocale('/checkout', cart.locale || 'nl');
+        const checkoutUrl = `https://lumorahorticulture.nl${checkoutPath}?cart_recovery=${cart._id}`;
 
         // Generate email content
         const emailContent = getAbandonedCartEmailContent({

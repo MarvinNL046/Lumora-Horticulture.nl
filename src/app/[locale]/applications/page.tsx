@@ -1,10 +1,6 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
 import { generatePageMetadata } from '@/lib/metadata'
-
-// Use dynamic import with no SSR to avoid hydration issues with client components
-const ApplicationsClient = dynamic(() => import('./ApplicationsClient'), { ssr: false })
+import ApplicationsLoader from './ApplicationsLoader'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -55,7 +51,6 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 export default async function ApplicationsPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
   // This is needed for internationalization to work properly
-  unstable_setRequestLocale(params.locale)
 
   // Load messages manually for static export
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
@@ -64,6 +59,6 @@ export default async function ApplicationsPage(props: { params: Promise<{ locale
   const t = messages.applications
 
   return (
-    <ApplicationsClient t={t} locale={params.locale} />
+    <ApplicationsLoader t={t} locale={params.locale} />
   )
 }

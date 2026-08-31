@@ -171,7 +171,9 @@ const cropRecommendations: CropRecommendation[] = [
   }
 ];
 
-const Page84vs104Comparison = () => {
+const Page84vs104Comparison = async (props: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await props.params;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream via-white to-lumora-cream/30">
       {/* Hero Section */}
@@ -263,7 +265,7 @@ const Page84vs104Comparison = () => {
 
                   <div className="text-center pt-4">
                     <Link
-                      href={localizePathForLocale('/shop/paper-plug-tray-84', 'nl')}
+                      href={localizePathForLocale('/shop/paper-plug-tray-84', locale)}
                       className="inline-block bg-lumora-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-lumora-green-600 transition-all duration-300 shadow-soft"
                     >
                       Bestel 84 Cellen →
@@ -315,7 +317,7 @@ const Page84vs104Comparison = () => {
 
                   <div className="text-center pt-4">
                     <Link
-                      href={localizePathForLocale('/shop/paper-plug-tray-104', 'nl')}
+                      href={localizePathForLocale('/shop/paper-plug-tray-104', locale)}
                       className="inline-block bg-lumora-gold text-white px-6 py-3 rounded-xl font-bold hover:bg-lumora-gold/90 transition-all duration-300 shadow-soft"
                     >
                       Bestel 104 Cellen →
@@ -792,13 +794,13 @@ const Page84vs104Comparison = () => {
 
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href={localizePathForLocale('/shop/paper-plug-tray-84', 'nl')}
+                href={localizePathForLocale('/shop/paper-plug-tray-84', locale)}
                 className="inline-block bg-white text-lumora-green-600 px-8 py-4 rounded-xl font-bold hover:bg-lumora-cream transition-all duration-300 shadow-soft-lg hover:shadow-soft-xl"
               >
                 Bestel 84 Cellen →
               </Link>
               <Link
-                href={localizePathForLocale('/shop/paper-plug-tray-104', 'nl')}
+                href={localizePathForLocale('/shop/paper-plug-tray-104', locale)}
                 className="inline-block bg-lumora-dark text-white px-8 py-4 rounded-xl font-bold hover:bg-lumora-dark/90 transition-all duration-300 shadow-soft-lg hover:shadow-soft-xl"
               >
                 Bestel 104 Cellen →
@@ -822,7 +824,7 @@ const Page84vs104Comparison = () => {
 
             <div className="grid md:grid-cols-3 gap-6">
               <Link
-                href={localizePathForLocale('/technische-specs/celgroottes-toepassingen', 'nl')}
+                href={localizePathForLocale('/technische-specs/celgroottes-toepassingen', locale)}
                 className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
               >
                 <h4 className="font-bold text-lumora-dark mb-2">Alle Celgroottes Vergelijken</h4>
@@ -831,16 +833,7 @@ const Page84vs104Comparison = () => {
               </Link>
 
               <Link
-                href={localizePathForLocale('/seo/voordelen/biologische-certificering', 'nl')}
-                className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
-              >
-                <h4 className="font-bold text-lumora-dark mb-2">Biologische Certificering</h4>
-                <p className="text-gray-600 text-sm mb-3">Waarom biologische paper plugs?</p>
-                <span className="text-lumora-green-600 text-sm font-semibold">Lees meer →</span>
-              </Link>
-
-              <Link
-                href={localizePathForLocale('/products', 'nl')}
+                href={localizePathForLocale('/products', locale)}
                 className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
               >
                 <h4 className="font-bold text-lumora-dark mb-2">Alle Paper Plug Producten</h4>

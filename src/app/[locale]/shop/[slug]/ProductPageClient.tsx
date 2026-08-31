@@ -285,9 +285,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     return '';
   };
 
-  // Domain based on locale
-  const domain = locale === 'de' ? 'lumorahorticulture.de' : locale === 'en' ? 'lumorahorticulture.com' : 'lumorahorticulture.nl';
-  const shopPath = locale === 'de' || locale === 'en' ? 'shop' : 'winkel';
+  const siteOrigin = 'https://lumorahorticulture.nl';
 
   // JSON-LD Product Structured Data
   const productSchema = {
@@ -295,14 +293,14 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     '@type': 'Product',
     name: product.name,
     description: product.description,
-    image: `https://${domain}${product.image_url}`,
+    image: `${siteOrigin}${product.image_url}`,
     brand: {
       '@type': 'Brand',
       name: product.brand || 'Lumora'
     },
     offers: {
       '@type': 'Offer',
-      url: `https://${domain}/${shopPath}/${product.slug}`,
+      url: `${siteOrigin}${localizePathForLocale(`/shop/${product.slug}`, locale)}`,
       priceCurrency: 'EUR',
       price: basePrice.toFixed(2),
       availability: product.availability === 'in stock' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
@@ -349,19 +347,19 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
         '@type': 'ListItem',
         position: 1,
         name: t.home,
-        item: `https://${domain}/`
+        item: `${siteOrigin}${localizePathForLocale('/', locale)}`
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: t.shop,
-        item: `https://${domain}/${shopPath}`
+        item: `${siteOrigin}${localizePathForLocale('/shop', locale)}`
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: product.name,
-        item: `https://${domain}/${shopPath}/${product.slug}`
+        item: `${siteOrigin}${localizePathForLocale(`/shop/${product.slug}`, locale)}`
       }
     ]
   };

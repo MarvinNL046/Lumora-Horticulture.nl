@@ -1,3 +1,7 @@
+const createNextIntlPlugin = require('next-intl/plugin')
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -23,35 +27,13 @@ const nextConfig = {
     ],
   },
   trailingSlash: false,
-  
-  // Optimize for serverless deployment
-  experimental: {
-    serverMinification: false,
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@swc/core-linux-x64-gnu',
-        'node_modules/@swc/core-linux-x64-musl',
-        'node_modules/@esbuild/linux-x64',
-      ],
-    },
-  },
-  
-  // Reduce bundle size
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...(config.externals || []), 'sharp'];
-    }
-    return config;
-  },
-  
-  // Make sure static assets are properly handled
-  async rewrites() {
-    return [
-      {
-        source: '/productAfbeeldingen/:path*',
-        destination: '/productAfbeeldingen/:path*',
-      },
-    ]
+
+  outputFileTracingExcludes: {
+    '/*': [
+      'node_modules/@swc/core-linux-x64-gnu',
+      'node_modules/@swc/core-linux-x64-musl',
+      'node_modules/@esbuild/linux-x64',
+    ],
   },
 
   async headers() {
@@ -76,4 +58,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withNextIntl(nextConfig)

@@ -29,24 +29,31 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 
   const { title, description, keywords } = metadata[locale] || metadata.nl;
+  const pagePath = '/innovatie-trends/automatisering-propagatie';
+  const localizedUrls = {
+    nl: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'nl')}`,
+    en: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'en')}`,
+    de: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'de')}`,
+  };
+  const canonicalUrl =
+    localizedUrls[locale as keyof typeof localizedUrls] || localizedUrls.nl;
 
   return {
     title,
     description,
     keywords,
     alternates: {
-      canonical: `https://lumorahorticulture.nl/innovatie-trends/automatisering-propagatie`,
+      canonical: canonicalUrl,
       languages: {
-        'nl': 'https://lumorahorticulture.nl/innovatie-trends/automatisering-propagatie',
-        'en': 'https://lumorahorticulture.com/seo/innovation-trends/propagation-automation',
-        'de': 'https://lumorahorticulture.de/seo/innovation-trends/vermehrung-automatisierung'
-      }
+        ...localizedUrls,
+        'x-default': localizedUrls.nl,
+      },
     },
     openGraph: {
       title,
       description,
       type: 'article',
-      url: `https://lumorahorticulture.nl/innovatie-trends/automatisering-propagatie`
+      url: canonicalUrl,
     }
   };
 }
@@ -326,9 +333,6 @@ export default async function AutomatiseringPropagatieNL(props: Props) {
       related: {
         title: 'Gerelateerde Innovaties',
         links: [
-          { text: 'Data-Driven Kweek Optimalisatie', href: '/innovatie-trends/data-driven-kweek' },
-          { text: 'AI in Propagatie Management', href: '/innovatie-trends/ai-propagatie' },
-          { text: 'Smart Greenhouse Integratie', href: '/seo/slimme-kas/greenhouse-integratie' }
         ]
       }
     },
@@ -602,9 +606,6 @@ export default async function AutomatiseringPropagatieNL(props: Props) {
       related: {
         title: 'Related Innovations',
         links: [
-          { text: 'Data-Driven Growing Optimization', href: '/seo/innovation-trends/data-driven-growing' },
-          { text: 'AI in Propagation Management', href: '/seo/innovation-trends/ai-propagation' },
-          { text: 'Smart Greenhouse Integration', href: '/seo/smart-greenhouse/greenhouse-integration' }
         ]
       }
     },
@@ -878,9 +879,6 @@ export default async function AutomatiseringPropagatieNL(props: Props) {
       related: {
         title: 'Verwandte Innovationen',
         links: [
-          { text: 'Datengesteuerte Anbauoptimierung', href: '/seo/innovation-trends/datengesteuerter-anbau' },
-          { text: 'KI in Vermehrungsmanagement', href: '/seo/innovation-trends/ki-vermehrung' },
-          { text: 'Smart Greenhouse Integration', href: '/seo/smart-greenhouse/gewachshaus-integration' }
         ]
       }
     }
@@ -1165,27 +1163,6 @@ export default async function AutomatiseringPropagatieNL(props: Props) {
         </div>
       </section>
 
-      {/* Related Links */}
-      <section className="py-12 bg-lumora-cream/20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-display font-bold text-lumora-dark mb-6 text-center">
-              {t.related.title}
-            </h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {t.related.links.map((link, index) => (
-                <Link
-                  key={index}
-                  href={link.href}
-                  className="px-6 py-3 bg-white text-lumora-green-500 rounded-lg hover:bg-lumora-green-500 hover:text-white transition-colors shadow-soft"
-                >
-                  {link.text}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

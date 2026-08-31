@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import EllepotFlyerClient from './EllepotFlyerClient'
 
 // Generate static params for locales
@@ -13,7 +12,6 @@ export function generateStaticParams() {
 export default async function EllepotFlyerPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
   // This is needed for internationalization to work properly
-  unstable_setRequestLocale(params.locale)
 
   return <EllepotFlyerClient />
 }

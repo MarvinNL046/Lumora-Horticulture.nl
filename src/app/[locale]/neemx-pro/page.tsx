@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import NeemxProClient from './NeemxProClient'
+import { localizePathForLocale } from '@/lib/url-localizations'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -28,7 +29,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const currentMeta = meta[locale as keyof typeof meta] || meta.nl
-  const domain = locale === 'de' ? 'lumorahorticulture.de' : locale === 'en' ? 'lumorahorticulture.com' : 'lumorahorticulture.nl'
+  const siteOrigin = 'https://lumorahorticulture.nl'
+  const canonical = `${siteOrigin}${localizePathForLocale('/neemx-pro', locale)}`
 
   return {
     title: currentMeta.title,
@@ -37,11 +39,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     openGraph: {
       title: currentMeta.title,
       description: currentMeta.description,
-      url: `https://${domain}/neemx-pro`,
+      url: canonical,
       siteName: 'Lumora Horticulture',
       images: [
         {
-          url: `https://${domain}/productAfbeeldingen/neemxpro/neemxpro-logo.png`,
+          url: `${siteOrigin}/productAfbeeldingen/neemxpro/neemxpro-logo.png`,
           width: 1200,
           height: 630,
           alt: 'NEEMX PRO Botanical Oil Concentrate',
@@ -56,11 +58,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       description: currentMeta.description,
     },
     alternates: {
-      canonical: `https://${domain}/neemx-pro`,
+      canonical,
       languages: {
         'nl': 'https://lumorahorticulture.nl/neemx-pro',
-        'en': 'https://lumorahorticulture.com/neemx-pro',
-        'de': 'https://lumorahorticulture.de/neemx-pro',
+        'en': 'https://lumorahorticulture.nl/en/neemx-pro',
+        'de': 'https://lumorahorticulture.nl/de/neemx-pro',
+        'x-default': 'https://lumorahorticulture.nl/neemx-pro',
       },
     },
   }

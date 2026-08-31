@@ -1,11 +1,4 @@
-const TRUSTED_PRODUCTION_HOSTS = new Set([
-  'lumorahorticulture.nl',
-  'www.lumorahorticulture.nl',
-  'lumorahorticulture.com',
-  'www.lumorahorticulture.com',
-  'lumorahorticulture.de',
-  'www.lumorahorticulture.de',
-]);
+const CANONICAL_PRODUCTION_HOST = 'lumorahorticulture.nl';
 
 export class InvalidCanonicalBaseUrlError extends Error {
   constructor() {
@@ -41,7 +34,7 @@ export function parseCanonicalBaseUrl(
   const isTrustedProduction =
     url.protocol === 'https:' &&
     url.port === '' &&
-    TRUSTED_PRODUCTION_HOSTS.has(url.hostname);
+    url.hostname === CANONICAL_PRODUCTION_HOST;
   const isTrustedLocal =
     isLocalhost &&
     (url.protocol === 'http:' || url.protocol === 'https:') &&

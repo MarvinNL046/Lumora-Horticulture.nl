@@ -12,8 +12,8 @@ import { localizePathForLocale } from '@/lib/url-localizations'
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
@@ -157,11 +157,11 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
   const breadcrumbItems = [
     {
       name: locale === 'nl' ? 'Home' : locale === 'de' ? 'Startseite' : 'Home',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.nl/de' : 'https://lumorahorticulture.nl/en'
     },
     {
       name: locale === 'nl' ? 'Producten' : locale === 'de' ? 'Produkte' : 'Products',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/' : locale === 'de' ? 'https://lumorahorticulture.de/produkte/' : 'https://lumorahorticulture.com/products/'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/producten/' : locale === 'de' ? 'https://lumorahorticulture.nl/de/produkte/' : 'https://lumorahorticulture.nl/en/products/'
     }
   ]
 
@@ -242,7 +242,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
       {products.map(product => (
         <ProductSchema key={product.sku} product={product} locale={locale} />
       ))}
-      
+
       {/* Background elements - adjusted for better mobile display with new brand colors */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>
@@ -253,7 +253,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
         <ProductsHeader t={t} />
-        
+
         {/* Reduced vertical spacing on mobile */}
         <section className="mt-12 md:mt-24 space-y-16 md:space-y-32">
 
@@ -393,7 +393,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
           </motion.div>
 
           {/* Benefits Grid before first product */}
-          <motion.div 
+          <motion.div
             variants={fadeIn}
             initial="hidden"
             animate="visible"
@@ -408,15 +408,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Milieuvriendelijk' : locale === 'de' ? 'Umweltfreundlich' : 'Eco-friendly'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu' 
+                    {locale === 'nl'
+                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu'
                       : locale === 'de'
                       ? 'Hergestellt aus Holzfasern aus erneuerbaren Quellen mit minimaler Umweltbelastung'
                       : 'Made from wood fibers from renewable sources with minimal environmental impact'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 2 - 12+ Maanden Afbraaktijd */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -425,15 +425,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? '12+ Maanden Afbraaktijd' : locale === 'de' ? '12+ Monate Abbauzeit' : '12+ Months Degradation Time'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden' 
+                    {locale === 'nl'
+                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden'
                       : locale === 'de'
                       ? 'Perfekt für Kulturen mit längerer Produktionszeit vor dem Auspflanzen oder Umtopfen'
                       : 'Perfect for crops with longer production time before transplanting or potting'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 3 - Schimmelwerend */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -442,15 +442,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                    {locale === 'nl'
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels'
                       : locale === 'de'
                       ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
                       : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 4 - Geen Transplantatieschok */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -459,8 +459,8 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Geen Transplantatieschok' : locale === 'de' ? 'Kein Transplantationsschock' : 'No Transplant Shock'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand' 
+                    {locale === 'nl'
+                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand'
                       : locale === 'de'
                       ? 'Wurzeln wachsen mühelos durch das Papier, wodurch Pflanzen stark und gesund ohne Wachstumsstillstand weiterwachsen'
                       : 'Roots grow effortlessly through the paper, allowing plants to continue growing strong and healthy without growth stagnation'}
@@ -496,9 +496,9 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             ]}
             locale={locale}
           />
-          
+
           {/* Benefits Grid before second product */}
-          <motion.div 
+          <motion.div
             variants={fadeIn}
             initial="hidden"
             animate="visible"
@@ -513,15 +513,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Milieuvriendelijk' : locale === 'de' ? 'Umweltfreundlich' : 'Eco-friendly'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu' 
+                    {locale === 'nl'
+                      ? 'Gemaakt van houtvezels uit hernieuwbare bronnen met minimale impact op het milieu'
                       : locale === 'de'
                       ? 'Hergestellt aus Holzfasern aus erneuerbaren Quellen mit minimaler Umweltbelastung'
                       : 'Made from wood fibers from renewable sources with minimal environmental impact'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 2 - 12+ Maanden Afbraaktijd */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -530,15 +530,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? '12+ Maanden Afbraaktijd' : locale === 'de' ? '12+ Monate Abbauzeit' : '12+ Months Degradation Time'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden' 
+                    {locale === 'nl'
+                      ? 'Perfect voor gewassen met een langere productietijd voordat ze uitgeplant of opgepot worden'
                       : locale === 'de'
                       ? 'Perfekt für Kulturen mit längerer Produktionszeit vor dem Auspflanzen oder Umtopfen'
                       : 'Perfect for crops with longer production time before transplanting or potting'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 3 - Schimmelwerend */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -547,15 +547,15 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                    {locale === 'nl'
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels'
                       : locale === 'de'
                       ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
                       : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
                   </p>
                 </div>
               </div>
-              
+
               {/* Benefit 4 - Geen Transplantatieschok */}
               <div className="bg-gradient-to-br from-lumora-green-50 to-lumora-cream/30 rounded-2xl p-6 border border-lumora-green-100 shadow-soft hover:shadow-md transition-all duration-300">
                 <div className="flex flex-col items-center text-center">
@@ -564,8 +564,8 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Geen Transplantatieschok' : locale === 'de' ? 'Kein Transplantationsschock' : 'No Transplant Shock'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand' 
+                    {locale === 'nl'
+                      ? 'Wortels groeien moeiteloos door het papier heen, waardoor planten sterk en gezond verder groeien zonder groeistilstand'
                       : locale === 'de'
                       ? 'Wurzeln wachsen mühelos durch das Papier, wodurch Pflanzen stark und gesund ohne Wachstumsstillstand weiterwachsen'
                       : 'Roots grow effortlessly through the paper, allowing plants to continue growing strong and healthy without growth stagnation'}
@@ -601,7 +601,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             ]}
             locale={locale}
           />
-          
+
           <ProductDetail
             t={t}
             id="transportbox"
@@ -620,7 +620,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             badges={locale === 'nl' ? ['Duurzaam', 'Efficiënt', 'Stapelbaar'] : locale === 'de' ? ['Nachhaltig', 'Effizient', 'Stapelbar'] : ['Sustainable', 'Efficient', 'Stackable']}
             locale={locale}
           />
-          
+
           <ProductDetail
             t={t}
             id="insertsheets-ldpe"
@@ -645,9 +645,9 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             badges={pc.hdpeBadges}
             locale={locale}
           />
-          
+
           {/* Ellepot FP 12+ Product Link */}
-          <motion.div 
+          <motion.div
             variants={fadeIn}
             initial="hidden"
             animate="visible"
@@ -657,13 +657,13 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
               {locale === 'nl' ? 'Onze pluggen met Ellepot® FP 12+ Papier' : locale === 'de' ? 'Unsere Stecker mit Ellepot® FP 12+ Papier' : 'Our plugs with Ellepot® FP 12+ Paper'}
             </h2>
             <p className="text-lumora-dark/80 mb-6 max-w-2xl mx-auto">
-              {locale === 'nl' 
-                ? 'Alle Lumora paperbus steenwol pluggen zijn verpakt met milieuvriendelijk Ellepot FP 12+ papier. Ontdek de voordelen van deze duurzame verpakking.' 
+              {locale === 'nl'
+                ? 'Alle Lumora paperbus steenwol pluggen zijn verpakt met milieuvriendelijk Ellepot FP 12+ papier. Ontdek de voordelen van deze duurzame verpakking.'
                 : locale === 'de'
                 ? 'Alle Lumora Papiertopf-Steinwollstecker sind mit umweltfreundlichem Ellepot FP 12+ Papier umhüllt. Entdecken Sie die Vorteile dieser nachhaltigen Verpackung.'
                 : 'All Lumora paper pot rockwool plugs are wrapped with eco-friendly Ellepot FP 12+ paper. Discover the benefits of this sustainable wrapping.'}
             </p>
-            
+
             {/* Schimmelwerend highlight */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 max-w-xl mx-auto border border-lumora-green-200 shadow-soft">
               <div className="flex items-start gap-4">
@@ -673,8 +673,8 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                     {locale === 'nl' ? 'Schimmelwerend' : locale === 'de' ? 'Pilzhemmend' : 'Fungicide Protection'}
                   </h3>
                   <p className="text-lumora-dark/70 text-sm">
-                    {locale === 'nl' 
-                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels' 
+                    {locale === 'nl'
+                      ? 'Voorzien van fungicide eigenschappen om jonge planten extra te beschermen tegen schimmels'
                       : locale === 'de'
                       ? 'Mit pilzhemmenden Eigenschaften ausgestattet, um junge Pflanzen zusätzlich vor Pilzen zu schützen'
                       : 'Equipped with fungicide properties to provide extra protection against fungi for young plants'}
@@ -685,9 +685,9 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href={localizePathForLocale('/products/ellepot-fp12', locale || 'nl')}
-                className="inline-flex items-center justify-center bg-lumora-dark text-lumora-cream 
-                        hover:bg-lumora-dark-800 px-6 py-3 rounded-xl shadow-soft 
-                        hover:shadow-soft-md transition-all duration-300 
+                className="inline-flex items-center justify-center bg-lumora-dark text-lumora-cream
+                        hover:bg-lumora-dark-800 px-6 py-3 rounded-xl shadow-soft
+                        hover:shadow-soft-md transition-all duration-300
                         font-medium group"
               >
                 <span>{locale === 'nl' ? 'Meer informatie' : locale === 'de' ? 'Mehr Informationen' : 'Learn More'}</span>
@@ -695,7 +695,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
-              
+
               <div className="inline-flex items-center gap-2">
                 <a
                   href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
@@ -717,7 +717,7 @@ export default function ProductsClient({ t, locale }: { t: any, locale: string }
             </div>
           </motion.div>
         </section>
-        
+
         <ContactCTA t={t} locale={locale} />
       </div>
     </div>
@@ -730,16 +730,16 @@ function ProductsHeader({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="max-w-4xl mx-auto text-center"
     >
-      <motion.span 
+      <motion.span
         className="inline-block text-lumora-dark mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream"
       >
         {t.title?.tag}
@@ -775,13 +775,13 @@ interface ProductDetailProps {
 }
 
 // Product detail component with animations
-function ProductDetail({ 
+function ProductDetail({
   t,
-  id, 
-  title, 
+  id,
+  title,
   subtitle,
-  description, 
-  imageSrc, 
+  description,
+  imageSrc,
   imagePosition = "left",
   specs = [],
   showSpecs = true,
@@ -792,11 +792,11 @@ function ProductDetail({
     threshold: 0.1, // Reduced threshold for better mobile visibility
     triggerOnce: true
   })
-  
+
   const [activeTab, setActiveTab] = useState(0)
-  
+
   return (
-    <motion.div 
+    <motion.div
       id={id}
       ref={ref}
       variants={fadeIn}
@@ -816,15 +816,15 @@ function ProductDetail({
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                priority={id === "tray84"}
+                preload={id === "tray84"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl opacity-60"></div>
-              
+
               {/* Product badges */}
               {badges.length > 0 && (
                 <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
                   {badges.map((badge, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="inline-block text-white text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-full bg-lumora-green-600/80 backdrop-blur-sm"
                     >
@@ -836,7 +836,7 @@ function ProductDetail({
             </div>
           </div>
         </div>
-        
+
         {/* Product Info */}
         <div className="w-full lg:w-1/2">
           <motion.div
@@ -856,11 +856,11 @@ function ProductDetail({
                 {subtitle}
               </p>
             </motion.div>
-            
+
             <motion.p variants={fadeIn} className="text-lumora-dark/80 leading-relaxed text-sm md:text-base">
               {description}
             </motion.p>
-            
+
             {showSpecs && (
               <motion.div variants={fadeIn} className="mt-4 md:mt-8">
                 <Tab.Group onChange={setActiveTab}>
@@ -887,7 +887,7 @@ function ProductDetail({
                   <Tab.Panels>
                     <Tab.Panel>
                       <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
-                        <motion.table 
+                        <motion.table
                           className="min-w-full"
                           variants={staggerContainer}
                           initial="hidden"
@@ -895,7 +895,7 @@ function ProductDetail({
                         >
                           <tbody>
                             {specs.map((spec, index) => (
-                              <motion.tr 
+                              <motion.tr
                                 key={index}
                                 variants={fadeIn}
                                 className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
@@ -914,7 +914,7 @@ function ProductDetail({
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="overflow-hidden rounded-2xl bg-white shadow-soft p-4 md:p-6">
-                        <motion.ul 
+                        <motion.ul
                           className="space-y-3 md:space-y-4"
                           variants={staggerContainer}
                           initial="hidden"
@@ -959,7 +959,7 @@ function ProductDetail({
                 </Tab.Group>
               </motion.div>
             )}
-            
+
             <motion.div variants={fadeIn} className="pt-4 md:pt-6 space-y-3">
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
@@ -1004,11 +1004,11 @@ function ProductDetail({
                       download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                       className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group text-sm md:text-base"
                     >
-                      <svg 
+                      <svg
                         className="mr-2 w-4 h-4 md:w-5 md:h-5"
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -1035,9 +1035,9 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
     threshold: 0.2,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
@@ -1051,9 +1051,9 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
         <div className="absolute -top-20 -right-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-dark/30 mix-blend-overlay blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-3xl"></div>
       </div>
-      
+
       <div className="glass-dark rounded-3xl p-6 sm:p-8 md:p-16 shadow-soft-lg backdrop-blur-md relative">
-        <motion.div 
+        <motion.div
           className="max-w-3xl mx-auto text-center"
           variants={staggerContainer}
           initial="hidden"

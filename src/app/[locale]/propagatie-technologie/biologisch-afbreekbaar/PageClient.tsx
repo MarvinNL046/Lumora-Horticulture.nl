@@ -176,9 +176,7 @@ const content: Record<string, PageContent> = {
       articles: [
         { title: 'Wat zijn Paper Plug Trays? Complete introductie', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
         { title: 'FP 12+ Technologie: 12 maanden stabiliteit uitgelegd', href: '/propagatie-technologie/fp-12-technologie' },
-        { title: 'Paper vs Plastic Plug Trays vergelijking', href: '/propagatie-technologie/paper-vs-plastic' },
-        { title: 'Carbon footprint vergelijking: Paper vs Plastic', href: '/duurzaamheid/carbon-footprint' },
-        { title: 'EU duurzaamheidsnormen compliance', href: '/duurzaamheid/eu-normen' }
+        { title: 'Carbon footprint vergelijking: Paper vs Plastic', href: '/duurzaamheid/carbon-footprint-kweekmateriaal' },
       ]
     },
     finalCta: {
@@ -303,11 +301,9 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles',
       articles: [
-        { title: 'What are Paper Plug Trays? Complete introduction', href: '/seo/propagation-technology/what-are-paper-plug-trays' },
-        { title: 'FP 12+ Technology: 12 months stability explained', href: '/seo/propagation-technology/fp-12-technology' },
-        { title: 'Paper vs Plastic Plug Trays comparison', href: '/seo/propagation-technology/paper-vs-plastic' },
-        { title: 'Carbon footprint comparison: Paper vs Plastic', href: '/seo/sustainability/carbon-footprint' },
-        { title: 'EU sustainability standards compliance', href: '/seo/sustainability/eu-standards' }
+        { title: 'What are Paper Plug Trays? Complete introduction', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'FP 12+ Technology: 12 months stability explained', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'Carbon footprint comparison: Paper vs Plastic', href: '/duurzaamheid/carbon-footprint-kweekmateriaal' },
       ]
     },
     finalCta: {
@@ -432,11 +428,9 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel',
       articles: [
-        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/seo/vermehrungstechnologie/was-sind-paper-plug-trays' },
-        { title: 'FP 12+ Technologie: 12 Monate Stabilität erklärt', href: '/seo/vermehrungstechnologie/fp-12-technologie' },
-        { title: 'Paper vs. Kunststoff Plug Trays Vergleich', href: '/seo/vermehrungstechnologie/papier-vs-kunststoff' },
-        { title: 'CO2-Fußabdruck-Vergleich: Papier vs. Kunststoff', href: '/seo/nachhaltigkeit/co2-fussabdruck' },
-        { title: 'EU-Nachhaltigkeitsstandards Compliance', href: '/seo/nachhaltigkeit/eu-standards' }
+        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'FP 12+ Technologie: 12 Monate Stabilität erklärt', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'CO2-Fußabdruck-Vergleich: Papier vs. Kunststoff', href: '/duurzaamheid/carbon-footprint-kweekmateriaal' },
       ]
     },
     finalCta: {
@@ -470,7 +464,7 @@ export default function BiologischAfbreekbaarClient({ locale }: { locale: string
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -671,7 +665,7 @@ export default function BiologischAfbreekbaarClient({ locale }: { locale: string
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">

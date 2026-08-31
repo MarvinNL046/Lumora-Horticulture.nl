@@ -68,8 +68,8 @@ export const WelcomeEmail = ({ customerName, locale = 'nl' }: WelcomeEmailProps)
   const siteUrl = locale === 'nl'
     ? 'https://lumorahorticulture.nl'
     : locale === 'de'
-    ? 'https://lumorahorticulture.de'
-    : 'https://lumorahorticulture.com';
+    ? 'https://lumorahorticulture.nl/de'
+    : 'https://lumorahorticulture.nl/en';
 
   const shopUrl = locale === 'nl'
     ? `${siteUrl}/winkel`

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { convex } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
+import { localizePathForLocale } from '@/lib/url-localizations';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,20 +16,13 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const locale = searchParams.get('locale') || 'nl';
 
-    // Domain mapping voor link URL's
-    const domainMap: Record<string, string> = {
-      nl: 'https://lumorahorticulture.nl',
-      en: 'https://lumorahorticulture.com',
-      de: 'https://lumorahorticulture.de',
-    };
-
-    const baseUrl = domainMap[locale] || domainMap.nl;
+    const siteOrigin = 'https://lumorahorticulture.nl';
 
     // Haal alle producten op (locale handles translation in Convex)
     const allProducts = await convex.query(api.products.list, { locale });
 
     // Genereer XML feed
-    const xml = generateGoogleShoppingXML(allProducts, locale, baseUrl);
+    const xml = generateGoogleShoppingXML(allProducts, locale, siteOrigin);
 
     // Return XML met correcte headers
     return new NextResponse(xml, {
@@ -63,7 +57,7 @@ function generateGoogleShoppingXML(
   xml += '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n';
   xml += '  <channel>\n';
   xml += `    <title>Lumora Horticulture - ${locale.toUpperCase()}</title>\n`;
-  xml += `    <link>${baseUrl}</link>\n`;
+  xml += `    <link>${baseUrl}${localizePathForLocale('/', locale)}</link>\n`;
   xml += `    <description>Professional horticulture products - Steenwol pluggen, kweektrays en verpakkingen</description>\n`;
 
   // Product items
@@ -73,8 +67,7 @@ function generateGoogleShoppingXML(
     const productDescription = product.description;
 
     // Product URL
-    const shopPath = locale === 'nl' ? 'winkel' : locale === 'de' ? 'shop' : 'shop';
-    const productUrl = `${baseUrl}/${shopPath}/${product.slug}`;
+    const productUrl = `${baseUrl}${localizePathForLocale(`/shop/${product.slug}`, locale)}`;
 
     // Image URL (absolute URL)
     let imageUrl = product.image_url;

@@ -4,16 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Lumora Horticulture is a multilingual B2B e-commerce website for professional horticulture products, built with Next.js 14 and deployed on Vercel. The site features a direct checkout flow optimized for B2B customers who know exactly what they want to order.
+Lumora Horticulture is a multilingual B2B e-commerce website for professional horticulture products, built with Next.js 16 and deployed on Vercel. The site features a direct checkout flow optimized for B2B customers who know exactly what they want to order.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 with App Router and TypeScript
+- **Framework**: Next.js 16 with App Router and TypeScript
 - **Backend / Database**: Convex (products, orders, blog posts, abandoned carts, analytics)
 - **Email**: Resend (order confirmations + business notifications)
 - **Payment**: Mollie integration
 - **Styling**: Tailwind CSS with custom brand colors
-- **i18n**: next-intl with domain-based routing (lumorahorticulture.nl, .com, .de)
+- **i18n**: next-intl on one canonical domain (`.nl`, `.nl/en`, `.nl/de`)
 - **Deployment**: Vercel with automatic deploys from `main` branch
 
 ## Development Commands
@@ -29,20 +29,22 @@ npx convex run products:list   # Run a query/mutation from the CLI
 npx convex deploy              # Deploy Convex functions to production
 
 # Production Build
-npm run build                 # Build + generate sitemaps
-npm run generate-sitemaps     # Manually regenerate sitemaps
+npm run build                 # Next.js production build; sitemap is an app route
 ```
 
 ## Architecture
 
 ### Multilingual URL Structure
 
-The site uses **domain-based locale detection** without `/[locale]` URL prefixes:
-- `lumorahorticulture.nl` → Dutch (default)
-- `lumorahorticulture.com` → English
-- `lumorahorticulture.de` → German
+The site uses one canonical origin with locale prefixes for secondary languages:
+- `lumorahorticulture.nl` → Dutch (default, no prefix)
+- `lumorahorticulture.nl/en` → English
+- `lumorahorticulture.nl/de` → German
 
-URL paths are localized per domain:
+The legacy `.com` and `.de` domains only issue path-preserving permanent
+redirects to the matching locale on `.nl`.
+
+URL paths are localized per locale:
 - `/products/` (EN) → `/producten/` (NL) → `/produkte/` (DE)
 - `/shop/` (EN) → `/winkel/` (NL) → `/shop/` (DE)
 
@@ -114,10 +116,10 @@ The site includes **50+ SEO landing pages** organized into 10 thematic categorie
 
 **Important**: `praktische-toepassingen` was renamed from `toepassingen` to avoid conflict with the existing `/applications` page which translates to `/toepassingen` in Dutch.
 
-**Sitemap Configuration** (`src/lib/sitemap-generator.ts`):
-- SEO category index pages: priority 0.80, weekly changefreq
-- SEO content pages: priority 0.75, monthly changefreq
-- Automatically generates domain-specific sitemaps for .nl, .com, .de
+**Sitemap Configuration** (`src/app/sitemap.ts`):
+- Generates one sitemap on `.nl`
+- Emits canonical locale URLs and hreflang alternates
+- Never emits `.com` or `.de` as canonical origins
 
 ### Key Components & Patterns
 

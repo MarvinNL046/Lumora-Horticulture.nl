@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import WatZijnPaperPlugTraysClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -64,25 +63,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/propagatie-technologie/wat-zijn-paper-plug-trays',
-    en: '/seo/propagation-technology/what-are-paper-plug-trays',
-    de: '/seo/vermehrungstechnologie/was-sind-paper-plug-trays'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/propagatie-technologie/wat-zijn-paper-plug-trays'
   })
 }
 
 // SEO Landing page - Pillar 1, Subpillar 1
 export default async function WatZijnPaperPlugTraysPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <WatZijnPaperPlugTraysClient locale={params.locale} />
 }

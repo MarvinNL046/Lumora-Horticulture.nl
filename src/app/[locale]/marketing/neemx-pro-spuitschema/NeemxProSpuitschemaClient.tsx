@@ -161,7 +161,7 @@ export default function NeemxProSpuitschemaClient({ locale }: Props) {
       ],
       scanText: 'Scan for product info',
       version: 'Version:',
-      domain: 'lumorahorticulture.com'
+      domain: 'lumorahorticulture.nl/en'
     },
     de: {
       title: 'NEEMX PRO',
@@ -189,7 +189,7 @@ export default function NeemxProSpuitschemaClient({ locale }: Props) {
       ],
       scanText: 'Scannen für Produktinfo',
       version: 'Version:',
-      domain: 'lumorahorticulture.de'
+      domain: 'lumorahorticulture.nl/de'
     }
   }
 

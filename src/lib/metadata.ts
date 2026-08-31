@@ -1,4 +1,8 @@
 import { Metadata } from 'next'
+import {
+  basePathFromLocalizedPath,
+  localizePathForLocale,
+} from './url-localizations'
 
 interface GenerateMetadataParams {
   title: string
@@ -7,13 +11,12 @@ interface GenerateMetadataParams {
   path?: string
   keywords?: string[]
   ogImage?: string
+  availableLocales?: readonly SupportedLocale[]
 }
 
-const domains = {
-  nl: 'https://lumorahorticulture.nl',
-  en: 'https://lumorahorticulture.com',
-  de: 'https://lumorahorticulture.de'
-}
+const siteOrigin = 'https://lumorahorticulture.nl'
+const supportedLocales = ['nl', 'en', 'de'] as const
+type SupportedLocale = (typeof supportedLocales)[number]
 
 export function generatePageMetadata({
   title,
@@ -21,20 +24,43 @@ export function generatePageMetadata({
   locale,
   path = '',
   keywords = [],
-  ogImage = '/logo/lumura-horticulture-logo.jpeg'
+  ogImage = '/logo/lumura-horticulture-logo.jpeg',
+  availableLocales = supportedLocales,
 }: GenerateMetadataParams): Metadata {
-  const domain = domains[locale as keyof typeof domains] || domains.nl
-  const url = `${domain}${path}`
-  
+  const basePath = basePathFromLocalizedPath(path || '/', locale)
+  const localizedPaths = {
+    nl: localizePathForLocale(basePath, 'nl'),
+    en: localizePathForLocale(basePath, 'en'),
+    de: localizePathForLocale(basePath, 'de'),
+  }
+  const localizedPath =
+    localizedPaths[locale as keyof typeof localizedPaths] || localizedPaths.nl
+  const url = `${siteOrigin}${localizedPath}`
+  const alternateLocales = availableLocales.filter((candidate) =>
+    supportedLocales.includes(candidate),
+  )
+  const defaultLocale = alternateLocales.includes('nl')
+    ? 'nl'
+    : alternateLocales[0] || 'nl'
+  const languageAlternates = {
+    ...Object.fromEntries(
+      alternateLocales.map((candidate) => [
+        candidate,
+        `${siteOrigin}${localizedPaths[candidate]}`,
+      ]),
+    ),
+    'x-default': `${siteOrigin}${localizedPaths[defaultLocale]}`,
+  }
+
   // Add default B2B keywords based on locale
   const defaultKeywords = {
     nl: ['B2B', 'groothandel', 'professionele tuinbouw', 'leverancier', 'fabrikant'],
     en: ['B2B', 'wholesale', 'professional horticulture', 'supplier', 'manufacturer'],
     de: ['B2B', 'Großhandel', 'professioneller Gartenbau', 'Lieferant', 'Hersteller']
   }
-  
+
   const allKeywords = [...(defaultKeywords[locale as keyof typeof defaultKeywords] || defaultKeywords.nl), ...keywords]
-  
+
   return {
     title: `${title} | Lumora Horticulture`,
     description,
@@ -63,11 +89,7 @@ export function generatePageMetadata({
     },
     alternates: {
       canonical: url,
-      languages: {
-        'nl': `${domains.nl}${path}`,
-        'en': `${domains.en}${path}`,
-        'de': `${domains.de}${path}`,
-      }
+      languages: languageAlternates,
     },
     robots: {
       index: true,
@@ -98,13 +120,13 @@ export function generateProductMetadata(
     en: `${productName} - Professional ${productType} for B2B wholesale. Direct from manufacturer. Order rockwool plugs and growing trays for greenhouse horticulture at Lumora Horticulture.`,
     de: `${productName} - Professionelle ${productType} für B2B-Großhandel. Direkt vom Hersteller. Bestellen Sie Steinwollstecker und Anzuchtschalen für Gewächshausgartenbau bei Lumora Horticulture.`
   }
-  
+
   const keywords = {
     nl: [productName, productType, 'steenwol pluggen', 'kweektrays', 'glastuinbouw', 'tuinbouw groothandel'],
     en: [productName, productType, 'rockwool plugs', 'growing trays', 'greenhouse', 'horticulture wholesale'],
     de: [productName, productType, 'Steinwollstecker', 'Anzuchtschalen', 'Gewächshaus', 'Gartenbau Großhandel']
   }
-  
+
   return generatePageMetadata({
     title: productName,
     description: descriptions[locale as keyof typeof descriptions] || descriptions.nl,

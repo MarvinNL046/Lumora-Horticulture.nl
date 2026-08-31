@@ -1,35 +1,63 @@
-import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { generatePageMetadata } from '@/lib/metadata';
 import { localizePathForLocale } from '@/lib/url-localizations';
-
-export const metadata: Metadata = {
-  title: 'Wortelvorming Optimaliseren: 8 Bewezen Technieken voor Sterke Wortels',
-  description: 'Maximaliseer wortelvorming met paper plug trays. Complete gids met 8 wetenschappelijk onderbouwde technieken, expert tips en praktische strategieën voor optimale wortelontwikkeling.',
-  keywords: 'wortelvorming optimaliseren, wortelstelsel ontwikkeling, sterke wortels kweken, paper plug tray, wortelstimulatie, beworteling stekken, wortelgroei, mycorrhiza',
-  openGraph: {
-    title: 'Wortelvorming Optimaliseren: 8 Technieken voor 40% Snellere Beworteling',
-    description: 'Versnelde wortelontwikkeling door paper plug trays. Wetenschappelijk onderbouwde technieken voor professionele telers.',
-    type: 'article',
-    images: ['/productAfbeeldingen/paper-plug-roots.jpg'],
-  },
-  alternates: {
-    canonical: '/troubleshooting/wortelvorming-optimaliseren',
-    languages: {
-      'nl': '/troubleshooting/wortelvorming-optimaliseren',
-      'en': '/en/troubleshooting/optimize-root-formation',
-      'de': '/de/troubleshooting/wurzelbildung-optimieren',
-    },
-  },
-};
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+const PAGE_PATH = '/troubleshooting/wortelvorming-optimaliseren';
+const PAGE_LOCALES = ['nl', 'en', 'de'] as const;
+type PageLocale = (typeof PAGE_LOCALES)[number];
+
+function isPageLocale(locale: string): locale is PageLocale {
+  return PAGE_LOCALES.includes(locale as PageLocale);
+}
+
+export function generateStaticParams() {
+  return PAGE_LOCALES.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { locale } = await params;
+  if (!isPageLocale(locale)) {
+    notFound();
+  }
+
+  const metadata = {
+    nl: {
+      title: 'Wortelvorming Optimaliseren met Paper Plug Trays',
+      description: 'Optimaliseer wortelvorming met acht praktische technieken voor sterke wortels, snellere beworteling en gezonde stekken in paper plug trays.',
+      keywords: ['wortelvorming optimaliseren', 'sterke wortels kweken', 'paper plug trays', 'wortelstimulatie', 'beworteling stekken'],
+    },
+    en: {
+      title: 'Optimize Root Formation with Paper Plug Trays',
+      description: 'Optimize root formation with eight practical techniques for stronger roots, faster rooting and healthy cuttings in paper plug trays.',
+      keywords: ['optimize root formation', 'grow strong roots', 'paper plug trays', 'root stimulation', 'rooting cuttings'],
+    },
+    de: {
+      title: 'Wurzelbildung mit Paper Plug Trays Optimieren',
+      description: 'Optimieren Sie die Wurzelbildung mit acht praktischen Techniken für starke Wurzeln, schnellere Bewurzelung und gesunde Stecklinge in Paper Plug Trays.',
+      keywords: ['Wurzelbildung optimieren', 'starke Wurzeln', 'Paper Plug Trays', 'Wurzelstimulation', 'Stecklinge bewurzeln'],
+    },
+  }[locale];
+
+  return generatePageMetadata({
+    ...metadata,
+    locale,
+    path: PAGE_PATH,
+    availableLocales: PAGE_LOCALES,
+  });
+}
+
 export default async function WortelvormingOptimaliserenPage(props: PageProps) {
   const params = await props.params;
   const { locale } = params;
+  if (!isPageLocale(locale)) {
+    notFound();
+  }
 
   // Translations
   const t = {

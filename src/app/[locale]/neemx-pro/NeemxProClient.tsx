@@ -633,7 +633,7 @@ export default function NeemxProClient({ locale }: Props) {
                   width={600}
                   height={400}
                   className="w-full h-auto"
-                  priority
+                  preload
                 />
               </div>
               {/* Floating badges */}
@@ -805,7 +805,6 @@ export default function NeemxProClient({ locale }: Props) {
                 width={800}
                 height={533}
                 className="w-full h-auto object-cover transition-opacity duration-300"
-                priority
               />
             </div>
 

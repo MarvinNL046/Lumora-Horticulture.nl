@@ -29,24 +29,31 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 
   const { title, description, keywords } = metadata[locale] || metadata.nl;
+  const pagePath = '/innovatie-trends/verticale-teelt-paper-plugs';
+  const localizedUrls = {
+    nl: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'nl')}`,
+    en: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'en')}`,
+    de: `https://lumorahorticulture.nl${localizePathForLocale(pagePath, 'de')}`,
+  };
+  const canonicalUrl =
+    localizedUrls[locale as keyof typeof localizedUrls] || localizedUrls.nl;
 
   return {
     title,
     description,
     keywords,
     alternates: {
-      canonical: `https://lumorahorticulture.nl/innovatie-trends/verticale-teelt-paper-plugs`,
+      canonical: canonicalUrl,
       languages: {
-        'nl': 'https://lumorahorticulture.nl/innovatie-trends/verticale-teelt-paper-plugs',
-        'en': 'https://lumorahorticulture.com/seo/innovation-trends/vertical-growing-paper-plugs',
-        'de': 'https://lumorahorticulture.de/seo/innovation-trends/vertikaler-anbau-paper-plugs'
-      }
+        ...localizedUrls,
+        'x-default': localizedUrls.nl,
+      },
     },
     openGraph: {
       title,
       description,
       type: 'article',
-      url: `https://lumorahorticulture.nl/innovatie-trends/verticale-teelt-paper-plugs`
+      url: canonicalUrl,
     }
   };
 }
@@ -537,8 +544,6 @@ export default async function VerticaleTeeltPaperPlugsNL(props: Props) {
         title: 'Gerelateerde Innovaties',
         links: [
           { text: 'Automatisering in Propagatie', href: '/innovatie-trends/automatisering-propagatie' },
-          { text: 'Smart Greenhouse Integratie', href: '/seo/slimme-kas/greenhouse-integratie' },
-          { text: 'Duurzame Kweek Praktijken', href: '/duurzaamheid/duurzame-teelt' }
         ]
       }
     },
@@ -1022,9 +1027,7 @@ export default async function VerticaleTeeltPaperPlugsNL(props: Props) {
       related: {
         title: 'Related Innovations',
         links: [
-          { text: 'Automation in Propagation', href: '/seo/innovation-trends/propagation-automation' },
-          { text: 'Smart Greenhouse Integration', href: '/seo/smart-greenhouse/greenhouse-integration' },
-          { text: 'Sustainable Growing Practices', href: '/seo/sustainability/sustainable-cultivation' }
+          { text: 'Automation in Propagation', href: '/innovatie-trends/automatisering-propagatie' },
         ]
       }
     },
@@ -1508,9 +1511,7 @@ export default async function VerticaleTeeltPaperPlugsNL(props: Props) {
       related: {
         title: 'Verwandte Innovationen',
         links: [
-          { text: 'Automatisierung in Vermehrung', href: '/seo/innovation-trends/vermehrung-automatisierung' },
-          { text: 'Smart Greenhouse Integration', href: '/seo/smart-greenhouse/gewachshaus-integration' },
-          { text: 'Nachhaltige Anbau-Praktiken', href: '/seo/nachhaltigkeit/nachhaltiger-anbau' }
+          { text: 'Automatisierung in Vermehrung', href: '/innovatie-trends/automatisering-propagatie' },
         ]
       }
     }
@@ -1623,7 +1624,7 @@ export default async function VerticaleTeeltPaperPlugsNL(props: Props) {
               {t.related.links.map((link, index) => (
                 <Link
                   key={index}
-                  href={link.href}
+                  href={localizePathForLocale(link.href, locale)}
                   className="px-6 py-3 bg-white text-lumora-green-500 rounded-lg hover:bg-lumora-green-500 hover:text-white transition-colors shadow-soft"
                 >
                   {link.text}

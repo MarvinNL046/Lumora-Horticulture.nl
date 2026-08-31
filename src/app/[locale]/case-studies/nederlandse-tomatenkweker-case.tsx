@@ -38,8 +38,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `https://lumorahorticulture.${locale === 'nl' ? 'nl' : locale === 'de' ? 'de' : 'com'}/case-studies/nederlandse-tomatenkweker-case`,
       languages: {
         'nl': 'https://lumorahorticulture.nl/case-studies/nederlandse-tomatenkweker-case',
-        'en': 'https://lumorahorticulture.com/case-studies/nederlandse-tomatenkweker-case',
-        'de': 'https://lumorahorticulture.de/case-studies/nederlandse-tomatenkweker-case'
+        'en': 'https://lumorahorticulture.nl/en/case-studies/nederlandse-tomatenkweker-case',
+        'de': 'https://lumorahorticulture.nl/de/case-studies/nederlandse-tomatenkweker-case'
       }
     }
   };

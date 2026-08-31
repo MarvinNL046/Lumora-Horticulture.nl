@@ -203,7 +203,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       footerTitle: 'More Information & Order',
       footerText: 'Scan the QR code or visit our website for product details, dosage instructions and to order directly.',
-      domain: 'lumorahorticulture.com',
+      domain: 'lumorahorticulture.nl/en',
       scanText: 'Scan me!'
     },
     de: {
@@ -251,7 +251,7 @@ export default function NeemxProFlyerClient({ locale }: Props) {
       ],
       footerTitle: 'Mehr Informationen & Bestellen',
       footerText: 'Scannen Sie den QR-Code oder besuchen Sie unsere Website für Produktdetails, Dosierungsanweisungen und um direkt zu bestellen.',
-      domain: 'lumorahorticulture.de',
+      domain: 'lumorahorticulture.nl/de',
       scanText: 'Scannen!'
     }
   }

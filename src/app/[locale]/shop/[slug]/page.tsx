@@ -1,25 +1,32 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { unstable_setRequestLocale } from 'next-intl/server';
 import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/../convex/_generated/api';
 import ProductPageClient from './ProductPageClient';
 import { isHiddenProductSlug } from '@/lib/hidden-products';
 import { ShopProductSchema, ShopBreadcrumbSchema } from '@/components/StructuredData';
+import { localizePathForLocale } from '@/lib/url-localizations';
+import {
+  getAvailableProductLocales,
+  hasProductLocale,
+} from '@/lib/product-locales';
 
 // Generate static params for all product slugs and locales
 export async function generateStaticParams() {
-  const allProducts = await fetchQuery(api.products.list, {});
-  const locales = ['nl', 'en', 'de'];
-
-  return allProducts
-    .filter((product) => !isHiddenProductSlug(product.slug))
-    .flatMap((product) =>
-      locales.map((locale) => ({
-        locale,
-        slug: product.slug,
-      }))
-    );
+  try {
+    const allProducts = await fetchQuery(api.products.list, {});
+    return allProducts
+      .filter((product) => !isHiddenProductSlug(product.slug))
+      .flatMap((product) =>
+        getAvailableProductLocales(product).map((locale) => ({
+          locale,
+          slug: product.slug,
+        }))
+      );
+  } catch (error) {
+    console.error('Skipping static product paths because Convex is unavailable:', error);
+    return [];
+  }
 }
 
 // Helper to get product from database
@@ -115,6 +122,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const params = await props.params;
   const { locale, slug } = params;
+
+  if (isHiddenProductSlug(slug)) {
+    notFound();
+  }
+
   const product = await getProduct(slug);
 
   if (!product) {
@@ -122,6 +134,10 @@ export async function generateMetadata(
       title: locale === 'de' ? 'Produkt nicht gefunden' : locale === 'en' ? 'Product not found' : 'Product niet gevonden',
       description: locale === 'de' ? 'Das angeforderte Produkt wurde nicht gefunden.' : locale === 'en' ? 'The requested product was not found.' : 'Het gevraagde product is niet gevonden.',
     };
+  }
+
+  if (!hasProductLocale(product, locale)) {
+    notFound();
   }
 
   // Get translated product name
@@ -139,23 +155,9 @@ export async function generateMetadata(
                      defaultMetaConfig[locale as keyof typeof defaultMetaConfig] ||
                      defaultMetaConfig.nl;
 
-  // Domain mapping
-  const domains = {
-    nl: 'https://lumorahorticulture.nl',
-    en: 'https://lumorahorticulture.com',
-    de: 'https://lumorahorticulture.de'
-  };
-
-  // Shop path mapping
-  const shopPaths = {
-    nl: '/winkel/',
-    en: '/shop/',
-    de: '/shop/'
-  };
-
-  const domain = domains[locale as keyof typeof domains] || domains.nl;
-  const shopPath = shopPaths[locale as keyof typeof shopPaths] || shopPaths.nl;
-  const url = `${domain}${shopPath}${slug}`;
+  const siteOrigin = 'https://lumorahorticulture.nl';
+  const url = `${siteOrigin}${localizePathForLocale(`/shop/${slug}`, locale)}`;
+  const availableLocales = getAvailableProductLocales(product);
 
   // CTR-optimized title: Product Name | Key Benefit | Trust Signal
   const title = `${productName} ${metaConfig.titleSuffix}`;
@@ -188,7 +190,7 @@ export async function generateMetadata(
       siteName: 'Lumora Horticulture',
       images: [
         {
-          url: product.image_url.startsWith('http') ? product.image_url : `${domain}${product.image_url}`,
+          url: product.image_url.startsWith('http') ? product.image_url : `${siteOrigin}${product.image_url}`,
           width: 1200,
           height: 630,
           alt: productName
@@ -201,14 +203,18 @@ export async function generateMetadata(
       card: 'summary_large_image',
       title: `${title} | Lumora Horticulture`,
       description,
-      images: [product.image_url.startsWith('http') ? product.image_url : `${domain}${product.image_url}`],
+      images: [product.image_url.startsWith('http') ? product.image_url : `${siteOrigin}${product.image_url}`],
     },
     alternates: {
       canonical: url,
       languages: {
-        'nl': `${domains.nl}${shopPaths.nl}${slug}`,
-        'en': `${domains.en}${shopPaths.en}${slug}`,
-        'de': `${domains.de}${shopPaths.de}${slug}`,
+        ...Object.fromEntries(
+          availableLocales.map((availableLocale) => [
+            availableLocale,
+            `${siteOrigin}${localizePathForLocale(`/shop/${slug}`, availableLocale)}`,
+          ]),
+        ),
+        'x-default': `${siteOrigin}${localizePathForLocale(`/shop/${slug}`, 'nl')}`,
       }
     },
     robots: {
@@ -241,7 +247,6 @@ export default async function ProductPage(
   }
 ) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale);
 
   if (isHiddenProductSlug(params.slug)) {
     notFound();
@@ -249,20 +254,9 @@ export default async function ProductPage(
 
   const product = await getProduct(params.slug);
   if (!product) notFound();
+  if (!hasProductLocale(product, params.locale)) notFound();
 
-  const domains = {
-    nl: 'https://lumorahorticulture.nl',
-    en: 'https://lumorahorticulture.com',
-    de: 'https://lumorahorticulture.de',
-  } as const;
-  const shopPaths = {
-    nl: '/winkel/',
-    en: '/shop/',
-    de: '/shop/',
-  } as const;
-  const domain = domains[params.locale as keyof typeof domains] ?? domains.nl;
-  const shopPath = shopPaths[params.locale as keyof typeof shopPaths] ?? shopPaths.nl;
-  const productUrl = `${domain}${shopPath}${params.slug}`;
+  const productUrl = `https://lumorahorticulture.nl${localizePathForLocale(`/shop/${params.slug}`, params.locale)}`;
 
   // Matches the volume-discount tiers rendered on the PDP (see ProductPageClient).
   // Feeds AggregateOffer lowPrice so Google shows the "from €X" rich result.
@@ -285,8 +279,8 @@ export default async function ProductPage(
       <ShopProductSchema product={product} locale={params.locale} url={productUrl} volumeTiers={volumeTiers} />
       <ShopBreadcrumbSchema
         items={[
-          { name: 'Home', url: domain + '/' },
-          { name: shopName, url: `${domain}${shopPath}` },
+          { name: 'Home', url: `https://lumorahorticulture.nl${localizePathForLocale('/', params.locale)}` },
+          { name: shopName, url: `https://lumorahorticulture.nl${localizePathForLocale('/shop', params.locale)}` },
           { name: productName, url: productUrl },
         ]}
       />

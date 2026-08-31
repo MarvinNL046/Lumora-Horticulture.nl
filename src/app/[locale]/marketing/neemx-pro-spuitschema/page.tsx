@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import NeemxProSpuitschemaClient from './NeemxProSpuitschemaClient'
 
 // Generate static params for locales
@@ -13,7 +12,6 @@ export function generateStaticParams() {
 export default async function NeemxProSpuitschemaPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
   // This is needed for internationalization to work properly
-  unstable_setRequestLocale(params.locale)
 
   return <NeemxProSpuitschemaClient locale={params.locale} />
 }

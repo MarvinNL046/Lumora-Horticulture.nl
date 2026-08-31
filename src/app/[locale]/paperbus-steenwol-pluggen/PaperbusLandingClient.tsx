@@ -30,7 +30,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             description: "Paperbus steenwol pluggen met FP 12+ vlies zijn volledig biologisch afbreekbaar en gemaakt van hernieuwbare houtvezels."
           },
           {
-            icon: "⏰", 
+            icon: "⏰",
             title: "12+ Maanden Stabiliteit",
             description: "Het FP 12+ vlies behoudt zijn structuur gedurende de hele kweekperiode voor optimale groeiomstandigheden."
           },
@@ -41,7 +41,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
           },
           {
             icon: "🌿",
-            title: "Geen Transplantatieschok", 
+            title: "Geen Transplantatieschok",
             description: "Wortels groeien moeiteloos door het papier, waardoor transplantatieschok volledig wordt geëlimineerd."
           },
           {
@@ -60,7 +60,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
         title: "Toepassingen van Paperbus Steenwol Pluggen",
         items: [
           "Groenteteelt in kassen",
-          "Sierteelt en potplanten", 
+          "Sierteelt en potplanten",
           "Boomkwekerijen",
           "Kruidenteelt",
           "Zaailingen en jonge planten",
@@ -80,7 +80,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
     },
     en: {
       title: "Paper Pot Rockwool Plugs",
-      subtitle: "Professional growing solution with FP 12+ technology", 
+      subtitle: "Professional growing solution with FP 12+ technology",
       hero: {
         title: "The Best Paper Pot Rockwool Plugs for Professional Cultivation",
         description: "Discover why Lumora Horticulture prefers paper pot rockwool plugs with FP 12+ technology. Superior quality, eco-friendly and proven results.",
@@ -96,7 +96,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
           },
           {
             icon: "⏰",
-            title: "12+ Months Stability", 
+            title: "12+ Months Stability",
             description: "The FP 12+ film maintains its structure throughout the entire growing period for optimal growing conditions."
           },
           {
@@ -128,7 +128,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
           "Ornamental plants and potted plants",
           "Tree nurseries",
           "Herb cultivation",
-          "Seedlings and young plants", 
+          "Seedlings and young plants",
           "Organic cultivation"
         ]
       },
@@ -176,7 +176,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
           },
           {
             icon: "🏭",
-            title: "Professionelle Qualität", 
+            title: "Professionelle Qualität",
             description: "Speziell entwickelt für kommerzielle Gärtnereien und professionelle Gewächshausanwendungen."
           },
           {
@@ -198,7 +198,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
         ]
       },
       why: {
-        title: "Warum Lumora Papiertopf-Steinwollstecker?", 
+        title: "Warum Lumora Papiertopf-Steinwollstecker?",
         description: "Bei Lumora Horticulture wählen wir bewusst das Beste: alle unsere Papiertopf-Steinwollstecker sind mit der innovativen FP 12+ Folie umhüllt. Dies macht unsere Stecker qualitativ überlegen, mit einzigartigen pilzhemmenden Eigenschaften für optimale Wachstumsergebnisse."
       },
       cta: {
@@ -227,7 +227,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                   {currentContent.hero.description}
                 </p>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href={`/${locale}/products`}
@@ -235,7 +235,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                 >
                   {currentContent.hero.cta}
                 </Link>
-                
+
                 <a
                   href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
                   download={`Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
@@ -245,7 +245,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                 </a>
               </div>
             </div>
-            
+
             <div className="relative">
               <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <Image
@@ -255,7 +255,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                   height={400}
                   className={`w-full h-auto rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
-                  priority
+                  preload
                 />
                 {!imageLoaded && (
                   <div className="absolute inset-0 bg-lumora-cream animate-pulse rounded-xl" />
@@ -275,7 +275,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             </h2>
             <div className="w-24 h-1 bg-lumora-gold mx-auto"></div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentContent.benefits.items.map((benefit, index) => (
               <div
@@ -306,7 +306,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
               <p className="text-lg text-gray-600 leading-relaxed">
                 {currentContent.why.description}
               </p>
-              
+
               <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-lumora-gold">
                 <h3 className="text-xl font-semibold text-lumora-dark mb-3">
                   FP 12+ Technologie Voordelen:
@@ -331,7 +331,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                 </ul>
               </div>
             </div>
-            
+
             <div className="relative">
               <Image
                 src="/images/greenhouse-1.jpg"
@@ -355,7 +355,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             </h2>
             <div className="w-24 h-1 bg-lumora-gold mx-auto"></div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentContent.applications.items.map((application, index) => (
               <div
@@ -385,7 +385,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                   <p className="text-lumora-dark font-medium">Pluggen per Tray-104st</p>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl p-6 shadow-lg">
                 <h3 className="text-xl font-semibold text-lumora-dark mb-4">
                   Beschikbare Formaten:
@@ -408,7 +408,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                 </div>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
                 <Image
@@ -444,7 +444,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
           <p className="text-xl text-lumora-cream/90 mb-10 leading-relaxed">
             {currentContent.cta.description}
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
               href={`/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`}
@@ -453,7 +453,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
             >
               📄 {currentContent.cta.button}
             </a>
-            
+
             <Link
               href={`/${locale}/contact`}
               className="inline-flex items-center justify-center bg-transparent border-2 border-lumora-cream text-lumora-cream hover:bg-lumora-cream hover:text-lumora-dark px-8 py-4 rounded-xl transition-all duration-300 font-semibold text-lg"
@@ -493,7 +493,7 @@ export default function PaperbusLandingClient({ t, locale }: PaperbusLandingClie
                 "value": "FP 12+"
               },
               {
-                "@type": "PropertyValue", 
+                "@type": "PropertyValue",
                 "name": "Stability Period",
                 "value": "12+ months"
               },

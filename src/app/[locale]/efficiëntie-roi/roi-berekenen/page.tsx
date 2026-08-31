@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import RoiBerekenenClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -66,25 +65,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/efficiëntie-roi/roi-berekenen',
-    en: '/seo/efficiency-roi/calculate-roi',
-    de: '/seo/effizienz-roi/roi-berechnen'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/efficiëntie-roi/roi-berekenen'
   })
 }
 
 // SEO Landing page - Pillar 3, Subpillar 1
 export default async function RoiBerekenenPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <RoiBerekenenClient locale={params.locale} />
 }

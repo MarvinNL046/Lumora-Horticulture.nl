@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import FP12TechnologieClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -66,25 +65,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/propagatie-technologie/fp-12-technologie',
-    en: '/seo/propagation-technology/fp-12-technology',
-    de: '/seo/vermehrungstechnologie/fp-12-technologie'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/propagatie-technologie/fp-12-technologie'
   })
 }
 
 // SEO Landing page - Pillar 1, Subpillar 2
 export default async function FP12TechnologiePage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <FP12TechnologieClient locale={params.locale} />
 }

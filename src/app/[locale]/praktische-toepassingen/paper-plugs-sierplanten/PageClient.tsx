@@ -206,9 +206,7 @@ const content: Record<string, PageContent> = {
       title: 'Gerelateerde content voor sierplantenkwekers',
       articles: [
         { title: 'Wat zijn Paper Plug Trays? Complete introductie', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
-        { title: 'Paper plugs voor bedding plants: Seizoensproductie', href: '/toepassingen/paper-plugs-bedding-plants' },
-        { title: 'Uniformiteit optimaliseren in propagatie', href: '/propagatie-technologie/uniformiteit' },
-        { title: 'ROI berekenen voor paper plug investeringen', href: '/seo/efficientie-roi/roi-berekenen' },
+        { title: 'ROI berekenen voor paper plug investeringen', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'Bekijk PAPER PLUG TRAY 84 en 104 specificaties', href: '/products' }
       ]
     },
@@ -355,10 +353,8 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related content for ornamental growers',
       articles: [
-        { title: 'What are Paper Plug Trays? Complete introduction', href: '/seo/propagation-technology/what-are-paper-plug-trays' },
-        { title: 'Paper plugs for bedding plants: Seasonal production', href: '/seo/applications/paper-plugs-bedding-plants' },
-        { title: 'Optimize uniformity in propagation', href: '/seo/propagation-technology/uniformity' },
-        { title: 'Calculate ROI for paper plug investments', href: '/seo/efficiency-roi/calculate-roi' },
+        { title: 'What are Paper Plug Trays? Complete introduction', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'Calculate ROI for paper plug investments', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'View PAPER PLUG TRAY 84 and 104 specifications', href: '/products' }
       ]
     },
@@ -505,10 +501,8 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Inhalte für Zierpflanzenzüchter',
       articles: [
-        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/seo/vermehrungstechnologie/was-sind-paper-plug-trays' },
-        { title: 'Paper Plugs für Beetpflanzen: Saisonale Produktion', href: '/seo/anwendungen/paper-plugs-beetpflanzen' },
-        { title: 'Gleichmäßigkeit in Vermehrung optimieren', href: '/seo/vermehrungstechnologie/gleichmaessigkeit' },
-        { title: 'ROI für Paper Plug Investitionen berechnen', href: '/seo/effizienz-roi/roi-berechnen' },
+        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'ROI für Paper Plug Investitionen berechnen', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'PAPER PLUG TRAY 84 und 104 Spezifikationen ansehen', href: '/products' }
       ]
     },
@@ -543,7 +537,7 @@ export default function PaperPlugsSierplantenClient({ locale }: { locale: string
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -762,7 +756,7 @@ export default function PaperPlugsSierplantenClient({ locale }: { locale: string
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">

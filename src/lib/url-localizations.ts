@@ -1,8 +1,8 @@
 /**
  * URL Path Localization for Lumora Horticulture
- * 
+ *
  * This module provides mappings for translating URL paths between different languages.
- * It enables domain-specific URL paths such as /products/ on the English site but /producten/ on the Dutch site.
+ * It enables locale-specific URL paths on the canonical .nl domain.
  */
 
 // English URL paths (used as the reference/default since they match the file structure)
@@ -14,8 +14,8 @@ export const basePaths = {
   contact: 'contact',
   applications: 'applications',
   // Legal pages
-  privacyPolicy: 'privacy-policy',
-  termsConditions: 'terms-conditions',
+  privacyPolicy: 'privacy',
+  termsConditions: 'terms',
   returnPolicy: 'return-policy',
   // Individual product paths
   tray84: 'products/tray84',
@@ -59,8 +59,8 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     shop: 'winkel',
     applications: 'toepassingen',
     // Legal pages
-    'privacy-policy': 'privacybeleid',
-    'terms-conditions': 'algemene-voorwaarden',
+    privacy: 'privacybeleid',
+    terms: 'algemene-voorwaarden',
     'return-policy': 'retourbeleid',
     // Individual products in Dutch
     'products/tray84': 'producten/tray84',
@@ -92,11 +92,15 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'case-studies': 'case-studies',
     // contact is the same in Dutch, no need to translate
   },
-  
+
   // English paths (same as base paths)
   en: {
+    // Legal pages
+    privacy: 'privacy-policy',
+    terms: 'terms-conditions',
     // SEO Landing pages translated to English
     'paperbus-pluggen': 'paper-pot-plugs',
+    'paperbus-steenwol-pluggen': 'paper-pot-rockwool-plugs',
     'steenwol-pluggen': 'rockwool-plugs',
     'stekpluggen': 'cutting-plugs',
     // FAQ pages translated to English
@@ -120,7 +124,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'case-studies': 'case-studies',
     // No translation needed for other paths as they match the base paths
   },
-  
+
   // German paths
   de: {
     about: 'uber-uns',
@@ -129,8 +133,8 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     contact: 'kontakt',
     applications: 'anwendungen',
     // Legal pages
-    'privacy-policy': 'datenschutz',
-    'terms-conditions': 'allgemeine-geschaftsbedingungen',
+    privacy: 'datenschutz',
+    terms: 'allgemeine-geschaftsbedingungen',
     'return-policy': 'ruckgaberecht',
     // Individual products in German
     'products/tray84': 'produkte/tray84',
@@ -142,6 +146,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'marketing/ellepot-flyer': 'marketing/ellepot-broschure',
     // SEO Landing pages translated to German
     'paperbus-pluggen': 'papiertopf-stecker',
+    'paperbus-steenwol-pluggen': 'papiertopf-steinwollstecker',
     'steenwol-pluggen': 'steinwolle-stecklinge',
     'stekpluggen': 'stecklingsplugs',
     // FAQ pages translated to German
@@ -166,58 +171,52 @@ export const localizedPaths: Record<string, Record<string, string>> = {
   }
 }
 
-// Domain to locale mapping
-export const domainLocaleMap: Record<string, string> = {
-  'lumorahorticulture.nl': 'nl',
-  'lumorahorticulture.com': 'en',
-  'lumorahorticulture.de': 'de',
-  'localhost': 'nl', // Default for local development
-}
-
 /**
- * Convert a path from the base path (English) to a localized path
+ * Convert a base path to its canonical path on lumorahorticulture.nl.
+ * Dutch uses no prefix; English and German use /en and /de.
  */
 export function localizePathForLocale(path: string, locale: string): string {
-  // Clean the path and remove leading/trailing slashes
-  const cleanPath = path.replace(/^\/|\/$/g, '');
-  
+  const localePrefix = locale === 'nl' ? '' : `/${locale}`;
+  const pathWithoutPrefix = path.replace(/^\/(nl|en|de)(?=\/|$)/, '') || '/';
+  const cleanPath = pathWithoutPrefix.replace(/^\/|\/$/g, '');
+
   // If this is the homepage (empty path), return as is
   if (!cleanPath) {
-    return '/';
+    return localePrefix || '/';
   }
-  
+
   // Check if we have a direct match for the full path
   const localizedPath = localizedPaths[locale]?.[cleanPath];
   if (localizedPath) {
-    return '/' + localizedPath;
+    return `${localePrefix}/${localizedPath}`;
   }
-  
+
   // Otherwise try to localize the first segment
   const pathSegments = cleanPath.split('/');
   const firstSegment = pathSegments[0];
-  
+
   // Find the localized version of the first segment if it exists
   const localizedFirstSegment = localizedPaths[locale]?.[firstSegment] || firstSegment;
-  
+
   // Replace the first segment with the localized version
   pathSegments[0] = localizedFirstSegment;
-  
+
   // Rebuild the path with localized first segment
-  return '/' + pathSegments.join('/');
+  return `${localePrefix}/${pathSegments.join('/')}`;
 }
 
 /**
  * Convert a localized path back to its base path (English)
  */
 export function basePathFromLocalizedPath(localizedPath: string, locale: string): string {
-  // Clean the path and remove leading/trailing slashes
-  const cleanPath = localizedPath.replace(/^\/|\/$/g, '');
-  
+  const pathWithoutPrefix = localizedPath.replace(/^\/(nl|en|de)(?=\/|$)/, '') || '/';
+  const cleanPath = pathWithoutPrefix.replace(/^\/|\/$/g, '');
+
   // If this is the homepage (empty path), return as is
   if (!cleanPath) {
     return '/';
   }
-  
+
   // First check if we have a direct match for the full path
   const localePathMap = localizedPaths[locale] || {};
   for (const [baseKey, localizedValue] of Object.entries(localePathMap)) {
@@ -225,39 +224,24 @@ export function basePathFromLocalizedPath(localizedPath: string, locale: string)
       return '/' + baseKey;
     }
   }
-  
+
   // Otherwise try to de-localize the first segment
   const pathSegments = cleanPath.split('/');
   const firstSegment = pathSegments[0];
-  
+
   // Find which base path key this segment corresponds to
   let basePath = firstSegment;
-  
+
   for (const [baseKey, localizedValue] of Object.entries(localePathMap)) {
     if (localizedValue === firstSegment) {
       basePath = baseKey;
       break;
     }
   }
-  
+
   // Replace the first segment with the base path
   pathSegments[0] = basePath;
-  
+
   // Rebuild the path with the base path
   return '/' + pathSegments.join('/');
-}
-
-/**
- * Get the localized path for a specific domain
- */
-export function getLocalizedPathForDomain(path: string, domain: string): string {
-  const locale = domainLocaleMap[domain] || 'nl'; // Default to Dutch if domain not found
-  return localizePathForLocale(path, locale);
-}
-
-/**
- * Determine the locale from a domain name
- */
-export function getLocaleFromDomain(domain: string): string {
-  return domainLocaleMap[domain] || 'nl'; // Default to Dutch if domain not found
 }

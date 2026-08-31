@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import PaperPlugsGroenteteeltClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -66,25 +65,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/toepassingen/paper-plugs-groenteteelt',
-    en: '/seo/applications/paper-plugs-vegetables',
-    de: '/seo/anwendungen/paper-plugs-gemueseanbau'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/praktische-toepassingen/paper-plugs-groenteteelt'
   })
 }
 
 // SEO Landing page - Pillar 2, Subpillar 2.1
 export default async function PaperPlugsGroenteteeltPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <PaperPlugsGroenteteeltClient locale={params.locale} />
 }

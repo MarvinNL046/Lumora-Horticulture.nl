@@ -7,7 +7,6 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { usePathname, useParams } from 'next/navigation'
 import {
-  domainLocaleMap,
   localizePathForLocale,
   basePathFromLocalizedPath
 } from '@/lib/url-localizations'
@@ -24,53 +23,12 @@ const HeaderNavClient = dynamic(() => import('./HeaderNavClient'), {
   )
 })
 
-// Define the locales we support directly in this file and their corresponding domains
-const localeMap = {
-  nl: 'lumorahorticulture.nl',
-  en: 'lumorahorticulture.com',
-  de: 'lumorahorticulture.de'
-}
+const locales = ['nl', 'en', 'de'] as const
 
 const defaultLocale = 'nl'
 
-// Helper function to get current locale from domain
-const getLocaleFromDomain = (domain?: string): string => {
-  if (!domain) return defaultLocale;
-  
-  // Check which domain matches
-  for (const [locale, domainValue] of Object.entries(localeMap)) {
-    if (domain.includes(domainValue)) {
-      return locale;
-    }
-  }
-  
-  // Default to nl if no match found
-  return defaultLocale;
-}
-
-// Helper function to create a link for a different locale
-// isLocalDev parameter is passed from component to ensure hydration-safe rendering
-const createLocalizedUrl = (locale: string, pathname: string, isLocalDev: boolean = false): string => {
-  // Get the domain for this locale
-  const domain = localeMap[locale as keyof typeof localeMap];
-
-  // First get the current locale from the pathname
-  const currentLocale = getCurrentLocaleFromPath(pathname);
-
-  // Convert the current path back to base path
-  const basePath = basePathFromLocalizedPath(pathname, currentLocale);
-
-  // Then localize it for the target locale
-  const localizedPath = localizePathForLocale(basePath, locale);
-
-  // For local development, use locale in path (only when isLocalDev is explicitly true)
-  if (isLocalDev) {
-    return `/${locale}${localizedPath}`;
-  }
-
-  // For production, use full domain
-  return `https://${domain}${localizedPath}`;
-}
+const createLocalizedUrl = (locale: string, basePath: string): string =>
+  localizePathForLocale(basePath, locale)
 
 // Helper to get current locale from pathname
 const getCurrentLocaleFromPath = (pathname: string): string => {
@@ -83,26 +41,12 @@ export default function HeaderNav() {
   const params = useParams()
   const { getTotalItems, setIsCartOpen } = useCart()
 
-  // Track if component is mounted (for hydration-safe rendering)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // Get current locale from URL or domain
+  // Get the locale from the internal [locale] route or the visible prefix.
   const getCurrentLocale = (): 'nl' | 'en' | 'de' => {
-    // If we have a locale in the URL params, use that
-    if (params?.locale) {
-      return params.locale as 'nl' | 'en' | 'de';
+    if (typeof params?.locale === 'string' && locales.includes(params.locale as typeof locales[number])) {
+      return params.locale as typeof locales[number]
     }
-
-    // Otherwise try to determine from domain (only after mount to avoid hydration issues)
-    if (isMounted && typeof window !== 'undefined') {
-      return getLocaleFromDomain(window.location.hostname) as 'nl' | 'en' | 'de';
-    }
-
-    return defaultLocale as 'nl' | 'en' | 'de';
+    return getCurrentLocaleFromPath(pathname) as typeof locales[number]
   }
 
   // Get the current locale
@@ -128,20 +72,16 @@ export default function HeaderNav() {
   const [scrolled, setScrolled] = useState(false)
   const cartItemCount = getTotalItems()
 
-  // Determine if we're in local development (hydration-safe)
-  const isLocalDev = isMounted && typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' || window.location.hostname.includes('netlify.app'))
-  
   // Handle scroll for transparent/solid header effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  
+
   return (
     <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
       scrolled ? 'bg-lumora-dark/95 py-3 shadow-md' : 'bg-lumora-dark/90 py-5'
@@ -150,23 +90,23 @@ export default function HeaderNav() {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link href={localizePathForLocale('/', currentLocale)} className="flex items-center group relative">
-              <div className={`relative transition-all duration-300 
+              <div className={`relative transition-all duration-300
                 ${scrolled ? 'h-12' : 'h-16'}`}>
-                <Image 
-                  src="/logo/lumura-horticulture-logo.jpeg" 
+                <Image
+                  src="/logo/lumura-horticulture-logo.jpeg"
                   alt="Lumora Horticulture Logo"
-                  width={160} 
+                  width={160}
                   height={64}
                   className="object-contain h-full w-auto max-w-[120px] sm:max-w-[160px]"
-                  priority
+                  preload
                 />
               </div>
-              <span className="absolute inset-0 rounded-xl scale-75 opacity-0 group-hover:opacity-100 
-                transition-opacity duration-700 bg-gradient-to-r from-lumora-green-500/20 to-lumora-gold-500/20 
+              <span className="absolute inset-0 rounded-xl scale-75 opacity-0 group-hover:opacity-100
+                transition-opacity duration-700 bg-gradient-to-r from-lumora-green-500/20 to-lumora-gold-500/20
                 blur-xl -z-10"></span>
             </Link>
           </div>
-          
+
           {/* Desktop navigation with localized links */}
           <nav className="hidden md:flex md:items-center md:space-x-1">
             <NavLink
@@ -220,14 +160,14 @@ export default function HeaderNav() {
               activeColor="text-lumora-cream bg-lumora-dark-700"
               hoverColor="text-lumora-cream/90 hover:bg-lumora-dark-800/80"
             />
-            
+
             {/* Language switcher - with domain switching */}
             <div className="relative ml-6 border-l border-lumora-cream/20 pl-6">
               <div className="flex space-x-3">
-                {Object.keys(localeMap).map((locale) => (
+                {locales.map((locale) => (
                   <a
                     key={locale}
-                    href={createLocalizedUrl(locale, pathWithoutLocale, isLocalDev)}
+                    href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-2 py-1 rounded-md transition-all duration-300 ${
                       locale === currentLocale
                         ? 'bg-lumora-dark-700/80 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'
@@ -259,7 +199,7 @@ export default function HeaderNav() {
               )}
             </button>
           </nav>
-          
+
           {/* Mobile menu button and cart */}
           <div className="flex items-center gap-3 md:hidden">
             {/* Cart Icon Mobile */}
@@ -314,7 +254,7 @@ export default function HeaderNav() {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile menu, show/hide based on menu state */}
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${
         mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
@@ -365,31 +305,31 @@ export default function HeaderNav() {
               }
               onClick={() => setMobileMenuOpen(false)}
             />
-            <MobileNavLink 
-              href={localizePathForLocale('/applications', currentLocale)} 
+            <MobileNavLink
+              href={localizePathForLocale('/applications', currentLocale)}
               label={
-                currentLocale === 'nl' ? 'Toepassingen' : 
-                currentLocale === 'de' ? 'Anwendungen' : 
+                currentLocale === 'nl' ? 'Toepassingen' :
+                currentLocale === 'de' ? 'Anwendungen' :
                 'Applications'
               }
-              onClick={() => setMobileMenuOpen(false)} 
+              onClick={() => setMobileMenuOpen(false)}
             />
-            <MobileNavLink 
-              href={localizePathForLocale('/contact', currentLocale)} 
-              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'} 
-              onClick={() => setMobileMenuOpen(false)} 
+            <MobileNavLink
+              href={localizePathForLocale('/contact', currentLocale)}
+              label={currentLocale === 'de' ? 'Kontakt' : 'Contact'}
+              onClick={() => setMobileMenuOpen(false)}
             />
-            
+
             {/* Account Section (mobile) */}
             <HeaderNavClient currentLocale={currentLocale} setMobileMenuOpen={setMobileMenuOpen} />
 
             {/* Language switcher (mobile) - with domain switching */}
             <div className="border-t border-lumora-cream/10 pt-4 pb-2 mt-4">
               <div className="flex justify-center space-x-4">
-                {Object.keys(localeMap).map((locale) => (
+                {locales.map((locale) => (
                   <a
                     key={locale}
-                    href={createLocalizedUrl(locale, pathWithoutLocale, isLocalDev)}
+                    href={createLocalizedUrl(locale, pathWithoutLocale)}
                     className={`uppercase text-sm font-medium px-3 py-2 rounded-xl transition-all duration-300 ${
                       locale === currentLocale
                         ? 'bg-lumora-dark-700 text-lumora-cream font-semibold shadow-soft-sm border border-lumora-cream/30'
@@ -429,16 +369,16 @@ function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) 
   const pathWithoutLocale = pathname.replace(/^\/(nl|en|de)/, '') || '/'
   const hrefWithoutLocale = href.replace(/^\/(nl|en|de)/, '') || '/'
   const isActive = pathWithoutLocale === hrefWithoutLocale
-  
+
   // Default styling if custom colors are not provided
   const defaultActiveStyle = 'text-lumora-cream bg-lumora-dark-700/80 shadow-soft-sm'
   const defaultInactiveStyle = 'text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
-  
+
   return (
     <Link
       href={href}
       className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group
-        ${isActive 
+        ${isActive
           ? activeColor || defaultActiveStyle
           : hoverColor || defaultInactiveStyle
         }`}
@@ -447,8 +387,8 @@ function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) 
       {isActive && (
         <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-1/2 bg-lumora-cream rounded-full"></span>
       )}
-      <span className="absolute inset-0 rounded-xl scale-90 opacity-0 group-hover:opacity-100 
-        transition-opacity duration-500 bg-lumora-dark-700/40 
+      <span className="absolute inset-0 rounded-xl scale-90 opacity-0 group-hover:opacity-100
+        transition-opacity duration-500 bg-lumora-dark-700/40
         blur-sm -z-10"></span>
     </Link>
   )
@@ -457,7 +397,7 @@ function NavLink({ href, label, color, activeColor, hoverColor }: NavLinkProps) 
 // Products dropdown component
 function ProductsDropdown({ currentLocale, pathWithoutLocale }: { currentLocale: string, pathWithoutLocale: string }) {
   const [isOpen, setIsOpen] = useState(false)
-  
+
   const products = [
     {
       href: '/products',
@@ -476,27 +416,27 @@ function ProductsDropdown({ currentLocale, pathWithoutLocale }: { currentLocale:
       }
     }
   ]
-  
+
   const isActive = pathWithoutLocale.startsWith('/products')
-  
+
   return (
-    <div 
+    <div
       className="relative"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
         className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group flex items-center gap-1
-          ${isActive 
+          ${isActive
             ? 'text-lumora-cream bg-lumora-dark-700/80 shadow-soft-sm'
             : 'text-lumora-cream/80 hover:text-lumora-cream hover:bg-lumora-dark-700/50'
           }`}
       >
         {currentLocale === 'nl' ? 'Producten' : currentLocale === 'de' ? 'Produkte' : 'Products'}
-        <svg 
-          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -505,7 +445,7 @@ function ProductsDropdown({ currentLocale, pathWithoutLocale }: { currentLocale:
           <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-1/2 bg-lumora-cream rounded-full"></span>
         )}
       </button>
-      
+
       {/* Dropdown menu */}
       <div className={`absolute top-full left-0 mt-2 w-64 rounded-xl bg-lumora-dark/95 backdrop-blur-sm shadow-lg border border-lumora-cream/10 overflow-hidden transition-all duration-200 ${
         isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
@@ -531,13 +471,13 @@ function MobileNavLink({ href, label, onClick }: MobileNavLinkProps) {
   const pathWithoutLocale = pathname.replace(/^\/(nl|en|de)/, '') || '/'
   const hrefWithoutLocale = href.replace(/^\/(nl|en|de)/, '') || '/'
   const isActive = pathWithoutLocale === hrefWithoutLocale
-  
+
   return (
     <Link
       href={href}
       className={`block px-4 py-3 text-base font-medium rounded-xl transition-all duration-300
-        ${isActive 
-          ? 'text-lumora-cream bg-lumora-dark-700/90 border border-lumora-cream/20 shadow-inner-soft' 
+        ${isActive
+          ? 'text-lumora-cream bg-lumora-dark-700/90 border border-lumora-cream/20 shadow-inner-soft'
           : 'text-lumora-cream/70 hover:text-lumora-cream hover:bg-lumora-dark-700/70'
         }`}
       onClick={onClick}
@@ -545,10 +485,10 @@ function MobileNavLink({ href, label, onClick }: MobileNavLinkProps) {
       <div className="flex items-center">
         {label}
         {isActive && (
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-5 w-5 ml-2 text-lumora-cream" 
-            viewBox="0 0 20 20" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 ml-2 text-lumora-cream"
+            viewBox="0 0 20 20"
             fill="currentColor"
           >
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

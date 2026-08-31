@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
-import { unstable_setRequestLocale } from 'next-intl/server'
+import Link from 'next/link'
+import { localizePathForLocale } from '@/lib/url-localizations'
 
 interface PrivacyPageProps {
   params: Promise<{
@@ -14,7 +14,7 @@ export async function generateMetadata(props: PrivacyPageProps): Promise<Metadat
 
   const titles = {
     nl: 'Privacybeleid | Lumora Horticulture',
-    en: 'Privacy Policy | Lumora Horticulture', 
+    en: 'Privacy Policy | Lumora Horticulture',
     de: 'Datenschutz | Lumora Horticulture'
   }
 
@@ -24,16 +24,27 @@ export async function generateMetadata(props: PrivacyPageProps): Promise<Metadat
     de: 'Datenschutzrichtlinien von Lumora Horticulture. Wie wir Ihre persönlichen Daten sammeln, verwenden und schützen.'
   }
 
+  const localizedUrls = {
+    nl: `https://lumorahorticulture.nl${localizePathForLocale('/privacy', 'nl')}`,
+    en: `https://lumorahorticulture.nl${localizePathForLocale('/privacy', 'en')}`,
+    de: `https://lumorahorticulture.nl${localizePathForLocale('/privacy', 'de')}`,
+  }
+  const canonical =
+    localizedUrls[locale as keyof typeof localizedUrls] || localizedUrls.nl
+
   return {
     title: titles[locale as keyof typeof titles] || titles.nl,
     description: descriptions[locale as keyof typeof descriptions] || descriptions.nl,
+    alternates: {
+      canonical,
+      languages: {...localizedUrls, 'x-default': localizedUrls.nl},
+    },
   }
 }
 
 export default async function PrivacyPage(props: PrivacyPageProps) {
   const params = await props.params;
   const { locale } = params
-  unstable_setRequestLocale(locale)
 
   const content = {
     nl: {
@@ -46,7 +57,7 @@ export default async function PrivacyPage(props: PrivacyPageProps) {
         },
         {
           title: '2. Contactgegevens',
-          content: 'Lumora Horticulture B.V.\nE-mail: info@lumorahorticulture.com\nWebsite: www.lumorahorticulture.nl'
+          content: 'Lumora Horticulture B.V.\nE-mail: info@lumorahorticulture.com\nWebsite: lumorahorticulture.nl'
         },
         {
           title: '3. Welke gegevens verzamelen wij?',
@@ -84,7 +95,7 @@ export default async function PrivacyPage(props: PrivacyPageProps) {
         },
         {
           title: '2. Contact Details',
-          content: 'Lumora Horticulture B.V.\nEmail: info@lumorahorticulture.com\nWebsite: www.lumorahorticulture.com'
+          content: 'Lumora Horticulture B.V.\nEmail: info@lumorahorticulture.com\nWebsite: lumorahorticulture.nl/en'
         },
         {
           title: '3. What data do we collect?',
@@ -122,7 +133,7 @@ export default async function PrivacyPage(props: PrivacyPageProps) {
         },
         {
           title: '2. Kontaktdaten',
-          content: 'Lumora Horticulture B.V.\nE-Mail: info@lumorahorticulture.com\nWebsite: www.lumorahorticulture.de'
+          content: 'Lumora Horticulture B.V.\nE-Mail: info@lumorahorticulture.com\nWebsite: lumorahorticulture.nl/de'
         },
         {
           title: '3. Welche Daten sammeln wir?',
@@ -181,23 +192,23 @@ export default async function PrivacyPage(props: PrivacyPageProps) {
 
         <div className="mt-16 p-6 bg-lumora-cream/20 rounded-xl border border-lumora-gold/20">
           <h3 className="text-xl font-semibold text-lumora-dark mb-3">
-            {locale === 'nl' ? 'Vragen over uw privacy?' : 
-             locale === 'en' ? 'Questions about your privacy?' : 
+            {locale === 'nl' ? 'Vragen over uw privacy?' :
+             locale === 'en' ? 'Questions about your privacy?' :
              'Fragen zu Ihrem Datenschutz?'}
           </h3>
           <p className="text-lumora-dark/80 mb-4">
-            {locale === 'nl' ? 'Neem contact met ons op als u vragen heeft over dit privacybeleid.' : 
-             locale === 'en' ? 'Contact us if you have questions about this privacy policy.' : 
+            {locale === 'nl' ? 'Neem contact met ons op als u vragen heeft over dit privacybeleid.' :
+             locale === 'en' ? 'Contact us if you have questions about this privacy policy.' :
              'Kontaktieren Sie uns, wenn Sie Fragen zu dieser Datenschutzerklärung haben.'}
           </p>
-          <a 
-            href="/contact" 
+          <Link
+            href={localizePathForLocale('/contact', locale)}
             className="inline-flex items-center bg-lumora-dark text-lumora-cream px-6 py-3 rounded-lg hover:bg-lumora-dark/90 transition-colors duration-300"
           >
-            {locale === 'nl' ? 'Contact opnemen' : 
-             locale === 'en' ? 'Contact us' : 
+            {locale === 'nl' ? 'Contact opnemen' :
+             locale === 'en' ? 'Contact us' :
              'Kontakt aufnehmen'}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -202,8 +202,8 @@ const content: Record<string, PageContent> = {
       articles: [
         { title: 'Wat zijn Paper Plug Trays? Complete introductie', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
         { title: 'FP 12+ Technologie: 12 maanden stabiliteit', href: '/propagatie-technologie/fp-12-technologie' },
-        { title: 'Wortelontwikkeling optimaliseren in paper plugs', href: '/propagatie-technologie/wortelontwikkeling' },
-        { title: 'ROI berekenen voor paper plug investeringen', href: '/seo/efficientie-roi/roi-berekenen' },
+        { title: 'Wortelontwikkeling optimaliseren in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'ROI berekenen voor paper plug investeringen', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'PAPER PLUG TRAY 84 specificaties', href: '/products' }
       ]
     },
@@ -349,10 +349,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles for vegetable growers',
       articles: [
-        { title: 'What are Paper Plug Trays? Complete introduction', href: '/seo/propagation-technology/what-are-paper-plug-trays' },
-        { title: 'FP 12+ Technology: 12 months stability', href: '/seo/propagation-technology/fp-12-technology' },
-        { title: 'Optimize root development in paper plugs', href: '/seo/propagation-technology/root-development' },
-        { title: 'Calculate ROI for paper plug investments', href: '/seo/efficiency-roi/calculate-roi' },
+        { title: 'What are Paper Plug Trays? Complete introduction', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'FP 12+ Technology: 12 months stability', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'Optimize root development in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'Calculate ROI for paper plug investments', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'PAPER PLUG TRAY 84 specifications', href: '/products' }
       ]
     },
@@ -498,10 +498,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel für Gemüsezüchter',
       articles: [
-        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/seo/vermehrungstechnologie/was-sind-paper-plug-trays' },
-        { title: 'FP 12+ Technologie: 12 Monate Stabilität', href: '/seo/vermehrungstechnologie/fp-12-technologie' },
-        { title: 'Wurzelentwicklung in Paper Plugs optimieren', href: '/seo/vermehrungstechnologie/wurzelentwicklung' },
-        { title: 'ROI für Paper Plug Investitionen berechnen', href: '/seo/effizienz-roi/roi-berechnen' },
+        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'FP 12+ Technologie: 12 Monate Stabilität', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'Wurzelentwicklung in Paper Plugs optimieren', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'ROI für Paper Plug Investitionen berechnen', href: '/efficiëntie-roi/roi-berekenen' },
         { title: 'PAPER PLUG TRAY 84 Spezifikationen', href: '/products' }
       ]
     },
@@ -536,7 +536,7 @@ export default function PaperPlugsGroenteteeltClient({ locale }: { locale: strin
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -743,7 +743,7 @@ export default function PaperPlugsGroenteteeltClient({ locale }: { locale: strin
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">

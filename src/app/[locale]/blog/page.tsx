@@ -1,16 +1,37 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import { generatePageMetadata } from '@/lib/metadata'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import Link from 'next/link'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import { localizePathForLocale } from '@/lib/url-localizations'
+
+export const dynamic = 'force-dynamic'
+
+const BLOG_LOCALES = ['nl', 'de'] as const
+type BlogLocale = (typeof BLOG_LOCALES)[number]
+
+function isBlogLocale(locale: string): locale is BlogLocale {
+  return BLOG_LOCALES.includes(locale as BlogLocale)
+}
+
+function hasGermanTranslation(post: {
+  title_de?: string
+  content_de?: string
+}): boolean {
+  return Boolean(post.title_de?.trim() && post.content_de?.trim())
+}
 
 export function generateStaticParams() {
-  return [{ locale: 'nl' }, { locale: 'de' }]
+  return BLOG_LOCALES.map((locale) => ({ locale }))
 }
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
+  if (!isBlogLocale(params.locale)) {
+    notFound()
+  }
+
   const meta = {
     nl: {
       title: 'Blog - Kennis over Tuinbouw & Kweektechnieken',
@@ -38,14 +59,15 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     },
   }
 
-  const localeMeta = meta[params.locale as keyof typeof meta] || meta.nl
+  const localeMeta = meta[params.locale]
 
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: '/blog/',
+    path: '/blog',
+    availableLocales: BLOG_LOCALES,
   })
 }
 
@@ -71,10 +93,18 @@ export default async function BlogListingPage(
   }
 ) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
   const locale = params.locale
+  if (!isBlogLocale(locale)) {
+    notFound()
+  }
 
-  const posts = await fetchQuery(api.blogPosts.listPublished, {})
+  const publishedPosts = await fetchQuery(api.blogPosts.listPublished, {}).catch((error) => {
+    console.error('Unable to load blog posts from Convex:', error)
+    return []
+  })
+  const posts = locale === 'de'
+    ? publishedPosts.filter(hasGermanTranslation)
+    : publishedPosts
 
   const subtitle =
     locale === 'de'
@@ -101,16 +131,16 @@ export default async function BlogListingPage(
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => {
               const title =
-                locale === 'de' && post.title_de ? post.title_de : post.title_nl
+                locale === 'de' ? post.title_de! : post.title_nl
               const excerpt =
-                locale === 'de' && post.excerpt_de ? post.excerpt_de : post.excerpt_nl
+                locale === 'de' ? post.excerpt_de || '' : post.excerpt_nl
               const categoryLabel =
                 categoryLabels[post.category]?.[locale] || post.category
 
               return (
                 <Link
                   key={post._id}
-                  href={`/${locale}/blog/${post.slug}`}
+                  href={localizePathForLocale(`/blog/${post.slug}`, locale)}
                   className="group flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
                 >
                   {post.featured_image && (

@@ -138,9 +138,6 @@ const content: Record<string, PageContent> = {
       title: 'Gerelateerde artikelen',
       articles: [
         { title: 'ROI berekenen: Wanneer betaalt investering zich terug?', href: '/efficiëntie-roi/roi-berekenen' },
-        { title: 'Schaalbaarheid: Paper plugs voor grote kwekerijen (100k+)', href: '/efficiëntie-roi/schaalbaarheid-grote-kwekerijen' },
-        { title: 'Ruimtebesparende kweek: Meer planten per m²', href: '/efficiëntie-roi/ruimtebesparende-kweek' },
-        { title: 'Case study: Duitse boomkwekerij bespaart 40% arbeid', href: '/case-studies/duitse-boomkwekerij' },
         { title: 'Transplantatieschok voorkomen: Best practices', href: '/troubleshooting/transplantatieschok-voorkomen' }
       ]
     },
@@ -269,11 +266,8 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles',
       articles: [
-        { title: 'Calculate ROI: When does investment pay back?', href: '/seo/efficiency-roi/calculate-roi' },
-        { title: 'Scalability: Paper plugs for large nurseries (100k+)', href: '/seo/efficiency-roi/scalability-large-nurseries' },
-        { title: 'Space-saving growing: More plants per m²', href: '/seo/efficiency-roi/space-saving-growing' },
-        { title: 'Case study: German tree nursery saves 40% labor', href: '/case-studies/german-tree-nursery' },
-        { title: 'Prevent transplant shock: Best practices', href: '/troubleshooting/prevent-transplant-shock' }
+        { title: 'Calculate ROI: When does investment pay back?', href: '/efficiëntie-roi/roi-berekenen' },
+        { title: 'Prevent transplant shock: Best practices', href: '/troubleshooting/transplantatieschok-voorkomen' }
       ]
     },
     finalCta: {
@@ -401,11 +395,8 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel',
       articles: [
-        { title: 'ROI berechnen: Wann amortisiert sich die Investition?', href: '/seo/effizienz-roi/roi-berechnen' },
-        { title: 'Skalierbarkeit: Paper Plugs für große Gärtnereien (100k+)', href: '/seo/effizienz-roi/skalierbarkeit-grosse-gaertnereien' },
-        { title: 'Platzsparender Anbau: Mehr Pflanzen pro m²', href: '/seo/effizienz-roi/platzsparender-anbau' },
-        { title: 'Fallstudie: Deutsche Baumschule spart 40% Arbeit', href: '/seo/fallstudien/deutsche-baumschule' },
-        { title: 'Transplantationsschock vermeiden: Best Practices', href: '/seo/problemloesung/transplantationsschock-vermeiden' }
+        { title: 'ROI berechnen: Wann amortisiert sich die Investition?', href: '/efficiëntie-roi/roi-berekenen' },
+        { title: 'Transplantationsschock vermeiden: Best Practices', href: '/troubleshooting/transplantatieschok-voorkomen' }
       ]
     },
     finalCta: {
@@ -430,7 +421,7 @@ export default function ArbeidsbesparingClient({ locale }: { locale: string }) {
             headline: t.hero.title,
             description: t.intro.content[0],
             author: { '@type': 'Organization', name: 'Lumora Horticulture' },
-            publisher: { '@type': 'Organization', name: 'Lumora Horticulture', logo: { '@type': 'ImageObject', url: 'https://lumorahorticulture.com/logo.png' } },
+            publisher: { '@type': 'Organization', name: 'Lumora Horticulture', logo: { '@type': 'ImageObject', url: 'https://lumorahorticulture.nl/logo.png' } },
             datePublished: '2025-01-01',
             dateModified: new Date().toISOString().split('T')[0]
           })
@@ -589,7 +580,7 @@ export default function ArbeidsbesparingClient({ locale }: { locale: string }) {
           <h2 className="font-display text-3xl md:text-4xl text-lumora-dark mb-8">{t.relatedArticles.title}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.relatedArticles.articles.map((article, i) => (
-              <Link key={i} href={article.href} className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group">
+              <Link key={i} href={localizePathForLocale(article.href, locale)} className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group">
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors mb-2">{article.title}</h3>
                 <span className="inline-flex items-center text-lumora-green-500 mt-3 group-hover:translate-x-1 transition-transform">
                   {locale === 'nl' ? 'Lees meer' : locale === 'de' ? 'Mehr lesen' : 'Read more'}

@@ -1,5 +1,13 @@
 import Script from 'next/script'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
+import { localizePathForLocale } from '@/lib/url-localizations'
+
+const SITE_ORIGIN = 'https://lumorahorticulture.nl'
+const PRICE_VALID_UNTIL = `${new Date().getUTCFullYear() + 1}-12-31`
+
+function siteUrl(locale: string, path = '/'): string {
+  return `${SITE_ORIGIN}${localizePathForLocale(path, locale)}`
+}
 
 interface OrganizationSchemaProps {
   locale: string
@@ -11,14 +19,14 @@ export function OrganizationSchema({ locale }: OrganizationSchemaProps) {
     "@type": "Organization",
     "@id": "https://lumorahorticulture.nl/#organization",
     "name": "Lumora Horticulture",
-    "url": locale === 'nl' ? "https://lumorahorticulture.nl" : locale === 'de' ? "https://lumorahorticulture.de" : "https://lumorahorticulture.com",
+    "url": siteUrl(locale),
     "logo": {
       "@type": "ImageObject",
       "url": "https://lumorahorticulture.nl/logo/lumura-horticulture-logo.jpeg",
       "width": "1200",
       "height": "630"
     },
-    "description": locale === 'nl' 
+    "description": locale === 'nl'
       ? "B2B leverancier van steenwol pluggen, kweektrays en tuinbouw verpakkingen. Eigen productie voor professionele kwekers."
       : locale === 'de'
       ? "B2B-Lieferant von Steinwollsteckern, Anzuchtschalen und Gartenbauverpackungen. Eigene Produktion für professionelle Züchter."
@@ -27,11 +35,7 @@ export function OrganizationSchema({ locale }: OrganizationSchemaProps) {
       "@type": "PostalAddress",
       "addressCountry": "NL"
     },
-    "sameAs": [
-      "https://lumorahorticulture.nl",
-      "https://lumorahorticulture.com",
-      "https://lumorahorticulture.de"
-    ],
+    "sameAs": [SITE_ORIGIN],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "sales",
@@ -85,7 +89,7 @@ export function ProductSchema({ product, locale }: ProductSchemaProps) {
     "price": product.price || 0,
     "availability": "https://schema.org/InStock",
     "url": typeof window !== 'undefined' ? window.location.href : '',
-    "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+    "priceValidUntil": PRICE_VALID_UNTIL,
     "seller": {
       "@type": "Organization",
       "name": "Lumora Horticulture"
@@ -183,7 +187,7 @@ export function ShopProductSchema({ product, locale, url, volumeTiers }: ShopPro
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
         url,
-        priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
+        priceValidUntil: PRICE_VALID_UNTIL,
         seller: { "@type": "Organization", name: "Lumora Horticulture" },
       }
 
@@ -194,7 +198,7 @@ export function ShopProductSchema({ product, locale, url, volumeTiers }: ShopPro
     description,
     image: product.image_url && product.image_url.startsWith("http")
       ? product.image_url
-      : `https://lumorahorticulture.com${product.image_url ?? ""}`,
+      : `${SITE_ORIGIN}${product.image_url ?? ""}`,
     sku: product.sku ?? product.slug,
     brand: { "@type": "Brand", name: product.brand ?? "Lumora Horticulture" },
     manufacturer: { "@type": "Organization", name: "Lumora Horticulture" },
@@ -272,12 +276,12 @@ export function LocalBusinessSchema({ locale }: LocalBusinessSchemaProps) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Lumora Horticulture",
-    "description": locale === 'nl' 
+    "description": locale === 'nl'
       ? "Fabrikant en leverancier van professionele tuinbouw producten"
       : locale === 'de'
       ? "Hersteller und Lieferant von professionellen Gartenbau-Produkten"
       : "Manufacturer and supplier of professional horticultural products",
-    "url": locale === 'nl' ? "https://lumorahorticulture.nl" : locale === 'de' ? "https://lumorahorticulture.de" : "https://lumorahorticulture.com",
+    "url": siteUrl(locale),
     "telephone": "",
     "email": "info@lumorahorticulture.nl",
     "address": {

@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import BiologischAfbreekbaarClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -66,25 +65,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/propagatie-technologie/biologisch-afbreekbaar',
-    en: '/seo/propagation-technology/biodegradable-solutions',
-    de: '/seo/vermehrungstechnologie/biologisch-abbaubar'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/propagatie-technologie/biologisch-afbreekbaar'
   })
 }
 
 // SEO Landing page - Pillar 1, Subpillar 3
 export default async function BiologischAfbreekbaarPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <BiologischAfbreekbaarClient locale={params.locale} />
 }

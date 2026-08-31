@@ -70,7 +70,7 @@ export default function Hero({ ctaTargetId }: Props) {
               alt="NEEMX PRO 2+1 GRATIS — drie flesjes met tijdelijke actie banner"
               width={1200}
               height={1200}
-              priority
+              preload
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="w-full h-auto rounded-2xl shadow-2xl"
             />

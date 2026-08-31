@@ -9,8 +9,8 @@ import { BreadcrumbSchema, OrganizationSchema } from '@/components/StructuredDat
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
@@ -36,11 +36,11 @@ export default function AboutClient({ t, locale }: AboutClientProps) {
   const breadcrumbItems = [
     {
       name: locale === 'nl' ? 'Home' : locale === 'de' ? 'Startseite' : 'Home',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.de' : 'https://lumorahorticulture.com'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl' : locale === 'de' ? 'https://lumorahorticulture.nl/de' : 'https://lumorahorticulture.nl/en'
     },
     {
       name: locale === 'nl' ? 'Over Ons' : locale === 'de' ? 'Über Uns' : 'About Us',
-      url: locale === 'nl' ? 'https://lumorahorticulture.nl/over-ons/' : locale === 'de' ? 'https://lumorahorticulture.de/uber-uns/' : 'https://lumorahorticulture.com/about/'
+      url: locale === 'nl' ? 'https://lumorahorticulture.nl/over-ons/' : locale === 'de' ? 'https://lumorahorticulture.nl/de/uber-uns/' : 'https://lumorahorticulture.nl/en/about/'
     }
   ]
 
@@ -49,7 +49,7 @@ export default function AboutClient({ t, locale }: AboutClientProps) {
       {/* Structured data */}
       <BreadcrumbSchema items={breadcrumbItems} />
       <OrganizationSchema locale={locale} />
-      
+
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-lumora-cream/20 to-transparent"></div>
@@ -60,7 +60,7 @@ export default function AboutClient({ t, locale }: AboutClientProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
         {/* Header */}
         <PageHeader t={t} />
-        
+
         {/* Content sections */}
         <div className="mt-12 md:mt-20 space-y-16 md:space-y-24">
           <IntroSection t={t} />
@@ -81,16 +81,16 @@ function PageHeader({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="max-w-4xl mx-auto text-center"
     >
-      <motion.span 
+      <motion.span
         className="inline-block text-lumora-dark mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-cream/60 border border-lumora-cream"
       >
         {t.title?.tag}
@@ -111,9 +111,9 @@ function IntroSection({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={staggerContainer}
       initial="hidden"
@@ -138,9 +138,9 @@ function OurStorySection({ t, locale }: { t: any; locale: string }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={staggerContainer}
       initial="hidden"
@@ -155,7 +155,7 @@ function OurStorySection({ t, locale }: { t: any; locale: string }) {
           {t.ourStory?.description}
         </p>
       </motion.div>
-      
+
       <motion.div variants={fadeIn} className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-soft-lg">
         <Image
           src="/images/greenhouse-1.jpg"
@@ -175,9 +175,9 @@ function ProductionSection({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={staggerContainer}
       initial="hidden"
@@ -192,13 +192,13 @@ function ProductionSection({ t }: { t: any }) {
           {t.production?.description}
         </p>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         variants={staggerContainer}
         className="grid md:grid-cols-2 gap-4 md:gap-6 mt-8"
       >
         {t.production?.features?.map((feature: string, index: number) => (
-          <motion.div 
+          <motion.div
             key={index}
             variants={fadeIn}
             className="flex items-start bg-white rounded-xl p-4 shadow-soft"
@@ -222,24 +222,24 @@ function WhyUsSection({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={staggerContainer}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
     >
-      <motion.h2 
+      <motion.h2
         variants={fadeIn}
         className="font-display text-2xl md:text-3xl font-bold text-lumora-dark mb-8 md:mb-12 text-center"
       >
         {t.whyUs?.title}
       </motion.h2>
-      
+
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {t.whyUs?.reasons?.map((reason: any, index: number) => (
-          <motion.div 
+          <motion.div
             key={index}
             variants={fadeIn}
             className="bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition-shadow duration-300"
@@ -262,9 +262,9 @@ function CertificationsSection({ t }: { t: any }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={fadeIn}
       initial="hidden"
@@ -287,9 +287,9 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.section 
+    <motion.section
       ref={ref}
       variants={fadeIn}
       initial="hidden"
@@ -303,15 +303,15 @@ function ContactCTA({ t, locale }: { t: any, locale: string }) {
         <p className="text-lumora-dark/80 mb-8 max-w-2xl mx-auto">
           {t.cta?.description}
         </p>
-        <Link 
+        <Link
           href={locale === 'nl' ? '/contact' : locale === 'de' ? '/kontakt' : '/contact'}
-          className="inline-flex items-center justify-center bg-lumora-dark text-white 
-                  hover:bg-lumora-dark-800 px-8 py-4 rounded-xl shadow-soft 
-                  hover:shadow-soft-md transition-all duration-300 
+          className="inline-flex items-center justify-center bg-lumora-dark text-white
+                  hover:bg-lumora-dark-800 px-8 py-4 rounded-xl shadow-soft
+                  hover:shadow-soft-md transition-all duration-300
                   font-medium text-lg group"
         >
           <span>{t.cta?.button}</span>
-          <svg className="ml-2 -mr-1 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+          <svg className="ml-2 -mr-1 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>

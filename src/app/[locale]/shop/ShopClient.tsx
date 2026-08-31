@@ -34,8 +34,7 @@ export default function ShopClient({ locale }: ShopClientProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Domain for structured data
-  const domain = locale === 'de' ? 'lumorahorticulture.de' : locale === 'en' ? 'lumorahorticulture.com' : 'lumorahorticulture.nl';
+  const siteOrigin = 'https://lumorahorticulture.nl';
 
   // Translations
   const t = {
@@ -88,8 +87,8 @@ export default function ShopClient({ locale }: ShopClientProps) {
         '@type': 'Product',
         name: product.name,
         description: product.description,
-        image: `https://${domain}${product.image_url}`,
-        url: `https://${domain}/${locale === 'nl' ? 'winkel' : 'shop'}/${product.slug}`,
+        image: `${siteOrigin}${product.image_url}`,
+        url: `${siteOrigin}${localizePathForLocale(`/shop/${product.slug}`, locale)}`,
         brand: {
           '@type': 'Brand',
           name: product.brand || 'Lumora',
@@ -114,13 +113,13 @@ export default function ShopClient({ locale }: ShopClientProps) {
         '@type': 'ListItem',
         position: 1,
         name: t.home,
-        item: `https://${domain}/`,
+        item: `${siteOrigin}${localizePathForLocale('/', locale)}`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: t.shop,
-        item: `https://${domain}/${locale === 'nl' ? 'winkel' : 'shop'}`,
+        item: `${siteOrigin}${localizePathForLocale('/shop', locale)}`,
       },
     ],
   };

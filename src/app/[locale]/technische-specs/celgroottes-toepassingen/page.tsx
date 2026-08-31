@@ -146,7 +146,9 @@ const cellSizes: CellSize[] = [
   }
 ];
 
-const CellSizeComparison = () => {
+const CellSizeComparison = async (props: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await props.params;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-lumora-cream via-white to-lumora-cream/30">
       {/* Hero Section */}
@@ -677,13 +679,13 @@ const CellSizeComparison = () => {
 
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href={localizePathForLocale('/shop/paper-plug-tray-84', 'nl')}
+                href={localizePathForLocale('/shop/paper-plug-tray-84', locale)}
                 className="inline-block bg-white text-lumora-green-600 px-8 py-4 rounded-xl font-bold hover:bg-lumora-cream transition-all duration-300 shadow-soft-lg hover:shadow-soft-xl"
               >
                 84 Cellen Tray →
               </Link>
               <Link
-                href={localizePathForLocale('/shop/paper-plug-tray-104', 'nl')}
+                href={localizePathForLocale('/shop/paper-plug-tray-104', locale)}
                 className="inline-block bg-lumora-dark text-white px-8 py-4 rounded-xl font-bold hover:bg-lumora-dark/90 transition-all duration-300 shadow-soft-lg hover:shadow-soft-xl"
               >
                 104 Cellen Tray →
@@ -707,7 +709,7 @@ const CellSizeComparison = () => {
 
             <div className="grid md:grid-cols-3 gap-6">
               <Link
-                href={localizePathForLocale('/technische-specs/84-vs-104-vergelijking', 'nl')}
+                href={localizePathForLocale('/technische-specs/84-vs-104-vergelijking', locale)}
                 className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
               >
                 <h4 className="font-bold text-lumora-dark mb-2">84 vs 104 Cellen: Welke Kiezen?</h4>
@@ -716,16 +718,7 @@ const CellSizeComparison = () => {
               </Link>
 
               <Link
-                href={localizePathForLocale('/seo/voordelen/biologische-certificering', 'nl')}
-                className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
-              >
-                <h4 className="font-bold text-lumora-dark mb-2">Biologische Certificering</h4>
-                <p className="text-gray-600 text-sm mb-3">Waarom biologische paper plugs kiezen?</p>
-                <span className="text-lumora-green-600 text-sm font-semibold">Lees meer →</span>
-              </Link>
-
-              <Link
-                href={localizePathForLocale('/products', 'nl')}
+                href={localizePathForLocale('/products', locale)}
                 className="block bg-lumora-cream/30 p-6 rounded-xl hover:shadow-soft transition-all duration-300"
               >
                 <h4 className="font-bold text-lumora-dark mb-2">Alle Paper Plug Producten</h4>

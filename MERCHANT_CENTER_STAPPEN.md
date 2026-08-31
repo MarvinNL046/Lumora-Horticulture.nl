@@ -35,12 +35,12 @@ https://lumorahorticulture.nl/api/feed/google-shopping?locale=nl
 
 **Voor Engelse producten:**
 ```
-https://lumorahorticulture.com/api/feed/google-shopping?locale=en
+https://lumorahorticulture.nl/api/feed/google-shopping?locale=en
 ```
 
 **Voor Duitse producten:**
 ```
-https://lumorahorticulture.de/api/feed/google-shopping?locale=de
+https://lumorahorticulture.nl/api/feed/google-shopping?locale=de
 ```
 
 ---

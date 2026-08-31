@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import HomeClient from '@/app/[locale]/HomeClient'
 import { generatePageMetadata } from '@/lib/metadata'
@@ -54,7 +53,6 @@ export default async function Home(props: { params: Promise<{ locale: string }> 
   }
 
   // This is needed for internationalization to work properly
-  unstable_setRequestLocale(params.locale)
 
   // Load messages manually for static export
   const messages = (await import(`../../messages/${params.locale}/common.json`)).default

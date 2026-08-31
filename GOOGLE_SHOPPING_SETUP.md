@@ -11,12 +11,12 @@ https://lumorahorticulture.nl/api/feed/google-shopping?locale=nl
 
 ### **English (EN)**
 ```
-https://lumorahorticulture.com/api/feed/google-shopping?locale=en
+https://lumorahorticulture.nl/api/feed/google-shopping?locale=en
 ```
 
 ### **Deutsch (DE)**
 ```
-https://lumorahorticulture.de/api/feed/google-shopping?locale=de
+https://lumorahorticulture.nl/api/feed/google-shopping?locale=de
 ```
 
 ---

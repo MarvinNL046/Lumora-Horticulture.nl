@@ -10,8 +10,8 @@ import { Tab } from '@headlessui/react'
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any }
   }
@@ -29,7 +29,7 @@ const staggerContainer = {
 
 const shimmer = {
   hidden: { backgroundPosition: '200% 0' },
-  visible: { 
+  visible: {
     backgroundPosition: '-200% 0',
     transition: {
       repeat: Infinity,
@@ -53,7 +53,7 @@ export default function ProductsPage() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <ProductsHeader />
-        
+
         <section className="mt-16 md:mt-24 space-y-32">
           <ProductDetail
             id="tray84"
@@ -94,7 +94,7 @@ export default function ProductsPage() {
               { label: "Materiaal type", value: "PS" }
             ]}
           />
-          
+
           <ProductDetail
             id="transportbox"
             title="Transportdoos (Vouwdoos)"
@@ -106,7 +106,7 @@ export default function ProductsPage() {
             ]}
             badges={["Duurzaam", "Efficiënt", "Stapelbaar"]}
           />
-          
+
           <ProductDetail
             id="insertsheets-ldpe"
             title="Inlegvellen 60x80cm LDPE"
@@ -128,7 +128,7 @@ export default function ProductsPage() {
             badges={["Transparant", "Stevig", "HDPE"]}
           />
         </section>
-        
+
         <ContactCTA />
       </div>
     </div>
@@ -141,16 +141,16 @@ function ProductsHeader() {
     threshold: 0.1,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="max-w-4xl mx-auto text-center"
     >
-      <motion.span 
+      <motion.span
         className="inline-block text-lumora-green-600 mb-3 font-medium px-4 py-1.5 rounded-full bg-lumora-green-50 border border-lumora-green-100"
       >
         Producten
@@ -184,12 +184,12 @@ interface ProductDetailProps {
 }
 
 // Product detail component with animations
-function ProductDetail({ 
-  id, 
-  title, 
+function ProductDetail({
+  id,
+  title,
   subtitle,
-  description, 
-  imageSrc, 
+  description,
+  imageSrc,
   imagePosition = "left",
   specs = [],
   showSpecs = true,
@@ -199,11 +199,11 @@ function ProductDetail({
     threshold: 0.15,
     triggerOnce: true
   })
-  
+
   const [activeTab, setActiveTab] = useState(0)
-  
+
   return (
-    <motion.div 
+    <motion.div
       id={id}
       ref={ref}
       variants={fadeIn}
@@ -223,15 +223,15 @@ function ProductDetail({
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                priority={id === "tray84"}
+                preload={id === "tray84"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl opacity-60"></div>
-              
+
               {/* Product badges */}
               {badges.length > 0 && (
                 <div className="absolute bottom-6 left-6 flex flex-wrap gap-2">
                   {badges.map((badge, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="inline-block text-white text-sm font-medium px-3 py-1 rounded-full bg-lumora-green-600/80 backdrop-blur-sm"
                     >
@@ -243,7 +243,7 @@ function ProductDetail({
             </div>
           </div>
         </div>
-        
+
         {/* Product Info */}
         <div className="lg:w-1/2">
           <motion.div
@@ -263,11 +263,11 @@ function ProductDetail({
                 {subtitle}
               </p>
             </motion.div>
-            
+
             <motion.p variants={fadeIn} className="text-gray-600 leading-relaxed">
               {description}
             </motion.p>
-            
+
             {showSpecs && (
               <motion.div variants={fadeIn} className="mt-8">
                 <Tab.Group onChange={setActiveTab}>
@@ -294,7 +294,7 @@ function ProductDetail({
                   <Tab.Panels>
                     <Tab.Panel>
                       <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
-                        <motion.table 
+                        <motion.table
                           className="min-w-full"
                           variants={staggerContainer}
                           initial="hidden"
@@ -302,7 +302,7 @@ function ProductDetail({
                         >
                           <tbody>
                             {specs.map((spec, index) => (
-                              <motion.tr 
+                              <motion.tr
                                 key={index}
                                 variants={fadeIn}
                                 className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
@@ -321,7 +321,7 @@ function ProductDetail({
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="overflow-hidden rounded-2xl bg-white shadow-soft p-6">
-                        <motion.ul 
+                        <motion.ul
                           className="space-y-4"
                           variants={staggerContainer}
                           initial="hidden"
@@ -366,18 +366,18 @@ function ProductDetail({
                 </Tab.Group>
               </motion.div>
             )}
-            
+
             <motion.div variants={fadeIn} className="pt-6">
               <Link
                 href={`/contact?product=${encodeURIComponent(title)}`}
                 className="inline-flex items-center text-lumora-green-600 font-medium hover:text-lumora-green-700 transition-all duration-300 group"
               >
                 <span>Offerte aanvragen</span>
-                <svg 
+                <svg
                   className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -397,9 +397,9 @@ function ContactCTA() {
     threshold: 0.2,
     triggerOnce: true
   })
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={fadeIn}
       initial="hidden"
@@ -413,9 +413,9 @@ function ContactCTA() {
         <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-lumora-green-500/30 mix-blend-overlay blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-lumora-green-400/20 mix-blend-overlay blur-3xl"></div>
       </div>
-      
+
       <div className="glass-dark rounded-3xl p-8 md:p-16 shadow-soft-lg backdrop-blur-md relative">
-        <motion.div 
+        <motion.div
           className="max-w-3xl mx-auto text-center"
           variants={staggerContainer}
           initial="hidden"
@@ -425,15 +425,15 @@ function ContactCTA() {
             Neem contact met ons op
           </motion.h3>
           <motion.p variants={fadeIn} className="text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Heeft u vragen over onze producten of wilt u een bestelling plaatsen? 
+            Heeft u vragen over onze producten of wilt u een bestelling plaatsen?
             Wij helpen u graag verder met persoonlijk advies.
           </motion.p>
           <motion.div variants={fadeIn}>
-            <Link 
-              href="/contact" 
-              className="inline-flex items-center justify-center bg-white text-lumora-green-700 
-                      hover:bg-lumora-green-50 px-8 py-4 rounded-xl shadow-soft 
-                      hover:shadow-soft-md transition-all duration-300 
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center bg-white text-lumora-green-700
+                      hover:bg-lumora-green-50 px-8 py-4 rounded-xl shadow-soft
+                      hover:shadow-soft-md transition-all duration-300
                       font-medium text-lg group"
             >
               <span>Contact opnemen</span>

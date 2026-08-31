@@ -168,9 +168,10 @@ export function CartProvider({ children }: { children: React.ReactNode}) {
             customer_email: savedEmail,
             cart_data: items,
             total_amount: totalPrice,
-            locale: typeof window !== 'undefined' ?
-              (window.location.hostname.includes('.com') ? 'en' :
-               window.location.hostname.includes('.de') ? 'de' : 'nl') : 'nl',
+            locale:
+              typeof window !== 'undefined'
+                ? window.location.pathname.match(/^\/(en|de)(?=\/|$)/)?.[1] || 'nl'
+                : 'nl',
           }),
         });
 

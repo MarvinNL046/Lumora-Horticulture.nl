@@ -18,12 +18,7 @@ export async function GET(request: NextRequest) {
     const locale = (request.nextUrl.searchParams.get('locale') || 'nl').toLowerCase();
     const products = await convex.query(api.products.list, { locale });
 
-    const domains: Record<string, string> = {
-      nl: 'https://lumorahorticulture.nl',
-      en: 'https://lumorahorticulture.com',
-      de: 'https://lumorahorticulture.de',
-    };
-    const domain = domains[locale] || domains.nl;
+    const domain = 'https://lumorahorticulture.nl';
     const currency = 'EUR';
 
     const items = products
@@ -84,7 +79,7 @@ export async function GET(request: NextRequest) {
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
     <title>Lumora Horticulture — ${locale.toUpperCase()}</title>
-    <link>${domain}</link>
+    <link>${domain}${localizePathForLocale('/', locale)}</link>
     <description>Professional horticulture supplies — paper plug trays, rockwool plugs, NeemX Pro</description>
 ${items}
   </channel>

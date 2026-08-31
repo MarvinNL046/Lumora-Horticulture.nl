@@ -38,8 +38,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `https://lumorahorticulture.${locale === 'nl' ? 'nl' : locale === 'de' ? 'de' : 'com'}/case-studies/duitse-boomkwekerij-succes`,
       languages: {
         'nl': 'https://lumorahorticulture.nl/case-studies/duitse-boomkwekerij-succes',
-        'en': 'https://lumorahorticulture.com/case-studies/duitse-boomkwekerij-succes',
-        'de': 'https://lumorahorticulture.de/case-studies/duitse-boomkwekerij-succes'
+        'en': 'https://lumorahorticulture.nl/en/case-studies/duitse-boomkwekerij-succes',
+        'de': 'https://lumorahorticulture.nl/de/case-studies/duitse-boomkwekerij-succes'
       }
     }
   };

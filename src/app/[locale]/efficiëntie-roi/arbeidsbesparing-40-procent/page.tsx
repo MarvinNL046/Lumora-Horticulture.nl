@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
 import ArbeidsbesparingClient from './PageClient'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -66,25 +65,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   }
 
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
-  const localePaths = {
-    nl: '/efficiëntie-roi/arbeidsbesparing-40-procent',
-    en: '/seo/efficiency-roi/labor-savings-40-percent',
-    de: '/seo/effizienz-roi/arbeitsersparnis-40-prozent'
-  }
-
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
     keywords: localeMeta.keywords,
     locale: params.locale,
-    path: localePaths[params.locale as keyof typeof localePaths] || localePaths.nl
+    path: '/efficiëntie-roi/arbeidsbesparing-40-procent'
   })
 }
 
 // SEO Landing page - Pillar 3, Subpillar 2
 export default async function ArbeidsbesparingPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  unstable_setRequestLocale(params.locale)
 
   return <ArbeidsbesparingClient locale={params.locale} />
 }

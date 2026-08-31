@@ -290,10 +290,6 @@ const content: Record<string, PageContent> = {
       title: 'Gerelateerde artikelen',
       articles: [
         { title: '40% arbeidsbesparing met paper plugs: Hoe het werkt', href: '/efficiëntie-roi/arbeidsbesparing-40-procent' },
-        { title: 'Schaalbaarheid: Paper plugs voor grote kwekerijen (100k+ planten)', href: '/efficiëntie-roi/schaalbaarheid-grote-kwekerijen' },
-        { title: 'Paper vs Plastic Plug Trays: Complete vergelijking', href: '/propagatie-technologie/paper-vs-plastic' },
-        { title: 'Waterbesparing: 30% minder irrigatie met paper plugs', href: '/efficiëntie-roi/waterbesparing-30-procent' },
-        { title: 'Case study: Nederlandse tomatenkweker verhoogt opbrengst 25%', href: '/case-studies/nederlandse-tomatenkweker' }
       ]
     },
     finalCta: {
@@ -508,11 +504,7 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles',
       articles: [
-        { title: '40% labor savings with paper plugs: How it works', href: '/seo/efficiency-roi/labor-savings-40-percent' },
-        { title: 'Scalability: Paper plugs for large nurseries (100k+ plants)', href: '/seo/efficiency-roi/scalability-large-nurseries' },
-        { title: 'Paper vs Plastic Plug Trays: Complete comparison', href: '/seo/propagation-technology/paper-vs-plastic' },
-        { title: 'Water savings: 30% less irrigation with paper plugs', href: '/seo/efficiency-roi/water-savings-30-percent' },
-        { title: 'Case study: Dutch tomato grower increases yield 25%', href: '/case-studies/dutch-tomato-grower' }
+        { title: '40% labor savings with paper plugs: How it works', href: '/efficiëntie-roi/arbeidsbesparing-40-procent' },
       ]
     },
     finalCta: {
@@ -727,11 +719,7 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel',
       articles: [
-        { title: '40% Arbeitsersparnis mit Paper Plugs: Wie es funktioniert', href: '/seo/effizienz-roi/arbeitsersparnis-40-prozent' },
-        { title: 'Skalierbarkeit: Paper Plugs für große Gärtnereien (100k+ Pflanzen)', href: '/seo/effizienz-roi/skalierbarkeit-grosse-gaertnereien' },
-        { title: 'Paper vs. Kunststoff Plug Trays: Vollständiger Vergleich', href: '/seo/vermehrungstechnologie/papier-vs-kunststoff' },
-        { title: 'Wassereinsparung: 30% weniger Bewässerung mit Paper Plugs', href: '/seo/effizienz-roi/wassereinsparung-30-prozent' },
-        { title: 'Fallstudie: Niederländischer Tomatenzüchter steigert Ertrag 25%', href: '/seo/fallstudien/niederlaendischer-tomatenzuechter' }
+        { title: '40% Arbeitsersparnis mit Paper Plugs: Wie es funktioniert', href: '/efficiëntie-roi/arbeidsbesparing-40-procent' },
       ]
     },
     finalCta: {
@@ -765,7 +753,7 @@ export default function RoiBerekenenClient({ locale }: { locale: string }) {
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -1061,7 +1049,7 @@ export default function RoiBerekenenClient({ locale }: { locale: string }) {
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors mb-2">

@@ -1,9 +1,9 @@
+/* Import brand colors before Tailwind expands into CSS rules. */
+@import './brand-colors.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import brand colors */
-@import './brand-colors.css';
 
 /* Custom base styles */
 :root {

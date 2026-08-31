@@ -168,10 +168,9 @@ const content: Record<string, PageContent> = {
       title: 'Gerelateerde artikelen',
       articles: [
         { title: 'FP 12+ Technologie: 12 maanden stabiliteit uitgelegd', href: '/propagatie-technologie/fp-12-technologie' },
-        { title: 'Paper vs Plastic Plug Trays: Volledige vergelijking', href: '/propagatie-technologie/paper-vs-plastic' },
-        { title: 'Optimale wortelontwikkeling in paper plugs', href: '/propagatie-technologie/wortelontwikkeling' },
-        { title: 'Paper plugs voor groenteteelt: Complete gids', href: '/toepassingen/paper-plugs-groenteteelt' },
-        { title: 'ROI berekenen voor paper plug investeringen', href: '/seo/effici entie-roi/roi-berekenen' }
+        { title: 'Optimale wortelontwikkeling in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'Paper plugs voor groenteteelt: Complete gids', href: '/praktische-toepassingen/paper-plugs-groenteteelt' },
+        { title: 'ROI berekenen voor paper plug investeringen', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -290,11 +289,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles',
       articles: [
-        { title: 'FP 12+ Technology: 12 months stability explained', href: '/seo/propagation-technology/fp-12-technology' },
-        { title: 'Paper vs Plastic Plug Trays: Complete comparison', href: '/seo/propagation-technology/paper-vs-plastic' },
-        { title: 'Optimal root development in paper plugs', href: '/seo/propagation-technology/root-development' },
-        { title: 'Paper plugs for vegetable growing: Complete guide', href: '/seo/applications/paper-plugs-vegetables' },
-        { title: 'Calculate ROI for paper plug investments', href: '/seo/efficiency-roi/calculate-roi' }
+        { title: 'FP 12+ Technology: 12 months stability explained', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'Optimal root development in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'Paper plugs for vegetable growing: Complete guide', href: '/praktische-toepassingen/paper-plugs-groenteteelt' },
+        { title: 'Calculate ROI for paper plug investments', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -411,11 +409,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel',
       articles: [
-        { title: 'FP 12+ Technologie: 12 Monate Stabilität erklärt', href: '/seo/vermehrungstechnologie/fp-12-technologie' },
-        { title: 'Paper vs. Kunststoff Plug Trays: Vollständiger Vergleich', href: '/seo/vermehrungstechnologie/papier-vs-kunststoff' },
-        { title: 'Optimale Wurzelentwicklung in Paper Plugs', href: '/seo/vermehrungstechnologie/wurzelentwicklung' },
-        { title: 'Paper Plugs für Gemüseanbau: Vollständiger Leitfaden', href: '/seo/anwendungen/paper-plugs-gemueseanbau' },
-        { title: 'ROI berechnen für Paper Plug Investitionen', href: '/seo/effizienz-roi/roi-berechnen' }
+        { title: 'FP 12+ Technologie: 12 Monate Stabilität erklärt', href: '/propagatie-technologie/fp-12-technologie' },
+        { title: 'Optimale Wurzelentwicklung in Paper Plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'Paper Plugs für Gemüseanbau: Vollständiger Leitfaden', href: '/praktische-toepassingen/paper-plugs-groenteteelt' },
+        { title: 'ROI berechnen für Paper Plug Investitionen', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -449,7 +446,7 @@ export default function WatZijnPaperPlugTraysClient({ locale }: { locale: string
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -647,7 +644,7 @@ export default function WatZijnPaperPlugTraysClient({ locale }: { locale: string
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">

@@ -421,7 +421,6 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     width={200}
                     height={200}
                     sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
-                    priority
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">
@@ -435,7 +434,6 @@ export default function HomeClient({ locale, t }: { locale: string, t: any }) {
                     width={200}
                     height={200}
                     sizes="(min-width: 1024px) 240px, (min-width: 768px) 22vw, 45vw"
-                    priority
                     className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform"
                   />
                   <p className="text-xs font-medium text-lumora-dark mt-2 group-hover:text-lumora-green-500 transition-colors">

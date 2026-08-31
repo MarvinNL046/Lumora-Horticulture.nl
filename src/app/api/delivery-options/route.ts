@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDeliveryOptions, getPickupPoints } from '@/lib/myparcel';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const CARRIERS = ['postnl', 'dpd', 'dhl', 'dhlforyou', 'ups'] as const;
 const COUNTRIES = ['NL', 'BE', 'DE'] as const;

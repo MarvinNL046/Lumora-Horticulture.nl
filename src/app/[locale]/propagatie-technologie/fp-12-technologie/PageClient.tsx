@@ -176,9 +176,8 @@ const content: Record<string, PageContent> = {
       articles: [
         { title: 'Wat zijn Paper Plug Trays? Complete introductie', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
         { title: 'Biologisch afbreekbare kweekoplossingen', href: '/propagatie-technologie/biologisch-afbreekbaar' },
-        { title: 'Paper vs Plastic Plug Trays vergelijking', href: '/propagatie-technologie/paper-vs-plastic' },
-        { title: 'Optimale wortelontwikkeling in paper plugs', href: '/propagatie-technologie/wortelontwikkeling' },
-        { title: 'ROI berekenen voor paper plug investeringen', href: '/seo/effici entie-roi/roi-berekenen' }
+        { title: 'Optimale wortelontwikkeling in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'ROI berekenen voor paper plug investeringen', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -303,11 +302,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Related articles',
       articles: [
-        { title: 'What are Paper Plug Trays? Complete introduction', href: '/seo/propagation-technology/what-are-paper-plug-trays' },
-        { title: 'Biodegradable growing solutions', href: '/seo/propagation-technology/biodegradable-solutions' },
-        { title: 'Paper vs Plastic Plug Trays comparison', href: '/seo/propagation-technology/paper-vs-plastic' },
-        { title: 'Optimal root development in paper plugs', href: '/seo/propagation-technology/root-development' },
-        { title: 'Calculate ROI for paper plug investments', href: '/seo/efficiency-roi/calculate-roi' }
+        { title: 'What are Paper Plug Trays? Complete introduction', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'Biodegradable growing solutions', href: '/propagatie-technologie/biologisch-afbreekbaar' },
+        { title: 'Optimal root development in paper plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'Calculate ROI for paper plug investments', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -432,11 +430,10 @@ const content: Record<string, PageContent> = {
     relatedArticles: {
       title: 'Verwandte Artikel',
       articles: [
-        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/seo/vermehrungstechnologie/was-sind-paper-plug-trays' },
-        { title: 'Biologisch abbaubare Anbaulösungen', href: '/seo/vermehrungstechnologie/biologisch-abbaubar' },
-        { title: 'Paper vs. Kunststoff Plug Trays Vergleich', href: '/seo/vermehrungstechnologie/papier-vs-kunststoff' },
-        { title: 'Optimale Wurzelentwicklung in Paper Plugs', href: '/seo/vermehrungstechnologie/wurzelentwicklung' },
-        { title: 'ROI berechnen für Paper Plug Investitionen', href: '/seo/effizienz-roi/roi-berechnen' }
+        { title: 'Was sind Paper Plug Trays? Vollständige Einführung', href: '/propagatie-technologie/wat-zijn-paper-plug-trays' },
+        { title: 'Biologisch abbaubare Anbaulösungen', href: '/propagatie-technologie/biologisch-afbreekbaar' },
+        { title: 'Optimale Wurzelentwicklung in Paper Plugs', href: '/troubleshooting/wortelvorming-optimaliseren' },
+        { title: 'ROI berechnen für Paper Plug Investitionen', href: '/efficiëntie-roi/roi-berekenen' }
       ]
     },
     finalCta: {
@@ -470,7 +467,7 @@ export default function FP12TechnologieClient({ locale }: { locale: string }) {
               name: 'Lumora Horticulture',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://lumorahorticulture.com/logo.png'
+                url: 'https://lumorahorticulture.nl/logo.png'
               }
             },
             datePublished: '2025-01-01',
@@ -671,7 +668,7 @@ export default function FP12TechnologieClient({ locale }: { locale: string }) {
             {t.relatedArticles.articles.map((article, index) => (
               <Link
                 key={index}
-                href={article.href}
+                href={localizePathForLocale(article.href, locale)}
                 className="block p-6 bg-lumora-cream rounded-xl shadow-soft hover:shadow-soft-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">

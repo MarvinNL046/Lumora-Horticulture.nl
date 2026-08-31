@@ -1,30 +1,28 @@
 # robots.txt for Lumora Horticulture
-# Multi-domain multilingual setup
+# Canonical multilingual setup on lumorahorticulture.nl
 
 # Allow all web crawlers
 User-agent: *
 Allow: /
 
-# Disallow certain directories that shouldn't be indexed
-Disallow: /.next/
+# Disallow non-public application areas. Next.js assets stay crawlable so
+# search engines can render the storefront correctly.
 Disallow: /node_modules/
 Disallow: /api/
-Disallow: /_next/
 Disallow: /scripts/
 Disallow: /marketing/
+Disallow: /en/marketing/
+Disallow: /de/marketing/
+Disallow: /account
+Disallow: /en/account
+Disallow: /de/account
+Disallow: /admin
+Disallow: /en/admin
+Disallow: /de/admin
+Disallow: /checkout
+Disallow: /en/checkout
+Disallow: /de/checkout
+Disallow: /handler
 
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
-
-# Sitemap index file (contains all language-specific sitemaps)
+# One generated sitemap contains NL, EN and DE URLs with hreflang links.
 Sitemap: https://lumorahorticulture.nl/sitemap.xml
-Sitemap: https://lumorahorticulture.com/sitemap.xml
-Sitemap: https://lumorahorticulture.de/sitemap.xml
-
-# Individual sitemaps for each domain (for direct access)
-Sitemap: https://lumorahorticulture.nl/sitemap-lumorahorticulture.nl.xml
-Sitemap: https://lumorahorticulture.com/sitemap-lumorahorticulture.com.xml
-Sitemap: https://lumorahorticulture.de/sitemap-lumorahorticulture.de.xml
-
-# Host preference for crawlers that support it
-Host: https://lumorahorticulture.nl

@@ -419,7 +419,7 @@ export default function SteenwolSubstraatClient({ t, locale }: SteenwolSubstraat
                   height={400}
                   className={`w-full h-auto rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
-                  priority
+                  preload
                 />
                 {!imageLoaded && (
                   <div className="absolute inset-0 bg-lumora-cream animate-pulse rounded-xl" />
