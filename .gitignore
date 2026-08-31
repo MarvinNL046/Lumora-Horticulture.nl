@@ -43,6 +43,9 @@ yarn-error.log*
 .idea
 .vscode
 
+# local Codex design-loop evidence
+.codex/
+
 # Netlify
 .netlify
 node_modules
