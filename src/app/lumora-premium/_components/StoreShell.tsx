@@ -138,20 +138,28 @@ export function StoreShell({ children }: { children: ReactNode }) {
 
       {isPdp || isCart ? null : (
         <nav className={styles.mobileNav} aria-label="Mobiele navigatie">
-          <Link className={pathname === ROOT ? styles.mobileNavActive : ''} href={ROOT}>
-            <HomeIcon />
+          <Link
+            aria-current={pathname === ROOT ? 'page' : undefined}
+            className={pathname === ROOT ? styles.mobileNavActive : ''}
+            href={ROOT}
+          >
+            <span className={styles.mobileNavIcon}><HomeIcon /></span>
             <span>Home</span>
           </Link>
-          <Link className={pathname === `${ROOT}/producten` ? styles.mobileNavActive : ''} href={`${ROOT}/producten`}>
-            <GridIcon />
+          <Link
+            aria-current={pathname === `${ROOT}/producten` ? 'page' : undefined}
+            className={pathname === `${ROOT}/producten` ? styles.mobileNavActive : ''}
+            href={`${ROOT}/producten`}
+          >
+            <span className={styles.mobileNavIcon}><GridIcon /></span>
             <span>Producten</span>
           </Link>
           <a href="mailto:info@lumorahorticulture.com">
-            <HelpIcon />
+            <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>Hulp</span>
           </a>
           <Link className={pathname === `${ROOT}/winkelmand` ? styles.mobileNavActive : ''} href={`${ROOT}/winkelmand`}>
-            <span className={styles.mobileBagWrap}>
+            <span className={`${styles.mobileNavIcon} ${styles.mobileBagWrap}`}>
               <BagIcon />
               <small>2</small>
             </span>
