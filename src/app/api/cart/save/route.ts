@@ -68,7 +68,10 @@ export async function POST(request: NextRequest) {
     }
 
     const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-    const candidateIp = request.ip || request.headers.get('x-real-ip') || forwardedFor || '';
+    // Next.js 15 removed NextRequest.ip. Trust only the platform-populated
+    // forwarding headers here; the distributed edge limiter remains the
+    // authoritative abuse-control layer.
+    const candidateIp = request.headers.get('x-real-ip') || forwardedFor || '';
     const rateLimitKey = /^[0-9a-f:.]{3,64}$/i.test(candidateIp) ? candidateIp : 'unknown';
     if (!consumeRateLimit(rateLimitKey)) {
       return NextResponse.json(

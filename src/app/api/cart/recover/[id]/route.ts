@@ -11,10 +11,8 @@ export const dynamic = 'force-dynamic';
  * The response intentionally contains no customer PII. The cart id is only a
  * locator; it is not treated as proof that the caller may read an email/name.
  */
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const cart = await convex.query(api.abandonedCarts.getById, {
       ...convexServerAuth(),

@@ -9,7 +9,8 @@ export function generateStaticParams() {
   return [{ locale: 'nl' }, { locale: 'de' }]
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const meta = {
     nl: {
       title: 'Blog - Kennis over Tuinbouw & Kweektechnieken',
@@ -64,11 +65,12 @@ const categoryLabels: Record<string, Record<string, string>> = {
   tips: { nl: 'Tips', de: 'Tipps' },
 }
 
-export default async function BlogListingPage({
-  params,
-}: {
-  params: { locale: string }
-}) {
+export default async function BlogListingPage(
+  props: {
+    params: Promise<{ locale: string }>
+  }
+) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
   const locale = params.locale
 

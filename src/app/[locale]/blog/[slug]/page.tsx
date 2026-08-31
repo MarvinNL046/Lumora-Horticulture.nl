@@ -18,11 +18,12 @@ export async function generateStaticParams() {
   return params
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string; slug: string }
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string; slug: string }>
+  }
+) {
+  const params = await props.params;
   const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
 
   if (!post) {
@@ -73,11 +74,12 @@ const categoryLabels: Record<string, Record<string, string>> = {
   tips: { nl: 'Tips', de: 'Tipps' },
 }
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: { locale: string; slug: string }
-}) {
+export default async function BlogDetailPage(
+  props: {
+    params: Promise<{ locale: string; slug: string }>
+  }
+) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
   const locale = params.locale
 

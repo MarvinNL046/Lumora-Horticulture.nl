@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: '40% Arbeidsbesparing met Paper Plug Trays: Efficiëntere Kwekerij | Lumora',
@@ -81,7 +82,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // SEO Landing page - Pillar 3, Subpillar 2
-export default async function ArbeidsbesparingPage({ params }: { params: { locale: string } }) {
+export default async function ArbeidsbesparingPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
 
   return <ArbeidsbesparingClient locale={params.locale} />

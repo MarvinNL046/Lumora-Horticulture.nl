@@ -10,7 +10,8 @@ export function generateStaticParams() {
   ]
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Is Steenwol Hetzelfde als ROCKWOOL? | Lumora Horticulture',
@@ -45,7 +46,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function SteenwolVsRockwoolPage({ params }: { params: { locale: string } }) {
+export default async function SteenwolVsRockwoolPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
 

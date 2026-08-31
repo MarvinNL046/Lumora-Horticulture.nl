@@ -3,20 +3,21 @@ import { useTranslations } from 'next-intl'
 import { unstable_setRequestLocale } from 'next-intl/server'
 
 interface TermsPageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: TermsPageProps): Promise<Metadata> {
+export async function generateMetadata(props: TermsPageProps): Promise<Metadata> {
+  const params = await props.params;
   const { locale } = params
-  
+
   const titles = {
     nl: 'Algemene Voorwaarden | Lumora Horticulture',
     en: 'Terms & Conditions | Lumora Horticulture', 
     de: 'Allgemeine Geschäftsbedingungen | Lumora Horticulture'
   }
-  
+
   const descriptions = {
     nl: 'Algemene voorwaarden van Lumora Horticulture voor de levering van tuinbouw producten en diensten.',
     en: 'Terms and conditions of Lumora Horticulture for the supply of horticultural products and services.',
@@ -29,7 +30,8 @@ export async function generateMetadata({ params }: TermsPageProps): Promise<Meta
   }
 }
 
-export default function TermsPage({ params }: TermsPageProps) {
+export default async function TermsPage(props: TermsPageProps) {
+  const params = await props.params;
   const { locale } = params
   unstable_setRequestLocale(locale)
 

@@ -108,11 +108,12 @@ const defaultMetaConfig = {
 };
 
 // Generate CTR-optimized metadata for product pages
-export async function generateMetadata({
-  params
-}: {
-  params: { locale: string; slug: string }
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string; slug: string }>
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const { locale, slug } = params;
   const product = await getProduct(slug);
 
@@ -234,11 +235,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({
-  params
-}: {
-  params: { locale: string; slug: string }
-}) {
+export default async function ProductPage(
+  props: {
+    params: Promise<{ locale: string; slug: string }>
+  }
+) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale);
 
   if (isHiddenProductSlug(params.slug)) {

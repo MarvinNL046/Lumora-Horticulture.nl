@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for Paperbus Steenwol Pluggen SEO landing page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Paperbus Steenwol Pluggen - FP 12+ Kwaliteit | Lumora Horticulture',
@@ -30,14 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       keywords: ['papiertopf steinwollstecker', 'steinwollstecker', 'papiertopf stecker', 'fp 12+', 'pilzschutz', 'umweltfreundlich', 'gewächshaus', 'gärtnerei', 'transplantationsschock', 'wurzelentwicklung']
     }
   }
-  
+
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
   const localePaths = {
     nl: '/paperbus-steenwol-pluggen/',
     en: '/paper-pot-rockwool-plugs/',
     de: '/papiertopf-steinwollstecker/'
   }
-  
+
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
@@ -48,13 +49,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // SEO Landing page for Paperbus Steenwol Pluggen
-export default async function PaperbusLandingPage({ params }: { params: { locale: string } }) {
+export default async function PaperbusLandingPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
-  
+
   // Load messages manually for static export
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull translations from the messages
   const t = messages
 

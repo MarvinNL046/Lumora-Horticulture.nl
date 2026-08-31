@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // SEO-optimized metadata for Steenwol Substraat page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Steenwol Substraat | Kweekmedium voor Hydrocultuur & Glastuinbouw',
@@ -48,7 +49,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // SEO Landing page for Steenwol Substraat
-export default async function SteenwolSubstraatPage({ params }: { params: { locale: string } }) {
+export default async function SteenwolSubstraatPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
 
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default

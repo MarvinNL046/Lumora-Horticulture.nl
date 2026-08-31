@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CompostabilityPage({ params }: { params: { locale: string } }) {
+export default async function CompostabilityPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const locale = params.locale || 'nl';
 
   const t = {

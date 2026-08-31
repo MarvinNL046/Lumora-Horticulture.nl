@@ -6,7 +6,8 @@ export function generateStaticParams() {
   return [{ locale: 'nl' }, { locale: 'en' }, { locale: 'de' }]
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Is Steenwol Schadelijk voor de Longen? | Veiligheid Info | Lumora',
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function SteenwolLongenPage({ params }: { params: { locale: string } }) {
+export default async function SteenwolLongenPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
   return <SteenwolLongenClient t={messages} locale={params.locale} />

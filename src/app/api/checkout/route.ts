@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
     // ≥3 NEEMX items. Discount = price of the cheapest individual bottle.
     let promoMetadata: { promoCode: string; promoDiscount: number; freeItemSlug: string } | null = null;
     let promoDiscountCents = 0;
-    const promoCookie = cookies().get(NEEMX_PROMO_COOKIE_NAME)?.value;
+    const promoCookie = (await cookies()).get(NEEMX_PROMO_COOKIE_NAME)?.value;
     if (isPromoCookieActive(promoCookie)) {
       const promo = calculateNeemxPromoDiscount(
         productDetails.map((p) => ({

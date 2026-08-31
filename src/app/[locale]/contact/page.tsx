@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // CTR-optimized metadata for contact page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Contact | Gratis Offerte Binnen 24u | Lumora B2B',
@@ -30,14 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       keywords: ['kontakt lumora', 'Steinwolle Plugs Angebot', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Steinwollstecker bestellen', 'Grosshandel Anfrage']
     }
   }
-  
+
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
   const localePaths = {
     nl: '/contact/',
     en: '/contact/',
     de: '/kontakt/'
   }
-  
+
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
@@ -47,13 +48,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function ContactPage({ params }: { params: { locale: string } }) {
+export default async function ContactPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // Load messages manually for static export
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull contact translations from the messages
   const t = messages.contact
-  
+
   // Create form translations
   const formTranslations = {
     name: t.form.name,
@@ -65,7 +67,7 @@ export default async function ContactPage({ params }: { params: { locale: string
     success: t.form.success,
     error: t.form.error
   }
-  
+
   return (
     <ContactPageClient 
       t={t} 

@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Paper Plug Trays voor Groenteteelt: Tomaten, Paprika, Komkommer | Lumora',
@@ -81,7 +82,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // SEO Landing page - Pillar 2, Subpillar 2.1
-export default async function PaperPlugsGroenteteeltPage({ params }: { params: { locale: string } }) {
+export default async function PaperPlugsGroenteteeltPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
 
   return <PaperPlugsGroenteteeltClient locale={params.locale} />

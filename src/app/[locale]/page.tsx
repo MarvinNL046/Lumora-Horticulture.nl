@@ -15,7 +15,8 @@ export function generateStaticParams() {
 }
 
 // CTR-optimized metadata for homepage
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Steenwol Pluggen & Kweektrays | Gratis Verzending | Lumora',
@@ -45,7 +46,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function Home({ params }: { params: { locale: string } }) {
+export default async function Home(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // Validate locale - return 404 for invalid locales (bot requests, etc.)
   if (!validLocales.includes(params.locale)) {
     notFound();
@@ -56,7 +58,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
 
   // Load messages manually for static export
   const messages = (await import(`../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull home translations from the messages
   const t = messages.home || {
     hero: {

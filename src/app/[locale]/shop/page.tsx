@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // CTR-optimized metadata for shop page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Webshop | Steenwol Pluggen & Trays | Gratis Verzending',
@@ -47,7 +48,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function ShopPage({ params }: { params: { locale: string } }) {
+export default async function ShopPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
 
   return <ShopClient locale={params.locale} />

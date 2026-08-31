@@ -6,7 +6,8 @@ import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import { convexServerAuth } from '@/lib/convex'
 
-export default async function OrdersPage({ params }: { params: { locale: string } }) {
+export default async function OrdersPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const user = await stackServerApp.getUser()
 
   if (!user) {

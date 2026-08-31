@@ -17,7 +17,8 @@ function fmtEUR(n: number): string {
   return `€${n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-export default async function AdminMetricsPage({ params }: { params: { locale: string } }) {
+export default async function AdminMetricsPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const user = await stackServerApp.getUser();
   if (!user) redirect('/handler/signin');
   if (!isAdmin(user.primaryEmail)) redirect(`/${params.locale}/account`);

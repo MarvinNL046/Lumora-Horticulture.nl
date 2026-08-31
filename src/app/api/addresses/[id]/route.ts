@@ -17,10 +17,8 @@ const MAX_ADDRESS_BODY_BYTES = 10_000;
  * PUT /api/addresses/[id]
  * Update een bestaand adres
  */
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     // Check if user is logged in
     const user = await stackServerApp.getUser();
@@ -83,10 +81,8 @@ export async function PUT(
  * DELETE /api/addresses/[id]
  * Verwijder een adres
  */
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     // Check if user is logged in
     const user = await stackServerApp.getUser();

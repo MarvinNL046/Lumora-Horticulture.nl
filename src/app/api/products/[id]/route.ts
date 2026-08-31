@@ -9,10 +9,8 @@ export const dynamic = 'force-dynamic';
  * GET /api/products/[id]
  * Haal een specifiek product op
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const product = await convex.query(api.products.getById, {
       id: params.id as Id<"products">,

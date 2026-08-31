@@ -3,20 +3,21 @@ import { useTranslations } from 'next-intl'
 import { unstable_setRequestLocale } from 'next-intl/server'
 
 interface PrivacyPageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: PrivacyPageProps): Promise<Metadata> {
+export async function generateMetadata(props: PrivacyPageProps): Promise<Metadata> {
+  const params = await props.params;
   const { locale } = params
-  
+
   const titles = {
     nl: 'Privacybeleid | Lumora Horticulture',
     en: 'Privacy Policy | Lumora Horticulture', 
     de: 'Datenschutz | Lumora Horticulture'
   }
-  
+
   const descriptions = {
     nl: 'Privacybeleid van Lumora Horticulture. Hoe wij uw persoonlijke gegevens verzamelen, gebruiken en beschermen.',
     en: 'Privacy Policy of Lumora Horticulture. How we collect, use and protect your personal data.',
@@ -29,7 +30,8 @@ export async function generateMetadata({ params }: PrivacyPageProps): Promise<Me
   }
 }
 
-export default function PrivacyPage({ params }: PrivacyPageProps) {
+export default async function PrivacyPage(props: PrivacyPageProps) {
+  const params = await props.params;
   const { locale } = params
   unstable_setRequestLocale(locale)
 

@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // CTR-optimized metadata for products page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Producten | Paper Plug Trays 84 & 104 | FP 12+ Kwaliteit',
@@ -30,14 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       keywords: ['paper plug tray 84', 'paper plug tray 104', 'Papier-Plug Steinwolle', 'Ellepot FP 12+', 'Anzuchtschalen B2B', 'Transportboxen Gartenbau', 'professionelle Anzuchtschalen']
     }
   }
-  
+
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
   const localePaths = {
     nl: '/producten/',
     en: '/products/',
     de: '/produkte/'
   }
-  
+
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
@@ -48,13 +49,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // Product page component with modern styling
-export default async function ProductsPage({ params }: { params: { locale: string } }) {
+export default async function ProductsPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
-  
+
   // Load messages manually for static export
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull products translations from the messages
   const t = messages.products
 

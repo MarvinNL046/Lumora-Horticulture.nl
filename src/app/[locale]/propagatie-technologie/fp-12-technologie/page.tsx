@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'FP 12+ Technologie: 12 Maanden Stabiliteit voor Professionele Kweek | Lumora',
@@ -81,7 +82,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // SEO Landing page - Pillar 1, Subpillar 2
-export default async function FP12TechnologiePage({ params }: { params: { locale: string } }) {
+export default async function FP12TechnologiePage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
 
   return <FP12TechnologieClient locale={params.locale} />

@@ -6,7 +6,8 @@ export function generateStaticParams() {
   return [{ locale: 'nl' }, { locale: 'en' }, { locale: 'de' }]
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Voor- en Nadelen van Steenwol | Lumora Horticulture',
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   })
 }
 
-export default async function VoordelenNadelenPage({ params }: { params: { locale: string } }) {
+export default async function VoordelenNadelenPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale)
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
   return <VoordelenNadelenClient t={messages} locale={params.locale} />

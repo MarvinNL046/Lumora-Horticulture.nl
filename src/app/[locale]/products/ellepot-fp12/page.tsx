@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for Ellepot FP 12+ page
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Ellepot FP 12+ Papier - Milieuvriendelijke Verpakking voor Paperbus Steenwol Pluggen',
@@ -30,14 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       keywords: ['ellepot fp 12+', 'papiertopf steinwollstecker', 'steinwollstecker', 'papier topf stecker', 'umweltfreundlich', 'pilzhemmend', 'transplantationsschock']
     }
   }
-  
+
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
   const localePaths = {
     nl: '/producten/ellepot-fp12/',
     en: '/products/ellepot-fp12/',
     de: '/produkte/ellepot-fp12/'
   }
-  
+
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
@@ -48,13 +49,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // Ellepot FP 12+ product page
-export default async function EllepotPage({ params }: { params: { locale: string } }) {
+export default async function EllepotPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
-  
+
   // Load messages manually for static export
   const messages = (await import(`../../../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull translations from the messages
   const t = messages
 

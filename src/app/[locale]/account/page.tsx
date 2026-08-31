@@ -3,7 +3,8 @@ import { stackServerApp } from '@/stack/server'
 import Link from 'next/link'
 import { localizePathForLocale } from '@/lib/url-localizations'
 
-export default async function AccountPage({ params }: { params: { locale: string } }) {
+export default async function AccountPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const user = await stackServerApp.getUser()
 
   // Redirect to login if not authenticated

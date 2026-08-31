@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { localizePathForLocale } from '@/lib/url-localizations';
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { locale } = params;
 
   const metadata: Record<string, any> = {
@@ -50,7 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function VerticaleTeeltPaperPlugsNL({ params }: Props) {
+export default async function VerticaleTeeltPaperPlugsNL(props: Props) {
+  const params = await props.params;
   const { locale } = params;
 
   const content = {

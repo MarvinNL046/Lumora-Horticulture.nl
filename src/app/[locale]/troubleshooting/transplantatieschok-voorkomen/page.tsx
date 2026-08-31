@@ -24,10 +24,11 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export default function TransplantatieschokVoorkomenPage({ params }: PageProps) {
+export default async function TransplantatieschokVoorkomenPage(props: PageProps) {
+  const params = await props.params;
   const { locale } = params;
 
   // Translations

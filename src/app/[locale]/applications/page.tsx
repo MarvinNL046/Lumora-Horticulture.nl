@@ -15,7 +15,8 @@ export function generateStaticParams() {
   ]
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const metadata = {
     nl: {
       title: 'Toepassingen Glastuinbouw - Professionele Kweek',
@@ -33,14 +34,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       keywords: ['Gewächshaus Anwendungen', 'Gemüseanzucht', 'Zierpflanzenanbau', 'Vertical Farming', 'Hydroponik', 'Tomaten Paprika Veredelung']
     }
   }
-  
+
   const localeMeta = metadata[params.locale as keyof typeof metadata] || metadata.nl
   const localePaths = {
     nl: '/toepassingen/',
     en: '/applications/',
     de: '/anwendungen/'
   }
-  
+
   return generatePageMetadata({
     title: localeMeta.title,
     description: localeMeta.description,
@@ -51,13 +52,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 // Applications page component with modern styling
-export default async function ApplicationsPage({ params }: { params: { locale: string } }) {
+export default async function ApplicationsPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
-  
+
   // Load messages manually for static export
   const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-  
+
   // Pull applications translations from the messages
   const t = messages.applications
 

@@ -10,7 +10,8 @@ export function generateStaticParams() {
   ]
 }
 
-export default function NeemxProFlyerPage({ params }: { params: { locale: string } }) {
+export default async function NeemxProFlyerPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   // This is needed for internationalization to work properly
   unstable_setRequestLocale(params.locale)
 
