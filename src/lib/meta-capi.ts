@@ -71,9 +71,24 @@ function buildUserData(u: CapiUserData) {
   return out;
 }
 
-export async function sendCapiEvent(event: CapiEvent): Promise<void> {
+export interface CapiSendOptions {
+  /**
+   * Webhook/outbox callers need delivery errors to escape so their durable
+   * retry ledger can retry the same event id. Interactive tracking callers
+   * keep the historical best-effort behaviour by leaving this false.
+   */
+  throwOnError?: boolean;
+}
+
+export async function sendCapiEvent(
+  event: CapiEvent,
+  options: CapiSendOptions = {},
+): Promise<void> {
   const token = process.env.META_CAPI_ACCESS_TOKEN;
   if (!token) {
+    if (options.throwOnError) {
+      throw new Error('META_CAPI_ACCESS_TOKEN is not configured');
+    }
     console.warn('META_CAPI_ACCESS_TOKEN not set — skipping CAPI event', event.eventName);
     return;
   }
@@ -112,12 +127,14 @@ export async function sendCapiEvent(event: CapiEvent): Promise<void> {
         });
         if (!res.ok) {
           const text = await res.text();
-          console.error(`CAPI ${event.eventName} → ${pixelId} failed (${res.status}):`, text);
-          return;
+          throw new Error(
+            `CAPI ${event.eventName} → ${pixelId} failed (${res.status}): ${text.slice(0, 500)}`,
+          );
         }
         const json = await res.json();
         console.log(`CAPI ${event.eventName} → ${pixelId}:`, json);
       } catch (err) {
+        if (options.throwOnError) throw err;
         console.error(`CAPI ${event.eventName} → ${pixelId} error:`, err);
       }
     })

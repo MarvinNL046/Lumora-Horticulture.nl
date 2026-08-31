@@ -1,27 +1,35 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
+import { requireServerSecret } from "./lib/serverSecret";
+import { blogPostValidator } from "./validators";
 
 export const listPublished = query({
   args: {
     category: v.optional(v.string()),
   },
+  returns: v.array(blogPostValidator),
   handler: async (ctx, { category }) => {
-    let posts = await ctx.db
+    if (category) {
+      return await ctx.db
+        .query("blogPosts")
+        .withIndex("by_status_and_category", (q) =>
+          q.eq("status", "published").eq("category", category),
+        )
+        .order("desc")
+        .take(500);
+    }
+
+    return await ctx.db
       .query("blogPosts")
       .withIndex("by_status", (q) => q.eq("status", "published"))
       .order("desc")
-      .collect();
-
-    if (category) {
-      posts = posts.filter((p) => p.category === category);
-    }
-
-    return posts;
+      .take(500);
   },
 });
 
 export const getBySlug = query({
   args: { slug: v.string() },
+  returns: v.union(blogPostValidator, v.null()),
   handler: async (ctx, { slug }) => {
     return await ctx.db
       .query("blogPosts")
@@ -32,6 +40,7 @@ export const getBySlug = query({
 
 export const create = mutation({
   args: {
+    server_secret: v.string(),
     slug: v.string(),
     title_nl: v.string(),
     excerpt_nl: v.string(),
@@ -47,7 +56,9 @@ export const create = mutation({
     tags: v.array(v.string()),
     featured_image: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  returns: v.id("blogPosts"),
+  handler: async (ctx, { server_secret, ...args }) => {
+    requireServerSecret(server_secret);
     // Prevent duplicates
     const existing = await ctx.db
       .query("blogPosts")

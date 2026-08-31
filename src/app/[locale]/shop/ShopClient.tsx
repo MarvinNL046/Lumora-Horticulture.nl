@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { localizePathForLocale } from '@/lib/url-localizations';
+import { serializeJsonLd } from '@/lib/safe-json-ld';
 
 interface Product {
   id: string;
@@ -137,11 +138,11 @@ export default function ShopClient({ locale }: ShopClientProps) {
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(itemListSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

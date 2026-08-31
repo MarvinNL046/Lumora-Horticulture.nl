@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { trackPurchase } from '@/lib/google-ads';
 
 /**
- * Dedicated conversion tracking page for Google Tag Manager
- * This page is only accessible after a successful payment
- * and provides a reliable endpoint for conversion tracking
+ * Payment-return bridge. Verified conversion events are handled server-side
+ * by the Mollie webhook; this page only waits for the resulting order status.
  */
 export default function ConversionTrackingPage() {
   const searchParams = useSearchParams();
@@ -22,44 +20,23 @@ export default function ConversionTrackingPage() {
       return;
     }
 
-    // Fetch order data and track conversion
+    // Fetch only the payment state. Purchase conversions are emitted from the
+    // verified Mollie webhook; browser-side events could be forged or doubled.
     fetch(`/api/orders/${orderId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.order) {
           // Only track if payment is actually paid
           if (data.order.payment_status === 'paid') {
-            const totalAmount = parseFloat(data.order.total_amount);
-
-            // Track Google Ads conversion
-            trackPurchase(
-              data.order.order_number || orderId,
-              totalAmount,
-              data.order.payment_id
-            );
-
-            // Push to dataLayer for GTM
-            if (typeof window !== 'undefined' && (window as any).dataLayer) {
-              (window as any).dataLayer.push({
-                event: 'purchase',
-                ecommerce: {
-                  transaction_id: data.order.order_number || orderId,
-                  value: totalAmount,
-                  currency: 'EUR',
-                  payment_id: data.order.payment_id,
-                },
-              });
-            }
-
             setConversionTracked(true);
 
             // Redirect to success page after tracking
             setTimeout(() => {
-              router.push(`/checkout/success?order_id=${orderId}`);
+              router.push(`/checkout/success?order_id=${encodeURIComponent(orderId)}`);
             }, 1000);
           } else {
             // Payment not completed, redirect to success page which will show proper status
-            router.push(`/checkout/success?order_id=${orderId}`);
+            router.push(`/checkout/success?order_id=${encodeURIComponent(orderId)}`);
           }
         } else {
           // Order not found, redirect to shop

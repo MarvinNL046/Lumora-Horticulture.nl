@@ -1,8 +1,16 @@
+import { v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { requireServerSecret } from "./lib/serverSecret";
 
 export const seedProducts = mutation({
-  args: {},
-  handler: async (ctx) => {
+  args: { server_secret: v.string() },
+  returns: v.object({
+    added: v.number(),
+    updated: v.number(),
+    total: v.number(),
+  }),
+  handler: async (ctx, { server_secret }) => {
+    requireServerSecret(server_secret);
     const products = [
       {
         slug: "paper-plug-tray-84",

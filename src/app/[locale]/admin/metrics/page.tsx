@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { stackServerApp } from '@/stack/server';
 import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/../convex/_generated/api';
+import { convexServerAuth } from '@/lib/convex';
 
 // ADMIN_EMAILS is a comma-separated list on the server (no NEXT_PUBLIC_ prefix
 // so it doesn't leak to the client bundle). Anyone outside the list gets
@@ -21,7 +22,9 @@ export default async function AdminMetricsPage({ params }: { params: { locale: s
   if (!user) redirect('/handler/signin');
   if (!isAdmin(user.primaryEmail)) redirect(`/${params.locale}/account`);
 
-  const data = await fetchQuery(api.analytics.baseline, {});
+  const data = await fetchQuery(api.analytics.baseline, {
+    ...convexServerAuth(),
+  });
   const snapshotDate = new Date(data.snapshotAt).toLocaleString('nl-NL');
 
   return (

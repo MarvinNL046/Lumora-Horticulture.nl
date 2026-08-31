@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
 import { stackServerApp } from '@/stack/server';
+import {
+  InvalidRequestBodyError,
+  readLimitedJson,
+  RequestBodyTooLargeError,
+} from '@/lib/limited-json';
+import { parseSavedAddressInput } from '@/lib/saved-address-input';
 
 export const dynamic = 'force-dynamic';
+const MAX_ADDRESS_BODY_BYTES = 10_000;
 
 /**
  * PUT /api/addresses/[id]
@@ -24,11 +31,11 @@ export async function PUT(
       );
     }
 
-    const body = await request.json();
-    const { name, street, city, postal_code, country, phone, is_default } = body;
+    const body = await readLimitedJson(request, MAX_ADDRESS_BODY_BYTES);
+    const address = parseSavedAddressInput(body);
 
     // Validation
-    if (!name || !street || !city || !postal_code || !country) {
+    if (!address) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -38,15 +45,10 @@ export async function PUT(
     // Update address (Convex mutation verifies ownership and handles default unsetting)
     try {
       await convex.mutation(api.savedAddresses.update, {
+        ...convexServerAuth(),
         id: params.id as Id<"savedAddresses">,
         user_id: user.id,
-        name,
-        street,
-        city,
-        postal_code,
-        country,
-        phone: phone || undefined,
-        is_default: is_default || false,
+        ...address,
       });
     } catch (err) {
       return NextResponse.json(
@@ -60,12 +62,17 @@ export async function PUT(
       address: { _id: params.id },
     });
   } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) {
+      return NextResponse.json({ success: false, error: 'Payload too large' }, { status: 413 });
+    }
+    if (error instanceof InvalidRequestBodyError) {
+      return NextResponse.json({ success: false, error: 'Invalid request' }, { status: 400 });
+    }
     console.error('Update address error:', error);
     return NextResponse.json(
       {
         success: false,
         error: 'Failed to update address',
-        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -93,6 +100,7 @@ export async function DELETE(
     // Delete address (Convex mutation verifies ownership)
     try {
       await convex.mutation(api.savedAddresses.remove, {
+        ...convexServerAuth(),
         id: params.id as Id<"savedAddresses">,
         user_id: user.id,
       });
@@ -113,7 +121,6 @@ export async function DELETE(
       {
         success: false,
         error: 'Failed to delete address',
-        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

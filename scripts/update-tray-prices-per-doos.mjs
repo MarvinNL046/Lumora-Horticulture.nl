@@ -34,6 +34,12 @@ if (!url) {
   process.exit(1);
 }
 
+const serverSecret = process.env.CONVEX_SERVER_SECRET;
+if (!serverSecret || serverSecret.length < 32) {
+  console.error('❌ CONVEX_SERVER_SECRET must be set to at least 32 characters');
+  process.exit(1);
+}
+
 const client = new ConvexHttpClient(url);
 
 const updates = [
@@ -63,7 +69,10 @@ console.log(`🚀 Updating tray prices on ${PROD ? 'PRODUCTION' : 'DEV'} (${url}
 
 for (const u of updates) {
   try {
-    const id = await client.mutation(api.products.updateBySlug, u);
+    const id = await client.mutation(api.products.updateBySlug, {
+      ...u,
+      server_secret: serverSecret,
+    });
     console.log(`✅ ${u.slug} → €${u.price.toFixed(2)} per doos (id=${id})`);
   } catch (err) {
     console.error(`❌ ${u.slug}:`, err.message || err);

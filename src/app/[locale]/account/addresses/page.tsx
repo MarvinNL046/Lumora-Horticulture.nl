@@ -5,6 +5,7 @@ import { localizePathForLocale } from '@/lib/url-localizations'
 import AddressesClient from './AddressesClient'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
+import { convexServerAuth } from '@/lib/convex'
 
 export default async function AddressesPage({ params }: { params: { locale: string } }) {
   const user = await stackServerApp.getUser()
@@ -15,7 +16,10 @@ export default async function AddressesPage({ params }: { params: { locale: stri
 
   const locale = params.locale as 'nl' | 'en' | 'de'
 
-  const addresses = await fetchQuery(api.savedAddresses.list, { user_id: user.id })
+  const addresses = await fetchQuery(api.savedAddresses.list, {
+    ...convexServerAuth(),
+    user_id: user.id,
+  })
 
   const t = {
     title: locale === 'de' ? 'Meine Adressen' : locale === 'en' ? 'My Addresses' : 'Mijn Adressen',

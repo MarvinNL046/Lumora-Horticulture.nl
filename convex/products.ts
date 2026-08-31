@@ -1,12 +1,17 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { requireServerSecret } from "./lib/serverSecret";
+import { productValidator } from "./validators";
 
 export const list = query({
   args: {
     locale: v.optional(v.string()),
   },
+  returns: v.array(productValidator),
   handler: async (ctx, { locale }) => {
-    const products = await ctx.db.query("products").collect();
+    // The rebuilt store has a deliberately small catalog. Keep the public
+    // query bounded anyway so accidental imports cannot exhaust a function.
+    const products = await ctx.db.query("products").take(100);
 
     // Sort by display_order ascending (nulls last)
     products.sort((a, b) => {
@@ -34,6 +39,7 @@ export const list = query({
 
 export const getBySlug = query({
   args: { slug: v.string() },
+  returns: v.union(productValidator, v.null()),
   handler: async (ctx, { slug }) => {
     return await ctx.db
       .query("products")
@@ -44,6 +50,7 @@ export const getBySlug = query({
 
 export const getById = query({
   args: { id: v.id("products") },
+  returns: v.union(productValidator, v.null()),
   handler: async (ctx, { id }) => {
     return await ctx.db.get(id);
   },
@@ -51,13 +58,16 @@ export const getById = query({
 
 export const updateBySlug = mutation({
   args: {
+    server_secret: v.string(),
     slug: v.string(),
     price: v.optional(v.number()),
     description: v.optional(v.string()),
     description_en: v.optional(v.string()),
     description_de: v.optional(v.string()),
   },
-  handler: async (ctx, { slug, ...patch }) => {
+  returns: v.id("products"),
+  handler: async (ctx, { server_secret, slug, ...patch }) => {
+    requireServerSecret(server_secret);
     const product = await ctx.db
       .query("products")
       .withIndex("by_slug", (q) => q.eq("slug", slug))
@@ -79,8 +89,15 @@ export const updateBySlug = mutation({
  * Spray basis: 0,1 L per m². Run with: npx convex run products:populateNeemxCoverage
  */
 export const populateNeemxCoverage = mutation({
-  args: {},
-  handler: async (ctx) => {
+  args: { server_secret: v.string() },
+  returns: v.array(
+    v.object({
+      slug: v.string(),
+      patched: v.boolean(),
+    }),
+  ),
+  handler: async (ctx, { server_secret }) => {
+    requireServerSecret(server_secret);
     const coverageFor = (bottleMl: number) => {
       const tiers = [
         { dosage: "2,5 ml/L — preventief", ml_per_l: 2.5 },
@@ -131,10 +148,11 @@ export const populateNeemxCoverage = mutation({
 
 export const listInStock = query({
   args: {},
+  returns: v.array(productValidator),
   handler: async (ctx) => {
     return await ctx.db
       .query("products")
       .withIndex("by_availability", (q) => q.eq("availability", "in stock"))
-      .collect();
+      .take(100);
   },
 });

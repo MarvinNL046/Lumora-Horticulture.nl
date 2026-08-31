@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { localizePathForLocale } from '@/lib/url-localizations'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
+import { convexServerAuth } from '@/lib/convex'
 
 export default async function OrdersPage({ params }: { params: { locale: string } }) {
   const user = await stackServerApp.getUser()
@@ -14,7 +15,10 @@ export default async function OrdersPage({ params }: { params: { locale: string 
 
   const locale = params.locale as 'nl' | 'en' | 'de'
 
-  const orders = await fetchQuery(api.orders.listByUserWithItems, { user_id: user.id })
+  const orders = await fetchQuery(api.orders.listByUserWithItems, {
+    ...convexServerAuth(),
+    user_id: user.id,
+  })
 
   const t = {
     title: locale === 'de' ? 'Meine Bestellungen' : locale === 'en' ? 'My Orders' : 'Mijn Bestellingen',

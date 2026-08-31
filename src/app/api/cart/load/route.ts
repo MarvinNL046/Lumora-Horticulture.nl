@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
 
@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
 
     // Get the most recent non-recovered cart for this user
     const cart = await convex.query(api.abandonedCarts.load, {
+      ...convexServerAuth(),
       user_id: user.id,
     });
 
@@ -50,7 +51,6 @@ export async function GET(request: NextRequest) {
       {
         success: false,
         error: 'Failed to load cart',
-        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

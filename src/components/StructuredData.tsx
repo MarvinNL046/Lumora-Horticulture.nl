@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import { serializeJsonLd } from '@/lib/safe-json-ld'
 
 interface OrganizationSchemaProps {
   locale: string
@@ -43,7 +44,7 @@ export function OrganizationSchema({ locale }: OrganizationSchemaProps) {
     <Script
       id="organization-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationData) }}
       strategy="afterInteractive"
     />
   )
@@ -113,7 +114,7 @@ export function ProductSchema({ product, locale }: ProductSchemaProps) {
     <Script
       id={`product-schema-${product.sku}`}
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(productData) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(productData) }}
       strategy="afterInteractive"
     />
   )
@@ -204,7 +205,7 @@ export function ShopProductSchema({ product, locale, url, volumeTiers }: ShopPro
     <script
       type="application/ld+json"
       // Rendered server-side so Googlebot sees the structured data on first byte.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   )
 }
@@ -229,7 +230,7 @@ export function ShopBreadcrumbSchema({
     })),
   }
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
   )
 }
 
@@ -256,7 +257,7 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
     <Script
       id="breadcrumb-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbData) }}
       strategy="afterInteractive"
     />
   )
@@ -300,7 +301,7 @@ export function LocalBusinessSchema({ locale }: LocalBusinessSchemaProps) {
     <Script
       id="local-business-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(businessData) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(businessData) }}
       strategy="afterInteractive"
     />
   )

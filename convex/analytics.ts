@@ -1,5 +1,6 @@
 import { query } from "./_generated/server";
 import { v } from "convex/values";
+import { requireServerSecret } from "./lib/serverSecret";
 
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -9,14 +10,52 @@ const DAY = 24 * 60 * 60 * 1000;
 
 const PAID_STATUSES = new Set(["paid", "processing", "shipped", "completed"]);
 
+const windowStatsValidator = v.object({
+  windowDays: v.number(),
+  totalOrders: v.number(),
+  paidOrders: v.number(),
+  revenueEUR: v.number(),
+  aovEUR: v.number(),
+  statusBreakdown: v.record(v.string(), v.number()),
+  abandonedCarts: v.object({
+    created: v.number(),
+    reminderSent: v.number(),
+    recovered: v.number(),
+    recoveryRatePct: v.number(),
+  }),
+  delivery: v.object({
+    pickup: v.number(),
+    home: v.number(),
+    noPreference: v.number(),
+  }),
+});
+
 export const aov = query({
-  args: { days: v.optional(v.number()) },
-  handler: async (ctx, { days = 90 }) => {
+  args: { server_secret: v.string(), days: v.optional(v.number()) },
+  returns: v.object({
+    windowDays: v.number(),
+    totalOrders: v.number(),
+    paidOrders: v.number(),
+    revenueEUR: v.number(),
+    aovEUR: v.number(),
+    distribution: v.array(
+      v.object({
+        range: v.string(),
+        count: v.number(),
+      }),
+    ),
+  }),
+  handler: async (ctx, { server_secret, days = 90 }) => {
+    requireServerSecret(server_secret);
+    if (!Number.isFinite(days) || days < 1 || days > 365) {
+      throw new Error("Invalid analytics window");
+    }
     const cutoff = Date.now() - days * DAY;
     const all = await ctx.db
       .query("orders")
-      .filter((q) => q.gte(q.field("created_at"), cutoff))
-      .collect();
+      .withIndex("by_created_at", (q) => q.gte("created_at", cutoff))
+      .order("desc")
+      .take(5_000);
 
     const paid = all.filter((o) => PAID_STATUSES.has(o.status));
 
@@ -49,13 +88,35 @@ export const aov = query({
 // Comprehensive baseline — everything we need to measure the CRO work's impact
 // in 30 days. Returns three rolling windows (7/30/90 d) side by side.
 export const baseline = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { server_secret: v.string() },
+  returns: v.object({
+    snapshotAt: v.number(),
+    windows: v.array(windowStatsValidator),
+    topProducts90d: v.array(
+      v.object({
+        productId: v.string(),
+        name: v.string(),
+        units: v.number(),
+        revenueEUR: v.number(),
+      }),
+    ),
+  }),
+  handler: async (ctx, { server_secret }) => {
+    requireServerSecret(server_secret);
     const now = Date.now();
     const windows = [7, 30, 90] as const;
+    const cutoff90 = now - 90 * DAY;
 
-    const allOrders = await ctx.db.query("orders").collect();
-    const allCarts = await ctx.db.query("abandonedCarts").collect();
+    const allOrders = await ctx.db
+      .query("orders")
+      .withIndex("by_created_at", (q) => q.gte("created_at", cutoff90))
+      .order("desc")
+      .take(5_000);
+    const allCarts = await ctx.db
+      .query("abandonedCarts")
+      .withIndex("by_created_at", (q) => q.gte("created_at", cutoff90))
+      .order("desc")
+      .take(5_000);
 
     const windowStats = windows.map((days) => {
       const cutoff = now - days * DAY;
@@ -104,7 +165,6 @@ export const baseline = query({
     });
 
     // Trailing 90d top products — which SKUs actually move.
-    const cutoff90 = now - 90 * DAY;
     const paid90 = allOrders.filter(
       (o) => PAID_STATUSES.has(o.status) && o.created_at >= cutoff90,
     );
@@ -113,7 +173,7 @@ export const baseline = query({
       const items = await ctx.db
         .query("orderItems")
         .withIndex("by_order", (q) => q.eq("order_id", order._id))
-        .collect();
+        .take(100);
       for (const item of items) {
         const p = await ctx.db.get(item.product_id);
         const key = String(item.product_id);

@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
-import { resend, EMAIL_FROM, EMAIL_REPLY_TO } from '@/lib/resend';
+import {
+  EMAIL_FROM,
+  EMAIL_REPLY_TO,
+  assertResendConfigured,
+  resend,
+} from '@/lib/resend';
 import { getPaymentRecoveryEmailContent } from '@/emails/payment-recovery-template';
+import {
+  assertPaymentRetryConfiguration,
+  createPaymentRetryToken,
+  type PaymentRetryLocale,
+} from '@/lib/payment-retry-token';
+import { isAuthorizedCronRequest } from '@/lib/cron-auth';
+import { getCanonicalBaseUrl } from '@/lib/canonical-base-url';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,8 +28,8 @@ export const maxDuration = 60;
 // - 2nd email: 48 hours after the 1st (final reminder)
 //
 // The cron does NOT pre-create Mollie payments. Each email links to
-// /checkout/retry?order_id=... which mints a fresh payment on click via
-// /api/orders/[id]/retry-payment. This avoids polluting the Mollie dashboard
+// /checkout/retry#token=... which mints a fresh payment on click via the
+// token-protected retry API. This avoids polluting the Mollie dashboard
 // with dozens of expired payments and lets the customer pay even if the
 // previous link expired. Mirrors how Shopify, Stripe Checkout, and Klaviyo
 // do abandoned-cart recovery.
@@ -39,16 +51,46 @@ function isSkippableEmail(email: string): boolean {
 }
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!isAuthorizedCronRequest(request.headers.get('authorization'))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Public checkout can be abused to nominate someone else's email address.
+  // Keep outbound recovery mail fail-closed until distributed checkout abuse
+  // controls have been configured and tested at the platform edge.
+  if (process.env.RECOVERY_EMAILS_ENABLED !== 'true') {
+    return NextResponse.json(
+      { message: 'Payment recovery email automation is disabled' },
+      { headers: { 'Cache-Control': 'no-store, max-age=0' } },
+    );
+  }
+
+  let baseUrl: string;
+  try {
+    // Check this before claiming any recovery state. Missing configuration
+    // must stop the whole job instead of consuming reminders without a link.
+    assertPaymentRetryConfiguration();
+    baseUrl = getCanonicalBaseUrl();
+    assertResendConfigured();
+  } catch (error) {
+    console.error('Payment recovery is disabled: retry token secret is not configured', error);
+    return NextResponse.json(
+      { error: 'Payment recovery is not configured' },
+      { status: 503 },
+    );
   }
 
   console.log('Running payment recovery email job...');
 
   try {
-    const ordersForFirstEmail = await convex.query(api.orders.listForFirstRecovery);
-    const ordersForSecondEmail = await convex.query(api.orders.listForSecondRecovery);
+    const ordersForFirstEmail = await convex.query(
+      api.orders.listForFirstRecovery,
+      convexServerAuth(),
+    );
+    const ordersForSecondEmail = await convex.query(
+      api.orders.listForSecondRecovery,
+      convexServerAuth(),
+    );
 
     const ordersToRecover = [
       ...ordersForFirstEmail.map((o) => ({ ...o, isSecondReminder: false })),
@@ -78,18 +120,20 @@ export async function GET(request: NextRequest) {
         // order again.
         if (isSkippableEmail(order.customer_email)) {
           await convex.mutation(api.orders.markRecoveryState, {
+            ...convexServerAuth(),
             id: order._id,
             expected_from: expectedFrom,
             to: 'given_up',
           });
           skippedCount++;
-          console.log(`Skipped order ${order._id}: test/invalid email ${order.customer_email}`);
+          console.log(`Skipped order ${order._id}: test/invalid recipient`);
           continue;
         }
 
         // CLAIM BEFORE WORK. If another cron instance / retry already moved
         // this order forward, the claim returns false and we skip.
         const claimed = await convex.mutation(api.orders.markRecoveryState, {
+          ...convexServerAuth(),
           id: order._id,
           expected_from: expectedFrom,
           to: nextState,
@@ -103,12 +147,14 @@ export async function GET(request: NextRequest) {
         }
 
         const itemsWithProducts = await convex.query(api.orderItems.getByOrderWithProducts, {
+          ...convexServerAuth(),
           order_id: order._id,
         });
 
         if (itemsWithProducts.length === 0) {
           console.log(`No items found for order ${order._id}, marking given_up`);
           await convex.mutation(api.orders.markRecoveryState, {
+            ...convexServerAuth(),
             id: order._id,
             to: 'given_up',
           });
@@ -116,19 +162,19 @@ export async function GET(request: NextRequest) {
           continue;
         }
 
-        const locale = order.locale || 'nl';
-        const domain =
-          locale === 'en'
-            ? 'lumorahorticulture.com'
-            : locale === 'de'
-            ? 'lumorahorticulture.de'
-            : 'lumorahorticulture.nl';
-        const baseUrl = `https://${domain}`;
+        const locale: PaymentRetryLocale =
+          order.locale === 'en' || order.locale === 'de' ? order.locale : 'nl';
+        const localePrefix = locale === 'nl' ? '' : `/${locale}`;
+        const retryToken = createPaymentRetryToken({
+          orderId: order._id,
+          locale,
+        });
 
-        // Single CTA: a stable retry URL. /checkout/retry creates the Mollie
-        // payment on click via /api/orders/[id]/retry-payment, so we don't
-        // pre-create anything here.
-        const retryPageUrl = `${baseUrl}/${locale}/checkout/retry?order_id=${order._id}`;
+        // The signed, expiring token is the only credential. The order id is
+        // deliberately not exposed as a lookup parameter.
+        // Keep the capability in the URL fragment: browsers do not send it in
+        // the HTTP request, Referer header, CDN logs, or server analytics.
+        const retryPageUrl = `${baseUrl}${localePrefix}/checkout/retry#token=${encodeURIComponent(retryToken)}`;
 
         const orderItemsForEmail = itemsWithProducts.map((item) => ({
           name: item.product?.name || 'Product',
@@ -150,17 +196,26 @@ export async function GET(request: NextRequest) {
           isSecondReminder,
         });
 
-        await resend.emails.send({
-          from: EMAIL_FROM,
-          to: order.customer_email,
-          replyTo: EMAIL_REPLY_TO,
-          subject: emailContent.subject,
-          html: emailContent.html,
-        });
+        const sendResult = await resend.emails.send(
+          {
+            from: EMAIL_FROM,
+            to: order.customer_email,
+            replyTo: EMAIL_REPLY_TO,
+            subject: emailContent.subject,
+            html: emailContent.html,
+          },
+          {
+            idempotencyKey: `payment-recovery-${order._id}-${isSecondReminder ? '2' : '1'}`,
+          },
+        );
+        if (sendResult.error || !sendResult.data?.id) {
+          throw new Error('Resend did not acknowledge payment recovery email');
+        }
 
         // After the 2nd reminder there's nowhere to go — close the loop.
         if (isSecondReminder) {
           await convex.mutation(api.orders.markRecoveryState, {
+            ...convexServerAuth(),
             id: order._id,
             to: finalState,
           });
@@ -168,7 +223,7 @@ export async function GET(request: NextRequest) {
 
         successCount++;
         console.log(
-          `${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order._id} to ${order.customer_email}`
+          `${isSecondReminder ? '2nd' : '1st'} recovery email sent for order ${order._id}`
         );
       } catch (error) {
         failCount++;

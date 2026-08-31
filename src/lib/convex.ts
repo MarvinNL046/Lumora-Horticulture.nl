@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { ConvexHttpClient } from 'convex/browser';
 
 let _client: ConvexHttpClient | null = null;
@@ -20,3 +22,24 @@ export const convex = new Proxy({} as ConvexHttpClient, {
     return typeof value === 'function' ? value.bind(client) : value;
   },
 });
+
+/**
+ * Shared secret for server-to-server Convex calls.
+ *
+ * Sensitive Convex functions are still public HTTP endpoints by platform
+ * design, so every server caller must prove it is part of this application.
+ * Fail closed when rollout configuration is missing or accidentally weak.
+ */
+export function requireConvexServerSecret(): string {
+  const secret = process.env.CONVEX_SERVER_SECRET;
+
+  if (!secret || secret.length < 32) {
+    throw new Error('CONVEX_SERVER_SECRET must be configured with at least 32 characters');
+  }
+
+  return secret;
+}
+
+export function convexServerAuth(): { server_secret: string } {
+  return { server_secret: requireConvexServerSecret() };
+}

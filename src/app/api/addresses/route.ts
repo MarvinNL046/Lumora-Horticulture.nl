@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { stackServerApp } from '@/stack/server';
+import {
+  InvalidRequestBodyError,
+  readLimitedJson,
+  RequestBodyTooLargeError,
+} from '@/lib/limited-json';
+import { parseSavedAddressInput } from '@/lib/saved-address-input';
 
 export const dynamic = 'force-dynamic';
+const MAX_ADDRESS_BODY_BYTES = 10_000;
 
 /**
  * GET /api/addresses
@@ -22,6 +29,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch all addresses for this user
     const addresses = await convex.query(api.savedAddresses.list, {
+      ...convexServerAuth(),
       user_id: user.id,
     });
 
@@ -35,7 +43,6 @@ export async function GET(request: NextRequest) {
       {
         success: false,
         error: 'Failed to fetch addresses',
-        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -57,11 +64,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { name, street, city, postal_code, country, phone, is_default } = body;
+    const body = await readLimitedJson(request, MAX_ADDRESS_BODY_BYTES);
+    const address = parseSavedAddressInput(body);
 
     // Validation
-    if (!name || !street || !city || !postal_code || !country) {
+    if (!address) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -70,14 +77,9 @@ export async function POST(request: NextRequest) {
 
     // Create new address (Convex mutation handles unsetting other defaults)
     const addressId = await convex.mutation(api.savedAddresses.create, {
+      ...convexServerAuth(),
       user_id: user.id,
-      name,
-      street,
-      city,
-      postal_code,
-      country,
-      phone: phone || undefined,
-      is_default: is_default || false,
+      ...address,
     });
 
     return NextResponse.json({
@@ -85,12 +87,17 @@ export async function POST(request: NextRequest) {
       address: { _id: addressId },
     });
   } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) {
+      return NextResponse.json({ success: false, error: 'Payload too large' }, { status: 413 });
+    }
+    if (error instanceof InvalidRequestBodyError) {
+      return NextResponse.json({ success: false, error: 'Invalid request' }, { status: 400 });
+    }
     console.error('Create address error:', error);
     return NextResponse.json(
       {
         success: false,
         error: 'Failed to create address',
-        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

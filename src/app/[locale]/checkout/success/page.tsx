@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { trackPurchase } from '@/lib/google-ads';
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
@@ -25,13 +24,6 @@ export default function CheckoutSuccessPage() {
             if (data.order.payment_status === 'paid') {
               setOrderStatus('success');
 
-              // Track Google Ads conversie alleen bij succesvolle betaling
-              const totalAmount = parseFloat(data.order.total_amount);
-              trackPurchase(
-                data.order.order_number || orderId,
-                totalAmount,
-                data.order.payment_id
-              );
             } else if (data.order.payment_status === 'pending') {
               setOrderStatus('pending');
             } else {

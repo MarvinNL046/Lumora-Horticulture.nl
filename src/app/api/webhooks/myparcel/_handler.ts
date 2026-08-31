@@ -1,10 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
-import { getShipment, trackingUrl } from '@/lib/myparcel';
+import {
+  getShipment,
+  getTrackTrace,
+  trackingUrl,
+  trackingUrlFromTrackTrace,
+  type MyParcelCarrier,
+} from '@/lib/myparcel';
 import { resend, EMAIL_FROM, EMAIL_REPLY_TO, EMAIL_NOTIFICATION_TO } from '@/lib/resend';
 import { render } from '@react-email/components';
 import { ShippedEmail } from '@/emails/ShippedEmail';
+import {
+  authenticateMyParcelWebhook,
+  isKnownMyParcelShipmentStatus,
+  MAX_MYPARCEL_WEBHOOK_BODY_BYTES,
+  MyParcelWebhookValidationError,
+  parseMyParcelWebhookEvents,
+} from '@/lib/myparcel-webhook-security';
 import React from 'react';
 
 const CARRIER_LABEL: Record<string, string> = {
@@ -55,99 +68,178 @@ function mapStatusCode(code: number): {
   return { shipment_status: 'pending', shipped: false, delivered: false };
 }
 
-// MyParcel's two webhooks have DIFFERENT payload shapes (per their docs):
-//
-//   shipment_status_change:
-//     { data: { hooks: [{ shipment_id, status (number), barcode, ... }] } }
-//
-//   shipment_label_created:
-//     { data: { hooks: [{ status ("success"|"failed"), shipment_ids: [int],
-//                         printer_identifier, pdf }] } }
-//
-// We normalise both into a flat list of {shipmentId, statusCode?, barcode?, pdfUrl?}.
-interface NormalisedEvent {
-  shipmentId: string;
-  statusCode?: number;
-  barcode?: string;
-  pdfUrl?: string;
-  labelOk?: boolean;
+async function readLimitedBody(request: NextRequest): Promise<string> {
+  const contentLength = request.headers.get('content-length');
+  if (
+    contentLength &&
+    (!/^\d+$/.test(contentLength) || Number(contentLength) > MAX_MYPARCEL_WEBHOOK_BODY_BYTES)
+  ) {
+    throw new MyParcelWebhookValidationError();
+  }
+
+  if (!request.body) throw new MyParcelWebhookValidationError();
+
+  const reader = request.body.getReader();
+  const chunks: Buffer[] = [];
+  let received = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    received += value.byteLength;
+    if (received > MAX_MYPARCEL_WEBHOOK_BODY_BYTES) {
+      await reader.cancel().catch(() => undefined);
+      throw new MyParcelWebhookValidationError();
+    }
+    chunks.push(Buffer.from(value));
+  }
+
+  return Buffer.concat(chunks).toString('utf8');
 }
 
-function normaliseEvents(source: 'label' | 'status', body: any): NormalisedEvent[] {
-  const hooks: any[] = body?.data?.hooks ?? [];
-  const out: NormalisedEvent[] = [];
-  for (const h of hooks) {
-    if (source === 'status') {
-      if (h.shipment_id != null) {
-        out.push({
-          shipmentId: String(h.shipment_id),
-          statusCode: typeof h.status === 'number' ? h.status : undefined,
-          barcode: typeof h.barcode === 'string' ? h.barcode : undefined,
-        });
-      }
-      continue;
-    }
-    // label-created: expand shipment_ids array, status is a string literal.
-    const ids: Array<number | string> = Array.isArray(h.shipment_ids) ? h.shipment_ids : [];
-    const ok = h.status === 'success';
-    for (const id of ids) {
-      out.push({
-        shipmentId: String(id),
-        pdfUrl: typeof h.pdf === 'string' ? h.pdf : undefined,
-        labelOk: ok,
-      });
-    }
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function carrierFromPreference(value: unknown): MyParcelCarrier {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return 'postnl';
+  const carrier = String((value as Record<string, unknown>).carrier || '').toLowerCase();
+  return (
+    ['postnl', 'dpd', 'dhl', 'dhlforyou', 'ups'] as const
+  ).includes(carrier as MyParcelCarrier)
+    ? (carrier as MyParcelCarrier)
+    : 'postnl';
+}
+
+function countryCode(value: unknown): 'NL' | 'BE' | 'DE' {
+  const country = String(value || '').trim().toUpperCase();
+  if (country === 'BE' || country.startsWith('BEL')) return 'BE';
+  if (country === 'DE' || country.startsWith('DUIT') || country.startsWith('GER')) {
+    return 'DE';
   }
-  return out;
+  return 'NL';
 }
 
 export async function handleMyParcelWebhook(
   request: NextRequest,
   source: 'label' | 'status',
 ): Promise<NextResponse> {
-  try {
-    const body = await request.json().catch(() => ({}));
-    const events = normaliseEvents(source, body);
-    if (events.length === 0) {
-      return NextResponse.json({ success: true, processed: 0, source });
-    }
+  const authentication = authenticateMyParcelWebhook({
+    headers: request.headers,
+    requestUrl: request.url,
+    source,
+    apiKey: process.env.MYPARCEL_API_KEY,
+    webhookSecret: process.env.MYPARCEL_WEBHOOK_SECRET,
+    expectedHookId:
+      source === 'label'
+        ? process.env.MYPARCEL_LABEL_HOOK_ID
+        : process.env.MYPARCEL_STATUS_HOOK_ID,
+  });
 
+  if (!authentication.ok) {
+    const status =
+      authentication.reason === 'misconfigured'
+        ? 503
+        : authentication.reason === 'unsupported_media_type'
+          ? 415
+          : 401;
+    const error =
+      status === 503 ? 'Service unavailable' : status === 401 ? 'Unauthorized' : 'Invalid request';
+    return NextResponse.json(
+      { success: false, error },
+      { status, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
+  let events: ReturnType<typeof parseMyParcelWebhookEvents>;
+  try {
+    const rawBody = await readLimitedBody(request);
+    events = parseMyParcelWebhookEvents(source, rawBody);
+  } catch (error) {
+    if (error instanceof MyParcelWebhookValidationError) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid request' },
+        { status: 400, headers: { 'Cache-Control': 'no-store' } },
+      );
+    }
+    console.error(`MyParcel ${source}-webhook body read failed`);
+    return NextResponse.json(
+      { success: false, error: 'Webhook processing failed' },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
+  try {
     let processed = 0;
     for (const evt of events) {
-      const order = await convex.query(api.orders.getByShipmentId, { shipment_id: evt.shipmentId });
+      // A failed asynchronous label creation contains no usable label. Ack it
+      // without changing an order; MyParcel may send a later successful hook.
+      if (source === 'label' && !evt.labelOk) continue;
+
+      const order = await convex.query(api.orders.getByShipmentId, {
+        shipment_id: evt.shipmentId,
+        ...convexServerAuth(),
+      });
       if (!order) {
         console.warn(`MyParcel ${source}-webhook: no order for shipment ${evt.shipmentId}`);
         continue;
       }
 
-      // Always pull fresh shipment detail — label-created events don't include
-      // barcode, status-change events sometimes drop it on early transitions.
-      let barcode = evt.barcode;
-      let statusCode = evt.statusCode;
-      try {
-        const detail = await getShipment(evt.shipmentId);
-        barcode = barcode || detail.barcode;
-        if (statusCode == null && typeof detail.status === 'number') statusCode = detail.status;
-      } catch (e) {
-        console.warn(`MyParcel ${source}-webhook: getShipment failed, using event data:`, e);
+      // The notification is only a signal. Always re-fetch the shipment with
+      // our authenticated API client and never mutate from event status/barcode.
+      const detail = await getShipment(evt.shipmentId);
+      if (String(detail.id) !== evt.shipmentId) {
+        throw new Error('MyParcel shipment identity mismatch');
       }
 
-      // For label_created without a status code, treat the event itself as
-      // "label printed" (MyParcel's internal status for printed shipments).
+      const detailStatus = isKnownMyParcelShipmentStatus(detail.status)
+        ? detail.status
+        : undefined;
+      if (source === 'status' && detailStatus === undefined) {
+        throw new Error('MyParcel returned an invalid shipment status');
+      }
+
+      // A successful label event can arrive just before GET /shipments moves
+      // from registered (2) to a printed state. The authenticated API lookup
+      // still proves that the shipment belongs to this MyParcel account.
       const effectiveStatus =
-        statusCode ?? (source === 'label' && evt.labelOk ? 12 : 0);
+        source === 'label' && (detailStatus === undefined || detailStatus <= 2)
+          ? 12
+          : detailStatus!;
       const mapped = mapStatusCode(effectiveStatus);
+      const barcode =
+        typeof detail.barcode === 'string' &&
+        detail.barcode.length <= 128 &&
+        !/[\u0000-\u001f\u007f]/.test(detail.barcode)
+          ? detail.barcode
+          : undefined;
 
       const shipping = order.shipping_address as any;
-      const cc = (String(shipping?.country || 'NL').slice(0, 2).toUpperCase() as 'NL' | 'BE' | 'DE');
-      const tUrl = barcode
-        ? trackingUrl(
-            barcode,
-            String(shipping?.postalCode || shipping?.postal_code || ''),
-            cc,
-            (order.locale as 'nl' | 'en' | 'de') || 'nl',
-          )
+      const pref = (order as any).delivery_preference as any;
+      const carrierKey = carrierFromPreference(pref);
+      const cc = countryCode(shipping?.country);
+      const trackTrace = await getTrackTrace(evt.shipmentId);
+      const providerTrackingUrl = trackTrace
+        ? trackingUrlFromTrackTrace(trackTrace, carrierKey)
         : undefined;
+      const tUrl = providerTrackingUrl ?? (
+        carrierKey === 'postnl' && barcode
+          ? trackingUrl(
+              barcode,
+              String(shipping?.postalCode || shipping?.postal_code || ''),
+              cc,
+              (order.locale as 'nl' | 'en' | 'de') || 'nl',
+            )
+          : undefined
+      );
+      if (mapped.shipped && !tUrl) {
+        throw new Error('MyParcel carrier tracking URL is not available yet');
+      }
 
       // Shipped email fires ONCE, as soon as the parcel is physically moving
       // (status 3+). We don't send it at "label_printed" because the courier
@@ -161,9 +253,7 @@ export async function handleMyParcelWebhook(
       let shippedEmailSentAt: number | undefined;
       if (shouldSendShippedEmail) {
         try {
-          const pref = (order as any).delivery_preference as any;
           const emailLocale = ((order as any).locale as 'nl' | 'en' | 'de') || 'nl';
-          const carrierKey = String(pref?.carrier || 'postnl');
           const html = await render(
             React.createElement(ShippedEmail, {
               orderNumber: order.order_number || String(order._id),
@@ -184,41 +274,66 @@ export async function handleMyParcelWebhook(
               locale: emailLocale,
             }),
           );
-          await resend.emails.send({
-            from: EMAIL_FROM,
-            replyTo: EMAIL_REPLY_TO,
-            to: order.customer_email,
-            subject: SHIPPED_SUBJECT[emailLocale](order.order_number || String(order._id)),
-            html,
-          });
+          const sendResult = await resend.emails.send(
+            {
+              from: EMAIL_FROM,
+              replyTo: EMAIL_REPLY_TO,
+              to: order.customer_email,
+              subject: SHIPPED_SUBJECT[emailLocale](order.order_number || String(order._id)),
+              html,
+            },
+            { idempotencyKey: `myparcel-shipped-${order._id}` },
+          );
+          if (sendResult.error) {
+            throw new Error(
+              `Resend ${sendResult.error.name}: ${sendResult.error.message}`,
+            );
+          }
+          if (!sendResult.data?.id) throw new Error('Resend returned no shipped-email id');
           shippedEmailSentAt = Date.now();
-          console.log(`Shipped email sent to ${order.customer_email} for order ${order._id}`);
+          console.log(`Shipped email sent for order ${order._id}`);
         } catch (mailErr) {
-          console.error(`${source}-webhook: shipped email failed (non-blocking):`, mailErr);
+          console.error(`${source}-webhook: shipped email failed:`, mailErr);
+          throw mailErr;
         }
       }
 
       // On label-created: forward the label PDF link to the shop owner so they
       // can print without logging into the MyParcel portal.
-      if (source === 'label' && evt.pdfUrl && evt.labelOk) {
+      const labelAlreadyHandled = ['label_printed', 'shipped', 'ready_for_pickup', 'delivered']
+        .includes(String((order as any).shipment_status || ''));
+      if (source === 'label' && evt.pdfUrl && evt.labelOk && !labelAlreadyHandled) {
         try {
-          await resend.emails.send({
-            from: EMAIL_FROM,
-            replyTo: EMAIL_REPLY_TO,
-            to: EMAIL_NOTIFICATION_TO,
-            subject: `🏷️ Verzendlabel klaar — ${order.order_number || order._id}`,
-            html: `<p>Verzendlabel voor order <strong>${order.order_number || order._id}</strong> is aangemaakt.</p>
-<p><a href="${evt.pdfUrl}">Label PDF openen →</a></p>
-<p>Klant: ${order.customer_name || ''} (${order.customer_email})<br/>
-Tracking: ${barcode || '—'}</p>`,
-          });
+          const safeOrderNumber = escapeHtml(order.order_number || order._id);
+          const safePdfUrl = escapeHtml(evt.pdfUrl);
+          const sendResult = await resend.emails.send(
+            {
+              from: EMAIL_FROM,
+              replyTo: EMAIL_REPLY_TO,
+              to: EMAIL_NOTIFICATION_TO,
+              subject: `🏷️ Verzendlabel klaar — ${order.order_number || order._id}`,
+              html: `<p>Verzendlabel voor order <strong>${safeOrderNumber}</strong> is aangemaakt.</p>
+<p><a href="${safePdfUrl}">Label PDF openen →</a></p>
+<p>Klant: ${escapeHtml(order.customer_name)} (${escapeHtml(order.customer_email)})<br/>
+Tracking: ${escapeHtml(barcode || '—')}</p>`,
+            },
+            { idempotencyKey: `myparcel-label-${evt.shipmentId}` },
+          );
+          if (sendResult.error) {
+            throw new Error(
+              `Resend ${sendResult.error.name}: ${sendResult.error.message}`,
+            );
+          }
+          if (!sendResult.data?.id) throw new Error('Resend returned no label-email id');
         } catch (e) {
-          console.error('Label-PDF admin notification failed (non-blocking):', e);
+          console.error('Label-PDF admin notification failed:', e);
+          throw e;
         }
       }
 
       await convex.mutation(api.orders.update, {
         id: order._id,
+        ...convexServerAuth(),
         shipment_status: mapped.shipment_status,
         tracking_code: barcode || undefined,
         tracking_url: tUrl,
@@ -230,12 +345,15 @@ Tracking: ${barcode || '—'}</p>`,
       processed++;
     }
 
-    return NextResponse.json({ success: true, processed, source });
-  } catch (error) {
-    console.error(`MyParcel ${source}-webhook error:`, error);
     return NextResponse.json(
-      { success: false, error: error instanceof Error ? error.message : 'unknown', source },
-      { status: 500 },
+      { success: true, processed },
+      { headers: { 'Cache-Control': 'no-store' } },
+    );
+  } catch {
+    console.error(`MyParcel ${source}-webhook processing failed`);
+    return NextResponse.json(
+      { success: false, error: 'Webhook processing failed' },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } },
     );
   }
 }

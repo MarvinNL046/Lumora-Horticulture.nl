@@ -1,9 +1,20 @@
 import { createMollieClient, PaymentMethod } from '@mollie/api-client';
 
-// Initialiseer Mollie client
-export const mollieClient = createMollieClient({
-  apiKey: process.env.MOLLIE_API_KEY!,
-});
+let mollieClient: ReturnType<typeof createMollieClient> | null = null;
+
+function getMollieClient(): ReturnType<typeof createMollieClient> {
+  const apiKey = process.env.MOLLIE_API_KEY;
+  if (
+    !apiKey ||
+    apiKey.length < 20 ||
+    (!apiKey.startsWith('live_') && !apiKey.startsWith('test_'))
+  ) {
+    throw new Error('MOLLIE_API_KEY is not configured correctly');
+  }
+
+  mollieClient ??= createMollieClient({ apiKey });
+  return mollieClient;
+}
 
 /**
  * Maak een Mollie betaling aan
@@ -15,6 +26,7 @@ export async function createPayment({
   webhookUrl,
   metadata,
   method,
+  idempotencyKey,
 }: {
   amount: number;
   description: string;
@@ -22,9 +34,10 @@ export async function createPayment({
   webhookUrl: string;
   metadata?: Record<string, any>;
   method?: PaymentMethod; // Optioneel: specificeer een betaalmethode of laat Mollie kiezen
+  idempotencyKey?: string;
 }) {
   try {
-    const payment = await mollieClient.payments.create({
+    const payment = await getMollieClient().payments.create({
       amount: {
         currency: 'EUR',
         value: amount.toFixed(2),
@@ -33,6 +46,7 @@ export async function createPayment({
       redirectUrl,
       webhookUrl,
       metadata,
+      idempotencyKey,
       // Als geen method opgegeven, toont Mollie alle beschikbare betaalmethodes
       ...(method && { method }),
     });
@@ -49,7 +63,7 @@ export async function createPayment({
  */
 export async function getPaymentStatus(paymentId: string) {
   try {
-    const payment = await mollieClient.payments.get(paymentId);
+    const payment = await getMollieClient().payments.get(paymentId);
     return payment;
   } catch (error) {
     console.error('Mollie payment status error:', error);

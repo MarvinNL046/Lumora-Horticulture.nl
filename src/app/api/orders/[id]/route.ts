@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { Id } from '@/../convex/_generated/dataModel';
 
@@ -28,6 +28,7 @@ export async function GET(
 
     // Zoek order op basis van ID
     const order = await convex.query(api.orders.getById, {
+      ...convexServerAuth(),
       id: orderId as Id<"orders">,
     });
 
@@ -47,12 +48,10 @@ export async function GET(
       order: {
         id: order._id,
         order_number: order.order_number,
-        total_amount: order.total_amount,
-        payment_id: order.payment_id,
         payment_status: order.payment_status,
         status: order.status,
       },
-    });
+    }, { headers: { 'Cache-Control': 'no-store, max-age=0' } });
   } catch (error) {
     console.error('Error fetching order:', error);
     return NextResponse.json(

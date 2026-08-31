@@ -1,4 +1,4 @@
-import { CartItem } from '@/contexts/CartContext';
+import type { CartItem } from '@/contexts/CartContext';
 import { formatPrice, calculateDiscountedPrice, calculateTotalPrice } from '@/lib/volume-discount';
 
 interface AbandonedCartEmailProps {
@@ -9,73 +9,181 @@ interface AbandonedCartEmailProps {
   checkoutUrl: string;
 }
 
+type EmailLocale = 'nl' | 'en' | 'de';
+
+const MAX_CART_ITEMS = 20;
+const MAX_ITEM_NAME_LENGTH = 200;
+const MAX_URL_LENGTH = 2_048;
+const MAX_QUANTITY = 100;
+const MAX_UNIT_PRICE = 100_000;
+const MAX_TOTAL_AMOUNT = 1_000_000;
+const TRUSTED_LUMORA_HOSTS = new Set([
+  'lumorahorticulture.nl',
+  'lumorahorticulture.com',
+  'lumorahorticulture.de',
+]);
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+    };
+    return entities[character];
+  });
+}
+
+function safeLumoraHttpsUrl(value: unknown, allowRelative = false): string {
+  if (typeof value !== 'string' || value.length === 0 || value.length > MAX_URL_LENGTH) return '';
+
+  try {
+    const isRelativePath = value.startsWith('/') && !value.startsWith('//');
+    if (isRelativePath && !allowRelative) return '';
+
+    const url = isRelativePath
+      ? new URL(value, 'https://lumorahorticulture.nl')
+      : new URL(value);
+    if (
+      url.protocol !== 'https:' ||
+      url.username !== '' ||
+      url.password !== '' ||
+      url.port !== '' ||
+      !TRUSTED_LUMORA_HOSTS.has(url.hostname)
+    ) {
+      return '';
+    }
+    return escapeHtml(url.toString());
+  } catch {
+    return '';
+  }
+}
+
+function normaliseLocale(value: unknown): EmailLocale {
+  return value === 'en' || value === 'de' ? value : 'nl';
+}
+
+function isBoundedNumber(value: unknown, maximum: number): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= maximum;
+}
+
+function normaliseCartItems(value: unknown): CartItem[] {
+  if (!Array.isArray(value)) return [];
+
+  const items: CartItem[] = [];
+  for (const candidate of value.slice(0, MAX_CART_ITEMS)) {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) continue;
+
+    const item = candidate as Partial<CartItem>;
+    if (
+      typeof item.name !== 'string' ||
+      item.name.length === 0 ||
+      item.name.length > MAX_ITEM_NAME_LENGTH ||
+      !Number.isInteger(item.quantity) ||
+      !isBoundedNumber(item.quantity, MAX_QUANTITY) ||
+      item.quantity < 1 ||
+      !isBoundedNumber(item.price, MAX_UNIT_PRICE) ||
+      calculateTotalPrice(item.price, item.quantity) > MAX_TOTAL_AMOUNT
+    ) {
+      continue;
+    }
+
+    items.push({
+      product_id: typeof item.product_id === 'string' ? item.product_id.slice(0, 128) : '',
+      slug: typeof item.slug === 'string' ? item.slug.slice(0, 200) : '',
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      image_url: typeof item.image_url === 'string' ? item.image_url : '',
+    });
+  }
+
+  return items;
+}
+
 export function getAbandonedCartEmailContent(props: AbandonedCartEmailProps) {
   const { customerName, cartItems, totalAmount, locale, checkoutUrl } = props;
+  const emailLocale = normaliseLocale(locale);
+  const safeCustomerName =
+    typeof customerName === 'string' && customerName.length <= 100
+      ? escapeHtml(customerName)
+      : undefined;
+  const safeCheckoutUrl = safeLumoraHttpsUrl(checkoutUrl);
+  const safeCartItems = normaliseCartItems(cartItems);
+  const computedTotal = safeCartItems.reduce(
+    (sum, item) => sum + calculateTotalPrice(item.price, item.quantity),
+    0,
+  );
+  const safeTotalAmount = isBoundedNumber(totalAmount, MAX_TOTAL_AMOUNT)
+    ? totalAmount
+    : Math.min(computedTotal, MAX_TOTAL_AMOUNT);
 
   const t = {
     subject:
-      locale === 'de'
+      emailLocale === 'de'
         ? 'Ihre Produkte warten noch auf Sie! 🌱'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'Your products are still waiting for you! 🌱'
         : 'Je producten wachten nog op je! 🌱',
     greeting:
-      customerName
-        ? locale === 'de'
-          ? `Hallo ${customerName},`
-          : locale === 'en'
-          ? `Hi ${customerName},`
-          : `Hoi ${customerName},`
-        : locale === 'de'
+      safeCustomerName
+        ? emailLocale === 'de'
+          ? `Hallo ${safeCustomerName},`
+          : emailLocale === 'en'
+          ? `Hi ${safeCustomerName},`
+          : `Hoi ${safeCustomerName},`
+        : emailLocale === 'de'
         ? 'Hallo,'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'Hi,'
         : 'Hoi,',
     intro:
-      locale === 'de'
+      emailLocale === 'de'
         ? 'Sie haben einige großartige Produkte in Ihrem Warenkorb gelassen! Wir möchten Sie daran erinnern, dass diese noch auf Sie warten.'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'You left some great products in your cart! We wanted to remind you that they\'re still waiting for you.'
         : 'Je hebt een aantal geweldige producten achtergelaten in je winkelwagen! We wilden je eraan herinneren dat ze nog op je wachten.',
-    yourCart: locale === 'de' ? 'Ihr Warenkorb:' : locale === 'en' ? 'Your Cart:' : 'Jouw Winkelwagen:',
-    quantity: locale === 'de' ? 'Anzahl' : locale === 'en' ? 'Quantity' : 'Aantal',
-    total: locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal',
+    yourCart: emailLocale === 'de' ? 'Ihr Warenkorb:' : emailLocale === 'en' ? 'Your Cart:' : 'Jouw Winkelwagen:',
+    quantity: emailLocale === 'de' ? 'Anzahl' : emailLocale === 'en' ? 'Quantity' : 'Aantal',
+    total: emailLocale === 'de' ? 'Gesamt' : emailLocale === 'en' ? 'Total' : 'Totaal',
     freeShipping:
-      locale === 'de'
+      emailLocale === 'de'
         ? '✅ Kostenloser Versand innerhalb NL, BE & DE'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? '✅ Free shipping within NL, BE & DE'
         : '✅ Gratis verzending binnen NL, BE & DE',
     volumeDiscounts:
-      locale === 'de'
+      emailLocale === 'de'
         ? '✅ Automatische Mengenrabatte'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? '✅ Automatic volume discounts'
         : '✅ Automatische staffelkortingen',
     checkoutButton:
-      locale === 'de'
+      emailLocale === 'de'
         ? 'Bestellung abschließen'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'Complete Your Order'
         : 'Bestelling Afronden',
-    needHelp: locale === 'de' ? 'Brauchen Sie Hilfe?' : locale === 'en' ? 'Need help?' : 'Hulp nodig?',
+    needHelp: emailLocale === 'de' ? 'Brauchen Sie Hilfe?' : emailLocale === 'en' ? 'Need help?' : 'Hulp nodig?',
     contactUs:
-      locale === 'de'
+      emailLocale === 'de'
         ? 'Kontaktieren Sie uns unter'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'Contact us at'
         : 'Neem contact op via',
     footer:
-      locale === 'de'
+      emailLocale === 'de'
         ? 'Mit freundlichen Grüßen,<br/>Das Lumora Horticulture Team'
-        : locale === 'en'
+        : emailLocale === 'en'
         ? 'Best regards,<br/>The Lumora Horticulture Team'
         : 'Met vriendelijke groet,<br/>Het Lumora Horticulture Team',
   };
 
   const html = `
 <!DOCTYPE html>
-<html lang="${locale}">
+<html lang="${emailLocale}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,10 +211,12 @@ export function getAbandonedCartEmailContent(props: AbandonedCartEmailProps) {
               <h2 style="margin: 0 0 20px; font-size: 20px; font-weight: bold; color: #404F4A;">${t.yourCart}</h2>
 
               <!-- Cart Items -->
-              ${cartItems
+              ${safeCartItems
                 .map((item) => {
                   const discountedPrice = calculateDiscountedPrice(item.price, item.quantity);
                   const itemTotal = calculateTotalPrice(item.price, item.quantity);
+                  const safeItemName = escapeHtml(item.name);
+                  const safeImageUrl = safeLumoraHttpsUrl(item.image_url, true);
 
                   return `
                 <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background-color: #FAF3C3; border-radius: 12px; overflow: hidden;">
@@ -115,10 +225,10 @@ export function getAbandonedCartEmailContent(props: AbandonedCartEmailProps) {
                       <table role="presentation" style="width: 100%;">
                         <tr>
                           <td style="width: 80px;">
-                            <img src="${item.image_url}" alt="${item.name}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />
+                            <img src="${safeImageUrl}" alt="${safeItemName}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />
                           </td>
                           <td style="padding-left: 15px;">
-                            <p style="margin: 0 0 5px; font-size: 16px; font-weight: 600; color: #404F4A;">${item.name}</p>
+                            <p style="margin: 0 0 5px; font-size: 16px; font-weight: 600; color: #404F4A;">${safeItemName}</p>
                             <p style="margin: 0 0 5px; font-size: 14px; color: #404F4A;">${t.quantity}: ${item.quantity}</p>
                             <p style="margin: 0; font-size: 14px; color: #2D7D46; font-weight: 600;">
                               ${formatPrice(discountedPrice)} × ${item.quantity} = ${formatPrice(itemTotal)}
@@ -138,7 +248,7 @@ export function getAbandonedCartEmailContent(props: AbandonedCartEmailProps) {
                 <tr>
                   <td style="padding: 10px 0; font-size: 20px; font-weight: bold; color: #404F4A;">${t.total}:</td>
                   <td style="padding: 10px 0; text-align: right; font-size: 24px; font-weight: bold; color: #2D7D46;">
-                    ${formatPrice(totalAmount)}
+                    ${formatPrice(safeTotalAmount)}
                   </td>
                 </tr>
               </table>
@@ -153,7 +263,7 @@ export function getAbandonedCartEmailContent(props: AbandonedCartEmailProps) {
               <table role="presentation" style="width: 100%; margin: 30px 0;">
                 <tr>
                   <td align="center">
-                    <a href="${checkoutUrl}" style="display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #2D7D46 0%, #26673B 100%); color: #ffffff; text-decoration: none; border-radius: 12px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 12px rgba(45, 125, 70, 0.3);">
+                    <a href="${safeCheckoutUrl}" style="display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #2D7D46 0%, #26673B 100%); color: #ffffff; text-decoration: none; border-radius: 12px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 12px rgba(45, 125, 70, 0.3);">
                       ${t.checkoutButton}
                     </a>
                   </td>

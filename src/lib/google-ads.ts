@@ -34,54 +34,6 @@ function fbqTrack(event: string, params?: Record<string, any>, eventId?: string)
   }
 }
 
-// Read Meta's fbp/fbc cookies from document.cookie for CAPI match quality.
-function readFbCookies(): { fbp?: string; fbc?: string } {
-  if (typeof document === 'undefined') return {};
-  const out: { fbp?: string; fbc?: string } = {};
-  for (const raw of document.cookie.split('; ')) {
-    const idx = raw.indexOf('=');
-    if (idx <= 0) continue;
-    const key = raw.slice(0, idx);
-    const val = decodeURIComponent(raw.slice(idx + 1));
-    if (key === '_fbp') out.fbp = val;
-    else if (key === '_fbc') out.fbc = val;
-  }
-  return out;
-}
-
-// Mirror a client-side Meta Pixel event to the server-side Conversions API so
-// iOS/Safari/ad-blocker users are still counted. Uses the same event_id as the
-// pixel call so Meta deduplicates the two events. Non-blocking, fire-and-forget.
-function sendCapiMirror(
-  eventName: 'ViewContent' | 'AddToCart' | 'InitiateCheckout' | 'Lead' | 'CompleteRegistration' | 'Subscribe',
-  eventId: string,
-  customData: Record<string, unknown>,
-  extraUserData?: Record<string, string>,
-) {
-  if (typeof window === 'undefined') return;
-  const { fbp, fbc } = readFbCookies();
-  const userData: Record<string, string> = { ...(extraUserData || {}) };
-  if (fbp) userData.fbp = fbp;
-  if (fbc) userData.fbc = fbc;
-
-  try {
-    fetch('/api/track/meta', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventName,
-        eventId,
-        customData,
-        userData,
-        eventSourceUrl: window.location.href,
-      }),
-      keepalive: true,
-    }).catch((err) => console.warn('CAPI mirror failed:', err));
-  } catch (err) {
-    console.warn('CAPI mirror throw:', err);
-  }
-}
-
 export interface Product {
   id: string;
   name: string;
@@ -184,7 +136,6 @@ export function trackViewItem(product: Product) {
   };
 
   fbqTrack('ViewContent', viewData, eventId);
-  sendCapiMirror('ViewContent', eventId, viewData);
 
   console.log('Product view tracked:', product.name);
 }
@@ -227,7 +178,6 @@ export function trackBeginCheckout(products: Product[], totalValue: number) {
   };
 
   fbqTrack('InitiateCheckout', checkoutData, eventId);
-  sendCapiMirror('InitiateCheckout', eventId, checkoutData);
 
   console.log('Begin checkout tracked:', { products, totalValue });
 }
@@ -269,7 +219,6 @@ export function trackAddToCart(product: Product) {
   };
 
   fbqTrack('AddToCart', atcData, eventId);
-  sendCapiMirror('AddToCart', eventId, atcData);
 
   console.log('Add to cart tracked:', product.name);
 }

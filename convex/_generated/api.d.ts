@@ -11,8 +11,10 @@
 import type * as abandonedCarts from "../abandonedCarts.js";
 import type * as analytics from "../analytics.js";
 import type * as blogPosts from "../blogPosts.js";
+import type * as orderEffects from "../orderEffects.js";
 import type * as orderItems from "../orderItems.js";
 import type * as orders from "../orders.js";
+import type * as paymentAttempts from "../paymentAttempts.js";
 import type * as products from "../products.js";
 import type * as savedAddresses from "../savedAddresses.js";
 import type * as seed from "../seed.js";
@@ -27,8 +29,10 @@ declare const fullApi: ApiFromModules<{
   abandonedCarts: typeof abandonedCarts;
   analytics: typeof analytics;
   blogPosts: typeof blogPosts;
+  orderEffects: typeof orderEffects;
   orderItems: typeof orderItems;
   orders: typeof orders;
+  paymentAttempts: typeof paymentAttempts;
   products: typeof products;
   savedAddresses: typeof savedAddresses;
   seed: typeof seed;

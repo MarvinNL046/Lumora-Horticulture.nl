@@ -4,6 +4,8 @@ import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { blogHtmlToPlainText } from '@/lib/blog-content'
+import { serializeJsonLd } from '@/lib/safe-json-ld'
 
 export async function generateStaticParams() {
   const posts = await fetchQuery(api.blogPosts.listPublished, {})
@@ -89,6 +91,7 @@ export default async function BlogDetailPage({
     locale === 'de' && post.title_de ? post.title_de : post.title_nl
   const content =
     locale === 'de' && post.content_de ? post.content_de : post.content_nl
+  const plainContent = blogHtmlToPlainText(content)
   const categoryLabel =
     categoryLabels[post.category]?.[locale] || post.category
   const tags = (post.tags as string[]) || []
@@ -125,7 +128,7 @@ export default async function BlogDetailPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <main className="min-h-screen bg-white">
@@ -167,10 +170,9 @@ export default async function BlogDetailPage({
             )}
           </div>
 
-          <div
-            className="prose prose-green max-w-none prose-headings:text-gray-900 prose-a:text-green-700"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <div className="prose prose-green max-w-none whitespace-pre-wrap prose-headings:text-gray-900 prose-a:text-green-700">
+            {plainContent}
+          </div>
 
           {tags.length > 0 && (
             <div className="mt-10 border-t border-gray-200 pt-6">

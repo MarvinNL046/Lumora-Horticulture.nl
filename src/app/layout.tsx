@@ -2,9 +2,7 @@ import '@/styles/globals.css'
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "../stack/client";
 import type { Metadata } from 'next'
-import GoogleAds from '@/components/GoogleAds'
-import MicrosoftClarity from '@/components/MicrosoftClarity'
-import MetaPixel from '@/components/MetaPixel'
+import TrackingScripts from '@/components/TrackingScripts'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { CartProvider } from '@/contexts/CartContext'
@@ -12,7 +10,6 @@ import SiteChrome from '@/components/SiteChrome'
 import dynamic from 'next/dynamic'
 
 // Dynamically import client-side components with SSR disabled
-const WelcomeEmailTrigger = dynamic(() => import('@/components/WelcomeEmailTrigger'), { ssr: false })
 const CartSync = dynamic(() => import('@/components/CartSync'), { ssr: false })
 
 // Initialize fonts
@@ -52,20 +49,11 @@ export default function RootLayout({
     <html lang="nl" className={`scrollbar-thin ${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col bg-white antialiased font-sans"><StackProvider app={stackClientApp}><StackTheme>
         <CartProvider>
-          {/* Welcome email trigger for new users */}
-          <WelcomeEmailTrigger />
-
           {/* Cart sync temporarily disabled - causing SSR issues */}
           {/* <CartSync /> */}
 
-          {/* Google Ads tracking */}
-          <GoogleAds />
-
-          {/* Microsoft Clarity heatmaps & analytics */}
-          <MicrosoftClarity />
-
-          {/* Meta (Facebook) Pixel tracking */}
-          <MetaPixel />
+          {/* Third-party tracking is suppressed on credential-bearing routes. */}
+          <TrackingScripts />
 
           {/* Organization structured data */}
           <OrganizationSchema locale="nl" />

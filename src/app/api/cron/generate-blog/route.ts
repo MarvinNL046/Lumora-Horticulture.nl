@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { convex } from '@/lib/convex';
+import { convex, convexServerAuth } from '@/lib/convex';
 import { api } from '@/../convex/_generated/api';
 import { generateBlogPost } from '@/lib/pipeline/content-generator';
 import { translateToGerman } from '@/lib/pipeline/translator';
 import { generateBlogImage } from '@/lib/pipeline/image-generator';
+import { isAuthorizedCronRequest } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!isAuthorizedCronRequest(request.headers.get('authorization'))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
     // Step 4: Insert into Convex
     console.log('Inserting into Convex...');
     await convex.mutation(api.blogPosts.create, {
+      ...convexServerAuth(),
       slug: post.slug,
       title_nl: post.title,
       excerpt_nl: post.excerpt,

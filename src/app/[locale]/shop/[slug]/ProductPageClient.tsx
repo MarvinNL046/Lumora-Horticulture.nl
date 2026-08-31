@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { serializeJsonLd } from '@/lib/safe-json-ld';
 import {
   VOLUME_DISCOUNT_TIERS,
   calculateDiscountedPrice,
@@ -370,11 +371,11 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

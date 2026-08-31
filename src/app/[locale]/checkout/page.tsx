@@ -44,6 +44,24 @@ type Step = 1 | 2 | 3;
 // Form state is persisted across refreshes. Mollie-side errors sometimes bounce
 // users back here and retyping the whole thing was part of our 95% abandonment.
 const LS_KEY = 'lumora-checkout-form-v1';
+const CHECKOUT_NONCE_KEY = 'lumora-checkout-idempotency-nonce-v1';
+
+async function checkoutRequestKey(payload: Record<string, unknown>): Promise<string> {
+  let nonce = window.sessionStorage.getItem(CHECKOUT_NONCE_KEY);
+  if (!nonce || !/^[A-Za-z0-9_-]{32,128}$/.test(nonce)) {
+    nonce = window.crypto.randomUUID();
+    window.sessionStorage.setItem(CHECKOUT_NONCE_KEY, nonce);
+  }
+
+  // The per-session nonce makes the key unguessable; hashing the exact payload
+  // means a network retry reuses its order while edited checkout details mint a
+  // different key.
+  const digest = await window.crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(`${nonce}:${JSON.stringify(payload)}`),
+  );
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
 
 interface PersistedForm {
   customerName: string;
@@ -83,12 +101,6 @@ export default function CheckoutPage() {
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
   const [saveAddressForFuture, setSaveAddressForFuture] = useState(false);
-
-  // Email recognition (guest users who bought before)
-  const [emailExists, setEmailExists] = useState(false);
-  const [suggestedData, setSuggestedData] = useState<{ customer_name: string; customer_phone: string | null } | null>(null);
-  const [showEmailPrompt, setShowEmailPrompt] = useState(false);
-  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
 
   // First paint: restore saved form state so a refresh mid-checkout doesn't
   // lose everything. Step is restored too — but clamped to 1 if cart is empty.
@@ -191,41 +203,6 @@ export default function CheckoutPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Email recognition for guest users (800 ms debounce)
-  useEffect(() => {
-    if (!user && customerEmail && customerEmail.includes('@')) {
-      setEmailCheckLoading(true);
-      const id = setTimeout(async () => {
-        try {
-          const res = await fetch('/api/check-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: customerEmail }),
-          });
-          const data = await res.json();
-          if (data.success && data.exists) {
-            setEmailExists(true);
-            setSuggestedData(data.order_data);
-            setShowEmailPrompt(true);
-          } else {
-            setEmailExists(false);
-            setSuggestedData(null);
-            setShowEmailPrompt(false);
-          }
-        } catch (e) {
-          console.error('Error checking email:', e);
-        } finally {
-          setEmailCheckLoading(false);
-        }
-      }, 800);
-      return () => clearTimeout(id);
-    } else {
-      setEmailExists(false);
-      setSuggestedData(null);
-      setShowEmailPrompt(false);
-    }
-  }, [customerEmail, user]);
-
   // Save as abandoned cart once the email is entered (3 s debounce)
   useEffect(() => {
     if (!customerEmail || !customerEmail.includes('@') || items.length === 0) return;
@@ -271,14 +248,6 @@ export default function CheckoutPage() {
     }
     const a = savedAddresses.find((x) => x.id === id);
     if (a) fillAddressFields(a);
-  };
-
-  const applySuggestedData = () => {
-    if (suggestedData) {
-      if (suggestedData.customer_name && !customerName) setCustomerName(suggestedData.customer_name);
-      if (suggestedData.customer_phone && !customerPhone) setCustomerPhone(suggestedData.customer_phone);
-    }
-    setShowEmailPrompt(false);
   };
 
   const t = {
@@ -420,30 +389,35 @@ export default function CheckoutPage() {
       total,
     );
     try {
+      const checkoutPayload = {
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
+        shipping_address: { street, city, postal_code: postalCode, country },
+        delivery_preference: delivery
+          ? {
+              kind: delivery.kind,
+              carrier: delivery.carrier,
+              date: delivery.date || null,
+              time_start: delivery.timeStart || null,
+              time_end: delivery.timeEnd || null,
+              time_type: delivery.timeType,
+              price_cents: delivery.priceCents,
+              label: delivery.label,
+              pickup: delivery.pickup ?? null,
+            }
+          : null,
+        items: items.map((i) => ({ product_id: i.product_id, quantity: i.quantity })),
+        recovery_cart_id: recoveryCartId,
+        locale,
+      };
+      const requestKey = await checkoutRequestKey(checkoutPayload);
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          customer_name: customerName,
-          customer_email: customerEmail,
-          customer_phone: customerPhone,
-          shipping_address: { street, city, postal_code: postalCode, country },
-          delivery_preference: delivery
-            ? {
-                kind: delivery.kind,
-                carrier: delivery.carrier,
-                date: delivery.date || null,
-                time_start: delivery.timeStart || null,
-                time_end: delivery.timeEnd || null,
-                time_type: delivery.timeType,
-                price_cents: delivery.priceCents,
-                label: delivery.label,
-                pickup: delivery.pickup ?? null,
-              }
-            : null,
-          items: items.map((i) => ({ product_id: i.product_id, quantity: i.quantity })),
-          recovery_cart_id: recoveryCartId,
-          locale,
+          ...checkoutPayload,
+          checkout_request_key: requestKey,
         }),
       });
       const data = await response.json();
@@ -461,6 +435,7 @@ export default function CheckoutPage() {
           }).catch((err) => console.error('Failed to save address:', err));
         }
         try { window.localStorage.removeItem(LS_KEY); } catch { /* quota */ }
+        try { window.sessionStorage.removeItem(CHECKOUT_NONCE_KEY); } catch { /* quota */ }
         clearCart();
         window.location.href = data.payment_url;
       } else {
@@ -719,45 +694,14 @@ export default function CheckoutPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-lumora-dark mb-1">{t.email} *</label>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        required
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        className="w-full px-4 py-3 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
-                      />
-                      {emailCheckLoading && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                          <svg className="animate-spin h-5 w-5 text-lumora-green-500" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={customerEmail}
+                      onChange={(e) => setCustomerEmail(e.target.value)}
+                      className="w-full px-4 py-3 border border-lumora-dark/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-lumora-green-500 focus:border-transparent"
+                    />
                   </div>
-
-                  {!user && showEmailPrompt && emailExists && (
-                    <div className="bg-gradient-to-r from-lumora-green-500/10 to-lumora-gold/10 rounded-xl p-4 border-2 border-lumora-green-500/30">
-                      <h3 className="font-bold text-lumora-dark mb-1">{t.emailRecognized}</h3>
-                      <p className="text-sm text-lumora-dark/80 mb-2">{t.emailRecognizedText}</p>
-                      <p className="text-sm text-lumora-dark/70 mb-3">{t.loginSuggestion}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <Link href="/handler/signin" className="px-4 py-2 bg-lumora-green-500 text-white rounded-lg font-medium hover:bg-lumora-green-600 text-sm">
-                          {t.loginButton}
-                        </Link>
-                        {suggestedData && (suggestedData.customer_name || suggestedData.customer_phone) && (
-                          <button type="button" onClick={applySuggestedData} className="px-4 py-2 bg-lumora-gold/20 text-lumora-dark rounded-lg font-medium hover:bg-lumora-gold/30 text-sm">
-                            {t.usePreviousInfo}
-                          </button>
-                        )}
-                        <button type="button" onClick={() => setShowEmailPrompt(false)} className="px-4 py-2 bg-lumora-cream/50 text-lumora-dark rounded-lg font-medium hover:bg-lumora-cream text-sm">
-                          {t.continueAsGuest}
-                        </button>
-                      </div>
-                    </div>
-                  )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>

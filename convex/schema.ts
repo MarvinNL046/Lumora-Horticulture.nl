@@ -25,6 +25,7 @@ export default defineSchema({
   })
     .index("by_slug", ["slug"])
     .index("by_status", ["status"])
+    .index("by_status_and_category", ["status", "category"])
     .index("by_category", ["category"]),
 
   // ─── Products ───────────────────────────────────────────────
@@ -53,6 +54,7 @@ export default defineSchema({
 
   // ─── Orders ─────────────────────────────────────────────────
   orders: defineTable({
+    checkout_request_key: v.optional(v.string()),
     order_number: v.optional(v.string()),
     user_id: v.optional(v.string()),
     customer_email: v.string(),
@@ -78,13 +80,20 @@ export default defineSchema({
     shipped_at: v.optional(v.number()),
     delivered_at: v.optional(v.number()),
     shipped_email_sent_at: v.optional(v.number()),
+    paid_at: v.optional(v.number()),
+    paid_payment_attempt_id: v.optional(v.id("paymentAttempts")),
     created_at: v.number(),
     updated_at: v.number(),
     metadata: v.optional(v.any()),
   })
+    .index("by_checkout_request_key", ["checkout_request_key"])
     .index("by_payment_id", ["payment_id"])
     .index("by_email", ["customer_email"])
     .index("by_status", ["status"])
+    .index("by_user_id", ["user_id"])
+    .index("by_created_at", ["created_at"])
+    .index("by_order_number", ["order_number"])
+    .index("by_payment_status_and_created_at", ["payment_status", "created_at"])
     .index("by_shipment_id", ["shipment_id"]),
 
   // ─── Order Items ────────────────────────────────────────────
@@ -96,6 +105,81 @@ export default defineSchema({
     created_at: v.number(),
   })
     .index("by_order", ["order_id"]),
+
+  // ─── Payment Attempts ───────────────────────────────────────
+  // One immutable identity per provider payment. Retries create a new row;
+  // late webhooks can therefore never overwrite a newer attempt by accident.
+  paymentAttempts: defineTable({
+    order_id: v.id("orders"),
+    kind: v.union(v.literal("checkout"), v.literal("retry"), v.literal("legacy")),
+    request_key: v.string(),
+    amount_cents: v.number(),
+    currency: v.literal("EUR"),
+    status: v.union(
+      v.literal("creating"),
+      v.literal("open"),
+      v.literal("pending"),
+      v.literal("authorized"),
+      v.literal("paid"),
+      v.literal("failed"),
+      v.literal("canceled"),
+      v.literal("expired"),
+    ),
+    provider_payment_id: v.optional(v.string()),
+    checkout_url: v.optional(v.string()),
+    failure_reason: v.optional(v.string()),
+    observed_at: v.optional(v.number()),
+    paid_at: v.optional(v.number()),
+    created_at: v.number(),
+    updated_at: v.number(),
+  })
+    .index("by_order_id", ["order_id"])
+    .index("by_order_id_and_request_key", ["order_id", "request_key"])
+    .index("by_provider_payment_id", ["provider_payment_id"]),
+
+  // ─── Paid-order Side Effects ────────────────────────────────
+  // The first-paid transaction creates a five-row outbox. External email,
+  // shipment and conversion APIs claim work with a short renewable lease.
+  orderEffects: defineTable({
+    order_id: v.id("orders"),
+    attempt_id: v.id("paymentAttempts"),
+    type: v.union(
+      v.literal("customer_confirmation"),
+      v.literal("admin_notification"),
+      v.literal("recovery_notification"),
+      v.literal("myparcel_shipment"),
+      v.literal("meta_purchase"),
+      // Kept for rollout compatibility with any pre-release rows. New paid
+      // orders do not queue this until a real Google delivery path exists.
+      v.literal("google_purchase"),
+    ),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("processing"),
+      v.literal("succeeded"),
+      v.literal("failed"),
+    ),
+    claim_token: v.optional(v.string()),
+    lease_expires_at: v.optional(v.number()),
+    attempt_count: v.number(),
+    last_error: v.optional(v.string()),
+    retryable: v.optional(v.boolean()),
+    provider_reference: v.optional(v.string()),
+    completed_at: v.optional(v.number()),
+    created_at: v.number(),
+    updated_at: v.number(),
+  })
+    .index("by_order_id", ["order_id"])
+    .index("by_order_id_and_type", ["order_id", "type"]),
+
+  // ─── Order Number Counters ──────────────────────────────────
+  // Updated in the same transaction as the first paid transition so two
+  // simultaneous webhooks cannot allocate the same human order number.
+  orderCounters: defineTable({
+    year: v.number(),
+    last_number: v.number(),
+    updated_at: v.number(),
+  }).index("by_year", ["year"]),
 
   // ─── Abandoned Carts ───────────────────────────────────────
   abandonedCarts: defineTable({
@@ -112,7 +196,11 @@ export default defineSchema({
     recovery_order_id: v.optional(v.id("orders")),
   })
     .index("by_email", ["customer_email"])
-    .index("by_recovered", ["recovered"]),
+    .index("by_recovered", ["recovered"])
+    .index("by_user_id", ["user_id"])
+    .index("by_user_id_and_recovered", ["user_id", "recovered"])
+    .index("by_recovered_and_created_at", ["recovered", "created_at"])
+    .index("by_created_at", ["created_at"]),
 
   // ─── Saved Addresses ───────────────────────────────────────
   savedAddresses: defineTable({
