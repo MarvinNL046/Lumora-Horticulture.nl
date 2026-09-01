@@ -941,10 +941,10 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                     <div className="mt-2 pt-2 border-t border-lumora-green-200/50">
                       <p className="text-xs text-lumora-dark/70 text-center">
                         {locale === 'de'
-                          ? '↩ Rückgabe nur bei ungeöffneten Flaschen. Versandkosten werden nach Prüfung erstattet.'
+                          ? '↩ Rückgabe nur bei ungeöffneter Flasche, unbeschädigter Versiegelung am Schraubverschluss und Originalzustand.'
                           : locale === 'en'
-                          ? '↩ Return only for unopened bottles. Shipping costs refunded after inspection.'
-                          : '↩ Retour alleen bij ongeopende flesjes. Verzendkosten na controle terugbetaald.'
+                          ? '↩ Return only if the bottle is unopened, the screw-cap seal is intact and the bottle is in its original condition.'
+                          : '↩ Alleen retour als de fles ongeopend is, de verzegeling van de draaidop intact is en de fles in originele staat verkeert.'
                         }
                       </p>
                     </div>

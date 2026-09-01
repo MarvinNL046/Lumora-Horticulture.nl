@@ -925,10 +925,10 @@ export default function CheckoutPage() {
                 {hasNeemxPro && (
                   <p className="text-xs text-lumora-dark/60">
                     {locale === 'de'
-                      ? '↩ NEEMX PRO: Rückgabe nur bei ungeöffneten Flaschen.'
+                      ? '↩ NEEMX PRO: Rückgabe nur bei ungeöffneter Flasche, unbeschädigter Versiegelung am Schraubverschluss und Originalzustand.'
                       : locale === 'en'
-                      ? '↩ NEEMX PRO: Return only for unopened bottles.'
-                      : '↩ NEEMX PRO: Retour alleen bij ongeopende flesjes.'}
+                      ? '↩ NEEMX PRO: Return only if the bottle is unopened, the screw-cap seal is intact and the bottle is in its original condition.'
+                      : '↩ NEEMX PRO: alleen retour als de fles ongeopend is, de verzegeling van de draaidop intact is en de fles in originele staat verkeert.'}
                   </p>
                 )}
               </div>

@@ -375,10 +375,10 @@ export default function CartSidebar() {
                 <div className="mt-2 pt-2 border-t border-lumora-green-200/50">
                   <p className="text-xs text-lumora-dark/70 text-center">
                     {locale === 'de'
-                      ? '↩ NEEMX PRO: Rückgabe nur ungeöffnet. Versandkosten nach Prüfung erstattet.'
+                      ? '↩ NEEMX PRO: Rückgabe nur bei ungeöffneter Flasche, unbeschädigter Versiegelung am Schraubverschluss und Originalzustand.'
                       : locale === 'en'
-                      ? '↩ NEEMX PRO: Return only if unopened. Shipping costs refunded after inspection.'
-                      : '↩ NEEMX PRO: Retour alleen ongeopend. Verzendkosten na controle terugbetaald.'
+                      ? '↩ NEEMX PRO: Return only if the bottle is unopened, the screw-cap seal is intact and the bottle is in its original condition.'
+                      : '↩ NEEMX PRO: alleen retour als de fles ongeopend is, de verzegeling van de draaidop intact is en de fles in originele staat verkeert.'
                     }
                   </p>
                 </div>

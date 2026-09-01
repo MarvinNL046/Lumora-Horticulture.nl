@@ -50,7 +50,7 @@ export default function AfrekenenPage() {
               <span>Door verder te gaan accepteer je:</span>
               <span className={styles.legalActions}>
                 <Link href="/terms">Algemene voorwaarden</Link>
-                <Link href="/return-policy">Retourbeleid</Link>
+                <Link href="/retourbeleid">Retourbeleid</Link>
               </span>
             </div>
           </form>
@@ -82,7 +82,7 @@ export default function AfrekenenPage() {
               </span>
             </div>
             <div className={styles.checkoutSupportActions}>
-              <Link className={styles.checkoutReturn} href="/return-policy"><CheckIcon /> 14 dagen bedenktijd</Link>
+              <Link className={styles.checkoutReturn} href="/retourbeleid"><CheckIcon /> 14 dagen bedenktijd</Link>
               <a className={styles.checkoutHelp} href="mailto:info@lumorahorticulture.com">Contact &amp; hulp</a>
             </div>
           </aside>

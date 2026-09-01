@@ -62,7 +62,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           </div>
           <div className={styles.checkoutDockTrust} aria-label="Veiligheid en service">
             <span>Veilig online betalen</span>
-            <Link href="/return-policy">14 dagen bedenktijd</Link>
+            <Link href="/retourbeleid">14 dagen bedenktijd</Link>
             <a href="mailto:info@lumorahorticulture.com">Contact</a>
           </div>
         </div>
@@ -122,7 +122,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           <div>
             <h2>Service</h2>
             <a href="mailto:info@lumorahorticulture.com">Contact</a>
-            <Link href="/return-policy">Retourbeleid</Link>
+            <Link href="/retourbeleid">Retourbeleid</Link>
             <Link href="/terms">Voorwaarden</Link>
           </div>
           <div>

@@ -294,7 +294,14 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                 </details>
               </>
             )}
-            <details><summary>Levering & retour <ChevronDownIcon /></summary><p>Verzending binnen Nederland, België en Duitsland is gratis. Voor consumenten geldt 14 dagen bedenktijd; bekijk vóór aankoop altijd het volledige retourbeleid.</p></details>
+            <details>
+              <summary>Levering & retour <ChevronDownIcon /></summary>
+              <p>
+                {isPaperbus
+                  ? 'Verzending binnen Nederland, België en Duitsland is gratis. Voor consumenten geldt 14 dagen bedenktijd; bekijk vóór aankoop altijd het volledige retourbeleid.'
+                  : 'Verzending binnen Nederland, België en Duitsland is gratis. NEEMX PRO kan alleen retour als de fles ongeopend is, de verzegeling van de draaidop volledig intact is en de fles inclusief etiket in originele staat verkeert.'}
+              </p>
+            </details>
           </div>
         </div>
       </section>

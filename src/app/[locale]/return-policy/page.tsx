@@ -36,7 +36,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       items: [
         'Het product is onbeschadigd en in originele staat',
         'Het product bevindt zich in de originele verpakking',
-        'Eventuele verzegeling is intact',
+        'NEEMX PRO kan alleen retour als de fles ongeopend is, de verzegeling van de draaidop volledig intact is en de fles inclusief etiket in originele staat verkeert',
         'Het product is niet gebruikt of geïnstalleerd',
         'Alle accessoires en documentatie zijn compleet',
       ],
@@ -79,7 +79,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       intro: 'In de volgende gevallen is het herroepingsrecht uitgesloten:',
       items: [
         'Producten die op maat zijn gemaakt of aangepast',
-        'Producten met een verzegeling die na levering is verbroken',
+        'Geopende NEEMX PRO-flessen of flessen waarvan de verzegeling van de draaidop is beschadigd of verbroken',
         'Producten die door hun aard niet kunnen worden teruggestuurd',
         'Snel bederfelijke producten',
       ],
@@ -106,7 +106,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       items: [
         'The product is undamaged and in its original condition',
         'The product is in its original packaging',
-        'Any seal is intact',
+        'NEEMX PRO can only be returned if the bottle is unopened, the screw-cap seal is completely intact, and the bottle and label remain in their original condition',
         'The product has not been used or installed',
         'All accessories and documentation are complete',
       ],
@@ -149,7 +149,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       intro: 'The right of withdrawal does not apply in the following cases:',
       items: [
         'Products that have been made to measure or customised',
-        'Sealed products whose seal has been broken after delivery',
+        'Opened NEEMX PRO bottles or bottles with a damaged or broken screw-cap seal',
         'Products that, by their nature, cannot be returned',
         'Perishable products',
       ],
@@ -176,7 +176,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       items: [
         'Das Produkt ist unbeschädigt und im Originalzustand',
         'Das Produkt befindet sich in der Originalverpackung',
-        'Eine vorhandene Versiegelung ist unbeschädigt',
+        'NEEMX PRO kann nur zurückgegeben werden, wenn die Flasche ungeöffnet, die Versiegelung des Schraubverschlusses vollständig unbeschädigt und die Flasche samt Etikett im Originalzustand ist',
         'Das Produkt wurde weder benutzt noch installiert',
         'Alle Zubehörteile und Unterlagen sind vollständig',
       ],
@@ -219,7 +219,7 @@ const COPY: Record<ReturnPolicyLocale, PolicyCopy> = {
       intro: 'In den folgenden Fällen besteht kein Widerrufsrecht:',
       items: [
         'Produkte, die nach Maß gefertigt oder angepasst wurden',
-        'Versiegelte Produkte, deren Versiegelung nach der Lieferung entfernt wurde',
+        'Geöffnete NEEMX PRO-Flaschen oder Flaschen mit beschädigter beziehungsweise gebrochener Versiegelung am Schraubverschluss',
         'Produkte, die aufgrund ihrer Beschaffenheit nicht zurückgesendet werden können',
         'Schnell verderbliche Produkte',
       ],
