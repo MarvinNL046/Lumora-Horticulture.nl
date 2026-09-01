@@ -11,6 +11,13 @@ export type ProductVariant = {
   detail: string
   price: number
   images?: ProductImage[]
+  description?: string
+  technology?: string
+  cellsPerTray?: number
+  cellDiameterMm?: number
+  cellDepthMm?: number
+  traysPerBox?: number
+  cellsPerBox?: number
 }
 
 export type ProductFamily = {
@@ -43,9 +50,9 @@ export const paperbus: ProductFamily = {
   eyebrow: 'Voor zaaien en stekken',
   name: 'Stekpluggen Steenwol',
   shortName: 'Stekpluggen',
-  statement: 'Stekpluggen van steenwol met een Paperbus-wikkel, geleverd in een kweektray.',
+  statement: 'Professionele stekpluggen met Ellepot FP 12+ papertechnologie, geleverd per doos voor gerichte zaailingenkweek.',
   description:
-    'Stekpluggen van steenwol met een Paperbus-wikkel, geleverd in een kweektray.',
+    'Kies 84 voor een grotere celmaat of 104 voor een hogere plantdichtheid per tray. Iedere uitvoering wordt per complete doos geleverd.',
   href: '/lumora-premium/paperbus',
   fromPrice: 80,
   mainImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
@@ -64,8 +71,15 @@ export const paperbus: ProductFamily = {
       id: 'tray-84',
       label: 'Stekpluggen Steenwol 84',
       shortLabel: 'Steenwol 84',
-      detail: '84 stekpluggen per tray',
+      detail: '8 trays per doos · 672 cellen totaal',
       price: 84,
+      description: 'Paper Plug Tray 84 met 84 cellen van Ø38 × 42 mm diep. De cellen hebben een grotere diameter en diepte dan bij de 104-uitvoering.',
+      technology: 'Ellepot FP 12+',
+      cellsPerTray: 84,
+      cellDiameterMm: 38,
+      cellDepthMm: 42,
+      traysPerBox: 8,
+      cellsPerBox: 672,
       images: [
         {
           src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
@@ -103,8 +117,15 @@ export const paperbus: ProductFamily = {
       id: 'tray-104',
       label: 'Stekpluggen Steenwol 104',
       shortLabel: 'Steenwol 104',
-      detail: '104 stekpluggen per tray',
+      detail: '7 trays per doos · 728 cellen totaal',
       price: 80,
+      description: 'Paper Plug Tray 104 met 104 cellen van Ø32 × 40 mm diep. De hogere plantdichtheid benut meer kweekplaatsen per tray.',
+      technology: 'Ellepot FP 12+',
+      cellsPerTray: 104,
+      cellDiameterMm: 32,
+      cellDepthMm: 40,
+      traysPerBox: 7,
+      cellsPerBox: 728,
       images: [
         {
           src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-104-tray.webp',
@@ -127,9 +148,9 @@ export const paperbus: ProductFamily = {
     },
   ],
   highlights: [
-    'Stekplug van steenwol met Paperbus-wikkel',
-    'Keuze uit twee tray-indelingen',
-    'Geleverd als complete kweektray',
+    'Ellepot FP 12+ papertechnologie',
+    'Direct uitplantbare plug',
+    'Complete trays per doos',
   ],
   useCases: ['Stekken', 'Zaaien', 'Professionele opkweek'],
 }

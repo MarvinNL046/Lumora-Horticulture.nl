@@ -359,6 +359,16 @@
 .productAccordions summary svg { width: 16px; transition: transform .2s ease; }
 .productAccordions details[open] summary svg { transform: rotate(180deg); }
 .productAccordions p { margin: -3px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.productSpecs { padding: 0 0 18px; }
+.productSpecs > p:first-child { margin: -3px 0 12px; }
+.productSpecs dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; margin: 0; }
+.productSpecs dl > div { min-width: 0; display: grid; gap: 3px; padding: 10px 11px; background: var(--soft); border: 1px solid var(--line); border-radius: 10px; }
+.productSpecs dt { color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .035em; text-transform: uppercase; }
+.productSpecs dd { margin: 0; color: var(--ink); font-size: 12px; font-weight: 800; line-height: 1.35; }
+.productSpecs dl > div:last-child { grid-column: 1 / -1; }
+.productAccordions .productSpecsNote { margin: 10px 0 0; padding: 10px 11px; color: var(--deep); background: #eef6f0; border-radius: 10px; font-size: 12px; font-weight: 700; line-height: 1.5; }
+.productSpecsAction { display: inline-flex; margin-top: 11px; color: var(--green); font-size: 12px; font-weight: 800; text-decoration: none; }
+.productSpecsAction:hover { text-decoration: underline; text-underline-offset: 3px; }
 .dosageContent { padding: 0 0 18px; }
 .productAccordions .dosageIntro { margin: -2px 0 10px; }
 .dosageTable { width: 100%; overflow: hidden; border-spacing: 0; border: 1px solid var(--line); border-radius: 11px; table-layout: fixed; }

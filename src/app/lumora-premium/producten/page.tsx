@@ -10,7 +10,7 @@ import styles from '../storefront.module.css'
 
 export const metadata: Metadata = {
   title: 'Stekpluggen Steenwol & NeemX Pro | Lumora Horticulture',
-  description: 'Vergelijk Stekpluggen Steenwol 84 en Stekpluggen Steenwol 104 met NeemX Pro en kies de uitvoering die bij je gebruik past.',
+  description: 'Vergelijk professionele Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
 }
 
 export default function ProductenPage() {

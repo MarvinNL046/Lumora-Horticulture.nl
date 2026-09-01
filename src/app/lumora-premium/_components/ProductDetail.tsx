@@ -64,6 +64,9 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const isPaperbus = product.id === 'paperbus'
   const paperbusSlug = variant.id === 'tray-104' ? 'paper-plug-tray-104' : 'paper-plug-tray-84'
   const compactVariantLabel = variant.shortLabel ?? variant.label
+  const selectedBoxContents = isPaperbus
+    ? `${variant.traysPerBox} trays · ${variant.cellsPerBox} cellen totaal`
+    : variant.detail
   const originalTotal = variant.price * quantity
   const discountInfo = getDiscountInfo(quantity)
   const discountedUnitPrice = calculateDiscountedPrice(variant.price, quantity)
@@ -83,9 +86,9 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const usageImageAlt = product.usageImageAlt ?? product.tertiaryImageAlt ?? product.secondaryImageAlt
   const usageSteps = isPaperbus
     ? [
-        ['Kweek in de gekozen tray', 'Gebruik de tray voor zaad of stek en stem de teeltomstandigheden af op je gewas.'],
-        ['Verzorg per teeltfase', 'Pas watergift en overige verzorging aan op de ontwikkeling van de jonge plant.'],
-        ['Plant de complete plug uit', 'De papieren omhulling blijft bij het uitplanten om de plug zitten.'],
+        ['Kies je celdichtheid', `${variant.label} heeft ${variant.cellsPerTray} cellen van Ø${variant.cellDiameterMm} × ${variant.cellDepthMm} mm diep.`],
+        ['Kweek in complete trays', `Eén doos bevat ${variant.traysPerBox} trays met in totaal ${variant.cellsPerBox} kweekcellen.`],
+        ['Plant de complete plug uit', 'Verwijder de paper-wikkel niet. Wortels kunnen na het uitplanten door de wikkel verder groeien.'],
       ]
     : [
         ['Breng op kamertemperatuur', 'Is het concentraat door kou dikker geworden? Laat het eerst op kamertemperatuur komen en schud daarna goed.'],
@@ -93,7 +96,11 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         ['Maak alleen aan wat je gebruikt', 'Bereid alleen de benodigde hoeveelheid en gebruik de aangemaakte spuitoplossing dezelfde dag.'],
       ]
   const highlightDescriptions = isPaperbus
-    ? product.highlights.map(() => 'Vergelijk de tray-indeling in het koopblok en kies op basis van je teeltplan.')
+    ? [
+        'De FP 12+ paper-wikkel beschermt de plug tijdens een langere opkweekperiode.',
+        'Plant de complete plug uit zonder de paper-wikkel te verwijderen.',
+        `${variant.label} wordt geleverd als ${variant.traysPerBox} trays met ${variant.cellsPerBox} cellen per doos.`,
+      ]
     : [
         'Door de hoge concentratie heb je per liter spuitoplossing slechts een kleine hoeveelheid nodig.',
         'Het emulgatorsysteem helpt de botanische olieblend goed en gelijkmatig met water te mengen.',
@@ -145,11 +152,11 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
         <div className={`${styles.productSummary} ${styles[`productSummary_${product.id}`]}`} id="koopblok">
           <span className={styles.eyebrow}>{product.eyebrow}</span>
-          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'NeemXPRO'}</h1>
+          <h1>{isPaperbus ? 'Professionele stekpluggen voor zaailingenkweek.' : 'NeemXPRO'}</h1>
 
           <div className={styles.priceLine}>
             <strong>{formatPrice(variant.price)}</strong>
-            <span>Prijs voor {variant.label}</span>
+            <span>{isPaperbus ? `Per doos · ${selectedBoxContents}` : `Prijs voor ${variant.label}`}</span>
           </div>
 
           <fieldset className={styles.variantFieldset}>
@@ -294,11 +301,25 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             </section>
           )}
 
-          <p className={styles.productIntro}>{product.description}</p>
+          <p className={styles.productIntro}>{isPaperbus ? variant.description : product.description}</p>
 
           <div className={styles.productAccordions}>
             {isPaperbus ? (
-              <details open><summary>Productinformatie <ChevronDownIcon /></summary><p>{product.statement} Kies hierboven de uitvoering die aansluit op je gebruik.</p></details>
+              <details open>
+                <summary>Specificaties {compactVariantLabel} <ChevronDownIcon /></summary>
+                <div className={styles.productSpecs}>
+                  <p>{variant.description}</p>
+                  <dl>
+                    <div><dt>Cellen per tray</dt><dd>{variant.cellsPerTray}</dd></div>
+                    <div><dt>Plugmaat</dt><dd>Ø{variant.cellDiameterMm} × {variant.cellDepthMm} mm diep</dd></div>
+                    <div><dt>Trays per doos</dt><dd>{variant.traysPerBox}</dd></div>
+                    <div><dt>Cellen per doos</dt><dd>{variant.cellsPerBox}</dd></div>
+                    <div><dt>Papertechnologie</dt><dd>{variant.technology}</dd></div>
+                  </dl>
+                  <p className={styles.productSpecsNote}>Direct uitplantbaar: plant de complete plug zonder de paper-wikkel te verwijderen.</p>
+                  <a className={styles.productSpecsAction} href="#koopblok">Terug naar maatkeuze ↑</a>
+                </div>
+              </details>
             ) : (
               <details open>
                 <summary>Dosering &amp; opbrengst <ChevronDownIcon /></summary>
@@ -358,7 +379,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           </div>
           <div className={styles.highlightGrid}>
             {product.highlights.map((highlight, index) => (
-              <article key={highlight}><span>0{index + 1}</span><CheckIcon /><h3>{highlight}</h3><p>{isPaperbus ? 'Vergelijk de tray-indeling in het koopblok en kies op basis van je teeltplan.' : highlightDescriptions[index]}</p></article>
+              <article key={highlight}><span>0{index + 1}</span><CheckIcon /><h3>{highlight}</h3><p>{highlightDescriptions[index]}</p></article>
             ))}
           </div>
           {!isPaperbus && <a className={styles.highlightAction} href="#koopblok">Kies je flesformaat <ArrowRightIcon /></a>}

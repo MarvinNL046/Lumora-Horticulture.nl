@@ -3,8 +3,8 @@ import { ProductDetail } from '../_components/ProductDetail'
 import { paperbus } from '../_data/products'
 
 export const metadata: Metadata = {
-  title: 'Stekpluggen Steenwol 84 & Stekpluggen Steenwol 104 | Lumora',
-  description: 'Vergelijk Stekpluggen Steenwol 84 en Stekpluggen Steenwol 104 met Paperbus-wikkel. Kies de tray voor zaaien, stekken en professionele opkweek.',
+  title: 'Professionele stekpluggen 84 & 104 | Lumora Horticulture',
+  description: 'Vergelijk Paper Plug Tray 84 en 104 met Ellepot FP 12+ papertechnologie. Bekijk plugmaat, cellen per tray en exacte doosinhoud voor professionele zaailingenkweek.',
 }
 
 export default function PaperbusPage() {

@@ -42,30 +42,30 @@ const productMetaConfig: Record<string, {
 }> = {
   'paper-plug-tray-84': {
     nl: {
-      titleSuffix: 'Kopen | 100% Biologisch Afbreekbaar | Gratis Verzending',
-      benefits: ['Geen transplantatieschok', 'FP 12+ technologie', 'Binnen 48 uur geleverd', 'Staffelkorting tot 20%']
+      titleSuffix: 'Kopen | 8 Trays & 672 Cellen | Gratis Verzending',
+      benefits: ['84 cellen per tray', 'Ø38 × 42 mm diep', 'FP 12+ technologie', '8 trays per doos']
     },
     en: {
-      titleSuffix: 'Buy Online | 100% Biodegradable | Free Shipping',
-      benefits: ['No transplant shock', 'FP 12+ technology', 'Delivered within 48h', 'Volume discounts up to 20%']
+      titleSuffix: 'Buy Online | 8 Trays & 672 Cells | Free Shipping',
+      benefits: ['84 cells per tray', 'Ø38 × 42 mm deep', 'FP 12+ technology', '8 trays per box']
     },
     de: {
-      titleSuffix: 'Kaufen | 100% Biologisch Abbaubar | Kostenloser Versand',
-      benefits: ['Kein Transplantationsschock', 'FP 12+ Technologie', 'Innerhalb 48 Std. geliefert', 'Mengenrabatt bis 20%']
+      titleSuffix: 'Kaufen | 8 Trays & 672 Zellen | Kostenloser Versand',
+      benefits: ['84 Zellen pro Tray', 'Ø38 × 42 mm tief', 'FP 12+ Technologie', '8 Trays pro Karton']
     }
   },
   'paper-plug-tray-104': {
     nl: {
-      titleSuffix: 'Kopen | 104 Cellen | Gratis Verzending',
-      benefits: ['Optimale wortelgroei', '100% biologisch afbreekbaar', 'Direct uit voorraad', 'B2B prijzen']
+      titleSuffix: 'Kopen | 7 Trays & 728 Cellen | Gratis Verzending',
+      benefits: ['104 cellen per tray', 'Ø32 × 40 mm diep', 'FP 12+ technologie', '7 trays per doos']
     },
     en: {
-      titleSuffix: 'Buy Online | 104 Cells | Free Shipping',
-      benefits: ['Optimal root growth', '100% biodegradable', 'In stock', 'B2B pricing']
+      titleSuffix: 'Buy Online | 7 Trays & 728 Cells | Free Shipping',
+      benefits: ['104 cells per tray', 'Ø32 × 40 mm deep', 'FP 12+ technology', '7 trays per box']
     },
     de: {
-      titleSuffix: 'Kaufen | 104 Zellen | Kostenloser Versand',
-      benefits: ['Optimale Wurzelentwicklung', '100% biologisch abbaubar', 'Auf Lager', 'B2B-Preise']
+      titleSuffix: 'Kaufen | 7 Trays & 728 Zellen | Kostenloser Versand',
+      benefits: ['104 Zellen pro Tray', 'Ø32 × 40 mm tief', 'FP 12+ Technologie', '7 Trays pro Karton']
     }
   },
   'steenwol-pluggen-paperbus-35mm': {

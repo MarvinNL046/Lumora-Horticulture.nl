@@ -87,7 +87,7 @@ export default async function AfrekenenPage({ searchParams }: AfrekenenPageProps
               <>
                 <div className={styles.checkoutProduct}>
                   <span className={styles.checkoutProductImage}><Image src={is104 ? '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-104-tray.webp' : '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp'} alt="" fill sizes="64px" /></span>
-                  <span><strong>Stekpluggen Steenwol {is104 ? '104' : '84'}</strong><small>Actiebundel · {quantity} dozen Stekpluggen Steenwol {is104 ? '104' : '84'}</small></span>
+                  <span><strong>Stekpluggen Steenwol {is104 ? '104' : '84'}</strong><small>Actiebundel · {quantity} dozen · per doos {is104 ? '7 trays / 728 cellen' : '8 trays / 672 cellen'}</small></span>
                   <strong>{formatPrice(bundleTotal)}</strong>
                 </div>
                 {promotion.eligible && <div className={styles.checkoutPromoApplied}><CheckIcon /><span><strong>3-voor-€180 actie toegepast</strong><small>Verzending inbegrepen</small></span></div>}
@@ -102,7 +102,7 @@ export default async function AfrekenenPage({ searchParams }: AfrekenenPageProps
               <>
                 <div className={styles.checkoutProduct}>
                   <span className={styles.checkoutProductImage}><Image src="/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp" alt="" fill sizes="64px" /></span>
-                  <span><strong>Stekpluggen Steenwol 84</strong><small>Paperbus · 84 stekpluggen per tray · 1 tray</small></span>
+                  <span><strong>Stekpluggen Steenwol 84</strong><small>1 doos · 8 trays · 672 cellen</small></span>
                   <strong>€ 84,00</strong>
                 </div>
                 <div className={styles.checkoutProduct}>

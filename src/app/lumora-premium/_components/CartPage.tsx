@@ -28,7 +28,7 @@ const defaultItems: CartItem[] = [
     slug: 'paper-plug-tray-84',
     name: 'Stekpluggen Steenwol',
     variant: 'Stekpluggen Steenwol 84',
-    detail: '84 stekpluggen per tray',
+    detail: 'Per doos: 8 trays · 672 cellen',
     price: 84,
     quantity: 1,
     image: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
@@ -61,7 +61,7 @@ function getInitialItems({ action, variantId, quantity }: CartPageProps): CartIt
     slug: is104 ? 'paper-plug-tray-104' : 'paper-plug-tray-84',
     name: 'Stekpluggen Steenwol',
     variant: is104 ? 'Stekpluggen Steenwol 104' : 'Stekpluggen Steenwol 84',
-    detail: is104 ? '104 stekpluggen per tray' : '84 stekpluggen per tray',
+    detail: is104 ? 'Per doos: 7 trays · 728 cellen' : 'Per doos: 8 trays · 672 cellen',
     price: is104 ? 80 : 84,
     quantity: Math.min(100, Math.max(1, quantity ?? 3)),
     image: is104
