@@ -17,7 +17,7 @@ export default function LumoraPremiumHomePage() {
             </span>
             <h1>Gerichte producten voor sterke, verzorgde planten.</h1>
             <p className={styles.heroLead}>
-              Paperbus pluggen voor zaaien en stekken. NeemX Pro voor gerichte plantverzorging. Twee heldere productlijnen, direct online te bestellen.
+              Stekpluggen van steenwol voor zaaien en stekken. NeemX Pro voor gerichte plantverzorging. Twee heldere productlijnen, direct online te bestellen.
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href="/lumora-premium/producten">
@@ -44,7 +44,7 @@ export default function LumoraPremiumHomePage() {
             />
             <div className={styles.heroCaption}>
               <span className={styles.heroCaptionIcon}><LeafIcon /></span>
-              <span><small>Paperbus Pluggen</small><strong>Voor een overzichtelijke opkweek</strong></span>
+              <span><small>Stekpluggen Steenwol</small><strong>Voor een overzichtelijke opkweek</strong></span>
             </div>
             <Link className={styles.heroMiniCard} href={neemx.href}>
               <span className={styles.heroMiniImage}>
@@ -82,7 +82,7 @@ export default function LumoraPremiumHomePage() {
           <div className={styles.choiceImage}>
             <Image
               src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
-              alt="Paperbus pluggen met jonge planten"
+              alt="Stekpluggen Steenwol 84 met jonge planten"
               fill
               sizes="(max-width: 767px) 100vw, 50vw"
             />
@@ -93,7 +93,7 @@ export default function LumoraPremiumHomePage() {
             <h2>Van teeltvraag naar het juiste product.</h2>
             <p>Geen eindeloze productlijst. Kies eerst tussen opkweek en plantverzorging en vergelijk daarna alleen de uitvoeringen die relevant zijn.</p>
             <ol className={styles.choiceSteps}>
-              <li><span>01</span><div><strong>Kies je toepassing</strong><small>Opkweek met Paperbus of verzorging met NeemX Pro.</small></div></li>
+              <li><span>01</span><div><strong>Kies je toepassing</strong><small>Opkweek met stekpluggen van steenwol of verzorging met NeemX Pro.</small></div></li>
               <li><span>02</span><div><strong>Selecteer de uitvoering</strong><small>Vergelijk tray-indeling of inhoudsmaat in één overzicht.</small></div></li>
               <li><span>03</span><div><strong>Bestel met duidelijkheid</strong><small>Bekijk levering, totaal en voorwaarden vóór je betaalt.</small></div></li>
             </ol>

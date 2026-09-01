@@ -27,8 +27,9 @@ export function ProductFamilyCard({ product }: { product: ProductFamily }) {
         <p>{product.statement}</p>
         <div className={styles.productCardFooter}>
           <span>{product.variants.map((variant) => variant.label).join(' · ')}</span>
-          <Link href={product.href} className={styles.roundArrow} aria-label={`Kies ${product.name}`}>
-            <ArrowRightIcon />
+          <Link href={product.href} className={styles.productCardAction}>
+            <span>Bekijk {product.name}</span>
+            <span className={styles.roundArrow}><ArrowRightIcon /></span>
           </Link>
         </div>
       </div>

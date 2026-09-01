@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon } from '../_components/Icons'
@@ -5,6 +6,11 @@ import { ProductFamilyCard } from '../_components/ProductFamilyCard'
 import { TrustStrip } from '../_components/TrustStrip'
 import { productFamilies } from '../_data/products'
 import styles from '../storefront.module.css'
+
+export const metadata: Metadata = {
+  title: 'Stekpluggen Steenwol & NeemX Pro | Lumora Horticulture',
+  description: 'Vergelijk Stekpluggen Steenwol 84 en Stekpluggen Steenwol 104 met NeemX Pro en kies de uitvoering die bij je gebruik past.',
+}
 
 export default function ProductenPage() {
   return (
@@ -14,7 +20,7 @@ export default function ProductenPage() {
           <div>
             <span className={styles.eyebrow}>De Lumora collectie</span>
             <h1>Kies je productlijn.</h1>
-            <p>Begin bij wat je wilt doen: opkweken met Paperbus pluggen of je planten verzorgen met NeemX Pro.</p>
+            <p>Begin bij wat je wilt doen: opkweken met stekpluggen van steenwol of je planten verzorgen met NeemX Pro.</p>
             <Link className={styles.collectionHeroAction} href="#productlijnen">
               Bekijk beide productlijnen <ArrowRightIcon />
             </Link>
@@ -23,7 +29,7 @@ export default function ProductenPage() {
             <div className={styles.collectionImageOne}>
               <Image
                 src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                alt="Paperbus pluggen in Tray 104"
+                alt="Stekpluggen Steenwol 104 in een kweektray"
                 fill
                 priority
                 sizes="260px"
@@ -60,10 +66,10 @@ export default function ProductenPage() {
             <h2>Van doel naar product.</h2>
             <p>Beide lijnen hebben een eigen toepassing. Vergelijk alleen wat je nodig hebt en kies daarna de juiste uitvoering.</p>
           </div>
-          <div className={styles.compareTable} role="table" aria-label="Vergelijk Paperbus en NeemX Pro">
+          <div className={styles.compareTable} role="table" aria-label="Vergelijk Stekpluggen Steenwol en NeemX Pro">
             <div className={`${styles.compareRow} ${styles.compareHeader}`} role="row">
               <span role="columnheader">Je zoekt</span>
-              <span role="columnheader">Paperbus Pluggen</span>
+              <span role="columnheader">Stekpluggen Steenwol</span>
               <span role="columnheader">NeemX Pro</span>
             </div>
             <div className={styles.compareRow} role="row">
@@ -73,12 +79,12 @@ export default function ProductenPage() {
             </div>
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">Uitvoeringen</strong>
-              <span role="cell">Tray 84 of Tray 104</span>
+              <span role="cell">Stekpluggen Steenwol 84 of Stekpluggen Steenwol 104</span>
               <span role="cell">10 ml, 30 ml of 50 ml</span>
             </div>
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">Volgende stap</strong>
-              <span role="cell"><Link href="/lumora-premium/paperbus">Kies je tray <ArrowRightIcon /></Link></span>
+              <span role="cell"><Link href="/lumora-premium/paperbus">Kies je stekpluggen <ArrowRightIcon /></Link></span>
               <span role="cell"><Link href="/lumora-premium/neemx-pro">Kies je formaat <ArrowRightIcon /></Link></span>
             </div>
           </div>

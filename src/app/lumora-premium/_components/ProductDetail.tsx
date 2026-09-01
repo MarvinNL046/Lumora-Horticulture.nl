@@ -28,6 +28,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
     { src: product.secondaryImage, alt: product.secondaryImageAlt },
   ]
   const isPaperbus = product.id === 'paperbus'
+  const compactVariantLabel = variant.shortLabel ?? variant.label
   const usageSteps = isPaperbus
     ? [
         ['Kweek in de gekozen tray', 'Gebruik de tray voor zaad of stek en stem de teeltomstandigheden af op je gewas.'],
@@ -78,7 +79,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
         <div className={`${styles.productSummary} ${styles[`productSummary_${product.id}`]}`} id="koopblok">
           <span className={styles.eyebrow}>{product.eyebrow}</span>
-          <h1>{isPaperbus ? 'Kies je Paperbus tray.' : 'Kies je NeemX formaat.'}</h1>
+          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'Kies je NeemX formaat.'}</h1>
           <p className={styles.productIntro}>{product.description}</p>
 
           <div className={styles.priceLine}>
@@ -87,7 +88,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           </div>
 
           <fieldset className={styles.variantFieldset}>
-            <legend>{isPaperbus ? 'Kies je tray' : 'Kies je flesformaat'}</legend>
+            <legend>{isPaperbus ? 'Kies 84 of 104' : 'Kies je flesformaat'}</legend>
             <div className={styles.variantGrid}>
               {product.variants.map((item) => (
                 <button
@@ -105,13 +106,17 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           </fieldset>
 
           <div className={styles.buyRow}>
+            <div className={styles.selectedDecision}>
+              <span><strong>{variant.label}</strong><small>{variant.detail}</small></span>
+              <strong>{formatPrice(variant.price * quantity)}</strong>
+            </div>
             <div className={styles.quantityControl} aria-label="Aantal">
               <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
               <span aria-live="polite">{quantity}</span>
               <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
             </div>
             <Link href="/lumora-premium/winkelmand" className={styles.addButton}>
-              <BagIcon /> {variant.label} in winkelwagen
+              <BagIcon /> {compactVariantLabel} in winkelwagen
             </Link>
           </div>
 
@@ -161,7 +166,10 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
       </section>
 
       <div className={styles.mobileBuyDock}>
-        <span><small>{variant.label}</small><strong>{formatPrice(variant.price * quantity)}</strong></span>
+        <span className={styles.dockSelection}>
+          <span><small>{compactVariantLabel}</small><em>{variant.detail}</em></span>
+          <strong>{formatPrice(variant.price * quantity)}</strong>
+        </span>
         <div className={styles.dockQuantity} aria-label="Aantal">
           <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
           <span aria-live="polite">{quantity}</span>

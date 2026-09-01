@@ -167,9 +167,10 @@
 .productCardTopline span:last-child { color: var(--ink); letter-spacing: 0; text-transform: none; }
 .productCard h3 { margin: 13px 0 8px; font-family: var(--font-playfair), Georgia, serif; font-size: 36px; font-weight: 600; letter-spacing: -.03em; }
 .productCardBody > p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
-.productCardFooter { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 650; }
+.productCardFooter { display: grid; gap: 14px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 650; }
+.productCardAction { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: var(--green); font-size: 13px; font-weight: 800; }
 .roundArrow { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; color: #fff !important; background: var(--green); border-radius: 50%; transition: transform .2s ease; }
-.roundArrow:hover { transform: translateX(3px); }
+.productCardAction:hover .roundArrow { transform: translateX(3px); }
 .roundArrow svg { width: 18px; }
 
 .choiceSection { padding: 104px 0; background: var(--soft); }
@@ -284,6 +285,11 @@
 .variantGrid .variantActive { background: #f2f8f3; border-color: var(--green); box-shadow: inset 4px 0 0 var(--green); }
 .variantGrid button:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
 .buyRow { display: grid; grid-template-columns: 136px 1fr; gap: 10px; margin-top: 16px; }
+.selectedDecision { grid-column: 1 / -1; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 13px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; }
+.selectedDecision > span { display: grid; gap: 3px; }
+.selectedDecision > span > strong { font-size: 13px; }
+.selectedDecision small { color: var(--muted); font-size: 12px; }
+.selectedDecision > strong { font-size: 14px; white-space: nowrap; }
 .quantityControl { min-height: 54px; display: grid; grid-template-columns: 48px 40px 48px; align-items: center; border: 1px solid var(--line); border-radius: 12px; }
 .quantityControl button { width: 48px; height: 52px; display: grid; place-items: center; padding: 0; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
 .quantityControl button:hover { background: var(--soft); }
@@ -617,7 +623,10 @@
   .mobileBuyDock > span, .checkoutDockMain > span { display: grid; gap: 2px; }
   .mobileBuyDock small, .checkoutDock small { color: var(--muted); font-size: 12px; }
   .mobileBuyDock strong, .checkoutDock strong { font-size: 15px; }
-  .mobileBuyDock { grid-template-columns: minmax(52px,auto) 132px minmax(0,1fr); gap: 8px; padding-left: 8px; }
+  .mobileBuyDock { min-height: 112px; grid-template-columns: 132px minmax(0,1fr); gap: 7px 8px; padding-left: 8px; }
+  .mobileBuyDock .dockSelection { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 8px 1px; }
+  .dockSelection > span { min-width: 0; display: grid; gap: 1px; }
+  .dockSelection em { overflow: hidden; color: var(--muted); font-size: 11px; font-style: normal; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
   .checkoutDock { min-height: 116px; display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 7px 8px 6px; }
   .checkoutDockMain { display: grid; grid-template-columns: auto minmax(180px,1fr); align-items: center; gap: 14px; }
   .checkoutDockMain > span { padding-left: 8px; }
@@ -646,8 +655,8 @@
   .compareSection { padding: 72px 0; }
   .compareIntro h2, .collectionHelp h2, .highlightIntro h2, .usageCopy h2 { font-size: 38px; }
   .compareTable { display: grid; gap: 12px; overflow: visible; background: transparent; border: 0; border-radius: 0; }
-  .compareRow { grid-template-columns: 1fr 1fr; min-height: 0; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
-  .compareRow > * { min-height: 58px; padding: 14px; border-right: 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .compareRow { grid-template-columns: repeat(2, minmax(0,1fr)); min-height: 0; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+  .compareRow > * { min-width: 0; min-height: 58px; padding: 14px; overflow-wrap: anywhere; border-right: 0; border-bottom: 1px solid var(--line); font-size: 14px; }
   .compareRow > *:first-child { grid-column: 1 / -1; min-height: 40px; background: #f7f9f7; }
   .compareRow > *:nth-child(2) { border-right: 1px solid var(--line); border-bottom: 0; }
   .compareRow > *:last-child { border-bottom: 0; }
@@ -657,7 +666,8 @@
   .collectionHelpInner { grid-template-columns: 1fr; gap: 18px; }
   .collectionHelp .primaryButton { margin-top: 6px; }
 
-  .breadcrumbs { min-height: 44px; padding-top: 0; overflow: hidden; white-space: nowrap; font-size: 12px; }
+  .breadcrumbs { min-height: 44px; gap: 5px; padding-top: 0; white-space: nowrap; font-size: 11px; }
+  .breadcrumbs a { padding-inline: 6px; }
   .pdpGrid { grid-template-columns: 1fr; gap: 28px; padding-top: 18px; padding-bottom: 72px; }
   .gallery { position: static; }
   .galleryMain { height: 166px; border-radius: 20px 20px 40px 20px; }
@@ -673,7 +683,7 @@
   .priceLine { order: 3; margin: 10px 0 12px; }
   .variantFieldset { order: 4; }
   .productSummary_paperbus .variantFieldset { margin-bottom: 125px; }
-  .productSummary_neemx .variantFieldset { margin-bottom: 63px; }
+  .productSummary_neemx .variantFieldset { margin-bottom: 125px; }
   .purchaseProof { order: 5; }
   .productIntro { order: 6; margin-top: 0; font-size: 16px; line-height: 1.65; }
   .buyRow { order: 7; display: none; }
@@ -704,7 +714,8 @@
   .cartHeading { align-items: start; margin-bottom: 24px; }
   .cartHeading h1 { font-size: 48px; }
   .cartHeading > a { display: none; }
-  .cartLayout { grid-template-columns: 1fr; gap: 16px; }
+  .cartLayout { min-width: 0; grid-template-columns: minmax(0,1fr); gap: 16px; }
+  .cartItems, .orderSummary { min-width: 0; width: 100%; }
   .orderSummary { position: static; order: -1; padding: 21px 21px 7px; }
   .orderSummary h2 { font-size: 27px; margin-bottom: 16px; }
   .summaryLines { gap: 9px; padding-bottom: 14px; }
@@ -712,9 +723,11 @@
   .checkoutButton { min-height: 50px; }
   .summaryDecisionTrust { margin: 4px 0 0; }
   .summaryProof { display: none; }
-  .cartItem { grid-template-columns: 92px 1fr; gap: 13px; padding: 15px; }
+  .cartItem { grid-template-columns: 92px minmax(0,1fr); gap: 13px; padding: 15px; }
   .cartItemImage { height: 94px; }
-  .cartItemInfo h2 { font-size: 21px; }
+  .cartItemInfo { min-width: 0; }
+  .cartItemInfo > span { display: block; overflow-wrap: anywhere; }
+  .cartItemInfo h2 { overflow-wrap: anywhere; font-size: 21px; }
   .cartItemControls { grid-column: 1 / -1; min-width: 0; flex-direction: row-reverse; align-items: center; justify-content: space-between; padding-top: 13px; border-top: 1px solid var(--line); }
   .cartItemControls > strong { font-size: 13px; }
   .cartNote { margin: 12px; }
@@ -744,6 +757,16 @@
   .formContinue { width: 100%; min-width: 0; }
   .legalCopy { justify-content: flex-start; text-align: left; }
   .legalActions { justify-content: flex-start; }
+}
+
+@media (max-width: 359px) {
+  .orderSummary { padding-inline: 18px; }
+  .summaryDecisionTrust { grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; }
+  .summaryDecisionTrust > span { grid-column: 1 / -1; justify-content: center; }
+  .summaryDecisionTrust > a { min-width: 0; justify-content: center; justify-self: stretch; padding-inline: 5px; }
+  .cartItem { grid-template-columns: 82px minmax(0,1fr); }
+  .checkoutDockTrust { gap: 4px; font-size: 11px; }
+  .checkoutDockTrust > span, .checkoutDockTrust a { padding-inline: 5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

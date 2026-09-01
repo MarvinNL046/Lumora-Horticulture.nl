@@ -20,12 +20,12 @@ type CartItem = {
 const initialItems: CartItem[] = [
   {
     id: 'paperbus-84',
-    name: 'Paperbus Pluggen',
-    variant: 'Tray 84',
+    name: 'Paperbus stekpluggen',
+    variant: 'Stekpluggen Steenwol 84',
     price: 84,
     quantity: 1,
     image: '/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp',
-    imageAlt: 'Paperbus Pluggen Tray 84',
+    imageAlt: 'Stekpluggen Steenwol 84 in een kweektray',
   },
   {
     id: 'neemx-10',
@@ -56,7 +56,7 @@ export function CartPage() {
         <div>
           <span className={styles.emptyCartIcon}>0</span>
           <h1>Je winkelwagen is nog leeg.</h1>
-          <p>Kies Paperbus pluggen of NeemX Pro om verder te gaan.</p>
+          <p>Kies Stekpluggen Steenwol of NeemX Pro om verder te gaan.</p>
           <Link href="/lumora-premium/producten" className={styles.primaryButton}>Bekijk de producten <ArrowRightIcon /></Link>
         </div>
       </main>
@@ -81,7 +81,7 @@ export function CartPage() {
                 <div className={styles.cartItemInfo}>
                   <span>{item.name}</span>
                   <h2>{item.variant}</h2>
-                  <small>{item.id.startsWith('paperbus') ? '84 pluggen per tray' : 'Geconcentreerde formule'}</small>
+                  <small>{item.id.startsWith('paperbus') ? '84 stekpluggen per tray' : 'Geconcentreerde formule'}</small>
                   <button type="button" onClick={() => removeItem(item.id)}>Verwijderen</button>
                 </div>
                 <div className={styles.cartItemControls}>

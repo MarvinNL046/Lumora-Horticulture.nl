@@ -1,6 +1,7 @@
 export type ProductVariant = {
   id: string
   label: string
+  shortLabel?: string
   detail: string
   price: number
 }
@@ -25,26 +26,38 @@ export type ProductFamily = {
 
 export const paperbus: ProductFamily = {
   id: 'paperbus',
-  eyebrow: 'Voor een sterke opkweek',
-  name: 'Paperbus Pluggen',
-  shortName: 'Paperbus',
-  statement: 'Een overzichtelijke start voor iedere jonge plant.',
+  eyebrow: 'Voor zaaien en stekken',
+  name: 'Stekpluggen Steenwol',
+  shortName: 'Stekpluggen',
+  statement: 'Stekpluggen van steenwol met een Paperbus-wikkel, geleverd in een kweektray.',
   description:
-    'Steenwolpluggen met paperbus-wikkel, geleverd in een kweektray. Kies de tray die aansluit op jouw teelt en werkwijze.',
+    'Stekpluggen van steenwol met een Paperbus-wikkel, geleverd in een kweektray.',
   href: '/lumora-premium/paperbus',
   fromPrice: 80,
   mainImage:
     '/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp',
-  mainImageAlt: 'Paperbus steenwolpluggen in een Tray 84',
+  mainImageAlt: 'Stekpluggen Steenwol 84 in een kweektray',
   secondaryImage:
     '/productAfbeeldingen/generated/paperbus-greenhouse-hero-v1.png',
   secondaryImageAlt: 'Jonge planten in een lichte professionele kas',
   variants: [
-    { id: 'tray-84', label: 'Tray 84', detail: '84 pluggen per tray', price: 84 },
-    { id: 'tray-104', label: 'Tray 104', detail: '104 pluggen per tray', price: 80 },
+    {
+      id: 'tray-84',
+      label: 'Stekpluggen Steenwol 84',
+      shortLabel: 'Steenwol 84',
+      detail: '84 stekpluggen per tray',
+      price: 84,
+    },
+    {
+      id: 'tray-104',
+      label: 'Stekpluggen Steenwol 104',
+      shortLabel: 'Steenwol 104',
+      detail: '104 stekpluggen per tray',
+      price: 80,
+    },
   ],
   highlights: [
-    'Steenwolplug met paperbus-wikkel',
+    'Stekplug van steenwol met Paperbus-wikkel',
     'Keuze uit twee tray-indelingen',
     'Geleverd als complete kweektray',
   ],

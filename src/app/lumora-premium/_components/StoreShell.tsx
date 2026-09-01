@@ -115,7 +115,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <h2>Producten</h2>
-            <Link href={`${ROOT}/paperbus`}>Paperbus Pluggen</Link>
+            <Link href={`${ROOT}/paperbus`}>Stekpluggen Steenwol</Link>
             <Link href={`${ROOT}/neemx-pro`}>NeemX Pro</Link>
           </div>
           <div>
