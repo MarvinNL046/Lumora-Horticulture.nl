@@ -263,4 +263,19 @@ export default defineSchema({
     conversion_order_id: v.optional(v.id("orders")),
   })
     .index("by_cta_query", ["cta_query_id"]),
+
+  // ─── Distributed request rate limits ──────────────────────
+  // Keys are HMAC hashes created by the trusted Next.js server. Raw client
+  // addresses are never persisted. Convex mutations are serializable, so the
+  // counter remains authoritative across every Vercel function instance.
+  requestRateLimits: defineTable({
+    route: v.string(),
+    key_hash: v.string(),
+    window_start: v.number(),
+    count: v.number(),
+    expires_at: v.number(),
+    updated_at: v.number(),
+  })
+    .index("by_route_key_window", ["route", "key_hash", "window_start"])
+    .index("by_expires_at", ["expires_at"]),
 });

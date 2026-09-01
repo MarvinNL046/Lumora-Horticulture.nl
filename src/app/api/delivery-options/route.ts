@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDeliveryOptions, getPickupPoints } from '@/lib/myparcel';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -12,29 +13,6 @@ const carrierSet = new Set<string>(CARRIERS);
 const countrySet = new Set<string>(COUNTRIES);
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS_PER_WINDOW = 20;
-const requestCounts = new Map<string, { count: number; resetAt: number }>();
-
-function consumeLocalRateLimit(key: string): boolean {
-  const now = Date.now();
-  if (requestCounts.size > 2_000) {
-    requestCounts.forEach((entry, entryKey) => {
-      if (entry.resetAt <= now) requestCounts.delete(entryKey);
-    });
-  }
-
-  const current = requestCounts.get(key);
-  if (!current || current.resetAt <= now) {
-    if (requestCounts.size >= 2_000) {
-      const oldest = requestCounts.keys().next().value as string | undefined;
-      if (oldest) requestCounts.delete(oldest);
-    }
-    requestCounts.set(key, { count: 1, resetAt: now + WINDOW_MS });
-    return true;
-  }
-  if (current.count >= MAX_REQUESTS_PER_WINDOW) return false;
-  current.count += 1;
-  return true;
-}
 
 // Combined endpoint: returns delivery slots + pickup points in one call so
 // the checkout picker can render both panels from a single request.
@@ -51,13 +29,34 @@ export async function GET(req: Request) {
     );
   }
 
-  const forwardedFor = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '';
-  const candidateIp = req.headers.get('x-real-ip') || forwardedFor;
-  const rateKey = /^[0-9a-f:.]{3,64}$/i.test(candidateIp) ? candidateIp : 'unknown';
-  if (!consumeLocalRateLimit(rateKey)) {
+  const rateLimit = await consumeDistributedRateLimit(
+    req.headers,
+    'delivery-options',
+    MAX_REQUESTS_PER_WINDOW,
+    WINDOW_MS,
+  );
+  if (rateLimit.kind === 'unavailable') {
+    return NextResponse.json(
+      { error: 'Delivery options are temporarily unavailable' },
+      {
+        status: 503,
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+        },
+      },
+    );
+  }
+  if (rateLimit.kind === 'limited') {
     return NextResponse.json(
       { error: 'Too many requests' },
-      { status: 429, headers: { 'Retry-After': '60', 'Cache-Control': 'no-store' } },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      },
     );
   }
 

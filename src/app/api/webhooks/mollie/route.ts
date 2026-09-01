@@ -36,12 +36,15 @@ import {
   assertResendConfigured,
   resend,
 } from '@/lib/resend';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
 const EFFECT_LEASE_MS = 10 * 60 * 1_000;
+const WEBHOOK_RATE_LIMIT = 600;
+const WEBHOOK_RATE_WINDOW_MS = 10 * 60 * 1_000;
 const NO_STORE_HEADERS = {
   'Cache-Control': 'no-store, max-age=0',
   Pragma: 'no-cache',
@@ -657,6 +660,37 @@ async function processPaidOrderEffects(orderId: Id<'orders'>): Promise<EffectOut
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const rateLimit = await consumeDistributedRateLimit(
+      request.headers,
+      'webhook:mollie',
+      WEBHOOK_RATE_LIMIT,
+      WEBHOOK_RATE_WINDOW_MS,
+    );
+    if (rateLimit.kind === 'unavailable') {
+      return NextResponse.json(
+        { success: false, error: 'Webhook protection is unavailable' },
+        {
+          status: 503,
+          headers: {
+            ...NO_STORE_HEADERS,
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+    if (rateLimit.kind === 'limited') {
+      return NextResponse.json(
+        { success: false, error: 'Too many webhook requests' },
+        {
+          status: 429,
+          headers: {
+            ...NO_STORE_HEADERS,
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
     const requestedPaymentId = await readMollieWebhookPaymentId(request);
     let payment;
     try {

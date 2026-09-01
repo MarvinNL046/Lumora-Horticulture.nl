@@ -44,9 +44,14 @@ untested checkout or changing production data prematurely.
 
 ## 2. Complete the payment staging gate
 
-Before enabling checkout, add a distributed per-IP limit or bot challenge for
-`/api/checkout` and the other routes listed in `SECURITY-HOTFIX-ROLLOUT.md`.
-Then run a controlled Mollie test-mode order through all states, including a
+A Convex-backed, atomic per-IP limit now protects `/api/checkout`, payment
+retry, cart capture, MyParcel delivery options and the Mollie/MyParcel webhook
+routes. Only a route-bound HMAC is stored; raw client addresses are not
+persisted. `/api/track/meta` is retired with HTTP 410 and performs no provider
+call. Keep these protections fail-closed and verify the 429 boundary in the
+isolated Preview deployment.
+
+Next, run a controlled Mollie test-mode order through all states, including a
 duplicate submit and duplicate/out-of-order webhook. Confirm exactly one order,
 email, invoice and MyParcel shipment. Never use a live Mollie key for this test.
 

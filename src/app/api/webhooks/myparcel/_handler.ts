@@ -19,6 +19,10 @@ import {
   parseMyParcelWebhookEvents,
 } from '@/lib/myparcel-webhook-security';
 import React from 'react';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
+
+const WEBHOOK_RATE_LIMIT = 600;
+const WEBHOOK_RATE_WINDOW_MS = 10 * 60 * 1_000;
 
 const CARRIER_LABEL: Record<string, string> = {
   postnl: 'PostNL',
@@ -153,6 +157,37 @@ export async function handleMyParcelWebhook(
     return NextResponse.json(
       { success: false, error },
       { status, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
+  const rateLimit = await consumeDistributedRateLimit(
+    request.headers,
+    `webhook:myparcel:${source}`,
+    WEBHOOK_RATE_LIMIT,
+    WEBHOOK_RATE_WINDOW_MS,
+  );
+  if (rateLimit.kind === 'unavailable') {
+    return NextResponse.json(
+      { success: false, error: 'Webhook protection is unavailable' },
+      {
+        status: 503,
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+        },
+      },
+    );
+  }
+  if (rateLimit.kind === 'limited') {
+    return NextResponse.json(
+      { success: false, error: 'Too many webhook requests' },
+      {
+        status: 429,
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+        },
+      },
     );
   }
 

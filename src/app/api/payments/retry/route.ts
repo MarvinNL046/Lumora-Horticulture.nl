@@ -14,11 +14,13 @@ import {
   type PaymentRetryTokenPayload,
 } from '@/lib/payment-retry-token';
 import { getCanonicalBaseUrl } from '@/lib/canonical-base-url';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 const MAX_RETRY_BODY_BYTES = 4_096;
+const RETRY_RATE_WINDOW_MS = 10 * 60 * 1_000;
 
 const NO_STORE_HEADERS = {
   'Cache-Control': 'no-store, max-age=0',
@@ -77,7 +79,52 @@ function bearerToken(request: NextRequest): string | null {
   return match?.[1] ?? null;
 }
 
+async function enforceRetryRateLimit(
+  request: NextRequest,
+  operation: 'get' | 'post',
+): Promise<NextResponse | null> {
+  const rateLimit = await consumeDistributedRateLimit(
+    request.headers,
+    `payment-retry:${operation}`,
+    operation === 'get' ? 30 : 8,
+    RETRY_RATE_WINDOW_MS,
+  );
+
+  if (rateLimit.kind === 'unavailable') {
+    return NextResponse.json(
+      { success: false, code: 'RETRY_UNAVAILABLE', error: 'Payment retry is temporarily unavailable' },
+      {
+        status: 503,
+        headers: {
+          ...NO_STORE_HEADERS,
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+        },
+      },
+    );
+  }
+
+  if (rateLimit.kind === 'limited') {
+    return NextResponse.json(
+      { success: false, code: 'TOO_MANY_REQUESTS', error: 'Too many payment retry attempts' },
+      {
+        status: 429,
+        headers: {
+          ...NO_STORE_HEADERS,
+          'Retry-After': String(rateLimit.retryAfterSeconds),
+          'X-RateLimit-Limit': String(rateLimit.limit),
+          'X-RateLimit-Remaining': '0',
+        },
+      },
+    );
+  }
+
+  return null;
+}
+
 export async function GET(request: NextRequest) {
+  const rateLimitResponse = await enforceRetryRateLimit(request, 'get');
+  if (rateLimitResponse) return rateLimitResponse;
+
   const checkedToken = verifyToken(bearerToken(request));
   if (checkedToken instanceof NextResponse) return checkedToken;
 
@@ -120,6 +167,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const rateLimitResponse = await enforceRetryRateLimit(request, 'post');
+  if (rateLimitResponse) return rateLimitResponse;
+
   const mediaType = request.headers
     .get('content-type')
     ?.split(';', 1)[0]

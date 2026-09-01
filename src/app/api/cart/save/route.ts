@@ -10,39 +10,13 @@ import {
   readLimitedJson,
   RequestBodyTooLargeError,
 } from '@/lib/limited-json';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const MAX_SAVES_PER_WINDOW = 8;
 const MAX_BODY_BYTES = 50_000;
-const rateLimits = new Map<string, { count: number; resetAt: number }>();
-
-function consumeRateLimit(key: string): boolean {
-  const now = Date.now();
-
-  if (rateLimits.size > 1_000) {
-    rateLimits.forEach((value, entryKey) => {
-      if (value.resetAt <= now) rateLimits.delete(entryKey);
-    });
-  }
-
-  const current = rateLimits.get(key);
-
-  if (!current || current.resetAt <= now) {
-    if (!current && rateLimits.size >= 1_000) {
-      const oldestKey = rateLimits.keys().next().value as string | undefined;
-      if (oldestKey) rateLimits.delete(oldestKey);
-    }
-    rateLimits.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return true;
-  }
-
-  if (current.count >= MAX_SAVES_PER_WINDOW) return false;
-  current.count += 1;
-
-  return true;
-}
 
 function isValidEmail(value: string): boolean {
   return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -67,16 +41,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-    // Next.js 15 removed NextRequest.ip. Trust only the platform-populated
-    // forwarding headers here; the distributed edge limiter remains the
-    // authoritative abuse-control layer.
-    const candidateIp = request.headers.get('x-real-ip') || forwardedFor || '';
-    const rateLimitKey = /^[0-9a-f:.]{3,64}$/i.test(candidateIp) ? candidateIp : 'unknown';
-    if (!consumeRateLimit(rateLimitKey)) {
+    const rateLimit = await consumeDistributedRateLimit(
+      request.headers,
+      'cart-save',
+      MAX_SAVES_PER_WINDOW,
+      RATE_LIMIT_WINDOW_MS,
+    );
+    if (rateLimit.kind === 'unavailable') {
+      return NextResponse.json(
+        { success: false, error: 'Cart protection is unavailable' },
+        {
+          status: 503,
+          headers: {
+            'Cache-Control': 'no-store, max-age=0',
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+    if (rateLimit.kind === 'limited') {
       return NextResponse.json(
         { success: false, error: 'Too many cart updates' },
-        { status: 429, headers: { 'Retry-After': '60' } }
+        {
+          status: 429,
+          headers: {
+            'Cache-Control': 'no-store, max-age=0',
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
       );
     }
 

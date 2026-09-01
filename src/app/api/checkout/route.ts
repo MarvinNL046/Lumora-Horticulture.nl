@@ -24,11 +24,14 @@ import {
   calculateNeemxPromoDiscount,
 } from '@/lib/neemx-promo';
 import { getCanonicalBaseUrl } from '@/lib/canonical-base-url';
+import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
 
 const MAX_CHECKOUT_BODY_BYTES = 64_000;
 const MAX_CHECKOUT_ITEMS = 20;
+const CHECKOUT_RATE_LIMIT = 8;
+const CHECKOUT_RATE_WINDOW_MS = 10 * 60 * 1_000;
 
 type CheckoutAddress = {
   street: string;
@@ -79,6 +82,40 @@ export async function POST(request: NextRequest) {
         {
           status: 503,
           headers: { 'Cache-Control': 'no-store, max-age=0', 'Retry-After': '60' },
+        },
+      );
+    }
+
+    const rateLimit = await consumeDistributedRateLimit(
+      request.headers,
+      'checkout',
+      CHECKOUT_RATE_LIMIT,
+      CHECKOUT_RATE_WINDOW_MS,
+    );
+    if (rateLimit.kind === 'unavailable') {
+      return NextResponse.json(
+        { success: false, error: 'Checkout protection is unavailable' },
+        {
+          status: 503,
+          headers: {
+            'Cache-Control': 'no-store, max-age=0',
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
+    if (rateLimit.kind === 'limited') {
+      return NextResponse.json(
+        { success: false, error: 'Too many checkout attempts' },
+        {
+          status: 429,
+          headers: {
+            'Cache-Control': 'no-store, max-age=0',
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+            'X-RateLimit-Limit': String(rateLimit.limit),
+            'X-RateLimit-Remaining': String(rateLimit.remaining),
+          },
         },
       );
     }

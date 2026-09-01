@@ -18,6 +18,7 @@ import type * as orderItems from "../orderItems.js";
 import type * as orders from "../orders.js";
 import type * as paymentAttempts from "../paymentAttempts.js";
 import type * as products from "../products.js";
+import type * as requestRateLimits from "../requestRateLimits.js";
 import type * as savedAddresses from "../savedAddresses.js";
 import type * as seed from "../seed.js";
 import type * as validators from "../validators.js";
@@ -39,6 +40,7 @@ declare const fullApi: ApiFromModules<{
   orders: typeof orders;
   paymentAttempts: typeof paymentAttempts;
   products: typeof products;
+  requestRateLimits: typeof requestRateLimits;
   savedAddresses: typeof savedAddresses;
   seed: typeof seed;
   validators: typeof validators;
