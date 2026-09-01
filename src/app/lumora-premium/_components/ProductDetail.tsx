@@ -45,13 +45,16 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const [quantity, setQuantity] = useState(1)
   const [imageIndex, setImageIndex] = useState(0)
   const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0]
-  const gallery = [
+  const fallbackGallery = [
     { src: product.mainImage, alt: product.mainImageAlt },
     { src: product.secondaryImage, alt: product.secondaryImageAlt },
     ...(product.tertiaryImage && product.tertiaryImageAlt
-      ? [{ src: product.tertiaryImage, alt: product.tertiaryImageAlt }]
+      ? [{ src: product.tertiaryImage, alt: product.tertiaryImageAlt, fit: 'cover' as const }]
       : []),
   ]
+  const gallery = variant.images?.length ? variant.images : fallbackGallery
+  const activeImageIndex = Math.min(imageIndex, gallery.length - 1)
+  const activeImage = gallery[activeImageIndex]
   const isPaperbus = product.id === 'paperbus'
   const compactVariantLabel = variant.shortLabel ?? variant.label
   const originalTotal = variant.price * quantity
@@ -89,9 +92,9 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         <div className={styles.gallery}>
           <div className={`${styles.galleryMain} ${styles[`galleryMain_${product.id}`]}`}>
             <Image
-              className={product.tertiaryImage && imageIndex === gallery.length - 1 ? styles.galleryDetailImage : undefined}
-              src={gallery[imageIndex].src}
-              alt={gallery[imageIndex].alt}
+              className={activeImage.fit === 'cover' ? styles.galleryDetailImage : undefined}
+              src={activeImage.src}
+              alt={activeImage.alt}
               fill
               priority
               sizes="(max-width: 767px) 100vw, 56vw"
@@ -102,11 +105,11 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             {gallery.map((image, index) => (
               <button
                 type="button"
-                className={imageIndex === index ? styles.galleryThumbActive : ''}
+                className={activeImageIndex === index ? styles.galleryThumbActive : ''}
                 key={image.src}
                 onClick={() => setImageIndex(index)}
                 aria-label={`Toon productafbeelding ${index + 1}`}
-                aria-pressed={imageIndex === index}
+                aria-pressed={activeImageIndex === index}
               >
                 <Image src={image.src} alt="" fill sizes="80px" />
               </button>
@@ -132,7 +135,10 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                   key={item.id}
                   type="button"
                   className={variantId === item.id ? styles.variantActive : ''}
-                  onClick={() => setVariantId(item.id)}
+                  onClick={() => {
+                    setVariantId(item.id)
+                    setImageIndex(0)
+                  }}
                   aria-pressed={variantId === item.id}
                 >
                   <span><strong>{item.label}</strong><small>{item.detail}</small></span>

@@ -1,9 +1,16 @@
+export type ProductImage = {
+  src: string
+  alt: string
+  fit?: 'contain' | 'cover'
+}
+
 export type ProductVariant = {
   id: string
   label: string
   shortLabel?: string
   detail: string
   price: number
+  images?: ProductImage[]
 }
 
 export type ProductFamily = {
@@ -49,6 +56,33 @@ export const paperbus: ProductFamily = {
       shortLabel: 'Steenwol 84',
       detail: '84 stekpluggen per tray',
       price: 84,
+      images: [
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
+          alt: 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-close.webp',
+          alt: 'Bovenaanzicht van een tray met 84 stekpluggen van steenwol',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-alternate.webp',
+          alt: 'Tweede aanzicht van een tray met 84 stekpluggen van steenwol',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-paperbus-detail.webp',
+          alt: 'Detail van stekpluggen van steenwol met Paperbus-wikkel',
+          fit: 'cover',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-open-box.webp',
+          alt: 'Open verzenddoos met een tray van 84 stekpluggen',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-closed-box.webp',
+          alt: 'Gesloten verzenddoos voor de stekpluggen',
+        },
+      ],
     },
     {
       id: 'tray-104',
@@ -56,6 +90,20 @@ export const paperbus: ProductFamily = {
       shortLabel: 'Steenwol 104',
       detail: '104 stekpluggen per tray',
       price: 80,
+      images: [
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-104-tray.webp',
+          alt: 'Tray met 104 hoge stekpluggen van steenwol',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-104-open-box.webp',
+          alt: 'Open verzenddoos met een tray van 104 stekpluggen',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-closed-box.webp',
+          alt: 'Gesloten verzenddoos voor de stekpluggen',
+        },
+      ],
     },
   ],
   highlights: [
@@ -79,7 +127,7 @@ export const neemx: ProductFamily = {
   mainImage: '/productAfbeeldingen/generated/neemx-clean-packshot-v1.png',
   mainImageAlt: 'Donkere NeemX Pro prototypefles met groene dop op een lichte achtergrond',
   secondaryImage:
-    '/productAfbeeldingen/generated/neemx-botanical-hero-v1.png',
+    '/productAfbeeldingen/neemxpro/neemx-botanical-hero-v1.avif',
   secondaryImageAlt: 'Frisse groene bladeren op een lichte achtergrond',
   variants: [
     { id: 'neemx-10', label: '10 ml', detail: 'Compact formaat', price: 24.95 },

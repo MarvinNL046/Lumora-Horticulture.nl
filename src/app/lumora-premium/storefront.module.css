@@ -262,8 +262,9 @@
 .galleryMain .galleryDetailImage { object-fit: cover; padding: 0; }
 .galleryMain_neemx img { object-fit: cover; padding: 0; }
 .galleryTag { position: absolute; left: 20px; top: 20px; padding: 9px 12px; color: var(--deep); background: rgba(255,255,255,.9); border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(10px); }
-.galleryThumbs { display: flex; gap: 10px; margin-top: 12px; }
-.galleryThumbs button { position: relative; width: 76px; height: 76px; overflow: hidden; padding: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 13px; cursor: pointer; }
+.galleryThumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; padding: 2px 2px 5px; scrollbar-width: none; }
+.galleryThumbs::-webkit-scrollbar { display: none; }
+.galleryThumbs button { position: relative; flex: 0 0 auto; width: 76px; height: 76px; overflow: hidden; padding: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 13px; cursor: pointer; }
 .galleryThumbs button img { object-fit: cover; }
 .galleryThumbs button:first-child img { object-fit: contain; padding: 7px; }
 .galleryThumbs .galleryThumbActive { border-color: var(--green); box-shadow: 0 0 0 2px rgba(45,125,70,.14); }
