@@ -66,8 +66,8 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const nextTierQuantity = discountInfo.nextTier?.quantity ?? null
   const bottlesToNextTier = nextTierQuantity === null ? 0 : nextTierQuantity - quantity
   const neemxYield = NEEMX_YIELD_BY_VARIANT[variant.id as keyof typeof NEEMX_YIELD_BY_VARIANT]
-  const usageImage = product.tertiaryImage ?? product.secondaryImage
-  const usageImageAlt = product.tertiaryImageAlt ?? product.secondaryImageAlt
+  const usageImage = product.usageImage ?? product.tertiaryImage ?? product.secondaryImage
+  const usageImageAlt = product.usageImageAlt ?? product.tertiaryImageAlt ?? product.secondaryImageAlt
   const usageSteps = isPaperbus
     ? [
         ['Kweek in de gekozen tray', 'Gebruik de tray voor zaad of stek en stem de teeltomstandigheden af op je gewas.'],
@@ -92,7 +92,11 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         <div className={styles.gallery}>
           <div className={`${styles.galleryMain} ${styles[`galleryMain_${product.id}`]}`}>
             <Image
-              className={activeImage.fit === 'cover' ? styles.galleryDetailImage : undefined}
+              className={activeImage.fit === 'cover'
+                ? styles.galleryDetailImage
+                : activeImage.fit === 'portrait'
+                  ? styles.galleryPortraitImage
+                  : undefined}
               src={activeImage.src}
               alt={activeImage.alt}
               fill

@@ -1,7 +1,7 @@
 export type ProductImage = {
   src: string
   alt: string
-  fit?: 'contain' | 'cover'
+  fit?: 'contain' | 'cover' | 'portrait'
 }
 
 export type ProductVariant = {
@@ -28,6 +28,8 @@ export type ProductFamily = {
   secondaryImageAlt: string
   tertiaryImage?: string
   tertiaryImageAlt?: string
+  usageImage?: string
+  usageImageAlt?: string
   variants: ProductVariant[]
   highlights: string[]
   useCases: string[]
@@ -49,6 +51,8 @@ export const paperbus: ProductFamily = {
   secondaryImageAlt: 'Tweede aanzicht van Stekpluggen Steenwol 84 in een kweektray',
   tertiaryImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-paperbus-detail.webp',
   tertiaryImageAlt: 'Detail van stekpluggen van steenwol met Paperbus-wikkel',
+  usageImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-bewortelde-zaailing.webp',
+  usageImageAlt: 'Jonge zaailing met zichtbare wortels in een stekplug van steenwol',
   variants: [
     {
       id: 'tray-84',
@@ -82,6 +86,11 @@ export const paperbus: ProductFamily = {
           src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-closed-box.webp',
           alt: 'Gesloten verzenddoos voor de stekpluggen',
         },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-bewortelde-zaailing.webp',
+          alt: 'Jonge zaailing met zichtbare wortels in een stekplug van steenwol',
+          fit: 'portrait',
+        },
       ],
     },
     {
@@ -102,6 +111,11 @@ export const paperbus: ProductFamily = {
         {
           src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-closed-box.webp',
           alt: 'Gesloten verzenddoos voor de stekpluggen',
+        },
+        {
+          src: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-bewortelde-zaailing.webp',
+          alt: 'Jonge zaailing met zichtbare wortels in een stekplug van steenwol',
+          fit: 'portrait',
         },
       ],
     },

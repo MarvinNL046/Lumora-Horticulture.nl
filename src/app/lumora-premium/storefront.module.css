@@ -260,6 +260,7 @@
 .galleryMain { position: relative; height: 610px; overflow: hidden; background: #f0f4f0; border: 1px solid var(--line); border-radius: 28px 28px 76px 28px; }
 .galleryMain img { object-fit: contain; padding: 54px; }
 .galleryMain .galleryDetailImage { object-fit: cover; padding: 0; }
+.galleryMain .galleryPortraitImage { object-fit: contain; padding: 0; background: #171b1e; }
 .galleryMain_neemx img { object-fit: cover; padding: 0; }
 .galleryTag { position: absolute; left: 20px; top: 20px; padding: 9px 12px; color: var(--deep); background: rgba(255,255,255,.9); border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(10px); }
 .galleryThumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; padding: 2px 2px 5px; scrollbar-width: none; }
@@ -366,6 +367,7 @@
 .usageGrid { display: grid; grid-template-columns: 1fr .9fr; gap: 82px; align-items: center; }
 .usageImage { position: relative; height: 570px; overflow: hidden; background: var(--soft); border-radius: 28px 28px 28px 82px; }
 .usageImage img { object-fit: cover; }
+.usageImage_paperbus img { object-fit: contain; background: #171b1e; }
 .usageImage_neemx img { object-position: center; }
 .usageCopy h2 { max-width: 570px; }
 .usageSteps { display: grid; margin: 30px 0; }
