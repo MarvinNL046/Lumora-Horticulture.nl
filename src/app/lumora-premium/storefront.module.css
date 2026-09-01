@@ -359,8 +359,7 @@
 .cartQuantity button:hover { background: var(--soft); }
 .cartQuantity svg { width: 14px; }
 .cartQuantity span { text-align: center; font-size: 13px; font-weight: 750; }
-.cartNote { display: flex; align-items: center; gap: 13px; margin: 18px; padding: 15px; color: var(--deep); background: var(--sage); border-radius: 12px; }
-.cartNote > svg { width: 25px; flex: 0 0 auto; color: var(--green); }
+.cartNote { display: grid; margin: 18px; padding: 15px; color: var(--deep); background: var(--sage); border-radius: 12px; }
 .cartNote > span { display: grid; gap: 4px; }
 .cartNote strong { font-size: 12px; }
 .cartNote small { color: var(--muted); font-size: 12px; }
@@ -377,10 +376,11 @@
 .checkoutButton, .formContinue { min-height: 54px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; color: #fff !important; background: var(--green); border: 0; border-radius: 12px; cursor: pointer; box-shadow: 0 12px 28px rgba(28,92,49,.16); font-size: 14px; font-weight: 800; }
 .checkoutButton:hover, .formContinue:hover { background: #236c3a; }
 .checkoutButton svg, .formContinue svg { width: 17px; }
-.summaryDecisionTrust { min-height: 44px; display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 8px; margin: 8px 0 12px; color: var(--muted); font-size: 12px; }
-.summaryDecisionTrust > span, .summaryDecisionTrust > a { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-.summaryDecisionTrust > a { justify-self: end; padding: 0 9px; color: var(--green); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; font-weight: 750; }
-.summaryDecisionTrust svg { width: 13px; flex: 0 0 auto; }
+.summaryPayment { display: grid; gap: 8px; margin: 12px 0 14px; color: var(--muted); }
+.summaryPaymentLabel { min-height: 24px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; }
+.summaryPaymentLabel svg { width: 13px; flex: 0 0 auto; }
+.paymentMethods { display: flex; flex-wrap: wrap; gap: 6px; }
+.paymentMethods > span { min-height: 28px; display: inline-flex; align-items: center; padding: 0 9px; color: var(--deep); background: var(--soft); border: 1px solid var(--line); border-radius: 7px; font-size: 11px; font-weight: 750; line-height: 1; white-space: nowrap; }
 .summaryProof { display: flex; align-items: center; gap: 10px; padding-top: 17px; border-top: 1px solid var(--line); }
 .summaryProof > svg { width: 23px; color: var(--green); }
 .summaryProof > span { display: grid; gap: 3px; }
@@ -721,7 +721,7 @@
   .summaryLines { gap: 9px; padding-bottom: 14px; }
   .summaryTotal { padding: 14px 0; }
   .checkoutButton { min-height: 50px; }
-  .summaryDecisionTrust { margin: 4px 0 0; }
+  .summaryPayment { margin: 8px 0 0; }
   .summaryProof { display: none; }
   .cartItem { grid-template-columns: 92px minmax(0,1fr); gap: 13px; padding: 15px; }
   .cartItemImage { height: 94px; }
@@ -761,9 +761,6 @@
 
 @media (max-width: 359px) {
   .orderSummary { padding-inline: 18px; }
-  .summaryDecisionTrust { grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; }
-  .summaryDecisionTrust > span { grid-column: 1 / -1; justify-content: center; }
-  .summaryDecisionTrust > a { min-width: 0; justify-content: center; justify-self: stretch; padding-inline: 5px; }
   .cartItem { grid-template-columns: 82px minmax(0,1fr); }
   .checkoutDockTrust { gap: 4px; font-size: 11px; }
   .checkoutDockTrust > span, .checkoutDockTrust a { padding-inline: 5px; }

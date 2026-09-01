@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
-import { ArrowRightIcon, LockIcon, MinusIcon, PlusIcon, ShieldIcon, TruckIcon } from './Icons'
+import { ArrowRightIcon, LockIcon, MinusIcon, PlusIcon, TruckIcon } from './Icons'
 
 type CartItem = {
   id: string
@@ -41,6 +41,7 @@ const initialItems: CartItem[] = [
 export function CartPage() {
   const [items, setItems] = useState(initialItems)
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   function changeQuantity(id: string, delta: number) {
     setItems((current) => current.map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item))
@@ -94,9 +95,11 @@ export function CartPage() {
                 </div>
               </article>
             ))}
-            <div className={styles.cartNote}>
-              <ShieldIcon />
-              <span><strong>Je bestelling blijft controleerbaar.</strong><small>Je ziet levering, totaal en voorwaarden voordat je betaalt.</small></span>
+            <div className={styles.cartNote} aria-label="Huidige bestelling" aria-live="polite">
+              <span>
+                <strong>Huidige bestelling</strong>
+                <small>{itemCount} {itemCount === 1 ? 'artikel' : 'artikelen'} · {formatPrice(total)} totaal</small>
+              </span>
             </div>
           </section>
 
@@ -109,10 +112,13 @@ export function CartPage() {
             </div>
             <div className={styles.summaryTotal}><span>Totaal</span><strong>{formatPrice(total)}</strong></div>
             <Link href="/lumora-premium/afrekenen" className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
-            <div className={styles.summaryDecisionTrust} aria-label="Betaling en service">
-              <span><LockIcon /> Via Mollie</span>
-              <Link href="/return-policy">14 dagen bedenktijd</Link>
-              <a href="mailto:info@lumorahorticulture.com">Contact</a>
+            <div className={styles.summaryPayment} aria-label="Betaalmogelijkheden">
+              <span className={styles.summaryPaymentLabel}><LockIcon /> Betaling via Mollie</span>
+              <div className={styles.paymentMethods} aria-label="iDEAL, Wero en creditcard">
+                <span>iDEAL</span>
+                <span>Wero</span>
+                <span>Creditcard</span>
+              </div>
             </div>
             <div className={styles.summaryProof}><TruckIcon /><span><strong>Gratis verzending</strong><small>Binnen Nederland, België en Duitsland</small></span></div>
           </aside>
