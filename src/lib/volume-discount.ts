@@ -33,7 +33,9 @@ export function getDiscountPercentage(quantity: number): number {
 export function calculateDiscountedPrice(basePrice: number, quantity: number): number {
   const discountPercentage = getDiscountPercentage(quantity);
   const discountMultiplier = 1 - discountPercentage / 100;
-  return basePrice * discountMultiplier;
+  // Checkout charges a rounded cent amount per unit. Keep every cart and PDP
+  // total on that same unit-price basis before multiplying by quantity.
+  return Math.round(basePrice * discountMultiplier * 100) / 100;
 }
 
 /**

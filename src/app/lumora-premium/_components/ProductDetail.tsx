@@ -3,6 +3,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import {
+  VOLUME_DISCOUNT_TIERS,
+  calculateDiscountedPrice,
+  calculateTotalPrice,
+  getDiscountInfo,
+} from '@/lib/volume-discount'
 import type { ProductFamily } from '../_data/products'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
@@ -14,9 +20,25 @@ import {
   MessageIcon,
   MinusIcon,
   PlusIcon,
-  ShieldIcon,
   TruckIcon,
 } from './Icons'
+
+const NEEMX_YIELD_BY_VARIANT = {
+  'neemx-10': { solution: '1–4 liter', coverage: '10–40 m²' },
+  'neemx-30': { solution: '3–12 liter', coverage: '30–120 m²' },
+  'neemx-50': { solution: '5–20 liter', coverage: '50–200 m²' },
+} as const
+
+const NEEMX_DOSAGE_ROWS = [
+  ['Preventief, wekelijks', '2,5 ml/L', '± 0,25 ml'],
+  ['Normaal', '5 ml/L', '± 0,5 ml'],
+  ['Intensief', '7 ml/L', '± 0,7 ml'],
+  ['Professioneel / zwaar', '10 ml/L', '± 1 ml'],
+] as const
+
+function getTierLabel(minQuantity: number, maxQuantity: number | null) {
+  return maxQuantity === null ? `${minQuantity}+` : `${minQuantity}–${maxQuantity}`
+}
 
 export function ProductDetail({ product }: { product: ProductFamily }) {
   const [variantId, setVariantId] = useState(product.variants[0].id)
@@ -29,6 +51,15 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   ]
   const isPaperbus = product.id === 'paperbus'
   const compactVariantLabel = variant.shortLabel ?? variant.label
+  const originalTotal = variant.price * quantity
+  const discountInfo = getDiscountInfo(quantity)
+  const discountedUnitPrice = calculateDiscountedPrice(variant.price, quantity)
+  const discountedTotal = calculateTotalPrice(variant.price, quantity)
+  const productTotal = isPaperbus ? originalTotal : discountedTotal
+  const savings = Math.max(0, originalTotal - discountedTotal)
+  const nextTierQuantity = discountInfo.nextTier?.quantity ?? null
+  const bottlesToNextTier = nextTierQuantity === null ? 0 : nextTierQuantity - quantity
+  const neemxYield = NEEMX_YIELD_BY_VARIANT[variant.id as keyof typeof NEEMX_YIELD_BY_VARIANT]
   const usageSteps = isPaperbus
     ? [
         ['Kweek in de gekozen tray', 'Gebruik de tray voor zaad of stek en stem de teeltomstandigheden af op je gewas.'],
@@ -105,10 +136,70 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             </div>
           </fieldset>
 
+          {!isPaperbus && (
+            <section className={styles.volumeDiscount} aria-labelledby="neemx-staffelkorting">
+              <div className={styles.volumeDiscountHeader}>
+                <div>
+                  <strong id="neemx-staffelkorting">Staffelkorting</strong>
+                  <span>Per gelijk flesformaat</span>
+                </div>
+                {discountInfo.hasDiscount && (
+                  <span className={styles.volumeDiscountBadge}>−{discountInfo.currentDiscount}%</span>
+                )}
+              </div>
+              <div className={styles.volumeTierGrid} role="group" aria-label="Kies een staffel en aantal">
+                {VOLUME_DISCOUNT_TIERS.map((tier) => {
+                  const isActive = quantity >= tier.minQuantity
+                    && (tier.maxQuantity === null || quantity <= tier.maxQuantity)
+                  const tierLabel = getTierLabel(tier.minQuantity, tier.maxQuantity)
+
+                  return (
+                    <button
+                      key={tier.minQuantity}
+                      type="button"
+                      className={isActive ? styles.volumeTierActive : ''}
+                      onClick={() => setQuantity(tier.minQuantity)}
+                      aria-pressed={isActive}
+                      aria-label={tier.discountPercentage === 0
+                        ? `Kies ${tierLabel} flessen zonder staffelkorting`
+                        : `Kies ${tierLabel} flessen voor ${tier.discountPercentage}% staffelkorting`}
+                    >
+                      <span>{tierLabel}</span>
+                      <strong>{tier.discountPercentage === 0 ? '0%' : `−${tier.discountPercentage}%`}</strong>
+                    </button>
+                  )
+                })}
+              </div>
+              <div className={styles.volumeDiscountStatus} aria-live="polite">
+                <strong>
+                  {discountInfo.hasDiscount
+                    ? `${discountInfo.currentDiscount}% staffelkorting actief · ${formatPrice(discountedUnitPrice)} per fles.`
+                    : `${formatPrice(variant.price)} per fles.`}
+                </strong>
+                {discountInfo.nextTier && (
+                  <span>
+                    Nog {bottlesToNextTier} {bottlesToNextTier === 1 ? 'fles' : 'flessen'} tot {discountInfo.nextTier.discount}% staffelkorting.
+                  </span>
+                )}
+              </div>
+            </section>
+          )}
+
           <div className={styles.buyRow}>
             <div className={styles.selectedDecision}>
-              <span><strong>{variant.label}</strong><small>{variant.detail}</small></span>
-              <strong>{formatPrice(variant.price * quantity)}</strong>
+              <span className={styles.selectedDecisionCopy}>
+                <strong>{variant.label} × {quantity}</strong>
+                <small>
+                  {!isPaperbus && discountInfo.hasDiscount
+                    ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
+                    : variant.detail}
+                </small>
+                {!isPaperbus && discountInfo.hasDiscount && <em>Je bespaart {formatPrice(savings)}</em>}
+              </span>
+              <span className={styles.selectedDecisionPrice}>
+                {!isPaperbus && discountInfo.hasDiscount && <del>{formatPrice(originalTotal)}</del>}
+                <strong>{formatPrice(productTotal)}</strong>
+              </span>
             </div>
             <div className={styles.quantityControl} aria-label="Aantal">
               <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
@@ -122,12 +213,46 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
           <div className={styles.purchaseProof}>
             <span><TruckIcon /><strong>Gratis verzending</strong><small>NL, BE en DE</small></span>
-            <span><ShieldIcon /><strong>Via Mollie</strong><small>Veilig afrekenen</small></span>
+            <span className={styles.paymentBrandProof} aria-label="Logo's: iDEAL, Wero, Visa en Mastercard">
+              <strong>Betaalmerken</strong>
+              <span className={styles.paymentLogos} aria-hidden="true">
+                <Image src="/payment-methods/ideal-wero.svg" alt="" width={45} height={30} />
+                <Image src="/payment-methods/visa.svg" alt="" width={45} height={30} />
+                <Image src="/payment-methods/mastercard.svg" alt="" width={45} height={30} />
+              </span>
+            </span>
             <span><MessageIcon /><strong>Productvraag?</strong><small>Neem contact op</small></span>
           </div>
 
           <div className={styles.productAccordions}>
-            <details open><summary>Productinformatie <ChevronDownIcon /></summary><p>{product.statement} Kies hierboven de uitvoering die aansluit op je gebruik.</p></details>
+            {isPaperbus ? (
+              <details open><summary>Productinformatie <ChevronDownIcon /></summary><p>{product.statement} Kies hierboven de uitvoering die aansluit op je gebruik.</p></details>
+            ) : (
+              <details open>
+                <summary>Dosering &amp; opbrengst <ChevronDownIcon /></summary>
+                <div className={styles.dosageContent}>
+                  <table className={styles.dosageTable}>
+                    <caption className={styles.srOnly}>NeemX dosering per gebruiksniveau</caption>
+                    <thead>
+                      <tr><th>Gebruik</th><th>Per liter</th><th>Concentraat per m²*</th></tr>
+                    </thead>
+                    <tbody>
+                      {NEEMX_DOSAGE_ROWS.map(([usage, perLiter, perSquareMeter]) => (
+                        <tr key={usage}><th scope="row">{usage}</th><td>{perLiter}</td><td>{perSquareMeter}</td></tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {neemxYield && (
+                    <p className={styles.dosageResult}>
+                      <strong>{variant.label} geselecteerd</strong>
+                      <span>Met {variant.label} maak je {neemxYield.solution} spuitoplossing voor indicatief {neemxYield.coverage}.</span>
+                    </p>
+                  )}
+                  <p className={styles.dosageFootnote}>*Gebaseerd op circa 100 ml aangemaakte spuitoplossing per m². Gebruik genoeg voor volledige bladbedekking, ook aan de onderzijde.</p>
+                  <p className={styles.dosageUseNote}>Goed schudden, eerst op een klein deel testen en buiten fel licht spuiten.</p>
+                </div>
+              </details>
+            )}
             <details><summary>Levering & retour <ChevronDownIcon /></summary><p>Verzending binnen Nederland, België en Duitsland is gratis. Voor consumenten geldt 14 dagen bedenktijd; bekijk vóór aankoop altijd het volledige retourbeleid.</p></details>
           </div>
         </div>
@@ -167,8 +292,13 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
       <div className={styles.mobileBuyDock}>
         <span className={styles.dockSelection}>
-          <span><small>{compactVariantLabel}</small><em>{variant.detail}</em></span>
-          <strong>{formatPrice(variant.price * quantity)}</strong>
+          <span>
+            <small>{compactVariantLabel} × {quantity}</small>
+            <em>{!isPaperbus && discountInfo.hasDiscount
+              ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
+              : variant.detail}</em>
+          </span>
+          <strong>{formatPrice(productTotal)}</strong>
         </span>
         <div className={styles.dockQuantity} aria-label="Aantal">
           <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>

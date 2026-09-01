@@ -284,12 +284,31 @@
 .variantGrid button > span:last-child { font-size: 12px; font-weight: 750; }
 .variantGrid .variantActive { background: #f2f8f3; border-color: var(--green); box-shadow: inset 4px 0 0 var(--green); }
 .variantGrid button:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
+.volumeDiscount { margin-top: 14px; padding: 14px; background: #f7faf7; border: 1px solid #dbe8de; border-radius: 14px; }
+.volumeDiscountHeader { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 11px; }
+.volumeDiscountHeader > div { display: grid; gap: 2px; }
+.volumeDiscountHeader strong { font-size: 13px; }
+.volumeDiscountHeader span { color: var(--muted); font-size: 11px; }
+.volumeDiscountBadge { min-width: 46px; min-height: 26px; display: grid; place-items: center; padding: 0 8px; color: var(--green) !important; background: #fff; border: 1px solid #bcd7c3; border-radius: 999px; font-size: 11px !important; font-weight: 850; }
+.volumeTierGrid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 6px; }
+.volumeTierGrid button { min-width: 0; min-height: 51px; display: grid; place-content: center; gap: 3px; padding: 6px 4px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.volumeTierGrid button span { font-size: 11px; font-weight: 700; white-space: nowrap; }
+.volumeTierGrid button strong { color: var(--muted); font-size: 11px; }
+.volumeTierGrid .volumeTierActive { color: #fff; background: var(--green); border-color: var(--green); box-shadow: 0 7px 16px rgba(30,102,53,.17); }
+.volumeTierGrid .volumeTierActive strong { color: #fff; }
+.volumeTierGrid button:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
+.volumeDiscountStatus { display: grid; gap: 2px; margin-top: 10px; }
+.volumeDiscountStatus strong { color: var(--deep); font-size: 12px; line-height: 1.4; }
+.volumeDiscountStatus span { color: var(--muted); font-size: 11px; line-height: 1.4; }
 .buyRow { display: grid; grid-template-columns: 136px 1fr; gap: 10px; margin-top: 16px; }
 .selectedDecision { grid-column: 1 / -1; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 13px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; }
 .selectedDecision > span { display: grid; gap: 3px; }
 .selectedDecision > span > strong { font-size: 13px; }
 .selectedDecision small { color: var(--muted); font-size: 12px; }
-.selectedDecision > strong { font-size: 14px; white-space: nowrap; }
+.selectedDecisionCopy em { color: var(--green); font-size: 11px; font-style: normal; font-weight: 750; }
+.selectedDecisionPrice { flex: 0 0 auto; justify-items: end; }
+.selectedDecisionPrice del { color: var(--muted); font-size: 11px; }
+.selectedDecisionPrice strong { font-size: 14px; white-space: nowrap; }
 .quantityControl { min-height: 54px; display: grid; grid-template-columns: 48px 40px 48px; align-items: center; border: 1px solid var(--line); border-radius: 12px; }
 .quantityControl button { width: 48px; height: 52px; display: grid; place-items: center; padding: 0; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
 .quantityControl button:hover { background: var(--soft); }
@@ -300,11 +319,14 @@
 .addButton { min-height: 54px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; color: #fff !important; background: var(--green); border-radius: 12px; box-shadow: 0 12px 28px rgba(28,92,49,.16); font-size: 13px; font-weight: 800; }
 .addButton:hover { background: #236c3a; }
 .addButton svg { width: 19px; }
-.purchaseProof { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 14px 0 24px; }
+.purchaseProof { display: grid; grid-template-columns: .9fr 1.2fr .9fr; gap: 8px; margin: 14px 0 24px; }
 .purchaseProof > span { display: grid; grid-template-columns: 25px 1fr; grid-template-rows: auto auto; column-gap: 7px; align-items: center; padding: 10px 8px; background: var(--soft); border-radius: 10px; }
 .purchaseProof svg { grid-row: 1 / 3; width: 21px; color: var(--green); }
 .purchaseProof strong { font-size: 12px; }
 .purchaseProof small { color: var(--muted); font-size: 12px; }
+.purchaseProof .paymentBrandProof { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px; }
+.paymentLogos { display: flex; align-items: center; gap: 3px; }
+.paymentLogos img { width: 44px; height: 29px; object-fit: contain; border: 1px solid #e1e7e3; border-radius: 4px; }
 .productAccordions { border-top: 1px solid var(--line); }
 .productAccordions details { border-bottom: 1px solid var(--line); }
 .productAccordions summary { min-height: 54px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; font-size: 12px; font-weight: 750; }
@@ -312,6 +334,21 @@
 .productAccordions summary svg { width: 16px; transition: transform .2s ease; }
 .productAccordions details[open] summary svg { transform: rotate(180deg); }
 .productAccordions p { margin: -3px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.dosageContent { padding: 0 0 18px; }
+.dosageTable { width: 100%; overflow: hidden; border-spacing: 0; border: 1px solid var(--line); border-radius: 11px; table-layout: fixed; }
+.dosageTable th, .dosageTable td { padding: 9px 8px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); font-size: 11px; line-height: 1.35; }
+.dosageTable thead th { color: #536159; background: var(--soft); font-size: 10px; font-weight: 800; letter-spacing: .035em; text-transform: uppercase; }
+.dosageTable tbody th { color: var(--ink); font-weight: 720; }
+.dosageTable td { color: var(--muted); }
+.dosageTable th:first-child { width: 43%; }
+.dosageTable th:nth-child(2) { width: 21%; }
+.dosageTable th:nth-child(3) { width: 36%; }
+.dosageTable tr:last-child > * { border-bottom: 0; }
+.productAccordions .dosageResult { display: grid; gap: 3px; margin: 10px 0 7px; padding: 10px 11px; color: var(--deep); background: #eef6f0; border-radius: 10px; font-size: 12px; line-height: 1.45; }
+.dosageResult strong { font-size: 12px; }
+.productAccordions .dosageFootnote { margin: 0 0 5px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.productAccordions .dosageUseNote { margin: 0; color: var(--deep); font-size: 11px; font-weight: 700; line-height: 1.5; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
 .productHighlights { padding: 98px 0; background: var(--deep); color: #fff; }
 .highlightIntro { max-width: 700px; margin-bottom: 38px; }
@@ -683,21 +720,34 @@
   .priceLine { order: 3; margin: 10px 0 12px; }
   .variantFieldset { order: 4; }
   .productSummary_paperbus .variantFieldset { margin-bottom: 125px; }
-  .productSummary_neemx .variantFieldset { margin-bottom: 125px; }
-  .purchaseProof { order: 5; }
-  .productIntro { order: 6; margin-top: 0; font-size: 16px; line-height: 1.65; }
-  .buyRow { order: 7; display: none; }
-  .productAccordions { order: 8; }
+  .productSummary_neemx .variantFieldset { margin-bottom: 0; }
+  .volumeDiscount { order: 5; margin-top: 10px; margin-bottom: 0; padding: 12px; }
+  .purchaseProof { order: 6; }
+  .productIntro { order: 7; margin-top: 0; font-size: 16px; line-height: 1.65; }
+  .buyRow { order: 8; display: none; }
+  .productAccordions { order: 9; }
   .priceLine strong { font-size: 24px; }
   .variantFieldset legend { margin-bottom: 7px; }
   .variantGrid { gap: 6px; }
   .variantGrid button { min-height: 50px; padding-block: 7px; }
+  .volumeDiscountHeader { margin-bottom: 9px; }
+  .volumeTierGrid { gap: 4px; }
+  .volumeTierGrid button { min-height: 48px; padding-inline: 2px; }
+  .volumeTierGrid button span, .volumeTierGrid button strong { font-size: 10px; }
+  .volumeDiscountStatus { margin-top: 8px; }
   .buyRow { grid-template-columns: 136px 1fr; }
   .quantityControl { grid-template-columns: 48px 40px 48px; }
   .quantityControl button { width: 48px; }
   .addButton { padding-inline: 12px; font-size: 12px; }
   .purchaseProof { grid-template-columns: 1fr; }
   .purchaseProof > span { grid-template-columns: 28px 1fr; padding: 10px 12px; }
+  .purchaseProof .paymentBrandProof { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+  .paymentLogos img { width: 46px; height: 31px; }
+  .dosageTable th, .dosageTable td { padding: 9px 6px; font-size: 11px; }
+  .dosageTable thead th { font-size: 9px; }
+  .productAccordions .dosageResult { font-size: 13px; }
+  .productAccordions .dosageFootnote,
+  .productAccordions .dosageUseNote { font-size: 12px; line-height: 1.5; }
   .productHighlights { padding: 72px 0; }
   .highlightGrid { grid-template-columns: 1fr; }
   .highlightGrid article { min-height: 190px; }
@@ -760,6 +810,13 @@
 }
 
 @media (max-width: 359px) {
+  .volumeDiscount { padding-inline: 9px; }
+  .volumeTierGrid { gap: 3px; }
+  .volumeTierGrid button { min-height: 46px; }
+  .volumeTierGrid button span, .volumeTierGrid button strong { font-size: 9px; }
+  .paymentLogos { gap: 2px; }
+  .paymentLogos img { width: 42px; height: 28px; }
+  .dosageTable th, .dosageTable td { padding-inline: 4px; font-size: 10px; }
   .orderSummary { padding-inline: 18px; }
   .cartItem { grid-template-columns: 82px minmax(0,1fr); }
   .checkoutDockTrust { gap: 4px; font-size: 11px; }
