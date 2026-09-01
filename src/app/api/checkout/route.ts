@@ -11,6 +11,10 @@ import {
   RequestBodyTooLargeError,
 } from '@/lib/limited-json';
 import { calculateDiscountedPrice } from '@/lib/volume-discount';
+import {
+  calculatePaperbusPromotion,
+  PAPERBUS_PROMO_CODE,
+} from '@/lib/paperbus-promo';
 import { stackServerApp } from '@/stack/server';
 import { isHiddenProductSlug } from '@/lib/hidden-products';
 import {
@@ -197,8 +201,11 @@ export async function POST(request: NextRequest) {
       const basePrice = product.price;
       const quantity = item.quantity;
 
-      // Bereken korting op basis van aantal
-      const discountedPrice = calculateDiscountedPrice(basePrice, quantity);
+      // Staffelkorting geldt alleen voor NEEMX PRO. De stekpluggenactie wordt
+      // hieronder als afzonderlijke orderkorting server-side toegepast.
+      const discountedPrice = product.slug.startsWith('neemx-pro')
+        ? calculateDiscountedPrice(basePrice, quantity)
+        : basePrice;
       const unitPriceCents = Math.round(discountedPrice * 100);
       const itemTotalCents = unitPriceCents * quantity;
 
@@ -214,11 +221,34 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // ─── 2+1 GRATIS promo (FB landing) ─────────────────────────────────
-    // Only applied when the hidden cookie is set AND the cart contains
-    // ≥3 NEEMX items. Discount = price of the cheapest individual bottle.
-    let promoMetadata: { promoCode: string; promoDiscount: number; freeItemSlug: string } | null = null;
+    // Product promotions are calculated server-side from the canonical
+    // product slug and quantity. The stekpluggen bundle is public; the
+    // separate NEEMX landing-page promotion still requires its cookie.
+    let promoMetadata: Record<string, unknown> | null = null;
     let promoDiscountCents = 0;
+
+    const paperbusPromotions = productDetails.flatMap((product) => {
+      const promotion = calculatePaperbusPromotion(
+        product.slug,
+        product.basePrice,
+        product.quantity,
+      );
+      if (!promotion.eligible) return [];
+      return [{ slug: product.slug, quantity: product.quantity, discount: promotion.discount }];
+    });
+
+    if (paperbusPromotions.length > 0) {
+      const paperbusDiscountCents = Math.round(
+        paperbusPromotions.reduce((sum, promotion) => sum + promotion.discount, 0) * 100,
+      );
+      promoDiscountCents += paperbusDiscountCents;
+      totalAmountCents = Math.max(0, totalAmountCents - paperbusDiscountCents);
+      promoMetadata = {
+        promoCode: PAPERBUS_PROMO_CODE,
+        paperbusPromotions,
+      };
+    }
+
     const promoCookie = (await cookies()).get(NEEMX_PROMO_COOKIE_NAME)?.value;
     if (isPromoCookieActive(promoCookie)) {
       const promo = calculateNeemxPromoDiscount(
@@ -229,10 +259,12 @@ export async function POST(request: NextRequest) {
         }))
       );
       if (promo.eligible && promo.freeItemSlug) {
-        promoDiscountCents = Math.round(promo.discount * 100);
-        totalAmountCents = Math.max(0, totalAmountCents - promoDiscountCents);
+        const neemxPromoDiscountCents = Math.round(promo.discount * 100);
+        promoDiscountCents += neemxPromoDiscountCents;
+        totalAmountCents = Math.max(0, totalAmountCents - neemxPromoDiscountCents);
         promoMetadata = {
-          promoCode: NEEMX_PROMO_CODE,
+          ...promoMetadata,
+          neemxPromoCode: NEEMX_PROMO_CODE,
           promoDiscount: promoDiscountCents / 100,
           freeItemSlug: promo.freeItemSlug,
         };

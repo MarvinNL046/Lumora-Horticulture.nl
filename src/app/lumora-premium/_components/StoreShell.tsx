@@ -2,8 +2,10 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import type { ReactNode } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { Suspense, type ReactNode } from 'react'
+import { calculatePaperbusPromotion } from '@/lib/paperbus-promo'
+import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
 import {
   BagIcon,
@@ -15,6 +17,38 @@ import {
 } from './Icons'
 
 const ROOT = '/lumora-premium'
+
+function readActionCart(searchParams: ReturnType<typeof useSearchParams>) {
+  if (searchParams.get('action') !== 'stekpluggen-3-voor-180') return null
+  const quantity = Math.min(100, Math.max(1, Number.parseInt(searchParams.get('quantity') ?? '3', 10) || 3))
+  const is104 = searchParams.get('variant') === 'tray-104'
+  const promotion = calculatePaperbusPromotion(
+    is104 ? 'paper-plug-tray-104' : 'paper-plug-tray-84',
+    is104 ? 80 : 84,
+    quantity,
+  )
+  return { quantity, total: promotion.total }
+}
+
+function CheckoutActionTotal() {
+  const actionCart = readActionCart(useSearchParams())
+  return <strong>{actionCart ? formatPrice(actionCart.total) : '€ 108,95'}</strong>
+}
+
+function ActionCartLink() {
+  const searchParams = useSearchParams()
+  const actionCart = readActionCart(searchParams)
+  const actionQuery = actionCart ? `?${searchParams.toString()}` : ''
+  const quantity = actionCart?.quantity ?? 2
+
+  return (
+    <Link className={styles.cartButton} href={`${ROOT}/winkelmand${actionQuery}`} aria-label={`Winkelwagen met ${quantity} artikelen`}>
+      <BagIcon />
+      <span className={styles.cartLabel}>Winkelwagen</span>
+      <span className={styles.cartCount}>{quantity}</span>
+    </Link>
+  )
+}
 
 function Wordmark({ priority = false }: { priority?: boolean }) {
   return (
@@ -55,7 +89,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           <div className={styles.checkoutDockMain}>
             <span>
               <small>Totaal</small>
-              <strong>€ 108,95</strong>
+              <Suspense fallback={<strong>€ 108,95</strong>}><CheckoutActionTotal /></Suspense>
             </span>
             <a href="#contactgegevens" className={styles.dockPrimaryAction}>
               Gegevens invullen
@@ -102,11 +136,15 @@ export function StoreShell({ children }: { children: ReactNode }) {
               <UserIcon />
               <span className={styles.cartLabel}>Account</span>
             </Link>
-            <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label="Winkelwagen met 2 artikelen">
-              <BagIcon />
-              <span className={styles.cartLabel}>Winkelwagen</span>
-              <span className={styles.cartCount}>2</span>
-            </Link>
+            <Suspense fallback={(
+              <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label="Winkelwagen met 2 artikelen">
+                <BagIcon />
+                <span className={styles.cartLabel}>Winkelwagen</span>
+                <span className={styles.cartCount}>2</span>
+              </Link>
+            )}>
+              <ActionCartLink />
+            </Suspense>
           </div>
         </div>
       </header>

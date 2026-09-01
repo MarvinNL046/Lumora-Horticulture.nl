@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { calculateTotalPrice } from '@/lib/volume-discount';
+import { calculateCartItemTotal } from '@/lib/cart-pricing';
 
 export interface CartItem {
   product_id: string;
@@ -156,7 +156,7 @@ export function CartProvider({ children }: { children: React.ReactNode}) {
     const timeoutId = setTimeout(async () => {
       try {
         const totalPrice = items.reduce((total, item) => {
-          return total + calculateTotalPrice(item.price, item.quantity);
+          return total + calculateCartItemTotal(item.slug, item.price, item.quantity);
         }, 0);
 
         const response = await fetch('/api/cart/save', {
@@ -249,9 +249,10 @@ export function CartProvider({ children }: { children: React.ReactNode}) {
   };
 
   const getTotalPrice = () => {
-    // Calculate total with volume discount applied per product
+    // Apply product-specific pricing, including the stekpluggen bundle and
+    // NEEMX PRO staffelkorting.
     return items.reduce((total, item) => {
-      const itemTotal = calculateTotalPrice(item.price, item.quantity);
+      const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity);
       return total + itemTotal;
     }, 0);
   };

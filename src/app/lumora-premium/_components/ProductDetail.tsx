@@ -9,6 +9,11 @@ import {
   calculateTotalPrice,
   getDiscountInfo,
 } from '@/lib/volume-discount'
+import {
+  calculatePaperbusPromotion,
+  PAPERBUS_PROMO_PRICE,
+  PAPERBUS_PROMO_QUANTITY,
+} from '@/lib/paperbus-promo'
 import type { ProductFamily } from '../_data/products'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
@@ -57,13 +62,20 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const activeImageIndex = Math.min(imageIndex, gallery.length - 1)
   const activeImage = gallery[activeImageIndex]
   const isPaperbus = product.id === 'paperbus'
+  const paperbusSlug = variant.id === 'tray-104' ? 'paper-plug-tray-104' : 'paper-plug-tray-84'
   const compactVariantLabel = variant.shortLabel ?? variant.label
   const originalTotal = variant.price * quantity
   const discountInfo = getDiscountInfo(quantity)
   const discountedUnitPrice = calculateDiscountedPrice(variant.price, quantity)
   const discountedTotal = calculateTotalPrice(variant.price, quantity)
-  const productTotal = isPaperbus ? originalTotal : discountedTotal
-  const savings = Math.max(0, originalTotal - discountedTotal)
+  const paperbusPromotion = calculatePaperbusPromotion(paperbusSlug, variant.price, quantity)
+  const productTotal = isPaperbus ? paperbusPromotion.total : discountedTotal
+  const savings = isPaperbus
+    ? paperbusPromotion.discount
+    : Math.max(0, originalTotal - discountedTotal)
+  const cartHref = isPaperbus
+    ? `/lumora-premium/winkelmand?action=stekpluggen-3-voor-180&variant=${variant.id}&quantity=${quantity}`
+    : '/lumora-premium/winkelmand'
   const nextTierQuantity = discountInfo.nextTier?.quantity ?? null
   const bottlesToNextTier = nextTierQuantity === null ? 0 : nextTierQuantity - quantity
   const neemxYield = NEEMX_YIELD_BY_VARIANT[variant.id as keyof typeof NEEMX_YIELD_BY_VARIANT]
@@ -162,20 +174,50 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             </div>
           </fieldset>
 
+          {isPaperbus && (
+            <section
+              className={`${styles.bundleOffer} ${paperbusPromotion.eligible ? styles.bundleOfferActive : ''}`}
+              aria-labelledby="stekpluggen-actie"
+            >
+              <div className={styles.bundleOfferHeader}>
+                <span>Actiebundel</span>
+                {paperbusPromotion.eligible && <strong><CheckIcon /> Actief</strong>}
+              </div>
+              <div className={styles.bundleOfferBody}>
+                <div>
+                  <h2 id="stekpluggen-actie">3 dozen voor €180</h2>
+                  <p>Kies {variant.label}: drie dozen van dezelfde maat voor <strong>{formatPrice(PAPERBUS_PROMO_PRICE)}</strong> totaal.</p>
+                  <small>Verzending inbegrepen naar NL, BE en DE.</small>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setQuantity(PAPERBUS_PROMO_QUANTITY)}
+                  aria-pressed={paperbusPromotion.eligible && quantity === PAPERBUS_PROMO_QUANTITY}
+                >
+                  {paperbusPromotion.eligible && quantity === PAPERBUS_PROMO_QUANTITY
+                    ? 'Actiebundel gekozen'
+                    : 'Kies 3 dozen'}
+                </button>
+              </div>
+            </section>
+          )}
+
           <div className={styles.purchasePanel}>
             <div className={styles.buyRow}>
               <div className={styles.selectedDecision}>
                 <span className={styles.selectedDecisionCopy}>
                   <strong>{variant.label} × {quantity}</strong>
                   <small>
-                    {!isPaperbus && discountInfo.hasDiscount
+                    {isPaperbus && paperbusPromotion.eligible
+                      ? `${paperbusPromotion.bundleCount === 1 ? 'Actiebundel' : `${paperbusPromotion.bundleCount} actiebundels`} actief · verzending inbegrepen`
+                      : !isPaperbus && discountInfo.hasDiscount
                       ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
                       : variant.detail}
                   </small>
-                  {!isPaperbus && discountInfo.hasDiscount && <em>Je bespaart {formatPrice(savings)}</em>}
+                  {savings > 0 && <em>Je bespaart {formatPrice(savings)}</em>}
                 </span>
                 <span className={styles.selectedDecisionPrice}>
-                  {!isPaperbus && discountInfo.hasDiscount && <del>{formatPrice(originalTotal)}</del>}
+                  {savings > 0 && <del>{formatPrice(originalTotal)}</del>}
                   <strong>{formatPrice(productTotal)}</strong>
                 </span>
               </div>
@@ -185,8 +227,10 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                 <span aria-live="polite">{quantity}</span>
                 <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
               </div>
-              <Link href="/lumora-premium/winkelmand" className={styles.addButton}>
-                <BagIcon /> {compactVariantLabel} in winkelwagen
+              <Link href={cartHref} className={styles.addButton}>
+                <BagIcon /> {isPaperbus && paperbusPromotion.eligible
+                  ? `Voeg ${quantity} dozen toe · ${formatPrice(productTotal)}`
+                  : `${compactVariantLabel} in winkelwagen`}
               </Link>
             </div>
 
@@ -345,10 +389,10 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           <span aria-live="polite">{quantity}</span>
           <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
         </div>
-        <Link href="/lumora-premium/winkelmand" className={styles.dockPrimaryAction}>
+        <Link href={cartHref} className={styles.dockPrimaryAction}>
           <span>
-            <small>{compactVariantLabel} × {quantity} · {formatPrice(productTotal)}</small>
-            <strong>In winkelwagen</strong>
+            <small>{isPaperbus && paperbusPromotion.eligible ? '3-voor-€180 actie · verzending inbegrepen' : `${compactVariantLabel} × ${quantity}`}</small>
+            <strong>{isPaperbus && paperbusPromotion.eligible ? `3 dozen · ${formatPrice(productTotal)}` : `In winkelwagen · ${formatPrice(productTotal)}`}</strong>
           </span>
         </Link>
       </div>

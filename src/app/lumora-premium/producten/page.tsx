@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon } from '../_components/Icons'
 import { ProductFamilyCard } from '../_components/ProductFamilyCard'
 import { TrustStrip } from '../_components/TrustStrip'
+import { StekplugPromoBand } from '../_components/StekplugPromoBand'
 import { neemx, productFamilies } from '../_data/products'
 import styles from '../storefront.module.css'
 
@@ -47,6 +48,8 @@ export default function ProductenPage() {
           </div>
         </div>
       </section>
+
+      <StekplugPromoBand />
 
       <section className={styles.collectionProducts} id="productlijnen">
         <div className={styles.container}>

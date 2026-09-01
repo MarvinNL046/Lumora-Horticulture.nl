@@ -7,10 +7,11 @@ import { useCart } from '@/contexts/CartContext';
 import { localizePathForLocale } from '@/lib/url-localizations';
 import {
   calculateDiscountedPrice,
-  calculateTotalPrice,
   getDiscountInfo,
   formatPrice,
 } from '@/lib/volume-discount';
+import { calculateCartItemTotal } from '@/lib/cart-pricing';
+import { calculatePaperbusPromotion, isPaperbusPromoSlug } from '@/lib/paperbus-promo';
 import {
   NEEMX_PROMO_COOKIE_NAME,
   isPromoCookieActive,
@@ -256,7 +257,7 @@ export default function CheckoutPage() {
     if (!customerEmail || !customerEmail.includes('@') || items.length === 0) return;
     const id = setTimeout(async () => {
       try {
-        const total = items.reduce((t, i) => t + calculateTotalPrice(i.price, i.quantity), 0);
+        const total = items.reduce((t, i) => t + calculateCartItemTotal(i.slug, i.price, i.quantity), 0);
         await fetch('/api/cart/save', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -422,7 +423,7 @@ export default function CheckoutPage() {
       items.map((item) => ({
         id: item.product_id,
         name: item.name,
-        price: calculateDiscountedPrice(item.price, item.quantity),
+        price: calculateCartItemTotal(item.slug, item.price, item.quantity) / item.quantity,
         quantity: item.quantity,
         category: 'Horticulture Products',
       })),
@@ -502,9 +503,13 @@ export default function CheckoutPage() {
     <div className="space-y-5">
       <div className="space-y-3">
         {items.map((item) => {
-          const discountInfo = getDiscountInfo(item.quantity);
-          const discountedPrice = calculateDiscountedPrice(item.price, item.quantity);
-          const itemTotal = calculateTotalPrice(item.price, item.quantity);
+          const isPaperbus = isPaperbusPromoSlug(item.slug);
+          const discountInfo = isPaperbus
+            ? { currentDiscount: 0, hasDiscount: false, nextTier: null }
+            : getDiscountInfo(item.quantity);
+          const paperbusPromotion = calculatePaperbusPromotion(item.slug, item.price, item.quantity);
+          const discountedPrice = isPaperbus ? item.price : calculateDiscountedPrice(item.price, item.quantity);
+          const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity);
           return (
             <div key={item.product_id} className="flex gap-3">
               <div className="relative w-16 h-16 flex-shrink-0">
@@ -520,7 +525,9 @@ export default function CheckoutPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-lumora-dark truncate">{item.name}</div>
-                {discountInfo.hasDiscount ? (
+                {paperbusPromotion.eligible ? (
+                  <div className="text-xs text-lumora-green-600 font-bold">✓ 3-voor-€180 actie toegepast</div>
+                ) : discountInfo.hasDiscount ? (
                   <div className="text-xs text-lumora-green-600 font-medium">-{discountInfo.currentDiscount}% · {formatPrice(discountedPrice)} {t.pricePerPiece}</div>
                 ) : (
                   <div className="text-xs text-lumora-dark/60">{formatPrice(item.price)} {t.pricePerPiece}</div>

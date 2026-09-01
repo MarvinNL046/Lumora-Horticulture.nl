@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon, LeafIcon } from './_components/Icons'
 import { ProductFamilyCard } from './_components/ProductFamilyCard'
 import { TrustStrip } from './_components/TrustStrip'
+import { StekplugPromoBand } from './_components/StekplugPromoBand'
 import { neemx, paperbus, productFamilies } from './_data/products'
 import styles from './storefront.module.css'
 
@@ -67,6 +68,7 @@ export default function LumoraPremiumHomePage() {
         </div>
       </section>
 
+      <StekplugPromoBand />
       <TrustStrip />
 
       <section className={styles.section} id="producten">

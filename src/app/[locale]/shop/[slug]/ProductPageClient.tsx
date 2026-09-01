@@ -7,10 +7,11 @@ import { serializeJsonLd } from '@/lib/safe-json-ld';
 import {
   VOLUME_DISCOUNT_TIERS,
   calculateDiscountedPrice,
-  calculateTotalPrice,
   getDiscountInfo,
   formatPrice,
 } from '@/lib/volume-discount';
+import { calculateCartItemTotal } from '@/lib/cart-pricing';
+import { calculatePaperbusPromotion } from '@/lib/paperbus-promo';
 import { localizePathForLocale } from '@/lib/url-localizations';
 import { trackViewItem, trackAddToCart } from '@/lib/google-ads';
 import { useCart } from '@/contexts/CartContext';
@@ -183,7 +184,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     trackAddToCart({
       id: cartProduct.id,
       name: cartProduct.name,
-      price: calculateDiscountedPrice(basePrice, quantity),
+      price: calculateCartItemTotal(cartProduct.slug, basePrice, quantity) / quantity,
       quantity: quantity,
       category: 'Horticulture Products',
     });
@@ -218,7 +219,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
     trackAddToCart({
       id: cartProduct.id,
       name: cartProduct.name,
-      price: calculateDiscountedPrice(basePrice, quantity),
+      price: calculateCartItemTotal(cartProduct.slug, basePrice, quantity) / quantity,
       quantity: quantity,
       category: 'Horticulture Products',
     });
@@ -272,9 +273,13 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
   // Use selectedVariant price for NEEMX PRO, otherwise use product price
   const activeProduct = isNeemxPro && selectedVariant ? selectedVariant : product;
   const basePrice = parseFloat(activeProduct.price);
-  const discountInfo = getDiscountInfo(quantity);
-  const discountedPrice = calculateDiscountedPrice(basePrice, quantity);
-  const totalPrice = calculateTotalPrice(basePrice, quantity);
+  const isPaperbusPromoProduct = activeProduct.slug === 'paper-plug-tray-84' || activeProduct.slug === 'paper-plug-tray-104';
+  const discountInfo = isPaperbusPromoProduct
+    ? { currentDiscount: 0, hasDiscount: false, nextTier: null }
+    : getDiscountInfo(quantity);
+  const paperbusPromotion = calculatePaperbusPromotion(activeProduct.slug, basePrice, quantity);
+  const discountedPrice = isPaperbusPromoProduct ? basePrice : calculateDiscountedPrice(basePrice, quantity);
+  const totalPrice = calculateCartItemTotal(activeProduct.slug, basePrice, quantity);
   const totalDiscount = (basePrice * quantity) - totalPrice;
 
   // Helper to extract size from NEEMX PRO product name
@@ -688,6 +693,33 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                   <p className="font-bold text-lg">📦 {t.freeShipping}</p>
                 </div>
 
+                {isPaperbusPromoProduct && (
+                  <div className={`rounded-2xl border overflow-hidden mb-6 ${paperbusPromotion.eligible ? 'border-lumora-green-500 ring-2 ring-lumora-green-100' : 'border-lumora-green-200'}`}>
+                    <div className="bg-lumora-dark text-white px-4 py-2 flex items-center justify-between gap-3">
+                      <span className="text-xs font-bold tracking-widest uppercase">
+                        {locale === 'de' ? 'Vorteilspaket' : locale === 'en' ? 'Bundle offer' : 'Voordeelbundel'}
+                      </span>
+                      {paperbusPromotion.eligible && <span className="text-xs font-bold text-lumora-green-100">✓ {locale === 'de' ? 'Aktiv' : locale === 'en' ? 'Applied' : 'Actief'}</span>}
+                    </div>
+                    <div className="bg-lumora-green-50 p-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="font-display text-2xl font-bold text-lumora-dark">3 dozen voor €180</h3>
+                          <p className="text-sm text-lumora-dark/75 mt-1">3 dozen van dezelfde maat voor <strong>€180 totaal</strong>.</p>
+                          <p className="text-xs text-lumora-dark/60 mt-1">Verzending inbegrepen naar NL, BE en DE.</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setQuantity(3)}
+                          className="shrink-0 min-h-11 px-4 rounded-xl bg-white border border-lumora-green-300 text-lumora-dark text-xs font-bold hover:bg-lumora-green-500 hover:text-white transition-colors"
+                        >
+                          {paperbusPromotion.eligible && quantity === 3 ? 'Gekozen' : 'Kies 3 dozen'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* NEEMX PRO Size Selector */}
                 {isNeemxPro && sizeVariants.length > 0 && (
                   <div className="mb-6">
@@ -835,6 +867,19 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                       <span className="font-bold text-lumora-green-600">
                         -{formatPrice(totalDiscount)}
                       </span>
+                    </div>
+                  </div>
+                )}
+
+                {paperbusPromotion.eligible && (
+                  <div className="bg-lumora-green-50 rounded-xl p-4 mb-4 border border-lumora-green-200">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-lumora-dark/70">Normaal</span>
+                      <span className="font-semibold text-lumora-dark/60 line-through">{formatPrice(basePrice * quantity)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-lumora-green-600 font-semibold">3-voor-€180 actie</span>
+                      <span className="font-bold text-lumora-green-600">−{formatPrice(paperbusPromotion.discount)}</span>
                     </div>
                   </div>
                 )}

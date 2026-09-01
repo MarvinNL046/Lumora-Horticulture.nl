@@ -6,10 +6,11 @@ import Link from 'next/link';
 import { localizePathForLocale } from '@/lib/url-localizations';
 import {
   calculateDiscountedPrice,
-  calculateTotalPrice,
   getDiscountInfo,
   formatPrice,
 } from '@/lib/volume-discount';
+import { calculateCartItemTotal } from '@/lib/cart-pricing';
+import { calculatePaperbusPromotion, isPaperbusPromoSlug } from '@/lib/paperbus-promo';
 import CartEmailPrompt from './CartEmailPrompt';
 
 // Static cross-sell candidates — the app has no ConvexProvider at layout
@@ -147,9 +148,13 @@ export default function CartSidebar() {
           ) : (
             <div className="space-y-4">
               {items.map((item) => {
-                const discountInfo = getDiscountInfo(item.quantity);
-                const discountedPrice = calculateDiscountedPrice(item.price, item.quantity);
-                const itemTotal = calculateTotalPrice(item.price, item.quantity);
+                const isPaperbus = isPaperbusPromoSlug(item.slug);
+                const discountInfo = isPaperbus
+                  ? { currentDiscount: 0, hasDiscount: false, nextTier: null }
+                  : getDiscountInfo(item.quantity);
+                const paperbusPromotion = calculatePaperbusPromotion(item.slug, item.price, item.quantity);
+                const discountedPrice = isPaperbus ? item.price : calculateDiscountedPrice(item.price, item.quantity);
+                const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity);
                 const itemDiscount = (item.price * item.quantity) - itemTotal;
 
                 return (
@@ -186,7 +191,11 @@ export default function CartSidebar() {
 
                         {/* Price */}
                         <div className="text-sm mb-2">
-                          {discountInfo.hasDiscount ? (
+                          {paperbusPromotion.eligible ? (
+                            <span className="inline-flex items-center rounded-full bg-lumora-green-100 px-2 py-1 text-xs font-bold text-lumora-green-700">
+                              ✓ 3 voor €180 · {formatPrice(itemTotal)}
+                            </span>
+                          ) : discountInfo.hasDiscount ? (
                             <>
                               <span className="text-lumora-dark/50 line-through mr-2">
                                 {formatPrice(item.price)}
@@ -207,6 +216,15 @@ export default function CartSidebar() {
                             {t.pricePerPiece}
                           </span>
                         </div>
+
+                        {isPaperbus && item.quantity < 3 && (
+                          <button
+                            onClick={() => updateQuantity(item.product_id, 3)}
+                            className="mb-2 w-full text-left text-xs bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-bold rounded-md px-2 py-1.5 transition-colors"
+                          >
+                            Kies 3 dozen voor €180 inclusief verzending
+                          </button>
+                        )}
 
                         {/* Quantity Controls */}
                         <div className="flex items-center gap-2 mb-2">
@@ -247,7 +265,7 @@ export default function CartSidebar() {
                             Shows the user exactly how many more pieces unlock
                             the next bulk discount tier AND how much extra they
                             save, so stacking quantity becomes the obvious move. */}
-                        {discountInfo.nextTier && (() => {
+                        {!isPaperbus && discountInfo.nextTier && (() => {
                           const piecesToNext = discountInfo.nextTier.quantity - item.quantity;
                           const nextTierPrice = item.price * (1 - discountInfo.nextTier.discount / 100);
                           const savedAtNextTier = (item.price * discountInfo.nextTier.quantity) - (nextTierPrice * discountInfo.nextTier.quantity);
