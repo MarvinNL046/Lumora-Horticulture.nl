@@ -792,7 +792,7 @@
   .variantFieldset { order: 4; }
   .productSummary_paperbus .variantFieldset { margin-bottom: 0; }
   .productSummary_neemx .variantFieldset { margin-bottom: 0; }
-  .bundleOffer, .volumeDiscount { order: 5; margin-top: 10px; margin-bottom: 0; }
+  .bundleOffer, .volumeDiscount { order: 5; margin-top: 6px; margin-bottom: 0; }
   .volumeDiscount { padding: 12px; }
   .purchaseProof { order: 6; }
   .productIntro { order: 7; margin-top: 0; font-size: 16px; line-height: 1.65; }
@@ -815,7 +815,7 @@
   .quantityControl { grid-template-columns: 48px 40px 48px; }
   .quantityControl button { width: 48px; }
   .addButton { padding-inline: 12px; font-size: 12px; }
-  .purchaseProof { grid-template-columns: 1fr; }
+  .purchaseProof { grid-template-columns: 1fr; gap: 6px; margin: 6px 0 12px; }
   .purchaseProof > span { grid-template-columns: 28px 1fr; padding: 10px 12px; }
   .purchaseProof .paymentBrandProof { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
   .paymentLogos img { width: 46px; height: 31px; }
