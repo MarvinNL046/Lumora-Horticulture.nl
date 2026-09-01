@@ -25,6 +25,21 @@ const LEGACY_BASE_PATH_ALIASES: Record<string, string> = {
   '/privacy-policy': '/privacy',
   '/terms-conditions': '/terms',
 }
+const PRODUCTION_STOREFRONT_REDIRECTS: Record<string, string> = {
+  '/lumora-premium': '/',
+  '/lumora-premium/producten': '/producten',
+  '/lumora-premium/paperbus': '/stekpluggen-steenwol',
+  '/lumora-premium/neemx-pro': '/neemx-pro',
+  '/lumora-premium/winkelmand': '/winkelmand',
+  '/lumora-premium/afrekenen': '/afrekenen',
+}
+const DUTCH_PRODUCT_FAMILY_REDIRECTS: Record<string, string> = {
+  '/shop/paper-plug-tray-84': '/stekpluggen-steenwol',
+  '/shop/paper-plug-tray-104': '/stekpluggen-steenwol',
+  '/shop/neemx-pro-10ml': '/neemx-pro',
+  '/shop/neemx-pro-30ml': '/neemx-pro',
+  '/shop/neemx-pro-50ml': '/neemx-pro',
+}
 
 function getHost(request: NextRequest): string {
   const forwardedHost = request.headers.get('x-forwarded-host')
@@ -88,6 +103,15 @@ export function proxy(request: NextRequest) {
   const bypassLocalization =
     FILE_EXTENSION.test(incomingPath) || isNonLocalizedPath(incomingPath)
 
+  // Keep the non-indexed /lumora-premium routes available on Vercel Preview,
+  // but consolidate them onto the final public URLs after production release.
+  const productionStorefrontPath = process.env.VERCEL_ENV === 'production'
+    ? PRODUCTION_STOREFRONT_REDIRECTS[incomingPath]
+    : undefined
+  if (productionStorefrontPath) {
+    return primaryHostPathRedirect(request, productionStorefrontPath)
+  }
+
   // Consolidate the legacy language domains onto the canonical .nl host.
   if (legacyLocale) {
     if (bypassLocalization) {
@@ -115,6 +139,19 @@ export function proxy(request: NextRequest) {
   const locale = prefixed.locale || routing.defaultLocale
   const visiblePath = prefixed.pathname
   const basePath = basePathFromLocalizedPath(visiblePath, locale)
+
+  const dutchProductFamilyPath = locale === 'nl'
+    ? DUTCH_PRODUCT_FAMILY_REDIRECTS[basePath]
+    : undefined
+  if (dutchProductFamilyPath) {
+    return primaryHostPathRedirect(request, dutchProductFamilyPath)
+  }
+
+  // The redesigned NeemX page contains the approved claim-safe copy. Until
+  // equivalent translations are reviewed, consolidate EN/DE onto that page.
+  if (locale !== 'nl' && basePath === '/neemx-pro') {
+    return primaryHostRedirect(request, 'nl', basePath)
+  }
 
   // The blog currently has verified Dutch content and optional German
   // translations, but no English articles. Avoid an indexable soft 404.

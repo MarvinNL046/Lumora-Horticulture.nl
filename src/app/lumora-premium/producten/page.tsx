@@ -6,6 +6,7 @@ import { ProductFamilyCard } from '../_components/ProductFamilyCard'
 import { TrustStrip } from '../_components/TrustStrip'
 import { StekplugPromoBand } from '../_components/StekplugPromoBand'
 import { neemx, productFamilies } from '../_data/products'
+import { previewStorefrontRoutes, publicStorefrontRoutes, type StorefrontRoutes } from '../_data/routes'
 import styles from '../storefront.module.css'
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   description: 'Vergelijk professionele Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
 }
 
-export default function ProductenPage() {
+export function StorefrontProductsPage({ routes = publicStorefrontRoutes }: { routes?: StorefrontRoutes }) {
   return (
     <main>
       <section className={styles.collectionHero}>
@@ -49,13 +50,19 @@ export default function ProductenPage() {
         </div>
       </section>
 
-      <StekplugPromoBand />
+      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} />
 
       <section className={styles.collectionProducts} id="productlijnen">
         <div className={styles.container}>
           <div className={styles.collectionCount}><span>2 productlijnen</span><span>5 uitvoeringen</span></div>
           <div className={styles.productGrid}>
-            {productFamilies.map((product) => <ProductFamilyCard product={product} key={product.id} />)}
+            {productFamilies.map((product) => (
+              <ProductFamilyCard
+                product={product}
+                key={product.id}
+                href={product.id === 'paperbus' ? routes.stekpluggen : routes.neemx}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -87,8 +94,8 @@ export default function ProductenPage() {
             </div>
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">Volgende stap</strong>
-              <span role="cell"><Link href="/lumora-premium/paperbus">Kies je stekpluggen <ArrowRightIcon /></Link></span>
-              <span role="cell"><Link href="/lumora-premium/neemx-pro">Kies je formaat <ArrowRightIcon /></Link></span>
+              <span role="cell"><Link href={routes.stekpluggen}>Kies je stekpluggen <ArrowRightIcon /></Link></span>
+              <span role="cell"><Link href={routes.neemx}>Kies je formaat <ArrowRightIcon /></Link></span>
             </div>
           </div>
         </div>
@@ -103,4 +110,8 @@ export default function ProductenPage() {
       </section>
     </main>
   )
+}
+
+export default function ProductenPage() {
+  return <StorefrontProductsPage routes={previewStorefrontRoutes} />
 }

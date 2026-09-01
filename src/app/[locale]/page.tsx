@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import HomeClient from '@/app/[locale]/HomeClient'
 import { generatePageMetadata } from '@/lib/metadata'
+import { StorefrontHomePage } from '@/app/lumora-premium/page'
+import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
 const validLocales = ['nl', 'en', 'de'];
 
@@ -18,9 +20,9 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Steenwol Pluggen & Kweektrays | Gratis Verzending | Lumora',
-      description: 'Professionele steenwol pluggen en paper plug trays voor kwekers. ✓ Gratis verzending NL/BE/DE ✓ Binnen 48 uur geleverd ✓ B2B prijzen ✓ 15+ jaar ervaring. Bestel direct bij de specialist.',
-      keywords: ['steenwol pluggen', 'kweektrays', 'paper plug trays', 'paperbus pluggen', 'glastuinbouw', 'B2B tuinbouw', 'Ellepot', 'propagatie materiaal']
+      title: 'Stekpluggen Steenwol & NeemX Pro',
+      description: 'Professionele stekpluggen van steenwol voor zaaien en stekken, plus NeemX Pro voor botanische bladverzorging. Gratis verzending binnen Nederland, België en Duitsland.',
+      keywords: ['stekpluggen', 'stekpluggen steenwol', 'steenwol pluggen', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'bladverzorging']
     },
     en: {
       title: 'Rockwool Plugs & Growing Trays | Free Shipping | Lumora',
@@ -50,6 +52,14 @@ export default async function Home(props: { params: Promise<{ locale: string }> 
   // Validate locale - return 404 for invalid locales (bot requests, etc.)
   if (!validLocales.includes(params.locale)) {
     notFound();
+  }
+
+  if (params.locale === 'nl') {
+    return (
+      <StoreShell>
+        <StorefrontHomePage />
+      </StoreShell>
+    )
   }
 
   // This is needed for internationalization to work properly

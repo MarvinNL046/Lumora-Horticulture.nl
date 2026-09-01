@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import {
@@ -18,6 +18,7 @@ import {
 } from '@/lib/paperbus-promo'
 import type { ProductFamily } from '../_data/products'
 import { formatPrice } from '../_data/products'
+import { getStorefrontRoutes } from '../_data/routes'
 import styles from '../storefront.module.css'
 import {
   ArrowRightIcon,
@@ -50,6 +51,8 @@ function getTierLabel(minQuantity: number, maxQuantity: number | null) {
 
 export function ProductDetail({ product }: { product: ProductFamily }) {
   const router = useRouter()
+  const pathname = usePathname()
+  const routes = getStorefrontRoutes(pathname)
   const { addItem } = useCart()
   const [variantId, setVariantId] = useState(product.variants[0].id)
   const [quantity, setQuantity] = useState(1)
@@ -141,7 +144,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         price: variant.price,
         image_url: gallery[0]?.src ?? product.mainImage,
       }, quantity)
-      router.push('/lumora-premium/winkelmand')
+      router.push(routes.cart)
     } catch (error) {
       setPurchaseError(error instanceof Error && error.message.includes('prijs')
         ? error.message
@@ -153,8 +156,8 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   return (
     <main>
       <div className={`${styles.container} ${styles.breadcrumbs}`}>
-        <Link href="/lumora-premium">Home</Link><span>/</span>
-        <Link href="/lumora-premium/producten">Producten</Link><span>/</span>
+        <Link href={routes.home}>Home</Link><span>/</span>
+        <Link href={routes.products}>Producten</Link><span>/</span>
         <strong>{product.name}</strong>
       </div>
 

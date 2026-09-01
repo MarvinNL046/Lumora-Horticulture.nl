@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
 import CartSidebar from '@/components/CartSidebar'
+import { publicStorefrontPathSet } from '@/app/lumora-premium/_data/routes'
 
 const ExitIntentPopup = dynamic(
   () => import('@/components/ExitIntentPopup'),
@@ -18,6 +19,7 @@ const STANDALONE_ROUTES = ['/lumora-premium', '/neemxpro-2-plus-1-gratis']
 
 function isStandalonePath(pathname: string | null): boolean {
   if (!pathname) return false
+  if (publicStorefrontPathSet.has(pathname)) return true
   return STANDALONE_ROUTES.some(
     (r) => pathname === r || pathname.startsWith(`${r}/`)
   )
@@ -28,7 +30,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   const standalone = isStandalonePath(pathname)
 
   if (standalone) {
-    return <main className="flex-grow">{children}</main>
+    return <>{children}</>
   }
 
   return (

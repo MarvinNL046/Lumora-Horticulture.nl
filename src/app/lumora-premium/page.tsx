@@ -5,9 +5,10 @@ import { ProductFamilyCard } from './_components/ProductFamilyCard'
 import { TrustStrip } from './_components/TrustStrip'
 import { StekplugPromoBand } from './_components/StekplugPromoBand'
 import { neemx, paperbus, productFamilies } from './_data/products'
+import { previewStorefrontRoutes, publicStorefrontRoutes, type StorefrontRoutes } from './_data/routes'
 import styles from './storefront.module.css'
 
-export default function LumoraPremiumHomePage() {
+export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes?: StorefrontRoutes }) {
   return (
     <main>
       <section className={styles.hero}>
@@ -21,7 +22,7 @@ export default function LumoraPremiumHomePage() {
               Stekpluggen van steenwol voor zaaien en stekken. NeemX Pro voor gerichte plantverzorging. Twee heldere productlijnen, direct online te bestellen.
             </p>
             <div className={styles.heroActions}>
-              <Link className={styles.primaryButton} href="/lumora-premium/producten">
+              <Link className={styles.primaryButton} href={routes.products}>
                 Bekijk de producten <ArrowRightIcon />
               </Link>
               <a className={styles.secondaryButton} href="mailto:info@lumorahorticulture.com">
@@ -54,7 +55,7 @@ export default function LumoraPremiumHomePage() {
               <span className={styles.heroCaptionIcon}><LeafIcon /></span>
               <span><small>Stekpluggen Steenwol</small><strong>Voor een overzichtelijke opkweek</strong></span>
             </div>
-            <Link className={styles.heroMiniCard} href={neemx.href}>
+            <Link className={styles.heroMiniCard} href={routes.neemx}>
               <span className={styles.heroMiniImage}>
                 <Image src={neemx.mainImage} alt="" fill sizes="132px" />
               </span>
@@ -68,7 +69,7 @@ export default function LumoraPremiumHomePage() {
         </div>
       </section>
 
-      <StekplugPromoBand />
+      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} />
       <TrustStrip />
 
       <section className={styles.section} id="producten">
@@ -81,7 +82,13 @@ export default function LumoraPremiumHomePage() {
             <p>Begin bij je doel. De juiste uitvoering kies je pas daarna, zonder een overvolle catalogus.</p>
           </div>
           <div className={styles.productGrid}>
-            {productFamilies.map((product) => <ProductFamilyCard key={product.id} product={product} />)}
+            {productFamilies.map((product) => (
+              <ProductFamilyCard
+                key={product.id}
+                product={product}
+                href={product.id === 'paperbus' ? routes.stekpluggen : routes.neemx}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -106,7 +113,7 @@ export default function LumoraPremiumHomePage() {
               <li><span>02</span><div><strong>Selecteer de uitvoering</strong><small>Vergelijk tray-indeling of inhoudsmaat in één overzicht.</small></div></li>
               <li><span>03</span><div><strong>Bestel met duidelijkheid</strong><small>Bekijk levering, totaal en voorwaarden vóór je betaalt.</small></div></li>
             </ol>
-            <Link className={styles.textLink} href="/lumora-premium/producten">Vergelijk beide producten <ArrowRightIcon /></Link>
+            <Link className={styles.textLink} href={routes.products}>Vergelijk beide producten <ArrowRightIcon /></Link>
           </div>
         </div>
       </section>
@@ -123,4 +130,8 @@ export default function LumoraPremiumHomePage() {
       </section>
     </main>
   )
+}
+
+export default function LumoraPremiumHomePage() {
+  return <StorefrontHomePage routes={previewStorefrontRoutes} />
 }

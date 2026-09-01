@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, CheckIcon } from './Icons'
+import { publicStorefrontRoutes } from '../_data/routes'
 
-export function StekplugPromoBand() {
+export function StekplugPromoBand({ href = `${publicStorefrontRoutes.stekpluggen}#koopblok` }: { href?: string }) {
   return (
     <section className={styles.promoBand} aria-label="Stekpluggen actie">
-      <Link className={styles.promoBandInner} href="/lumora-premium/paperbus#koopblok">
+      <Link className={styles.promoBandInner} href={href}>
         <span className={styles.promoBandBadge}>3 voor €180</span>
         <span className={styles.promoBandCopy}>
           <strong>3 dozen Stekpluggen Steenwol voor €180</strong>

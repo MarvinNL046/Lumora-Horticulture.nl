@@ -5,10 +5,10 @@ import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon } from './Icons'
 
-export function ProductFamilyCard({ product }: { product: ProductFamily }) {
+export function ProductFamilyCard({ product, href = product.href }: { product: ProductFamily; href?: string }) {
   return (
     <article className={`${styles.productCard} ${styles[`productCard_${product.id}`]}`}>
-      <Link href={product.href} className={styles.productCardMedia} aria-label={`Bekijk ${product.name}`}>
+      <Link href={href} className={styles.productCardMedia} aria-label={`Bekijk ${product.name}`}>
         <Image
           className={styles.productCardImage}
           src={product.mainImage}
@@ -27,7 +27,7 @@ export function ProductFamilyCard({ product }: { product: ProductFamily }) {
         <p>{product.statement}</p>
         <div className={styles.productCardFooter}>
           <span>{product.variants.map((variant) => variant.label).join(' · ')}</span>
-          <Link href={product.href} className={styles.productCardAction}>
+          <Link href={href} className={styles.productCardAction}>
             <span>Bekijk {product.name}</span>
             <span className={styles.roundArrow}><ArrowRightIcon /></span>
           </Link>

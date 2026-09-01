@@ -1,3 +1,5 @@
+import { publicStorefrontRoutes } from './routes'
+
 export type ProductImage = {
   src: string
   alt: string
@@ -54,7 +56,7 @@ export const paperbus: ProductFamily = {
   statement: 'Professionele stekpluggen met Ellepot FP 12+ papertechnologie, geleverd per doos voor gerichte zaailingenkweek.',
   description:
     'Kies 84 voor een grotere celmaat of 104 voor een hogere plantdichtheid per tray. Iedere uitvoering wordt per complete doos geleverd.',
-  href: '/lumora-premium/paperbus',
+  href: publicStorefrontRoutes.stekpluggen,
   fromPrice: 80,
   mainImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
   mainImageAlt: 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
@@ -166,7 +168,7 @@ export const neemx: ProductFamily = {
   statement: 'Hooggeconcentreerd plantaardig olieconcentraat voor een gelijkmatige verzorging van het bladoppervlak.',
   description:
     'NEEMX PRO is een hooggeconcentreerde botanische olieblend voor de verzorging en gelijkmatige behandeling van het bladoppervlak. De formule is goed te verdelen in water en verkrijgbaar in 10, 30 en 50 ml.',
-  href: '/lumora-premium/neemx-pro',
+  href: publicStorefrontRoutes.neemx,
   fromPrice: 24.95,
   mainImage: '/productAfbeeldingen/neemxpro/neemx-pro-assortiment-travertijn-neem-bloesem.webp',
   mainImageAlt: 'NeemX Pro assortiment op travertijn met neem-bladeren en witte bloesem',

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ProductDetail } from '@/app/lumora-premium/_components/ProductDetail'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
-import { neemx } from '@/app/lumora-premium/_data/products'
+import { paperbus } from '@/app/lumora-premium/_data/products'
 import { generatePageMetadata } from '@/lib/metadata'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
 
@@ -10,8 +10,8 @@ type Props = {
   params: Promise<{ locale: string }>
 }
 
-const title = 'NEEMX PRO plantaardig olieconcentraat'
-const description = 'Premium plantaardig olieconcentraat voor bladverzorging. Een zuinige botanische olieblend voor gelijkmatige bedekking, verkrijgbaar in 10, 30 en 50 ml.'
+const title = 'Stekpluggen Steenwol 84 & 104'
+const description = 'Professionele stekpluggen van steenwol met Ellepot FP 12+ papertechnologie. Vergelijk 84 en 104 cellen per tray en bestel per complete doos met gratis verzending.'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
@@ -24,15 +24,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     locale,
-    path: '/neemx-pro',
+    path: '/stekpluggen-steenwol',
     keywords: [
-      'NEEMX PRO',
-      'plantaardig olieconcentraat',
-      'botanische olieblend',
-      'bladverzorging',
-      'plantaardige olie voor planten',
+      'stekpluggen',
+      'stekpluggen steenwol',
+      'steenwol pluggen',
+      'Paper Plug Tray 84',
+      'Paper Plug Tray 104',
+      'Ellepot FP 12+',
     ],
-    ogImage: neemx.usageImage ?? neemx.mainImage,
+    ogImage: paperbus.mainImage,
     availableLocales: ['nl'],
   })
 }
@@ -40,33 +41,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const productGroupJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProductGroup',
-  name: 'NEEMX PRO',
+  name: title,
   description,
-  url: 'https://lumorahorticulture.nl/neemx-pro',
-  image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
+  url: 'https://lumorahorticulture.nl/stekpluggen-steenwol',
+  image: [paperbus.mainImage, paperbus.secondaryImage, paperbus.tertiaryImage]
     .filter((image): image is string => Boolean(image))
     .map((image) => `https://lumorahorticulture.nl${image}`),
   brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
-  category: 'Plantaardig olieconcentraat voor bladverzorging',
-  productGroupID: 'neemx-pro',
+  category: 'Stekpluggen van steenwol',
+  productGroupID: 'stekpluggen-steenwol',
   variesBy: 'https://schema.org/size',
-  hasVariant: neemx.variants.map((variant) => ({
+  hasVariant: paperbus.variants.map((variant) => ({
     '@type': 'Product',
-    name: `NEEMX PRO ${variant.label}`,
+    name: variant.label,
     sku: variant.slug,
-    size: variant.label,
+    size: `${variant.cellsPerTray} cellen`,
+    description: variant.description,
     offers: {
       '@type': 'Offer',
       price: variant.price.toFixed(2),
       priceCurrency: 'EUR',
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
-      url: 'https://lumorahorticulture.nl/neemx-pro',
+      url: 'https://lumorahorticulture.nl/stekpluggen-steenwol',
     },
   })),
 }
 
-export default async function NeemXProPage({ params }: Props) {
+export default async function StekpluggenSteenwolPage({ params }: Props) {
   const { locale } = await params
   if (locale !== 'nl') notFound()
 
@@ -76,7 +78,7 @@ export default async function NeemXProPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupJsonLd) }}
       />
-      <ProductDetail product={neemx} />
+      <ProductDetail product={paperbus} />
     </StoreShell>
   )
 }

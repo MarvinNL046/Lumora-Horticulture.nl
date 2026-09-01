@@ -2,11 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { calculateCartItemTotal } from '@/lib/cart-pricing'
 import { formatPrice } from '../_data/products'
+import { getStorefrontRoutes } from '../_data/routes'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, CheckIcon, LockIcon } from './Icons'
 import { PaymentLogos } from './PaymentLogos'
@@ -61,6 +63,7 @@ function productDetail(slug: string, quantity: number): string {
 }
 
 export function PremiumCheckout() {
+  const routes = getStorefrontRoutes(usePathname())
   const { items, getTotalPrice, clearCart, isLoaded } = useCart()
   const [form, setForm] = useState<CheckoutForm>(INITIAL_FORM)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
@@ -144,7 +147,7 @@ export function PremiumCheckout() {
           <span className={styles.eyebrow}>Afrekenen</span>
           <h1>Je winkelwagen is leeg.</h1>
           <p>Voeg eerst een product toe voordat je gaat afrekenen.</p>
-          <Link className={styles.primaryButton} href="/lumora-premium/producten">Bekijk de producten <ArrowRightIcon /></Link>
+          <Link className={styles.primaryButton} href={routes.products}>Bekijk de producten <ArrowRightIcon /></Link>
         </div>
       </main>
     )
@@ -188,7 +191,7 @@ export function PremiumCheckout() {
 
             <label className={styles.termsConsent}>
               <input required type="checkbox" checked={acceptedTerms} onChange={(event) => setAcceptedTerms(event.target.checked)} />
-              <span>Ik ga akkoord met de <Link href="/terms">algemene voorwaarden</Link> en heb het <Link href="/retourbeleid">retourbeleid</Link> gelezen.</span>
+              <span>Ik ga akkoord met de <Link href="/algemene-voorwaarden">algemene voorwaarden</Link> en heb het <Link href="/retourbeleid">retourbeleid</Link> gelezen.</span>
             </label>
 
             {checkoutError ? <p className={styles.checkoutError} role="alert">{checkoutError}</p> : null}
@@ -199,7 +202,7 @@ export function PremiumCheckout() {
           </form>
 
           <aside className={styles.checkoutSummary}>
-            <div className={styles.checkoutSummaryHeading}><span>Jouw bestelling</span><Link href="/lumora-premium/winkelmand">Wijzigen</Link></div>
+            <div className={styles.checkoutSummaryHeading}><span>Jouw bestelling</span><Link href={routes.cart}>Wijzigen</Link></div>
             {items.map((item) => {
               const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity)
               return (

@@ -22,6 +22,9 @@ Disallow: /de/admin
 Disallow: /checkout
 Disallow: /en/checkout
 Disallow: /de/checkout
+Disallow: /winkelmand
+Disallow: /afrekenen
+Disallow: /lumora-premium
 Disallow: /handler
 
 # One generated sitemap contains NL, EN and DE URLs with hreflang links.

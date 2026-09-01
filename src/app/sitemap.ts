@@ -10,6 +10,13 @@ export const dynamic = 'force-dynamic'
 const SITE_ORIGIN = 'https://lumorahorticulture.nl'
 const LOCALES = ['nl', 'en', 'de'] as const
 const BLOG_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const CONSOLIDATED_PRODUCT_SLUGS = new Set([
+  'paper-plug-tray-84',
+  'paper-plug-tray-104',
+  'neemx-pro-10ml',
+  'neemx-pro-30ml',
+  'neemx-pro-50ml',
+])
 
 function absoluteUrl(basePath: string, locale: string): string {
   return `${SITE_ORIGIN}${localizePathForLocale(basePath, locale)}`
@@ -63,7 +70,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/applications',
     '/paperbus-pluggen',
     '/paperbus-steenwol-pluggen',
-    '/neemx-pro',
     '/privacy',
     '/terms',
   ]
@@ -73,6 +79,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
   const returnPolicyEntries = localizedEntries('/return-policy', 0.5, 'monthly')
   const blogEntries = localizedEntries('/blog', 0.7, 'weekly', ['nl', 'de'] as const)
+  const storefrontProductEntries = [
+    ...localizedEntries('/stekpluggen-steenwol', 0.95, 'daily', ['nl'] as const),
+    ...localizedEntries('/neemx-pro', 0.95, 'daily', ['nl'] as const),
+  ]
 
   let blogArticleEntries: MetadataRoute.Sitemap = []
   try {
@@ -103,7 +113,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const products = await fetchQuery(api.products.listInStock)
     productEntries = products
-      .filter((product) => product.slug && !isHiddenProductSlug(product.slug))
+      .filter((product) =>
+        product.slug
+        && !isHiddenProductSlug(product.slug)
+        && !CONSOLIDATED_PRODUCT_SLUGS.has(product.slug),
+      )
       .flatMap((product) =>
         localizedEntries(
           `/shop/${product.slug}`,
@@ -119,6 +133,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticEntries,
     ...returnPolicyEntries,
+    ...storefrontProductEntries,
     ...blogEntries,
     ...blogArticleEntries,
     ...productEntries,

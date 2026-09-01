@@ -2,10 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
 import { calculateCartItemTotal } from '@/lib/cart-pricing'
 import { calculatePaperbusPromotion, isPaperbusPromoSlug } from '@/lib/paperbus-promo'
 import { formatPrice } from '../_data/products'
+import { getStorefrontRoutes } from '../_data/routes'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, CheckIcon, LockIcon, MinusIcon, PlusIcon, TruckIcon } from './Icons'
 import { PaymentLogos } from './PaymentLogos'
@@ -20,6 +22,7 @@ function cartItemDetail(slug: string): string {
 }
 
 export function CartPage() {
+  const routes = getStorefrontRoutes(usePathname())
   const {
     items,
     getTotalPrice,
@@ -41,7 +44,7 @@ export function CartPage() {
           <span className={styles.emptyCartIcon}>0</span>
           <h1>Je winkelwagen is nog leeg.</h1>
           <p>Kies Stekpluggen Steenwol of NeemX Pro om verder te gaan.</p>
-          <Link href="/lumora-premium/producten" className={styles.primaryButton}>Bekijk de producten <ArrowRightIcon /></Link>
+          <Link href={routes.products} className={styles.primaryButton}>Bekijk de producten <ArrowRightIcon /></Link>
         </div>
       </main>
     )
@@ -52,7 +55,7 @@ export function CartPage() {
       <div className={styles.container}>
         <div className={styles.cartHeading}>
           <div><span className={styles.eyebrow}>Jouw selectie</span><h1>Je winkelwagen.</h1></div>
-          <Link href="/lumora-premium/producten">Verder winkelen <ArrowRightIcon /></Link>
+          <Link href={routes.products}>Verder winkelen <ArrowRightIcon /></Link>
         </div>
 
         <div className={styles.cartLayout}>
@@ -120,7 +123,7 @@ export function CartPage() {
                 <span><strong>3-voor-€180 actie toegepast</strong><small>{items[0].quantity} dozen {items[0].name}</small></span>
               </div>
             )}
-            <Link href="/lumora-premium/afrekenen" className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
+            <Link href={routes.checkout} className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
             <div className={styles.summaryPayment} aria-label="Betaalmogelijkheden">
               <span className={styles.summaryPaymentLabel}><LockIcon /> Veilig online betalen</span>
               <PaymentLogos />

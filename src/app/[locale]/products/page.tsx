@@ -1,5 +1,7 @@
 import ProductsClient from './ProductsClient'
 import { generatePageMetadata } from '@/lib/metadata'
+import { StorefrontProductsPage } from '@/app/lumora-premium/producten/page'
+import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -15,9 +17,9 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Producten | Paper Plug Trays 84 & 104 | FP 12+ Kwaliteit',
-      description: 'Bekijk ons complete B2B assortiment: Paper Plug Tray 84/104, transportdozen en inlegvellen. ✓ FP 12+ technologie ✓ Gratis verzending ✓ B2B prijzen ✓ Direct van fabrikant.',
-      keywords: ['paper plug tray 84', 'paper plug tray 104', 'paperbus steenwol pluggen', 'ellepot fp 12+', 'kweektrays B2B', 'transportdozen tuinbouw', 'professionele kweektrays']
+      title: 'Stekpluggen Steenwol & NeemX Pro',
+      description: 'Vergelijk Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
+      keywords: ['stekpluggen', 'stekpluggen steenwol', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'botanische bladverzorging']
     },
     en: {
       title: 'Products | Paper Plug Trays 84 & 104 | FP 12+ Quality',
@@ -50,6 +52,15 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 // Product page component with modern styling
 export default async function ProductsPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
+
+  if (params.locale === 'nl') {
+    return (
+      <StoreShell>
+        <StorefrontProductsPage />
+      </StoreShell>
+    )
+  }
+
   // This is needed for internationalization to work properly
 
   // Load messages manually for static export

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { formatPrice } from '../_data/products'
+import { getStorefrontRoutes } from '../_data/routes'
 import styles from '../storefront.module.css'
 import {
   BagIcon,
@@ -16,8 +17,6 @@ import {
   UserIcon,
 } from './Icons'
 import { PaymentLogos } from './PaymentLogos'
-
-const ROOT = '/lumora-premium'
 
 function Wordmark({ priority = false }: { priority?: boolean }) {
   return (
@@ -39,16 +38,17 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const { getTotalItems, getTotalPrice } = useCart()
   const cartCount = getTotalItems()
   const cartTotal = getTotalPrice()
-  const isCheckout = pathname === `${ROOT}/afrekenen`
-  const isPdp = pathname === `${ROOT}/paperbus` || pathname === `${ROOT}/neemx-pro`
-  const isCart = pathname === `${ROOT}/winkelmand`
+  const routes = getStorefrontRoutes(pathname)
+  const isCheckout = pathname === routes.checkout
+  const isPdp = pathname === routes.stekpluggen || pathname === routes.neemx
+  const isCart = pathname === routes.cart
 
   if (isCheckout) {
     return (
       <div className={`${styles.site} ${styles.checkoutSite}`} data-lumora-storefront>
         <header className={styles.checkoutHeader}>
           <div className={styles.shellRow}>
-            <Link href={ROOT} className={styles.logoLink} aria-label="Terug naar Lumora">
+            <Link href={routes.home} className={styles.logoLink} aria-label="Terug naar Lumora">
               <Wordmark priority />
             </Link>
             <span className={styles.secureLabel}>
@@ -87,15 +87,15 @@ export function StoreShell({ children }: { children: ReactNode }) {
 
       <header className={styles.header}>
         <div className={styles.shellRow}>
-          <Link href={ROOT} className={styles.logoLink} aria-label="Lumora homepage">
+          <Link href={routes.home} className={styles.logoLink} aria-label="Lumora homepage">
             <Wordmark priority />
           </Link>
 
           <nav className={styles.desktopNav} aria-label="Hoofdnavigatie">
-            <Link className={pathname === `${ROOT}/producten` ? styles.activeNav : ''} href={`${ROOT}/producten`}>
+            <Link className={pathname === routes.products ? styles.activeNav : ''} href={routes.products}>
               Producten
             </Link>
-            <a href={`${ROOT}/#waarom-lumora`}>Waarom Lumora</a>
+            <a href={`${routes.home === '/' ? '' : routes.home}/#waarom-lumora`}>Waarom Lumora</a>
             <a href="mailto:info@lumorahorticulture.com">Hulp & contact</a>
           </nav>
 
@@ -107,7 +107,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
               <UserIcon />
               <span className={styles.cartLabel}>Account</span>
             </Link>
-            <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label={`Winkelwagen met ${cartCount} artikelen`}>
+            <Link className={styles.cartButton} href={routes.cart} aria-label={`Winkelwagen met ${cartCount} artikelen`}>
               <BagIcon />
               <span className={styles.cartLabel}>Winkelwagen</span>
               <span className={styles.cartCount}>{cartCount}</span>
@@ -126,14 +126,14 @@ export function StoreShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <h2>Producten</h2>
-            <Link href={`${ROOT}/paperbus`}>Stekpluggen Steenwol</Link>
-            <Link href={`${ROOT}/neemx-pro`}>NeemX Pro</Link>
+            <Link href={routes.stekpluggen}>Stekpluggen Steenwol</Link>
+            <Link href={routes.neemx}>NeemX Pro</Link>
           </div>
           <div>
             <h2>Service</h2>
             <a href="mailto:info@lumorahorticulture.com">Contact</a>
             <Link href="/retourbeleid">Retourbeleid</Link>
-            <Link href="/terms">Voorwaarden</Link>
+            <Link href="/algemene-voorwaarden">Voorwaarden</Link>
           </div>
           <div>
             <h2>Bereikbaar</h2>
@@ -150,17 +150,17 @@ export function StoreShell({ children }: { children: ReactNode }) {
       {isPdp || isCart ? null : (
         <nav className={styles.mobileNav} aria-label="Mobiele navigatie">
           <Link
-            aria-current={pathname === ROOT ? 'page' : undefined}
-            className={pathname === ROOT ? styles.mobileNavActive : ''}
-            href={ROOT}
+            aria-current={pathname === routes.home ? 'page' : undefined}
+            className={pathname === routes.home ? styles.mobileNavActive : ''}
+            href={routes.home}
           >
             <span className={styles.mobileNavIcon}><HomeIcon /></span>
             <span>Home</span>
           </Link>
           <Link
-            aria-current={pathname === `${ROOT}/producten` ? 'page' : undefined}
-            className={pathname === `${ROOT}/producten` ? styles.mobileNavActive : ''}
-            href={`${ROOT}/producten`}
+            aria-current={pathname === routes.products ? 'page' : undefined}
+            className={pathname === routes.products ? styles.mobileNavActive : ''}
+            href={routes.products}
           >
             <span className={styles.mobileNavIcon}><GridIcon /></span>
             <span>Producten</span>
@@ -173,7 +173,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><UserIcon /></span>
             <span>Account</span>
           </Link>
-          <Link className={pathname === `${ROOT}/winkelmand` ? styles.mobileNavActive : ''} href={`${ROOT}/winkelmand`}>
+          <Link className={pathname === routes.cart ? styles.mobileNavActive : ''} href={routes.cart}>
             <span className={`${styles.mobileNavIcon} ${styles.mobileBagWrap}`}>
               <BagIcon />
               <small>{cartCount}</small>
