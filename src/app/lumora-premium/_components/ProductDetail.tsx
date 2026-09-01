@@ -22,6 +22,7 @@ import {
   PlusIcon,
   TruckIcon,
 } from './Icons'
+import { PaymentLogos } from './PaymentLogos'
 
 const NEEMX_YIELD_BY_VARIANT = {
   'neemx-10': { solution: '1–4 liter', coverage: '10–40 m²' },
@@ -229,13 +230,9 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
           <div className={styles.purchaseProof}>
             <span><TruckIcon /><strong>Gratis verzending</strong><small>NL, BE en DE</small></span>
-            <span className={styles.paymentBrandProof} aria-label="Logo's: iDEAL, Wero, Visa en Mastercard">
-              <strong>Betaalmerken</strong>
-              <span className={styles.paymentLogos} aria-hidden="true">
-                <Image src="/payment-methods/ideal-wero.svg" alt="" width={45} height={30} />
-                <Image src="/payment-methods/visa.svg" alt="" width={45} height={30} />
-                <Image src="/payment-methods/mastercard.svg" alt="" width={45} height={30} />
-              </span>
+            <span className={styles.paymentBrandProof}>
+              <strong>Betaalmethoden</strong>
+              <PaymentLogos />
             </span>
             <span><MessageIcon /><strong>Productvraag?</strong><small>Neem contact op</small></span>
           </div>

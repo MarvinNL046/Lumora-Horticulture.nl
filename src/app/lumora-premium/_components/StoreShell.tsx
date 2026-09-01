@@ -60,7 +60,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             </a>
           </div>
           <div className={styles.checkoutDockTrust} aria-label="Veiligheid en service">
-            <span>Via Mollie</span>
+            <span>Veilig online betalen</span>
             <Link href="/return-policy">14 dagen bedenktijd</Link>
             <a href="mailto:info@lumorahorticulture.com">Contact</a>
           </div>
@@ -132,7 +132,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
         </div>
         <div className={`${styles.container} ${styles.footerBottom}`}>
           <span>© 2026 Lumora Horticulture</span>
-          <span>Betaling wordt veilig verwerkt via Mollie</span>
+          <span>Veilig online betalen met bekende betaalmethoden</span>
         </div>
       </footer>
 

@@ -29,7 +29,7 @@ export default function LumoraPremiumHomePage() {
             </div>
             <div className={styles.heroProof}>
               <span><CheckIcon /> Slechts twee productlijnen</span>
-              <span><CheckIcon /> Afrekenen via Mollie</span>
+              <span><CheckIcon /> iDEAL, Wero &amp; creditcard</span>
             </div>
           </div>
 

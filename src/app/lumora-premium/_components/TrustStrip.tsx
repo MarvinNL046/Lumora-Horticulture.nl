@@ -1,5 +1,6 @@
 import styles from '../storefront.module.css'
 import { MessageIcon, ShieldIcon, TruckIcon } from './Icons'
+import { PaymentLogos } from './PaymentLogos'
 
 const items = [
   {
@@ -10,7 +11,7 @@ const items = [
   {
     icon: ShieldIcon,
     title: 'Veilig afrekenen',
-    text: 'Je betaling verloopt via Mollie',
+    paymentLogos: true,
   },
   {
     icon: MessageIcon,
@@ -32,7 +33,7 @@ export function TrustStrip() {
               </span>
               <span>
                 <strong>{item.title}</strong>
-                <small>{item.text}</small>
+                {item.paymentLogos ? <PaymentLogos /> : <small>{item.text}</small>}
               </span>
             </div>
           )

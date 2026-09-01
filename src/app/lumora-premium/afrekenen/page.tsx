@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon, LockIcon } from '../_components/Icons'
+import { PaymentLogos } from '../_components/PaymentLogos'
 import styles from '../storefront.module.css'
 
 export default function AfrekenenPage() {
@@ -72,7 +73,14 @@ export default function AfrekenenPage() {
               <span><b>Totaal</b><b>€ 108,95</b></span>
             </div>
             <a className={styles.summaryAction} href="#contactgegevens">Vul je gegevens in <ArrowRightIcon /></a>
-            <div className={styles.checkoutSecurity}><LockIcon /><span><strong>Betaling via Mollie</strong><small>Je kiest je betaalmethode na controle van je bestelling.</small></span></div>
+            <div className={styles.checkoutSecurity}>
+              <LockIcon />
+              <span>
+                <strong>Veilig online betalen</strong>
+                <PaymentLogos />
+                <small>Je kiest je betaalmethode na controle van je bestelling.</small>
+              </span>
+            </div>
             <div className={styles.checkoutSupportActions}>
               <Link className={styles.checkoutReturn} href="/return-policy"><CheckIcon /> 14 dagen bedenktijd</Link>
               <a className={styles.checkoutHelp} href="mailto:info@lumorahorticulture.com">Contact &amp; hulp</a>

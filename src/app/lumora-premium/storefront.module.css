@@ -420,8 +420,6 @@
 .summaryPayment { display: grid; gap: 8px; margin: 12px 0 14px; color: var(--muted); }
 .summaryPaymentLabel { min-height: 24px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; }
 .summaryPaymentLabel svg { width: 13px; flex: 0 0 auto; }
-.paymentMethods { display: flex; flex-wrap: wrap; gap: 6px; }
-.paymentMethods > span { min-height: 28px; display: inline-flex; align-items: center; padding: 0 9px; color: var(--deep); background: var(--soft); border: 1px solid var(--line); border-radius: 7px; font-size: 11px; font-weight: 750; line-height: 1; white-space: nowrap; }
 .summaryProof { display: flex; align-items: center; gap: 10px; padding-top: 17px; border-top: 1px solid var(--line); }
 .summaryProof > svg { width: 23px; color: var(--green); }
 .summaryProof > span { display: grid; gap: 3px; }

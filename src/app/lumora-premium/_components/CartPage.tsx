@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, LockIcon, MinusIcon, PlusIcon, TruckIcon } from './Icons'
+import { PaymentLogos } from './PaymentLogos'
 
 type CartItem = {
   id: string
@@ -113,12 +114,8 @@ export function CartPage() {
             <div className={styles.summaryTotal}><span>Totaal</span><strong>{formatPrice(total)}</strong></div>
             <Link href="/lumora-premium/afrekenen" className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
             <div className={styles.summaryPayment} aria-label="Betaalmogelijkheden">
-              <span className={styles.summaryPaymentLabel}><LockIcon /> Betaling via Mollie</span>
-              <div className={styles.paymentMethods} aria-label="iDEAL, Wero en creditcard">
-                <span>iDEAL</span>
-                <span>Wero</span>
-                <span>Creditcard</span>
-              </div>
+              <span className={styles.summaryPaymentLabel}><LockIcon /> Veilig online betalen</span>
+              <PaymentLogos />
             </div>
             <div className={styles.summaryProof}><TruckIcon /><span><strong>Gratis verzending</strong><small>Binnen Nederland, België en Duitsland</small></span></div>
           </aside>
