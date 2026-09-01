@@ -381,6 +381,13 @@ async function sendRecoveryNotification(
 }
 
 async function createOrReconcileShipment(context: EffectContext): Promise<string> {
+  // Creating a shipment changes external MyParcel state. Keep fulfilment
+  // fail-closed independently from checkout so a payment staging run cannot
+  // accidentally register a real label.
+  if (process.env.MYPARCEL_SHIPMENTS_ENABLED !== 'true') {
+    throw new Error('MyParcel shipment creation is disabled');
+  }
+
   if (!process.env.MYPARCEL_API_KEY) {
     throw new Error('MYPARCEL_API_KEY is not configured');
   }

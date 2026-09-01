@@ -32,7 +32,8 @@ untested checkout or changing production data prematurely.
    the matching `CONVEX_SERVER_SECRET`.
 3. Keep `CHECKOUT_ENABLED`, `RECOVERY_EMAILS_ENABLED`,
    `ABANDONED_CART_CAPTURE_ENABLED` and
-   `MYPARCEL_DELIVERY_OPTIONS_ENABLED` off.
+   `MYPARCEL_DELIVERY_OPTIONS_ENABLED` off. Keep
+   `MYPARCEL_SHIPMENTS_ENABLED` off until the controlled fulfilment test.
 4. Smoke-test desktop and mobile:
    - product variants and supplied imagery;
    - add, remove and change quantity in the cart;
@@ -64,6 +65,8 @@ yet configured for the new production flow:
 - a high-entropy `PAYMENT_RETRY_SECRET`;
 - `MYPARCEL_WEBHOOK_SECRET`, `MYPARCEL_STATUS_HOOK_ID` and
   `MYPARCEL_LABEL_HOOK_ID` after the corresponding MyParcel hooks exist;
+- `MYPARCEL_SHIPMENTS_ENABLED=true`, only during the explicitly approved
+  MyParcel label test and later for the controlled production rollout;
 - `CHECKOUT_ENABLED=true`, but only after the test-mode order succeeds.
 
 Do not reuse a Preview secret in Production and do not expose any of these
