@@ -2,9 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { Suspense, type ReactNode } from 'react'
-import { calculatePaperbusPromotion } from '@/lib/paperbus-promo'
+import { usePathname } from 'next/navigation'
+import type { ReactNode } from 'react'
+import { useCart } from '@/contexts/CartContext'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
 import {
@@ -15,40 +15,9 @@ import {
   LockIcon,
   UserIcon,
 } from './Icons'
+import { PaymentLogos } from './PaymentLogos'
 
 const ROOT = '/lumora-premium'
-
-function readActionCart(searchParams: ReturnType<typeof useSearchParams>) {
-  if (searchParams.get('action') !== 'stekpluggen-3-voor-180') return null
-  const quantity = Math.min(100, Math.max(1, Number.parseInt(searchParams.get('quantity') ?? '3', 10) || 3))
-  const is104 = searchParams.get('variant') === 'tray-104'
-  const promotion = calculatePaperbusPromotion(
-    is104 ? 'paper-plug-tray-104' : 'paper-plug-tray-84',
-    is104 ? 80 : 84,
-    quantity,
-  )
-  return { quantity, total: promotion.total }
-}
-
-function CheckoutActionTotal() {
-  const actionCart = readActionCart(useSearchParams())
-  return <strong>{actionCart ? formatPrice(actionCart.total) : '€ 108,95'}</strong>
-}
-
-function ActionCartLink() {
-  const searchParams = useSearchParams()
-  const actionCart = readActionCart(searchParams)
-  const actionQuery = actionCart ? `?${searchParams.toString()}` : ''
-  const quantity = actionCart?.quantity ?? 2
-
-  return (
-    <Link className={styles.cartButton} href={`${ROOT}/winkelmand${actionQuery}`} aria-label={`Winkelwagen met ${quantity} artikelen`}>
-      <BagIcon />
-      <span className={styles.cartLabel}>Winkelwagen</span>
-      <span className={styles.cartCount}>{quantity}</span>
-    </Link>
-  )
-}
 
 function Wordmark({ priority = false }: { priority?: boolean }) {
   return (
@@ -67,6 +36,9 @@ function Wordmark({ priority = false }: { priority?: boolean }) {
 
 export function StoreShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  const { getTotalItems, getTotalPrice } = useCart()
+  const cartCount = getTotalItems()
+  const cartTotal = getTotalPrice()
   const isCheckout = pathname === `${ROOT}/afrekenen`
   const isPdp = pathname === `${ROOT}/paperbus` || pathname === `${ROOT}/neemx-pro`
   const isCart = pathname === `${ROOT}/winkelmand`
@@ -89,16 +61,15 @@ export function StoreShell({ children }: { children: ReactNode }) {
           <div className={styles.checkoutDockMain}>
             <span>
               <small>Totaal</small>
-              <Suspense fallback={<strong>€ 108,95</strong>}><CheckoutActionTotal /></Suspense>
+              <strong>{formatPrice(cartTotal)}</strong>
             </span>
-            <a href="#contactgegevens" className={styles.dockPrimaryAction}>
-              Gegevens invullen
+            <a href="#bestelling-plaatsen" className={styles.dockPrimaryAction}>
+              Naar betaling
             </a>
           </div>
-          <div className={styles.checkoutDockTrust} aria-label="Veiligheid en service">
-            <span>Veilig online betalen</span>
-            <Link href="/retourbeleid">14 dagen bedenktijd</Link>
-            <a href="mailto:info@lumorahorticulture.com">Contact</a>
+          <div className={styles.checkoutDockTrust} aria-label="Beschikbare betaalmethoden">
+            <span>Betaal met</span>
+            <PaymentLogos />
           </div>
         </div>
       </div>
@@ -136,15 +107,11 @@ export function StoreShell({ children }: { children: ReactNode }) {
               <UserIcon />
               <span className={styles.cartLabel}>Account</span>
             </Link>
-            <Suspense fallback={(
-              <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label="Winkelwagen met 2 artikelen">
-                <BagIcon />
-                <span className={styles.cartLabel}>Winkelwagen</span>
-                <span className={styles.cartCount}>2</span>
-              </Link>
-            )}>
-              <ActionCartLink />
-            </Suspense>
+            <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label={`Winkelwagen met ${cartCount} artikelen`}>
+              <BagIcon />
+              <span className={styles.cartLabel}>Winkelwagen</span>
+              <span className={styles.cartCount}>{cartCount}</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -209,7 +176,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           <Link className={pathname === `${ROOT}/winkelmand` ? styles.mobileNavActive : ''} href={`${ROOT}/winkelmand`}>
             <span className={`${styles.mobileNavIcon} ${styles.mobileBagWrap}`}>
               <BagIcon />
-              <small>2</small>
+              <small>{cartCount}</small>
             </span>
             <span>Mandje</span>
           </Link>

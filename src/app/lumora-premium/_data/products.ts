@@ -6,6 +6,7 @@ export type ProductImage = {
 
 export type ProductVariant = {
   id: string
+  slug: string
   label: string
   shortLabel?: string
   detail: string
@@ -69,6 +70,7 @@ export const paperbus: ProductFamily = {
   variants: [
     {
       id: 'tray-84',
+      slug: 'paper-plug-tray-84',
       label: 'Stekpluggen Steenwol 84',
       shortLabel: 'Steenwol 84',
       detail: '8 trays per doos · 672 cellen totaal',
@@ -115,6 +117,7 @@ export const paperbus: ProductFamily = {
     },
     {
       id: 'tray-104',
+      slug: 'paper-plug-tray-104',
       label: 'Stekpluggen Steenwol 104',
       shortLabel: 'Steenwol 104',
       detail: '7 trays per doos · 728 cellen totaal',
@@ -174,9 +177,9 @@ export const neemx: ProductFamily = {
   usageImage: '/productAfbeeldingen/neemxpro/neemx-pro-hero-marmer-neem-tak.webp',
   usageImageAlt: 'NeemX Pro flesjes in drie formaten op een marmeren blad met een neem-tak',
   variants: [
-    { id: 'neemx-10', label: '10 ml', detail: 'Voor 1–4 liter spuitoplossing', price: 24.95 },
-    { id: 'neemx-30', label: '30 ml', detail: 'Voor 3–12 liter spuitoplossing', price: 44.95 },
-    { id: 'neemx-50', label: '50 ml', detail: 'Voor 5–20 liter spuitoplossing', price: 59.95 },
+    { id: 'neemx-10', slug: 'neemx-pro-10ml', label: '10 ml', detail: 'Voor 1–4 liter spuitoplossing', price: 24.95 },
+    { id: 'neemx-30', slug: 'neemx-pro-30ml', label: '30 ml', detail: 'Voor 3–12 liter spuitoplossing', price: 44.95 },
+    { id: 'neemx-50', slug: 'neemx-pro-50ml', label: '50 ml', detail: 'Voor 5–20 liter spuitoplossing', price: 59.95 },
   ],
   highlights: [
     'Hooggeconcentreerde olieblend',

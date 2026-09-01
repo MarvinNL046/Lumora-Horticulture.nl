@@ -2,7 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useCart } from '@/contexts/CartContext'
 import {
   VOLUME_DISCOUNT_TIERS,
   calculateDiscountedPrice,
@@ -47,9 +49,13 @@ function getTierLabel(minQuantity: number, maxQuantity: number | null) {
 }
 
 export function ProductDetail({ product }: { product: ProductFamily }) {
+  const router = useRouter()
+  const { addItem } = useCart()
   const [variantId, setVariantId] = useState(product.variants[0].id)
   const [quantity, setQuantity] = useState(1)
   const [imageIndex, setImageIndex] = useState(0)
+  const [isAdding, setIsAdding] = useState(false)
+  const [purchaseError, setPurchaseError] = useState<string | null>(null)
   const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0]
   const fallbackGallery = [
     { src: product.mainImage, alt: product.mainImageAlt },
@@ -62,7 +68,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const activeImageIndex = Math.min(imageIndex, gallery.length - 1)
   const activeImage = gallery[activeImageIndex]
   const isPaperbus = product.id === 'paperbus'
-  const paperbusSlug = variant.id === 'tray-104' ? 'paper-plug-tray-104' : 'paper-plug-tray-84'
+  const paperbusSlug = variant.slug
   const compactVariantLabel = variant.shortLabel ?? variant.label
   const selectedBoxContents = isPaperbus
     ? `${variant.traysPerBox} trays · ${variant.cellsPerBox} cellen totaal`
@@ -76,9 +82,6 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const savings = isPaperbus
     ? paperbusPromotion.discount
     : Math.max(0, originalTotal - discountedTotal)
-  const cartHref = isPaperbus
-    ? `/lumora-premium/winkelmand?action=stekpluggen-3-voor-180&variant=${variant.id}&quantity=${quantity}`
-    : '/lumora-premium/winkelmand'
   const nextTierQuantity = discountInfo.nextTier?.quantity ?? null
   const bottlesToNextTier = nextTierQuantity === null ? 0 : nextTierQuantity - quantity
   const neemxYield = NEEMX_YIELD_BY_VARIANT[variant.id as keyof typeof NEEMX_YIELD_BY_VARIANT]
@@ -106,6 +109,46 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         'Het emulgatorsysteem helpt de botanische olieblend goed en gelijkmatig met water te mengen.',
         'De aangemaakte oplossing is bedoeld voor een gelijkmatige bedekking van het bladoppervlak.',
       ]
+
+  async function addSelectedProductToCart() {
+    if (isAdding) return
+    setIsAdding(true)
+    setPurchaseError(null)
+
+    try {
+      const response = await fetch(`/api/products/slug/${encodeURIComponent(variant.slug)}?locale=nl`, {
+        cache: 'no-store',
+      })
+      const data = await response.json() as {
+        success?: boolean
+        product?: { id?: string; price?: number }
+      }
+      const productId = data.product?.id
+      const databasePrice = data.product?.price
+
+      if (!response.ok || !data.success || !productId || typeof databasePrice !== 'number') {
+        throw new Error('Product kon niet worden geladen')
+      }
+
+      if (Math.abs(databasePrice - variant.price) > 0.001) {
+        throw new Error('De prijs wordt bijgewerkt. Vernieuw de pagina en probeer opnieuw.')
+      }
+
+      addItem({
+        product_id: productId,
+        slug: variant.slug,
+        name: isPaperbus ? variant.label : `NeemX Pro ${variant.label}`,
+        price: variant.price,
+        image_url: gallery[0]?.src ?? product.mainImage,
+      }, quantity)
+      router.push('/lumora-premium/winkelmand')
+    } catch (error) {
+      setPurchaseError(error instanceof Error && error.message.includes('prijs')
+        ? error.message
+        : 'Toevoegen lukt nu niet. Probeer het opnieuw of neem contact met ons op.')
+      setIsAdding(false)
+    }
+  }
 
   return (
     <main>
@@ -234,11 +277,18 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                 <span aria-live="polite">{quantity}</span>
                 <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
               </div>
-              <Link href={cartHref} className={styles.addButton}>
+              <button
+                type="button"
+                className={styles.addButton}
+                onClick={addSelectedProductToCart}
+                disabled={isAdding}
+                aria-busy={isAdding}
+              >
                 <BagIcon /> {isPaperbus && paperbusPromotion.eligible
-                  ? `Voeg ${quantity} dozen toe · ${formatPrice(productTotal)}`
-                  : `${compactVariantLabel} in winkelwagen`}
-              </Link>
+                  ? (isAdding ? 'Bezig met toevoegen…' : `Voeg ${quantity} dozen toe · ${formatPrice(productTotal)}`)
+                  : (isAdding ? 'Bezig met toevoegen…' : `${compactVariantLabel} in winkelwagen`)}
+              </button>
+              {purchaseError && <p className={styles.purchaseError} role="alert">{purchaseError}</p>}
             </div>
 
             <div className={styles.purchaseProof}>
@@ -410,12 +460,18 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           <span aria-live="polite">{quantity}</span>
           <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
         </div>
-        <Link href={cartHref} className={styles.dockPrimaryAction}>
+        <button
+          type="button"
+          className={styles.dockPrimaryAction}
+          onClick={addSelectedProductToCart}
+          disabled={isAdding}
+          aria-busy={isAdding}
+        >
           <span>
             <small>{isPaperbus && paperbusPromotion.eligible ? '3-voor-€180 actie · verzending inbegrepen' : `${compactVariantLabel} × ${quantity}`}</small>
-            <strong>{isPaperbus && paperbusPromotion.eligible ? `3 dozen · ${formatPrice(productTotal)}` : `In winkelwagen · ${formatPrice(productTotal)}`}</strong>
+            <strong>{isAdding ? 'Toevoegen…' : isPaperbus && paperbusPromotion.eligible ? `3 dozen · ${formatPrice(productTotal)}` : `In winkelwagen · ${formatPrice(productTotal)}`}</strong>
           </span>
-        </Link>
+        </button>
       </div>
     </main>
   )

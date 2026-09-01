@@ -2,97 +2,37 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useCart } from '@/contexts/CartContext'
 import { calculateCartItemTotal } from '@/lib/cart-pricing'
-import { calculatePaperbusPromotion } from '@/lib/paperbus-promo'
+import { calculatePaperbusPromotion, isPaperbusPromoSlug } from '@/lib/paperbus-promo'
 import { formatPrice } from '../_data/products'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, CheckIcon, LockIcon, MinusIcon, PlusIcon, TruckIcon } from './Icons'
 import { PaymentLogos } from './PaymentLogos'
 
-type CartItem = {
-  id: string
-  slug: string
-  name: string
-  variant: string
-  detail: string
-  price: number
-  quantity: number
-  image: string
-  imageAlt: string
+function cartItemDetail(slug: string): string {
+  if (slug === 'paper-plug-tray-84') return 'Per doos: 8 trays · 672 cellen'
+  if (slug === 'paper-plug-tray-104') return 'Per doos: 7 trays · 728 cellen'
+  if (slug === 'neemx-pro-10ml') return '10 ml · geconcentreerde formule'
+  if (slug === 'neemx-pro-30ml') return '30 ml · geconcentreerde formule'
+  if (slug === 'neemx-pro-50ml') return '50 ml · geconcentreerde formule'
+  return 'Bekijk de productdetails voor de gekozen uitvoering'
 }
 
-const defaultItems: CartItem[] = [
-  {
-    id: 'paperbus-84',
-    slug: 'paper-plug-tray-84',
-    name: 'Stekpluggen Steenwol',
-    variant: 'Stekpluggen Steenwol 84',
-    detail: 'Per doos: 8 trays · 672 cellen',
-    price: 84,
-    quantity: 1,
-    image: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
-    imageAlt: 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
-  },
-  {
-    id: 'neemx-10',
-    slug: 'neemx-pro-10ml',
-    name: 'NeemX Pro',
-    variant: '10 ml',
-    detail: 'Geconcentreerde formule',
-    price: 24.95,
-    quantity: 1,
-    image: '/productAfbeeldingen/neemxpro/neemx-pro-assortiment-travertijn-neem-bloesem.webp',
-    imageAlt: 'NeemX Pro assortiment met flesjes van 50, 30 en 10 ml',
-  },
-]
-
-type CartPageProps = {
-  action?: string
-  variantId?: string
-  quantity?: number
-}
-
-function getInitialItems({ action, variantId, quantity }: CartPageProps): CartItem[] {
-  if (action !== 'stekpluggen-3-voor-180') return defaultItems
-  const is104 = variantId === 'tray-104'
-  return [{
-    id: is104 ? 'paperbus-104' : 'paperbus-84',
-    slug: is104 ? 'paper-plug-tray-104' : 'paper-plug-tray-84',
-    name: 'Stekpluggen Steenwol',
-    variant: is104 ? 'Stekpluggen Steenwol 104' : 'Stekpluggen Steenwol 84',
-    detail: is104 ? 'Per doos: 7 trays · 728 cellen' : 'Per doos: 8 trays · 672 cellen',
-    price: is104 ? 80 : 84,
-    quantity: Math.min(100, Math.max(1, quantity ?? 3)),
-    image: is104
-      ? '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-104-tray.webp'
-      : '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
-    imageAlt: is104
-      ? 'Tray met 104 stekpluggen van steenwol'
-      : 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
-  }]
-}
-
-export function CartPage(props: CartPageProps) {
-  const [items, setItems] = useState(() => getInitialItems(props))
+export function CartPage() {
+  const {
+    items,
+    getTotalPrice,
+    removeItem,
+    updateQuantity,
+  } = useCart()
   const regularTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const total = items.reduce((sum, item) => sum + calculateCartItemTotal(item.slug, item.price, item.quantity), 0)
+  const total = getTotalPrice()
   const totalDiscount = Math.max(0, regularTotal - total)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
-  const activeBundle = items.length === 1
+  const activeBundle = items.length === 1 && isPaperbusPromoSlug(items[0].slug)
     ? calculatePaperbusPromotion(items[0].slug, items[0].price, items[0].quantity)
     : null
-  const checkoutHref = activeBundle?.eligible
-    ? `/lumora-premium/afrekenen?action=stekpluggen-3-voor-180&variant=${items[0].id.endsWith('104') ? 'tray-104' : 'tray-84'}&quantity=${items[0].quantity}`
-    : '/lumora-premium/afrekenen'
-
-  function changeQuantity(id: string, delta: number) {
-    setItems((current) => current.map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item))
-  }
-
-  function removeItem(id: string) {
-    setItems((current) => current.filter((item) => item.id !== id))
-  }
 
   if (items.length === 0) {
     return (
@@ -117,46 +57,46 @@ export function CartPage(props: CartPageProps) {
 
         <div className={styles.cartLayout}>
           <section className={styles.cartItems} aria-label="Producten in winkelwagen">
-            {items.map((item) => (
-              <article className={styles.cartItem} key={item.id}>
-                <div className={`${styles.cartItemImage} ${item.id.startsWith('neemx') ? styles.cartItemImageNeemx : ''}`}>
-                  <Image src={item.image} alt={item.imageAlt} fill sizes="160px" />
-                </div>
-                <div className={styles.cartItemInfo}>
-                  <span>{item.name}</span>
-                  <h2>{item.variant}</h2>
-                  <small>{item.detail}</small>
-                  {item.id.startsWith('paperbus') && (() => {
-                    const promotion = calculatePaperbusPromotion(item.slug, item.price, item.quantity)
-                    return promotion.eligible ? (
+            {items.map((item) => {
+              const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity)
+              const itemRegularTotal = item.price * item.quantity
+              const paperbusPromotion = isPaperbusPromoSlug(item.slug)
+                ? calculatePaperbusPromotion(item.slug, item.price, item.quantity)
+                : null
+              const isNeemx = item.slug.startsWith('neemx-pro')
+
+              return (
+                <article className={styles.cartItem} key={item.product_id}>
+                  <div className={`${styles.cartItemImage} ${isNeemx ? styles.cartItemImageNeemx : ''}`}>
+                    <Image src={item.image_url} alt={item.name} fill sizes="160px" />
+                  </div>
+                  <div className={styles.cartItemInfo}>
+                    <span>{isNeemx ? 'Botanische bladverzorging' : 'Professionele stekpluggen'}</span>
+                    <h2>{item.name}</h2>
+                    <small>{cartItemDetail(item.slug)}</small>
+                    {paperbusPromotion && (paperbusPromotion.eligible ? (
                       <span className={styles.cartPromoApplied}><CheckIcon /> 3-voor-€180 actie toegepast</span>
                     ) : (
-                      <button className={styles.cartPromoNudge} type="button" onClick={() => changeQuantity(item.id, 3 - item.quantity)}>
+                      <button className={styles.cartPromoNudge} type="button" onClick={() => updateQuantity(item.product_id, 3)}>
                         Kies 3 dozen voor €180
                       </button>
-                    )
-                  })()}
-                  <button type="button" onClick={() => removeItem(item.id)}>Verwijderen</button>
-                </div>
-                <div className={styles.cartItemControls}>
-                  {(() => {
-                    const itemTotal = calculateCartItemTotal(item.slug, item.price, item.quantity)
-                    const itemRegularTotal = item.price * item.quantity
-                    return (
-                      <span className={styles.cartItemPrice}>
-                        {itemTotal < itemRegularTotal && <del>{formatPrice(itemRegularTotal)}</del>}
-                        <strong>{formatPrice(itemTotal)}</strong>
-                      </span>
-                    )
-                  })()}
-                  <div className={styles.cartQuantity}>
-                    <button type="button" onClick={() => changeQuantity(item.id, -1)} aria-label={`Aantal ${item.name} verlagen`}><MinusIcon /></button>
-                    <span>{item.quantity}</span>
-                    <button type="button" onClick={() => changeQuantity(item.id, 1)} aria-label={`Aantal ${item.name} verhogen`}><PlusIcon /></button>
+                    ))}
+                    <button type="button" onClick={() => removeItem(item.product_id)}>Verwijderen</button>
                   </div>
-                </div>
-              </article>
-            ))}
+                  <div className={styles.cartItemControls}>
+                    <span className={styles.cartItemPrice}>
+                      {itemTotal < itemRegularTotal && <del>{formatPrice(itemRegularTotal)}</del>}
+                      <strong>{formatPrice(itemTotal)}</strong>
+                    </span>
+                    <div className={styles.cartQuantity}>
+                      <button type="button" onClick={() => updateQuantity(item.product_id, Math.max(1, item.quantity - 1))} aria-label={`Aantal ${item.name} verlagen`}><MinusIcon /></button>
+                      <span>{item.quantity}</span>
+                      <button type="button" onClick={() => updateQuantity(item.product_id, Math.min(100, item.quantity + 1))} aria-label={`Aantal ${item.name} verhogen`}><PlusIcon /></button>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
             <div className={styles.cartNote} aria-label="Huidige bestelling" aria-live="polite">
               <span>
                 <strong>Huidige bestelling</strong>
@@ -170,17 +110,17 @@ export function CartPage(props: CartPageProps) {
             <h2>Totaal</h2>
             <div className={styles.summaryLines}>
               <span><small>Subtotaal</small><strong>{formatPrice(regularTotal)}</strong></span>
-              {totalDiscount > 0 && <span className={styles.summaryDiscount}><small>3-voor-€180 actie</small><strong>− {formatPrice(totalDiscount)}</strong></span>}
+              {totalDiscount > 0 && <span className={styles.summaryDiscount}><small>Actie en staffelkorting</small><strong>− {formatPrice(totalDiscount)}</strong></span>}
               <span><small>Verzending NL, BE of DE</small><strong>Inbegrepen</strong></span>
             </div>
             <div className={styles.summaryTotal}><span>Totaal</span><strong>{formatPrice(total)}</strong></div>
             {activeBundle?.eligible && (
               <div className={styles.summaryPromoProof}>
                 <CheckIcon />
-                <span><strong>Actie toegepast</strong><small>{items[0].quantity} dozen {items[0].variant}</small></span>
+                <span><strong>3-voor-€180 actie toegepast</strong><small>{items[0].quantity} dozen {items[0].name}</small></span>
               </div>
             )}
-            <Link href={checkoutHref} className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
+            <Link href="/lumora-premium/afrekenen" className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
             <div className={styles.summaryPayment} aria-label="Betaalmogelijkheden">
               <span className={styles.summaryPaymentLabel}><LockIcon /> Veilig online betalen</span>
               <PaymentLogos />

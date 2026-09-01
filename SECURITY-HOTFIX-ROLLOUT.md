@@ -7,12 +7,12 @@ validators because that argument does not exist there yet.
 
 ## 0. Release gate: dependencies and lockfile
 
-Do not release this branch yet. The historical lockfile still resolves known
-high-severity production advisories in Next.js and its bundled PostCSS, while
-the pinned `next-intl` version also requires a security update. The lockfile is
-incomplete enough that `npm ci` cannot reproduce an install. Upgrade the
-framework/intl dependency set, regenerate the lockfile from a clean install,
-review the migration and rerun this entire preflight before deployment.
+The dependency upgrade is included in this branch. `npm ci` is reproducible,
+Next.js is pinned to 16.3.3, and the production audit has no high or critical
+advisories. The remaining low/moderate advisories are transitive dependencies
+of Stack Auth and must stay tracked; do not force-downgrade Stack to silence
+them. Rerun `npm ci`, the production audit, typecheck, tests and build for the
+exact commit that will be promoted.
 
 ## 1. Prepare secrets before deployment
 
@@ -40,16 +40,14 @@ support to send one on request; do not restore the public raw-order lookup.
 
 ## 2. Preflight locally or in staging
 
-The repository currently has an inconsistent historical `package-lock.json`,
-so `npm ci` is not yet a reliable install command. Repair and review the lockfile
-in a separate dependency-upgrade change before relying on CI.
-
 Before production rollout:
 
-1. Run official Convex code generation against the target deployment.
-2. Run the TypeScript typecheck and all security tests.
-3. Run a production Next.js build with staging environment variables.
-4. Verify that no generated secret or local `.env` file is staged.
+1. Install the exact lockfile with `npm ci` on Node 24.
+2. Run official Convex code generation against the target deployment.
+3. Run the TypeScript typecheck and all security tests.
+4. Run a production Next.js build with staging environment variables.
+5. Run `npm audit --omit=dev --audit-level=high`.
+6. Verify that no generated secret or local `.env` file is staged.
 
 ## 3. Coordinated deployment
 
