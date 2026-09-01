@@ -57,7 +57,7 @@ export default function AfrekenenPage() {
           <aside className={styles.checkoutSummary}>
             <div className={styles.checkoutSummaryHeading}><span>Jouw bestelling</span><Link href="/lumora-premium/winkelmand">Wijzigen</Link></div>
             <div className={styles.checkoutProduct}>
-              <span className={styles.checkoutProductImage}><Image src="/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp" alt="" fill sizes="64px" /></span>
+              <span className={styles.checkoutProductImage}><Image src="/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp" alt="" fill sizes="64px" /></span>
               <span><strong>Stekpluggen Steenwol 84</strong><small>Paperbus · 84 stekpluggen per tray · 1 tray</small></span>
               <strong>€ 84,00</strong>
             </div>

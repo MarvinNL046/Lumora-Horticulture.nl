@@ -81,8 +81,8 @@ export default function LumoraPremiumHomePage() {
         <div className={`${styles.container} ${styles.choiceGrid}`}>
           <div className={styles.choiceImage}>
             <Image
-              src="/productAfbeeldingen/trays/tray84/steenwol-plug-84tray-sfeer.webp"
-              alt="Stekpluggen Steenwol 84 met jonge planten"
+              src={paperbus.tertiaryImage ?? paperbus.mainImage}
+              alt={paperbus.tertiaryImageAlt ?? paperbus.mainImageAlt}
               fill
               sizes="(max-width: 767px) 100vw, 50vw"
             />

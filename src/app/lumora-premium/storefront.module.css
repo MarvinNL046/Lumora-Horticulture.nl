@@ -124,7 +124,7 @@
 .heroProof svg { width: 16px; color: var(--green); }
 
 .heroVisual { position: relative; height: 590px; border-radius: 30px 30px 96px 30px; background: var(--soft); box-shadow: 0 24px 70px rgba(35,66,48,.13); }
-.heroImage { object-fit: cover; border-radius: inherit; }
+.heroImage { object-fit: contain; padding: 44px; border-radius: inherit; }
 .heroVisual::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(45,125,70,.09); border-radius: inherit; pointer-events: none; }
 .heroCaption { position: absolute; z-index: 2; left: 24px; top: 24px; display: flex; align-items: center; gap: 11px; padding: 11px 14px 11px 11px; background: rgba(255,255,255,.91); border: 1px solid rgba(255,255,255,.88); border-radius: 15px; box-shadow: 0 10px 30px rgba(25,58,37,.10); backdrop-filter: blur(10px); }
 .heroCaptionIcon { width: 36px; height: 36px; display: grid; place-items: center; color: var(--green); background: var(--sage); border-radius: 11px; }
@@ -259,6 +259,7 @@
 .gallery { position: sticky; top: 104px; min-width: 0; }
 .galleryMain { position: relative; height: 610px; overflow: hidden; background: #f0f4f0; border: 1px solid var(--line); border-radius: 28px 28px 76px 28px; }
 .galleryMain img { object-fit: contain; padding: 54px; }
+.galleryMain .galleryDetailImage { object-fit: cover; padding: 0; }
 .galleryMain_neemx img { object-fit: cover; padding: 0; }
 .galleryTag { position: absolute; left: 20px; top: 20px; padding: 9px 12px; color: var(--deep); background: rgba(255,255,255,.9); border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(10px); }
 .galleryThumbs { display: flex; gap: 10px; margin-top: 12px; }
@@ -525,6 +526,7 @@
   .primaryButton, .secondaryButton { min-height: 50px; }
   .heroProof { gap: 12px; margin-top: 17px; font-size: 12px; }
   .heroVisual { height: 272px; border-radius: 20px 20px 54px 20px; }
+  .heroImage { padding: 22px; }
   .heroCaption { left: 12px; top: 12px; padding: 8px 10px 8px 8px; border-radius: 12px; }
   .heroCaptionIcon { width: 31px; height: 31px; }
   .heroCaption strong { font-size: 12px; }

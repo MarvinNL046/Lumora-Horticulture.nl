@@ -19,6 +19,8 @@ export type ProductFamily = {
   mainImageAlt: string
   secondaryImage: string
   secondaryImageAlt: string
+  tertiaryImage?: string
+  tertiaryImageAlt?: string
   variants: ProductVariant[]
   highlights: string[]
   useCases: string[]
@@ -34,12 +36,12 @@ export const paperbus: ProductFamily = {
     'Stekpluggen van steenwol met een Paperbus-wikkel, geleverd in een kweektray.',
   href: '/lumora-premium/paperbus',
   fromPrice: 80,
-  mainImage:
-    '/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp',
-  mainImageAlt: 'Stekpluggen Steenwol 84 in een kweektray',
-  secondaryImage:
-    '/productAfbeeldingen/generated/paperbus-greenhouse-hero-v1.png',
-  secondaryImageAlt: 'Jonge planten in een lichte professionele kas',
+  mainImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
+  mainImageAlt: 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
+  secondaryImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-alternate.webp',
+  secondaryImageAlt: 'Tweede aanzicht van Stekpluggen Steenwol 84 in een kweektray',
+  tertiaryImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-paperbus-detail.webp',
+  tertiaryImageAlt: 'Detail van stekpluggen van steenwol met Paperbus-wikkel',
   variants: [
     {
       id: 'tray-84',

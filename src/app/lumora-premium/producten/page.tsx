@@ -28,8 +28,8 @@ export default function ProductenPage() {
           <div className={styles.collectionHeroVisual}>
             <div className={styles.collectionImageOne}>
               <Image
-                src="/productAfbeeldingen/trays/tray104/tray104-pluggen-transparant.webp"
-                alt="Stekpluggen Steenwol 104 in een kweektray"
+                src="/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-alternate.webp"
+                alt="Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray"
                 fill
                 priority
                 sizes="260px"

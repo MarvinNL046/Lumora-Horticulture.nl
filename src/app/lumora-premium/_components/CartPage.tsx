@@ -24,8 +24,8 @@ const initialItems: CartItem[] = [
     variant: 'Stekpluggen Steenwol 84',
     price: 84,
     quantity: 1,
-    image: '/productAfbeeldingen/trays/tray84/tray84-pluggen-transparant1.webp',
-    imageAlt: 'Stekpluggen Steenwol 84 in een kweektray',
+    image: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-front.webp',
+    imageAlt: 'Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray',
   },
   {
     id: 'neemx-10',

@@ -48,6 +48,9 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const gallery = [
     { src: product.mainImage, alt: product.mainImageAlt },
     { src: product.secondaryImage, alt: product.secondaryImageAlt },
+    ...(product.tertiaryImage && product.tertiaryImageAlt
+      ? [{ src: product.tertiaryImage, alt: product.tertiaryImageAlt }]
+      : []),
   ]
   const isPaperbus = product.id === 'paperbus'
   const compactVariantLabel = variant.shortLabel ?? variant.label
@@ -60,6 +63,8 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
   const nextTierQuantity = discountInfo.nextTier?.quantity ?? null
   const bottlesToNextTier = nextTierQuantity === null ? 0 : nextTierQuantity - quantity
   const neemxYield = NEEMX_YIELD_BY_VARIANT[variant.id as keyof typeof NEEMX_YIELD_BY_VARIANT]
+  const usageImage = product.tertiaryImage ?? product.secondaryImage
+  const usageImageAlt = product.tertiaryImageAlt ?? product.secondaryImageAlt
   const usageSteps = isPaperbus
     ? [
         ['Kweek in de gekozen tray', 'Gebruik de tray voor zaad of stek en stem de teeltomstandigheden af op je gewas.'],
@@ -84,6 +89,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         <div className={styles.gallery}>
           <div className={`${styles.galleryMain} ${styles[`galleryMain_${product.id}`]}`}>
             <Image
+              className={product.tertiaryImage && imageIndex === gallery.length - 1 ? styles.galleryDetailImage : undefined}
               src={gallery[imageIndex].src}
               alt={gallery[imageIndex].alt}
               fill
@@ -275,7 +281,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
       <section className={styles.usageSection}>
         <div className={`${styles.container} ${styles.usageGrid}`}>
           <div className={`${styles.usageImage} ${styles[`usageImage_${product.id}`]}`}>
-            <Image src={product.secondaryImage} alt={product.secondaryImageAlt} fill sizes="(max-width: 767px) 100vw, 50vw" />
+            <Image src={usageImage} alt={usageImageAlt} fill sizes="(max-width: 767px) 100vw, 50vw" />
           </div>
           <div className={styles.usageCopy}>
             <span className={styles.eyebrow}>{isPaperbus ? 'Zo gebruik je de plug' : 'Gebruik zorgvuldig'}</span>
