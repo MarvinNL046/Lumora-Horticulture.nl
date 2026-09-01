@@ -5,7 +5,7 @@ untested checkout or changing production data prematurely.
 
 ## Current safe state
 
-- Commit `8f511e1` is deployed as a Vercel Preview from `design-rebuild`.
+- Commit `26dd07a` is deployed as a Vercel Preview from `design-rebuild`.
 - Preview keeps `/lumora-premium` available and `noindex` for design review.
 - The same reviewed components now serve the final Dutch routes on Preview:
   `/`, `/producten`, `/stekpluggen-steenwol`, `/neemx-pro`, `/winkelmand`
@@ -48,8 +48,9 @@ A Convex-backed, atomic per-IP limit now protects `/api/checkout`, payment
 retry, cart capture, MyParcel delivery options and the Mollie/MyParcel webhook
 routes. Only a route-bound HMAC is stored; raw client addresses are not
 persisted. `/api/track/meta` is retired with HTTP 410 and performs no provider
-call. Keep these protections fail-closed and verify the 429 boundary in the
-isolated Preview deployment.
+call. These protections fail closed. The isolated Preview probe verified that
+requests 1 through 8 enter the route and request 9 receives HTTP 429; the
+short-lived probe deployment was removed immediately afterwards.
 
 Next, run a controlled Mollie test-mode order through all states, including a
 duplicate submit and duplicate/out-of-order webhook. Confirm exactly one order,
