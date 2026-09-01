@@ -325,14 +325,14 @@
 .productAccordions details[open] summary svg { transform: rotate(180deg); }
 .productAccordions p { margin: -3px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.65; }
 .dosageContent { padding: 0 0 18px; }
+.productAccordions .dosageIntro { margin: -2px 0 10px; }
 .dosageTable { width: 100%; overflow: hidden; border-spacing: 0; border: 1px solid var(--line); border-radius: 11px; table-layout: fixed; }
 .dosageTable th, .dosageTable td { padding: 9px 8px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); font-size: 11px; line-height: 1.35; }
 .dosageTable thead th { color: #536159; background: var(--soft); font-size: 10px; font-weight: 800; letter-spacing: .035em; text-transform: uppercase; }
 .dosageTable tbody th { color: var(--ink); font-weight: 720; }
 .dosageTable td { color: var(--muted); }
-.dosageTable th:first-child { width: 43%; }
-.dosageTable th:nth-child(2) { width: 21%; }
-.dosageTable th:nth-child(3) { width: 36%; }
+.dosageTable th:first-child,
+.dosageTable th:nth-child(2) { width: 50%; }
 .dosageTable tr:last-child > * { border-bottom: 0; }
 .productAccordions .dosageResult { display: grid; gap: 3px; margin: 10px 0 7px; padding: 10px 11px; color: var(--deep); background: #eef6f0; border-radius: 10px; font-size: 12px; line-height: 1.45; }
 .dosageResult strong { font-size: 12px; }
@@ -349,6 +349,9 @@
 .highlightGrid article > svg { width: 27px; color: #9bd4aa; }
 .highlightGrid h3 { position: relative; margin: 60px 0 11px; font-family: var(--font-playfair), Georgia, serif; font-size: 23px; font-weight: 600; }
 .highlightGrid p { position: relative; margin: 0; color: rgba(255,255,255,.65); font-size: 14px; line-height: 1.65; }
+.highlightAction { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 13px 19px; color: var(--deep); background: #fff; border-radius: 10px; font-size: 13px; font-weight: 800; text-decoration: none; }
+.highlightAction svg { width: 16px; transition: transform .2s ease; }
+.highlightAction:hover svg { transform: translateX(3px); }
 
 .usageSection { padding: 106px 0; }
 .usageGrid { display: grid; grid-template-columns: 1fr .9fr; gap: 82px; align-items: center; }

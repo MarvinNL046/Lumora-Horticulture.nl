@@ -31,10 +31,10 @@ const NEEMX_YIELD_BY_VARIANT = {
 } as const
 
 const NEEMX_DOSAGE_ROWS = [
-  ['Preventief, wekelijks', '2,5 ml/L', '± 0,25 ml'],
-  ['Normaal', '5 ml/L', '± 0,5 ml'],
-  ['Intensief', '7 ml/L', '± 0,7 ml'],
-  ['Professioneel / zwaar', '10 ml/L', '± 1 ml'],
+  ['2,5 ml/L', '± 0,25 ml'],
+  ['5 ml/L', '± 0,5 ml'],
+  ['7 ml/L', '± 0,7 ml'],
+  ['10 ml/L', '± 1 ml'],
 ] as const
 
 function getTierLabel(minQuantity: number, maxQuantity: number | null) {
@@ -76,9 +76,16 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
         ['Plant de complete plug uit', 'De papieren omhulling blijft bij het uitplanten om de plug zitten.'],
       ]
     : [
-        ['Schud voor gebruik', 'Zorg dat het concentraat goed gemengd is voordat je gaat doseren.'],
-        ['Volg de actuele instructie', 'Meng en gebruik het product uitsluitend volgens het etiket en de gebruiksinstructie.'],
-        ['Test eerst kleinschalig', 'Probeer de toepassing eerst op een klein deel van de plant.'],
+        ['Breng op kamertemperatuur', 'Is het concentraat door kou dikker geworden? Laat het eerst op kamertemperatuur komen en schud daarna goed.'],
+        ['Verdun volgens de gebruiksaanwijzing', 'Meng de juiste hoeveelheid concentraat met water en zorg voor een gelijkmatige verdeling.'],
+        ['Maak alleen aan wat je gebruikt', 'Bereid alleen de benodigde hoeveelheid en gebruik de aangemaakte spuitoplossing dezelfde dag.'],
+      ]
+  const highlightDescriptions = isPaperbus
+    ? product.highlights.map(() => 'Vergelijk de tray-indeling in het koopblok en kies op basis van je teeltplan.')
+    : [
+        'Door de hoge concentratie heb je per liter spuitoplossing slechts een kleine hoeveelheid nodig.',
+        'Het emulgatorsysteem helpt de botanische olieblend goed en gelijkmatig met water te mengen.',
+        'De aangemaakte oplossing is bedoeld voor een gelijkmatige bedekking van het bladoppervlak.',
       ]
 
   return (
@@ -104,7 +111,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
               priority
               sizes="(max-width: 767px) 100vw, 56vw"
             />
-            <span className={styles.galleryTag}>{isPaperbus ? 'Voor zaaien & stekken' : 'Voor plantverzorging'}</span>
+            <span className={styles.galleryTag}>{isPaperbus ? 'Voor zaaien & stekken' : 'Voor bladverzorging'}</span>
           </div>
           <div className={styles.galleryThumbs} aria-label="Productafbeeldingen">
             {gallery.map((image, index) => (
@@ -124,7 +131,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
         <div className={`${styles.productSummary} ${styles[`productSummary_${product.id}`]}`} id="koopblok">
           <span className={styles.eyebrow}>{product.eyebrow}</span>
-          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'Kies je NeemX formaat.'}</h1>
+          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'Plantaardig olieconcentraat voor bladverzorging.'}</h1>
           <p className={styles.productIntro}>{product.description}</p>
 
           <div className={styles.priceLine}>
@@ -133,7 +140,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           </div>
 
           <fieldset className={styles.variantFieldset}>
-            <legend>{isPaperbus ? 'Kies 84 of 104' : 'Kies je flesformaat'}</legend>
+            <legend>{isPaperbus ? 'Kies 84 of 104' : 'Kies 10, 30 of 50 ml'}</legend>
             <div className={styles.variantGrid}>
               {product.variants.map((item) => (
                 <button
@@ -244,14 +251,15 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
               <details open>
                 <summary>Dosering &amp; opbrengst <ChevronDownIcon /></summary>
                 <div className={styles.dosageContent}>
+                  <p className={styles.dosageIntro}>Gebruik de actuele gebruiksaanwijzing om de passende dosering te bepalen. Begin altijd met de laagste dosering.</p>
                   <table className={styles.dosageTable}>
-                    <caption className={styles.srOnly}>NeemX dosering per gebruiksniveau</caption>
+                    <caption className={styles.srOnly}>NEEMX PRO dosering per liter en per vierkante meter</caption>
                     <thead>
-                      <tr><th>Gebruik</th><th>Per liter</th><th>Concentraat per m²*</th></tr>
+                      <tr><th>Dosering per liter</th><th>Concentraat per m²*</th></tr>
                     </thead>
                     <tbody>
-                      {NEEMX_DOSAGE_ROWS.map(([usage, perLiter, perSquareMeter]) => (
-                        <tr key={usage}><th scope="row">{usage}</th><td>{perLiter}</td><td>{perSquareMeter}</td></tr>
+                      {NEEMX_DOSAGE_ROWS.map(([perLiter, perSquareMeter]) => (
+                        <tr key={perLiter}><th scope="row">{perLiter}</th><td>{perSquareMeter}</td></tr>
                       ))}
                     </tbody>
                   </table>
@@ -261,10 +269,22 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                       <span>Met {variant.label} maak je {neemxYield.solution} spuitoplossing voor indicatief {neemxYield.coverage}.</span>
                     </p>
                   )}
-                  <p className={styles.dosageFootnote}>*Gebaseerd op circa 100 ml aangemaakte spuitoplossing per m². Gebruik genoeg voor volledige bladbedekking, ook aan de onderzijde.</p>
-                  <p className={styles.dosageUseNote}>Goed schudden, eerst op een klein deel testen en buiten fel licht spuiten.</p>
+                  <p className={styles.dosageFootnote}>*Gebaseerd op circa 100 ml aangemaakte spuitoplossing per m².</p>
+                  <p className={styles.dosageUseNote}>Test eerst op een klein deel van de plant en spuit niet in direct zonlicht.</p>
                 </div>
               </details>
+            )}
+            {!isPaperbus && (
+              <>
+                <details>
+                  <summary>Wat is NEEMX PRO? <ChevronDownIcon /></summary>
+                  <p>NEEMX PRO combineert hoogwaardige plantaardige oliën met een natuurlijke antioxidant en emulgatoren. Het emulgatorsysteem helpt de olieblend gelijkmatig met water te mengen voor de verzorging van het bladoppervlak.</p>
+                </details>
+                <details>
+                  <summary>Bewaren &amp; voorbereiden <ChevronDownIcon /></summary>
+                  <p>Bij lage temperaturen kan het concentraat dikker worden. Breng het product voor gebruik op kamertemperatuur en schud goed. Maak alleen de hoeveelheid spuitoplossing aan die je direct nodig hebt en gebruik deze dezelfde dag.</p>
+                </details>
+              </>
             )}
             <details><summary>Levering & retour <ChevronDownIcon /></summary><p>Verzending binnen Nederland, België en Duitsland is gratis. Voor consumenten geldt 14 dagen bedenktijd; bekijk vóór aankoop altijd het volledige retourbeleid.</p></details>
           </div>
@@ -274,14 +294,15 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
       <section className={styles.productHighlights}>
         <div className={styles.container}>
           <div className={styles.highlightIntro}>
-            <span className={styles.eyebrow}>Helder uitgelegd</span>
-            <h2>{isPaperbus ? 'Eén productlijn, twee traykeuzes.' : 'Eén concentraat, drie formaten.'}</h2>
+            <span className={styles.eyebrow}>{isPaperbus ? 'Helder uitgelegd' : 'Waarom NEEMX PRO'}</span>
+            <h2>{isPaperbus ? 'Eén productlijn, twee traykeuzes.' : 'Ontwikkeld voor gelijkmatige bladverzorging.'}</h2>
           </div>
           <div className={styles.highlightGrid}>
             {product.highlights.map((highlight, index) => (
-              <article key={highlight}><span>0{index + 1}</span><CheckIcon /><h3>{highlight}</h3><p>{isPaperbus ? 'Vergelijk de tray-indeling in het koopblok en kies op basis van je teeltplan.' : 'Kies je inhoudsmaat in het koopblok en volg bij gebruik steeds de actuele instructie.'}</p></article>
+              <article key={highlight}><span>0{index + 1}</span><CheckIcon /><h3>{highlight}</h3><p>{isPaperbus ? 'Vergelijk de tray-indeling in het koopblok en kies op basis van je teeltplan.' : highlightDescriptions[index]}</p></article>
             ))}
           </div>
+          {!isPaperbus && <a className={styles.highlightAction} href="#koopblok">Kies je flesformaat <ArrowRightIcon /></a>}
         </div>
       </section>
 
@@ -291,8 +312,8 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             <Image src={usageImage} alt={usageImageAlt} fill sizes="(max-width: 767px) 100vw, 50vw" />
           </div>
           <div className={styles.usageCopy}>
-            <span className={styles.eyebrow}>{isPaperbus ? 'Zo gebruik je de plug' : 'Gebruik zorgvuldig'}</span>
-            <h2>{isPaperbus ? 'Van tray naar uitplanten.' : 'Drie heldere aandachtspunten.'}</h2>
+            <span className={styles.eyebrow}>{isPaperbus ? 'Zo gebruik je de plug' : 'Zo gebruik je NEEMX PRO'}</span>
+            <h2>{isPaperbus ? 'Van tray naar uitplanten.' : 'Van concentraat naar verse spuitoplossing.'}</h2>
             <div className={styles.usageSteps}>
               {usageSteps.map(([title, text], index) => (
                 <div key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></div>

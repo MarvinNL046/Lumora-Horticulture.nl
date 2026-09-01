@@ -136,12 +136,12 @@ export const paperbus: ProductFamily = {
 
 export const neemx: ProductFamily = {
   id: 'neemx',
-  eyebrow: 'Voor gerichte plantverzorging',
+  eyebrow: 'Botanische bladverzorging',
   name: 'NeemX Pro',
   shortName: 'NeemX Pro',
-  statement: 'Geconcentreerde verzorging, helder gedoseerd.',
+  statement: 'Hooggeconcentreerd plantaardig olieconcentraat voor een gelijkmatige verzorging van het bladoppervlak.',
   description:
-    'Een geconcentreerde formule op basis van neem voor de verzorging van planten. Verkrijgbaar in drie praktische inhoudsmaten.',
+    'NEEMX PRO is een hooggeconcentreerde botanische olieblend voor de verzorging en gelijkmatige behandeling van het bladoppervlak. De formule is goed te verdelen in water en verkrijgbaar in 10, 30 en 50 ml.',
   href: '/lumora-premium/neemx-pro',
   fromPrice: 24.95,
   mainImage: '/productAfbeeldingen/generated/neemx-clean-packshot-v1.png',
@@ -150,16 +150,16 @@ export const neemx: ProductFamily = {
     '/productAfbeeldingen/neemxpro/neemx-botanical-hero-v1.avif',
   secondaryImageAlt: 'Frisse groene bladeren op een lichte achtergrond',
   variants: [
-    { id: 'neemx-10', label: '10 ml', detail: 'Compact formaat', price: 24.95 },
-    { id: 'neemx-30', label: '30 ml', detail: 'Ruimer formaat', price: 44.95 },
-    { id: 'neemx-50', label: '50 ml', detail: 'Grootste formaat', price: 59.95 },
+    { id: 'neemx-10', label: '10 ml', detail: 'Voor 1–4 liter spuitoplossing', price: 24.95 },
+    { id: 'neemx-30', label: '30 ml', detail: 'Voor 3–12 liter spuitoplossing', price: 44.95 },
+    { id: 'neemx-50', label: '50 ml', detail: 'Voor 5–20 liter spuitoplossing', price: 59.95 },
   ],
   highlights: [
-    'Geconcentreerde formule',
-    'Keuze uit drie inhoudsmaten',
-    'Duidelijke gebruiksinstructie',
+    'Hooggeconcentreerde olieblend',
+    'Goed te verdelen in water',
+    'Gelijkmatige bladbedekking',
   ],
-  useCases: ['Kamerplanten', 'Sierplanten', 'Plantverzorging'],
+  useCases: ['Bladverzorging', 'Kamerplanten', 'Teeltomgevingen'],
 }
 
 export const productFamilies = [paperbus, neemx] as const
