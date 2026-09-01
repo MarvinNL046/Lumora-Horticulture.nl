@@ -35,12 +35,19 @@ export default function LumoraPremiumHomePage() {
 
           <div className={styles.heroVisual}>
             <Image
-              className={styles.heroImage}
-              src={paperbus.secondaryImage}
-              alt={paperbus.secondaryImageAlt}
+              className={`${styles.heroImage} ${styles.heroImageDesktop}`}
+              src={paperbus.heroImage ?? paperbus.secondaryImage}
+              alt={paperbus.heroImageAlt ?? paperbus.secondaryImageAlt}
               fill
               priority
               sizes="(max-width: 767px) 100vw, 56vw"
+            />
+            <Image
+              className={`${styles.heroImage} ${styles.heroImageMobile}`}
+              src={paperbus.heroMobileImage ?? paperbus.heroImage ?? paperbus.secondaryImage}
+              alt={paperbus.heroImageAlt ?? paperbus.secondaryImageAlt}
+              fill
+              sizes="100vw"
             />
             <div className={styles.heroCaption}>
               <span className={styles.heroCaptionIcon}><LeafIcon /></span>

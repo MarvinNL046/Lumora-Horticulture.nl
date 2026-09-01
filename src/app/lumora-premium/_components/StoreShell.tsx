@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
@@ -9,22 +10,22 @@ import {
   GridIcon,
   HelpIcon,
   HomeIcon,
-  LeafIcon,
   LockIcon,
 } from './Icons'
 
 const ROOT = '/lumora-premium'
 
-function Wordmark({ compact = false }: { compact?: boolean }) {
+function Wordmark({ priority = false }: { priority?: boolean }) {
   return (
     <span className={styles.wordmark} aria-label="Lumora Horticulture">
-      <span className={styles.wordmarkMark}>
-        <LeafIcon />
-      </span>
-      <span className={styles.wordmarkText}>
-        <strong>Lumora</strong>
-        {!compact && <small>Horticulture</small>}
-      </span>
+      <Image
+        className={styles.wordmarkImage}
+        src="/brand/lumora-horticulture-logo.avif"
+        alt=""
+        width={64}
+        height={64}
+        priority={priority}
+      />
     </span>
   )
 }
@@ -41,7 +42,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
         <header className={styles.checkoutHeader}>
           <div className={styles.shellRow}>
             <Link href={ROOT} className={styles.logoLink} aria-label="Terug naar Lumora">
-              <Wordmark />
+              <Wordmark priority />
             </Link>
             <span className={styles.secureLabel}>
               <LockIcon /> Veilig afrekenen
@@ -81,7 +82,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
       <header className={styles.header}>
         <div className={styles.shellRow}>
           <Link href={ROOT} className={styles.logoLink} aria-label="Lumora homepage">
-            <Wordmark />
+            <Wordmark priority />
           </Link>
 
           <nav className={styles.desktopNav} aria-label="Hoofdnavigatie">

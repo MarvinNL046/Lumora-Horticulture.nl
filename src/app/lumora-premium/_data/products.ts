@@ -30,6 +30,9 @@ export type ProductFamily = {
   tertiaryImageAlt?: string
   usageImage?: string
   usageImageAlt?: string
+  heroImage?: string
+  heroMobileImage?: string
+  heroImageAlt?: string
   variants: ProductVariant[]
   highlights: string[]
   useCases: string[]
@@ -53,6 +56,9 @@ export const paperbus: ProductFamily = {
   tertiaryImageAlt: 'Detail van stekpluggen van steenwol met Paperbus-wikkel',
   usageImage: '/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-bewortelde-zaailing.webp',
   usageImageAlt: 'Jonge zaailing met zichtbare wortels in een stekplug van steenwol',
+  heroImage: '/productAfbeeldingen/stekpluggen/stekpluggen-greenhouse-hero-desktop.avif',
+  heroMobileImage: '/productAfbeeldingen/stekpluggen/stekpluggen-greenhouse-hero-mobile.avif',
+  heroImageAlt: 'Stekpluggen Steenwol 84 met jonge planten in een lichte kas',
   variants: [
     {
       id: 'tray-84',

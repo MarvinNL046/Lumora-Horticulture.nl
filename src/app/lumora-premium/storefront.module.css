@@ -61,21 +61,8 @@
 .logoLink { min-height: 44px; display: inline-flex; align-items: center; border-radius: 10px; }
 .logoLink:focus-visible { outline: 3px solid rgba(45,125,70,.3); outline-offset: 4px; }
 
-.wordmark { display: inline-flex; align-items: center; gap: 10px; }
-.wordmarkMark {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: var(--green);
-  border-radius: 50% 50% 50% 16%;
-  transform: rotate(-4deg);
-}
-.wordmarkMark svg { width: 23px; height: 23px; transform: rotate(4deg); }
-.wordmarkText { display: grid; line-height: 1; }
-.wordmarkText strong { font-family: var(--font-playfair), Georgia, serif; font-size: 23px; letter-spacing: -.02em; font-weight: 650; }
-.wordmarkText small { margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.wordmark { display: inline-flex; align-items: center; }
+.wordmarkImage { width: 62px; height: 62px; object-fit: cover; border-radius: 11px; box-shadow: 0 3px 10px rgba(18,36,29,.12); }
 
 .desktopNav { display: flex; align-items: center; gap: 32px; margin-left: auto; }
 .desktopNav a { position: relative; padding: 28px 0; color: #3f4d47; font-size: 14px; font-weight: 620; }
@@ -124,7 +111,9 @@
 .heroProof svg { width: 16px; color: var(--green); }
 
 .heroVisual { position: relative; height: 590px; border-radius: 30px 30px 96px 30px; background: var(--soft); box-shadow: 0 24px 70px rgba(35,66,48,.13); }
-.heroImage { object-fit: contain; padding: 44px; border-radius: inherit; }
+.heroImage { object-fit: cover; padding: 0; border-radius: inherit; }
+.heroImageDesktop { display: block; object-position: center; }
+.heroImageMobile { display: none !important; object-position: center; }
 .heroVisual::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(45,125,70,.09); border-radius: inherit; pointer-events: none; }
 .heroCaption { position: absolute; z-index: 2; left: 24px; top: 24px; display: flex; align-items: center; gap: 11px; padding: 11px 14px 11px 11px; background: rgba(255,255,255,.91); border: 1px solid rgba(255,255,255,.88); border-radius: 15px; box-shadow: 0 10px 30px rgba(25,58,37,.10); backdrop-filter: blur(10px); }
 .heroCaptionIcon { width: 36px; height: 36px; display: grid; place-items: center; color: var(--green); background: var(--sage); border-radius: 11px; }
@@ -198,9 +187,7 @@
 
 .footer { padding: 76px 0 26px; color: rgba(255,255,255,.72); background: #102d1e; }
 .footerGrid { display: grid; grid-template-columns: 1.55fr repeat(3,1fr); gap: 58px; }
-.footer .wordmark { color: #fff; }
-.footer .wordmarkMark { color: var(--deep); background: #fff; }
-.footer .wordmarkText small { color: rgba(255,255,255,.55); }
+.footer .wordmarkImage { width: 76px; height: 76px; border: 1px solid rgba(255,255,255,.18); box-shadow: none; }
 .footerBrand p { max-width: 320px; margin: 20px 0 0; font-size: 12px; line-height: 1.7; }
 .footer h2 { margin: 4px 0 20px; color: #fff; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
 .footerGrid > div:not(:first-child) { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -511,10 +498,7 @@
   .utilityBar, .desktopNav, .languageButton, .cartLabel { display: none; }
   .header { height: 66px; }
   .header .shellRow { gap: 12px; }
-  .wordmarkMark { width: 36px; height: 36px; }
-  .wordmarkMark svg { width: 20px; }
-  .wordmarkText strong { font-size: 21px; }
-  .wordmarkText small { font-size: 12px; }
+  .wordmarkImage { width: 54px; height: 54px; border-radius: 9px; }
   .cartButton { min-width: 44px; width: 44px; height: 44px; justify-content: center; padding: 0; background: var(--soft); border: 1px solid var(--line); }
   .cartCount { position: absolute; right: -5px; top: 1px; min-width: 20px; height: 20px; border: 2px solid #fff; }
 
@@ -527,7 +511,8 @@
   .primaryButton, .secondaryButton { min-height: 50px; }
   .heroProof { gap: 12px; margin-top: 17px; font-size: 12px; }
   .heroVisual { height: 272px; border-radius: 20px 20px 54px 20px; }
-  .heroImage { padding: 22px; }
+  .heroImageDesktop { display: none !important; }
+  .heroImageMobile { display: block !important; }
   .heroCaption { left: 12px; top: 12px; padding: 8px 10px 8px 8px; border-radius: 12px; }
   .heroCaptionIcon { width: 31px; height: 31px; }
   .heroCaption strong { font-size: 12px; }
@@ -787,7 +772,6 @@
 
   .checkoutSite { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
   .checkoutHeader { height: 66px; }
-  .checkoutHeader .wordmarkText small { display: none; }
   .secureLabel { font-size: 12px; }
   .checkoutPage { min-height: calc(100vh - 66px); padding: 26px 0 58px; }
   .checkoutContainer { width: min(calc(100% - 40px),1120px); }
