@@ -5,13 +5,23 @@ untested checkout or changing production data prematurely.
 
 ## Current safe state
 
-- The redesign lives under `/lumora-premium` and remains `noindex`.
+- Commit `8f511e1` is deployed as a Vercel Preview from `design-rebuild`.
+- Preview keeps `/lumora-premium` available and `noindex` for design review.
+- The same reviewed components now serve the final Dutch routes on Preview:
+  `/`, `/producten`, `/stekpluggen-steenwol`, `/neemx-pro`, `/winkelmand`
+  and `/afrekenen`.
+- Production-only redirects consolidate temporary `/lumora-premium` URLs after
+  promotion. Existing Dutch 84/104 and NeemX variant URLs redirect to their
+  canonical product-family pages.
 - Product, cart and checkout screens use the real Convex catalogue and the
   shared cart state.
 - The backend is the authority for product prices and the three-box promotion.
 - Preview uses an isolated Convex development deployment.
 - `CHECKOUT_ENABLED` is absent or `false`; checkout therefore fails closed with
   a maintenance message.
+- Cart and checkout are `noindex`; public product pages have reviewed canonical
+  metadata and structured product-family data.
+- The claim-safe NeemX page contains no pest-control or pesticide terminology.
 - No production Convex data, Mollie payment or MyParcel shipment is changed by
   creating a preview.
 
@@ -40,6 +50,19 @@ Then run a controlled Mollie test-mode order through all states, including a
 duplicate submit and duplicate/out-of-order webhook. Confirm exactly one order,
 email, invoice and MyParcel shipment. Never use a live Mollie key for this test.
 
+The current Vercel environment audit shows these required release items are not
+yet configured for the new production flow:
+
+- `CONVEX_SERVER_SECRET` in Vercel Production and the matching production
+  Convex deployment;
+- a high-entropy `PAYMENT_RETRY_SECRET`;
+- `MYPARCEL_WEBHOOK_SECRET`, `MYPARCEL_STATUS_HOOK_ID` and
+  `MYPARCEL_LABEL_HOOK_ID` after the corresponding MyParcel hooks exist;
+- `CHECKOUT_ENABLED=true`, but only after the test-mode order succeeds.
+
+Do not reuse a Preview secret in Production and do not expose any of these
+values through a `NEXT_PUBLIC_` variable.
+
 ## 3. Prepare the production window
 
 1. Record the current production Vercel deployment URL and Convex deployment so
@@ -61,16 +84,19 @@ email, invoice and MyParcel shipment. Never use a live Mollie key for this test.
 
 ## 4. Promote the redesign
 
-The public routes currently still serve the old storefront. Promotion therefore
-requires a reviewed routing change that makes the redesigned shell canonical at
-`/`, `/producten` and the product URLs while preserving locale routes and legal
-pages. In that same change, remove `noindex` only from the public canonical
-pages and add redirects from temporary `/lumora-premium` URLs.
+The reviewed routing change is included in commit `8f511e1`. It promotes the
+Dutch storefront while preserving the existing English and German site, legal
+pages and domain consolidation. The old NeemX translations temporarily redirect
+to the reviewed Dutch page so unapproved product claims are not published.
 
 Deploy the matching Convex functions and Vercel release in one maintenance
 window. First verify browsing and a gated checkout. Enable
 `CHECKOUT_ENABLED=true` only after the payment staging gate has passed and
 monitor the first real order from payment through invoice and shipment.
+
+Promote the exact tested commit; do not rebuild from a moving branch. Record the
+previous production deployment before promotion and keep checkout disabled for
+the initial visual smoke test.
 
 ## 5. Rollback
 
