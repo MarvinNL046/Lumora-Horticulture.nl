@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon } from '../_components/Icons'
 import { ProductFamilyCard } from '../_components/ProductFamilyCard'
 import { TrustStrip } from '../_components/TrustStrip'
-import { productFamilies } from '../_data/products'
+import { neemx, productFamilies } from '../_data/products'
 import styles from '../storefront.module.css'
 
 export const metadata: Metadata = {
@@ -37,8 +37,8 @@ export default function ProductenPage() {
             </div>
             <div className={styles.collectionImageTwo}>
               <Image
-                src="/productAfbeeldingen/generated/neemx-clean-packshot-v1.png"
-                alt="Lichte prototype-packshot van NeemX Pro"
+                src={neemx.mainImage}
+                alt={neemx.mainImageAlt}
                 fill
                 priority
                 sizes="220px"

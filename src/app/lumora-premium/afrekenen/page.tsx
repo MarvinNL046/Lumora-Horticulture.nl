@@ -63,7 +63,7 @@ export default function AfrekenenPage() {
               <strong>€ 84,00</strong>
             </div>
             <div className={styles.checkoutProduct}>
-              <span className={`${styles.checkoutProductImage} ${styles.checkoutProductNeemx}`}><Image src="/productAfbeeldingen/generated/neemx-clean-packshot-v1.png" alt="" fill sizes="64px" /></span>
+              <span className={`${styles.checkoutProductImage} ${styles.checkoutProductNeemx}`}><Image src="/productAfbeeldingen/neemxpro/neemx-pro-assortiment-travertijn-neem-bloesem.webp" alt="" fill sizes="64px" /></span>
               <span><strong>NeemX Pro</strong><small>10 ml · 1 stuk</small></span>
               <strong>€ 24,95</strong>
             </div>

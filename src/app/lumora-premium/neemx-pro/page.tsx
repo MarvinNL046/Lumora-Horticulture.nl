@@ -15,7 +15,10 @@ export const metadata: Metadata = {
     description,
     url: '/lumora-premium/neemx-pro',
     type: 'website',
-    images: [{ url: neemx.mainImage, alt: 'NEEMX PRO plantaardig olieconcentraat voor bladverzorging' }],
+    images: [{
+      url: neemx.usageImage ?? neemx.mainImage,
+      alt: 'NEEMX PRO plantaardig olieconcentraat in 10, 30 en 50 ml',
+    }],
   },
 }
 
@@ -24,7 +27,9 @@ const productJsonLd = {
   '@type': 'Product',
   name: 'NEEMX PRO',
   description,
-  image: `https://lumorahorticulture.nl${neemx.mainImage}`,
+  image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
+    .filter((image): image is string => Boolean(image))
+    .map((image) => `https://lumorahorticulture.nl${image}`),
   url: 'https://lumorahorticulture.nl/lumora-premium/neemx-pro',
   brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
   category: 'Plantaardig olieconcentraat voor bladverzorging',

@@ -358,7 +358,7 @@
 .usageImage { position: relative; height: 570px; overflow: hidden; background: var(--soft); border-radius: 28px 28px 28px 82px; }
 .usageImage img { object-fit: cover; }
 .usageImage_paperbus img { object-fit: contain; background: #171b1e; }
-.usageImage_neemx img { object-position: center; }
+.usageImage_neemx img { object-position: 68% center; }
 .usageCopy h2 { max-width: 570px; }
 .usageSteps { display: grid; margin: 30px 0; }
 .usageSteps > div { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--line); }
@@ -700,6 +700,7 @@
   .gallery { position: static; }
   .galleryMain { height: 166px; border-radius: 20px 20px 40px 20px; }
   .galleryMain img { padding: 20px; }
+  .galleryMain_neemx { height: 310px; }
   .galleryMain_neemx img { padding: 0; }
   .galleryTag { left: 12px; top: 12px; font-size: 12px; }
   .galleryThumbs { margin-top: 9px; }

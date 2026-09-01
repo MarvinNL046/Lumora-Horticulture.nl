@@ -34,8 +34,8 @@ const initialItems: CartItem[] = [
     variant: '10 ml',
     price: 24.95,
     quantity: 1,
-    image: '/productAfbeeldingen/generated/neemx-clean-packshot-v1.png',
-    imageAlt: 'NeemX Pro prototypefles 10 ml',
+    image: '/productAfbeeldingen/neemxpro/neemx-pro-assortiment-travertijn-neem-bloesem.webp',
+    imageAlt: 'NeemX Pro assortiment met flesjes van 50, 30 en 10 ml',
   },
 ]
 
