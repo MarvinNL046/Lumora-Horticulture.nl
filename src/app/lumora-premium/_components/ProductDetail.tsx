@@ -98,41 +98,42 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
       <section className={`${styles.container} ${styles.pdpGrid}`}>
         <div className={styles.gallery}>
-          <div className={`${styles.galleryMain} ${styles[`galleryMain_${product.id}`]}`}>
-            <Image
-              className={activeImage.fit === 'cover'
-                ? styles.galleryDetailImage
-                : activeImage.fit === 'portrait'
-                  ? styles.galleryPortraitImage
-                  : undefined}
-              src={activeImage.src}
-              alt={activeImage.alt}
-              fill
-              priority
-              sizes="(max-width: 767px) 100vw, 56vw"
-            />
-            <span className={styles.galleryTag}>{isPaperbus ? 'Voor zaaien & stekken' : 'Voor bladverzorging'}</span>
-          </div>
-          <div className={styles.galleryThumbs} aria-label="Productafbeeldingen">
-            {gallery.map((image, index) => (
-              <button
-                type="button"
-                className={activeImageIndex === index ? styles.galleryThumbActive : ''}
-                key={image.src}
-                onClick={() => setImageIndex(index)}
-                aria-label={`Toon productafbeelding ${index + 1}`}
-                aria-pressed={activeImageIndex === index}
-              >
-                <Image src={image.src} alt="" fill sizes="80px" />
-              </button>
-            ))}
+          <div className={styles.galleryStage}>
+            <div className={styles.galleryThumbs} aria-label="Productafbeeldingen">
+              {gallery.map((image, index) => (
+                <button
+                  type="button"
+                  className={activeImageIndex === index ? styles.galleryThumbActive : ''}
+                  key={image.src}
+                  onClick={() => setImageIndex(index)}
+                  aria-label={`Toon productafbeelding ${index + 1}`}
+                  aria-pressed={activeImageIndex === index}
+                >
+                  <Image src={image.src} alt="" fill sizes="80px" />
+                </button>
+              ))}
+            </div>
+            <div className={`${styles.galleryMain} ${styles[`galleryMain_${product.id}`]}`}>
+              <Image
+                className={activeImage.fit === 'cover'
+                  ? styles.galleryDetailImage
+                  : activeImage.fit === 'portrait'
+                    ? styles.galleryPortraitImage
+                    : undefined}
+                src={activeImage.src}
+                alt={activeImage.alt}
+                fill
+                priority
+                sizes="(max-width: 767px) 100vw, 50vw"
+              />
+              <span className={styles.galleryTag}>{isPaperbus ? 'Voor zaaien & stekken' : 'Voor bladverzorging'}</span>
+            </div>
           </div>
         </div>
 
         <div className={`${styles.productSummary} ${styles[`productSummary_${product.id}`]}`} id="koopblok">
           <span className={styles.eyebrow}>{product.eyebrow}</span>
           <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'Plantaardig olieconcentraat voor bladverzorging.'}</h1>
-          <p className={styles.productIntro}>{product.description}</p>
 
           <div className={styles.priceLine}>
             <strong>{formatPrice(variant.price)}</strong>
@@ -145,6 +146,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
               {product.variants.map((item) => (
                 <button
                   key={item.id}
+                  id={`variant-${item.id}`}
                   type="button"
                   className={variantId === item.id ? styles.variantActive : ''}
                   onClick={() => {
@@ -159,6 +161,44 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
               ))}
             </div>
           </fieldset>
+
+          <div className={styles.purchasePanel}>
+            <div className={styles.buyRow}>
+              <div className={styles.selectedDecision}>
+                <span className={styles.selectedDecisionCopy}>
+                  <strong>{variant.label} × {quantity}</strong>
+                  <small>
+                    {!isPaperbus && discountInfo.hasDiscount
+                      ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
+                      : variant.detail}
+                  </small>
+                  {!isPaperbus && discountInfo.hasDiscount && <em>Je bespaart {formatPrice(savings)}</em>}
+                </span>
+                <span className={styles.selectedDecisionPrice}>
+                  {!isPaperbus && discountInfo.hasDiscount && <del>{formatPrice(originalTotal)}</del>}
+                  <strong>{formatPrice(productTotal)}</strong>
+                </span>
+              </div>
+              <span className={styles.buyRowLabel}>Aantal</span>
+              <div className={styles.quantityControl} aria-label="Aantal">
+                <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
+                <span aria-live="polite">{quantity}</span>
+                <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
+              </div>
+              <Link href="/lumora-premium/winkelmand" className={styles.addButton}>
+                <BagIcon /> {compactVariantLabel} in winkelwagen
+              </Link>
+            </div>
+
+            <div className={styles.purchaseProof}>
+              <span><TruckIcon /><strong>Gratis verzending</strong><small>NL, BE en DE</small></span>
+              <span className={styles.paymentBrandProof}>
+                <strong>Betaalmethoden</strong>
+                <PaymentLogos />
+              </span>
+              <span><MessageIcon /><strong>Productvraag?</strong><small>Neem contact op</small></span>
+            </div>
+          </div>
 
           {!isPaperbus && (
             <section className={styles.volumeDiscount} aria-labelledby="neemx-staffelkorting">
@@ -180,6 +220,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                   return (
                     <button
                       key={tier.minQuantity}
+                      id={`neemx-tier-${tier.minQuantity}`}
                       type="button"
                       className={isActive ? styles.volumeTierActive : ''}
                       onClick={() => setQuantity(tier.minQuantity)}
@@ -209,40 +250,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             </section>
           )}
 
-          <div className={styles.buyRow}>
-            <div className={styles.selectedDecision}>
-              <span className={styles.selectedDecisionCopy}>
-                <strong>{variant.label} × {quantity}</strong>
-                <small>
-                  {!isPaperbus && discountInfo.hasDiscount
-                    ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
-                    : variant.detail}
-                </small>
-                {!isPaperbus && discountInfo.hasDiscount && <em>Je bespaart {formatPrice(savings)}</em>}
-              </span>
-              <span className={styles.selectedDecisionPrice}>
-                {!isPaperbus && discountInfo.hasDiscount && <del>{formatPrice(originalTotal)}</del>}
-                <strong>{formatPrice(productTotal)}</strong>
-              </span>
-            </div>
-            <div className={styles.quantityControl} aria-label="Aantal">
-              <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
-              <span aria-live="polite">{quantity}</span>
-              <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
-            </div>
-            <Link href="/lumora-premium/winkelmand" className={styles.addButton}>
-              <BagIcon /> {compactVariantLabel} in winkelwagen
-            </Link>
-          </div>
-
-          <div className={styles.purchaseProof}>
-            <span><TruckIcon /><strong>Gratis verzending</strong><small>NL, BE en DE</small></span>
-            <span className={styles.paymentBrandProof}>
-              <strong>Betaalmethoden</strong>
-              <PaymentLogos />
-            </span>
-            <span><MessageIcon /><strong>Productvraag?</strong><small>Neem contact op</small></span>
-          </div>
+          <p className={styles.productIntro}>{product.description}</p>
 
           <div className={styles.productAccordions}>
             {isPaperbus ? (
@@ -325,21 +333,17 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
       </section>
 
       <div className={styles.mobileBuyDock}>
-        <span className={styles.dockSelection}>
-          <span>
-            <small>{compactVariantLabel} × {quantity}</small>
-            <em>{!isPaperbus && discountInfo.hasDiscount
-              ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
-              : variant.detail}</em>
-          </span>
-          <strong>{formatPrice(productTotal)}</strong>
-        </span>
         <div className={styles.dockQuantity} aria-label="Aantal">
           <button type="button" aria-label="Aantal verlagen" onClick={() => setQuantity((current) => Math.max(1, current - 1))}><MinusIcon /></button>
           <span aria-live="polite">{quantity}</span>
           <button type="button" aria-label="Aantal verhogen" onClick={() => setQuantity((current) => current + 1)}><PlusIcon /></button>
         </div>
-        <Link href="/lumora-premium/winkelmand" className={styles.dockPrimaryAction}>In winkelwagen</Link>
+        <Link href="/lumora-premium/winkelmand" className={styles.dockPrimaryAction}>
+          <span>
+            <small>{compactVariantLabel} × {quantity} · {formatPrice(productTotal)}</small>
+            <strong>In winkelwagen</strong>
+          </span>
+        </Link>
       </div>
     </main>
   )

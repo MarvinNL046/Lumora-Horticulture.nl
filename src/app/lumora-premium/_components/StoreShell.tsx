@@ -38,7 +38,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
 
   if (isCheckout) {
     return (
-      <div className={`${styles.site} ${styles.checkoutSite}`}>
+      <div className={`${styles.site} ${styles.checkoutSite}`} data-lumora-storefront>
         <header className={styles.checkoutHeader}>
           <div className={styles.shellRow}>
             <Link href={ROOT} className={styles.logoLink} aria-label="Terug naar Lumora">
@@ -71,7 +71,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className={styles.site}>
+    <div className={styles.site} data-lumora-storefront>
       <div className={styles.utilityBar}>
         <div className={styles.shellRow}>
           <span>Specialistische producten voor plant en opkweek</span>

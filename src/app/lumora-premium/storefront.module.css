@@ -24,6 +24,10 @@
 .site button, .site input, .site select { font: inherit; }
 .site img { display: block; }
 
+:global(html:has([data-lumora-storefront])),
+:global(body:has([data-lumora-storefront])) { overflow-x: clip; scroll-behavior: auto; }
+:global(nextjs-portal) { display: none !important; }
+
 .container,
 .shellRow {
   width: min(calc(100% - 64px), 1240px);
@@ -242,46 +246,48 @@
 .breadcrumbs a { min-height: 44px; display: inline-flex; align-items: center; padding: 0 9px; background: var(--soft); border-radius: 8px; }
 .breadcrumbs a:hover { color: var(--green); }
 .breadcrumbs strong { color: var(--ink); font-weight: 700; }
-.pdpGrid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(390px,.92fr); gap: 76px; align-items: start; padding-top: 28px; padding-bottom: 100px; }
+.pdpGrid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(410px,.82fr); gap: 46px; align-items: start; padding-top: 22px; padding-bottom: 92px; }
 .gallery { position: sticky; top: 104px; min-width: 0; }
-.galleryMain { position: relative; height: 610px; overflow: hidden; background: #f0f4f0; border: 1px solid var(--line); border-radius: 28px 28px 76px 28px; }
-.galleryMain img { object-fit: contain; padding: 54px; }
+.galleryStage { display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 14px; align-items: start; }
+.galleryMain { position: relative; height: 700px; overflow: hidden; background: #f0f4f0; border: 1px solid var(--line); border-radius: 28px 28px 66px 28px; }
+.galleryMain img { object-fit: contain; padding: 44px; }
 .galleryMain .galleryDetailImage { object-fit: cover; padding: 0; }
 .galleryMain .galleryPortraitImage { object-fit: contain; padding: 0; background: #171b1e; }
 .galleryMain_neemx img { object-fit: cover; padding: 0; }
 .galleryTag { position: absolute; left: 20px; top: 20px; padding: 9px 12px; color: var(--deep); background: rgba(255,255,255,.9); border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(10px); }
-.galleryThumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; padding: 2px 2px 5px; scrollbar-width: none; }
+.galleryThumbs { max-height: 700px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding: 2px; scrollbar-width: none; }
 .galleryThumbs::-webkit-scrollbar { display: none; }
-.galleryThumbs button { position: relative; flex: 0 0 auto; width: 76px; height: 76px; overflow: hidden; padding: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 13px; cursor: pointer; }
+.galleryThumbs button { position: relative; flex: 0 0 auto; width: 66px; height: 66px; overflow: hidden; padding: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
 .galleryThumbs button img { object-fit: cover; }
-.galleryThumbs button:first-child img { object-fit: contain; padding: 7px; }
-.galleryThumbs .galleryThumbActive { border-color: var(--green); box-shadow: 0 0 0 2px rgba(45,125,70,.14); }
+.galleryThumbs button:first-child img { object-fit: contain; padding: 5px; }
+.galleryThumbs .galleryThumbActive { border-color: var(--green); box-shadow: 0 0 0 2px rgba(45,125,70,.18); }
 .galleryThumbs button:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
 
-.productSummary { padding-top: 8px; }
-.productSummary h1 { margin: 14px 0 16px; font-family: var(--font-playfair), Georgia, serif; font-size: clamp(44px,4vw,59px); font-weight: 560; letter-spacing: -.04em; line-height: 1.01; text-wrap: balance; }
-.productIntro { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
-.priceLine { display: flex; align-items: baseline; gap: 13px; margin: 26px 0 28px; }
+.productSummary { min-width: 0; padding-top: 4px; }
+.purchasePanel { position: sticky; z-index: 2; top: 104px; background: #fff; }
+.productSummary h1 { margin: 11px 0 12px; font-family: var(--font-playfair), Georgia, serif; font-size: clamp(39px,3.2vw,49px); font-weight: 560; letter-spacing: -.04em; line-height: 1.02; text-wrap: balance; }
+.productIntro { margin: 4px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.68; }
+.priceLine { display: flex; align-items: baseline; gap: 13px; margin: 18px 0 19px; }
 .priceLine strong { font-size: 27px; letter-spacing: -.03em; }
 .priceLine span { color: var(--muted); font-size: 12px; }
 .variantFieldset { margin: 0; padding: 0; border: 0; }
-.variantFieldset legend { margin-bottom: 12px; font-size: 12px; font-weight: 800; }
-.variantGrid { display: grid; gap: 9px; }
-.variantGrid button { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 12px 15px; color: var(--ink); text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 13px; cursor: pointer; }
+.variantFieldset legend { margin-bottom: 9px; font-size: 12px; font-weight: 800; }
+.variantGrid { display: grid; gap: 7px; }
+.variantGrid button { min-height: 57px; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 9px 13px; color: var(--ink); text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
 .variantGrid button > span:first-child { display: grid; gap: 4px; }
 .variantGrid button strong { font-size: 13px; }
 .variantGrid button small { color: var(--muted); font-size: 12px; }
 .variantGrid button > span:last-child { font-size: 12px; font-weight: 750; }
 .variantGrid .variantActive { background: #f2f8f3; border-color: var(--green); box-shadow: inset 4px 0 0 var(--green); }
 .variantGrid button:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
-.volumeDiscount { margin-top: 14px; padding: 14px; background: #f7faf7; border: 1px solid #dbe8de; border-radius: 14px; }
+.volumeDiscount { margin-top: 14px; padding: 12px; background: #f7faf7; border: 1px solid #dbe8de; border-radius: 13px; }
 .volumeDiscountHeader { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 11px; }
 .volumeDiscountHeader > div { display: grid; gap: 2px; }
 .volumeDiscountHeader strong { font-size: 13px; }
 .volumeDiscountHeader span { color: var(--muted); font-size: 11px; }
 .volumeDiscountBadge { min-width: 46px; min-height: 26px; display: grid; place-items: center; padding: 0 8px; color: var(--green) !important; background: #fff; border: 1px solid #bcd7c3; border-radius: 999px; font-size: 11px !important; font-weight: 850; }
 .volumeTierGrid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 6px; }
-.volumeTierGrid button { min-width: 0; min-height: 51px; display: grid; place-content: center; gap: 3px; padding: 6px 4px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.volumeTierGrid button { min-width: 0; min-height: 45px; display: grid; place-content: center; gap: 2px; padding: 5px 3px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 9px; cursor: pointer; }
 .volumeTierGrid button span { font-size: 11px; font-weight: 700; white-space: nowrap; }
 .volumeTierGrid button strong { color: var(--muted); font-size: 11px; }
 .volumeTierGrid .volumeTierActive { color: #fff; background: var(--green); border-color: var(--green); box-shadow: 0 7px 16px rgba(30,102,53,.17); }
@@ -290,8 +296,8 @@
 .volumeDiscountStatus { display: grid; gap: 2px; margin-top: 10px; }
 .volumeDiscountStatus strong { color: var(--deep); font-size: 12px; line-height: 1.4; }
 .volumeDiscountStatus span { color: var(--muted); font-size: 11px; line-height: 1.4; }
-.buyRow { display: grid; grid-template-columns: 136px 1fr; gap: 10px; margin-top: 16px; }
-.selectedDecision { grid-column: 1 / -1; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 13px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; }
+.buyRow { display: grid; grid-template-columns: 126px minmax(0,1fr); gap: 8px 10px; margin-top: 14px; }
+.selectedDecision { grid-column: 1 / -1; min-height: 50px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 12px; background: var(--soft); border: 1px solid var(--line); border-radius: 11px; }
 .selectedDecision > span { display: grid; gap: 3px; }
 .selectedDecision > span > strong { font-size: 13px; }
 .selectedDecision small { color: var(--muted); font-size: 12px; }
@@ -299,17 +305,18 @@
 .selectedDecisionPrice { flex: 0 0 auto; justify-items: end; }
 .selectedDecisionPrice del { color: var(--muted); font-size: 11px; }
 .selectedDecisionPrice strong { font-size: 14px; white-space: nowrap; }
-.quantityControl { min-height: 54px; display: grid; grid-template-columns: 48px 40px 48px; align-items: center; border: 1px solid var(--line); border-radius: 12px; }
-.quantityControl button { width: 48px; height: 52px; display: grid; place-items: center; padding: 0; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
+.buyRowLabel { grid-column: 1 / -1; color: var(--ink); font-size: 11px; font-weight: 800; }
+.quantityControl { min-height: 52px; display: grid; grid-template-columns: 43px 40px 43px; align-items: center; border: 1px solid var(--line); border-radius: 12px; }
+.quantityControl button { width: 43px; height: 50px; display: grid; place-items: center; padding: 0; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
 .quantityControl button:hover { background: var(--soft); }
 .quantityControl button:first-child { border-radius: 11px 0 0 11px; }
 .quantityControl button:last-child { border-radius: 0 11px 11px 0; }
 .quantityControl svg { width: 16px; }
 .quantityControl span { text-align: center; font-size: 13px; font-weight: 750; }
-.addButton { min-height: 54px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; color: #fff !important; background: var(--green); border-radius: 12px; box-shadow: 0 12px 28px rgba(28,92,49,.16); font-size: 13px; font-weight: 800; }
+.addButton { grid-column: 1 / -1; min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; color: #fff !important; background: var(--green); border-radius: 12px; box-shadow: 0 12px 28px rgba(28,92,49,.16); font-size: 13px; font-weight: 800; }
 .addButton:hover { background: #236c3a; }
 .addButton svg { width: 19px; }
-.purchaseProof { display: grid; grid-template-columns: .9fr 1.2fr .9fr; gap: 8px; margin: 14px 0 24px; }
+.purchaseProof { display: grid; grid-template-columns: .9fr 1.2fr .9fr; gap: 7px; margin: 12px 0 16px; }
 .purchaseProof > span { display: grid; grid-template-columns: 25px 1fr; grid-template-rows: auto auto; column-gap: 7px; align-items: center; padding: 10px 8px; background: var(--soft); border-radius: 10px; }
 .purchaseProof svg { grid-row: 1 / 3; width: 21px; color: var(--green); }
 .purchaseProof strong { font-size: 12px; }
@@ -487,6 +494,12 @@
 .checkoutReturn svg { width: 14px; color: var(--green); }
 .checkoutHelp { min-height: 44px; display: flex; align-items: center; justify-content: center; color: var(--green) !important; background: var(--soft); border: 1px solid var(--line); border-radius: 9px; font-size: 12px; font-weight: 750; }
 
+@media (max-width: 1120px) {
+  .pdpGrid { grid-template-columns: 1fr; gap: 40px; }
+  .gallery, .purchasePanel { position: static; }
+  .galleryMain { height: 620px; }
+}
+
 @media (max-width: 1023px) {
   .desktopNav { gap: 20px; }
   .heroGrid { gap: 34px; }
@@ -648,26 +661,27 @@
     box-shadow: 0 14px 42px rgba(16,45,30,.22);
     backdrop-filter: blur(16px);
   }
-  .mobileBuyDock > span, .checkoutDockMain > span { display: grid; gap: 2px; }
+  .checkoutDockMain > span { display: grid; gap: 2px; }
   .mobileBuyDock small, .checkoutDock small { color: var(--muted); font-size: 12px; }
   .mobileBuyDock strong, .checkoutDock strong { font-size: 15px; }
-  .mobileBuyDock { min-height: 112px; grid-template-columns: 132px minmax(0,1fr); gap: 7px 8px; padding-left: 8px; }
-  .mobileBuyDock .dockSelection { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 8px 1px; }
-  .dockSelection > span { min-width: 0; display: grid; gap: 1px; }
-  .dockSelection em { overflow: hidden; color: var(--muted); font-size: 11px; font-style: normal; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+  .mobileBuyDock { bottom: 0; min-height: 78px; grid-template-columns: 132px minmax(0,1fr); gap: 8px; padding: 7px max(7px, env(safe-area-inset-right)) max(7px, env(safe-area-inset-bottom)) max(7px, env(safe-area-inset-left)); border-radius: 18px 18px 0 0; }
   .checkoutDock { min-height: 116px; display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 7px 8px 6px; }
   .checkoutDockMain { display: grid; grid-template-columns: auto minmax(180px,1fr); align-items: center; gap: 14px; }
   .checkoutDockMain > span { padding-left: 8px; }
   .checkoutDockTrust { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--muted); font-size: 12px; line-height: 1.2; white-space: nowrap; }
   .checkoutDockTrust > span { padding: 0 4px; }
   .checkoutDockTrust a { min-height: 44px; display: flex; align-items: center; padding: 0 8px; color: var(--green); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; font-weight: 750; }
-  .dockQuantity { height: 50px; display: grid; grid-template-columns: 48px 36px 48px; align-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; }
-  .dockQuantity button { width: 48px; height: 48px; display: grid; place-items: center; padding: 0; color: var(--muted); background: transparent; border: 0; cursor: pointer; }
+  .dockQuantity { height: 62px; display: grid; grid-template-columns: 46px 40px 46px; align-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; }
+  .dockQuantity button { width: 46px; height: 60px; display: grid; place-items: center; padding: 0; color: var(--muted); background: transparent; border: 0; cursor: pointer; }
   .dockQuantity button:hover { color: var(--green); background: var(--sage); }
   .dockQuantity button:focus-visible { outline: 3px solid rgba(45,125,70,.35); outline-offset: -3px; }
   .dockQuantity svg { width: 15px; }
   .dockQuantity > span { text-align: center; font-size: 13px; font-weight: 750; }
-  .dockPrimaryAction { min-height: 50px; padding: 0 16px; color: #fff !important; background: var(--green); border-radius: 12px; font-size: 13px; }
+  .dockPrimaryAction { min-height: 62px; padding: 0 12px; color: #fff !important; background: var(--green); border-radius: 12px; font-size: 13px; }
+  .dockPrimaryAction > span { min-width: 0; display: grid; gap: 2px; text-align: center; }
+  .mobileBuyDock .dockPrimaryAction small { overflow: hidden; color: rgba(255,255,255,.82); font-size: 10px; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
+  .mobileBuyDock .dockPrimaryAction strong { color: #fff; font-size: 13px; }
+  :global(#__hexclave-dev-tool-root) { display: none !important; }
 
   .collectionHero { padding: 38px 0 44px; }
   .collectionHeroGrid { grid-template-columns: 1fr; gap: 27px; }
@@ -698,15 +712,17 @@
   .breadcrumbs a { padding-inline: 6px; }
   .pdpGrid { grid-template-columns: 1fr; gap: 28px; padding-top: 18px; padding-bottom: 72px; }
   .gallery { position: static; }
+  .galleryStage { display: block; }
   .galleryMain { height: 166px; border-radius: 20px 20px 40px 20px; }
   .galleryMain img { padding: 20px; }
-  .galleryMain_neemx { height: 310px; }
+  .galleryMain_neemx { height: 280px; }
   .galleryMain_neemx img { padding: 0; }
   .galleryTag { left: 12px; top: 12px; font-size: 12px; }
-  .galleryThumbs { margin-top: 9px; }
+  .galleryThumbs { max-height: none; flex-direction: row; margin-top: 9px; overflow-x: auto; overflow-y: hidden; padding: 2px 2px 5px; }
   .galleryThumbs button { width: 50px; height: 50px; }
   .pdpGrid { gap: 14px; }
   .productSummary { display: flex; flex-direction: column; padding-top: 0; }
+  .purchasePanel { display: contents; }
   .productSummary > .eyebrow { order: 1; }
   .productSummary h1 { order: 2; margin: 8px 0 9px; font-size: 48px; line-height: 1; }
   .priceLine { order: 3; margin: 10px 0 12px; }
