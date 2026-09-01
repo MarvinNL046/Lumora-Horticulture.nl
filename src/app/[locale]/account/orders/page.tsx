@@ -1,183 +1,100 @@
-import { redirect } from 'next/navigation'
-import { stackServerApp } from '@/stack/server'
 import Link from 'next/link'
-import { localizePathForLocale } from '@/lib/url-localizations'
+import { redirect } from 'next/navigation'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import { convexServerAuth } from '@/lib/convex'
+import { localizePathForLocale } from '@/lib/url-localizations'
+import { stackServerApp } from '@/stack/server'
+import styles from '../account.module.css'
+import AccountMobileNav from '../AccountMobileNav'
+
+type Locale = 'nl' | 'en' | 'de'
 
 export default async function OrdersPage(props: { params: Promise<{ locale: string }> }) {
-  const params = await props.params;
+  const { locale: rawLocale } = await props.params
+  const locale = rawLocale as Locale
   const user = await stackServerApp.getUser()
+  if (!user) redirect('/handler/signin')
 
-  if (!user) {
-    redirect('/handler/signin')
-  }
-
-  const locale = params.locale as 'nl' | 'en' | 'de'
-
-  const orders = await fetchQuery(api.orders.listByUserWithItems, {
-    ...convexServerAuth(),
-    user_id: user.id,
+  const orders = await fetchQuery(api.orders.listByAccountWithItems, {
+    ...convexServerAuth(), user_id: user.id,
+    verified_email: user.primaryEmailVerified ? user.primaryEmail?.trim().toLowerCase() : undefined,
   })
-
-  const t = {
-    title: locale === 'de' ? 'Meine Bestellungen' : locale === 'en' ? 'My Orders' : 'Mijn Bestellingen',
-    noOrders: locale === 'de' ? 'Sie haben noch keine Bestellungen aufgegeben' : locale === 'en' ? "You haven't placed any orders yet" : 'Je hebt nog geen bestellingen geplaatst',
-    startShopping: locale === 'de' ? 'Jetzt einkaufen' : locale === 'en' ? 'Start Shopping' : 'Ga naar winkel',
-    orderNumber: locale === 'de' ? 'Bestellnummer' : locale === 'en' ? 'Order Number' : 'Bestelnummer',
-    date: locale === 'de' ? 'Datum' : locale === 'en' ? 'Date' : 'Datum',
-    status: locale === 'de' ? 'Status' : locale === 'en' ? 'Status' : 'Status',
-    total: locale === 'de' ? 'Gesamt' : locale === 'en' ? 'Total' : 'Totaal',
-    items: locale === 'de' ? 'Artikel' : locale === 'en' ? 'Items' : 'Artikelen',
-    backToAccount: locale === 'de' ? 'Zurück zum Konto' : locale === 'en' ? 'Back to Account' : 'Terug naar Account',
-    pending: locale === 'de' ? 'Ausstehend' : locale === 'en' ? 'Pending' : 'In afwachting',
-    paid: locale === 'de' ? 'Bezahlt' : locale === 'en' ? 'Paid' : 'Betaald',
-    processing: locale === 'de' ? 'In Bearbeitung' : locale === 'en' ? 'Processing' : 'In behandeling',
-    shipped: locale === 'de' ? 'Versendet' : locale === 'en' ? 'Shipped' : 'Verzonden',
-    completed: locale === 'de' ? 'Abgeschlossen' : locale === 'en' ? 'Completed' : 'Voltooid',
-    cancelled: locale === 'de' ? 'Storniert' : locale === 'en' ? 'Cancelled' : 'Geannuleerd',
-    trackParcel: locale === 'de' ? 'Paket verfolgen' : locale === 'en' ? 'Track parcel' : 'Volg je pakket',
-    deliveryChoice: locale === 'de' ? 'Gewählte Lieferung' : locale === 'en' ? 'Chosen delivery' : 'Gekozen bezorgoptie',
-  }
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'pending': return t.pending
-      case 'paid': return t.paid
-      case 'processing': return t.processing
-      case 'shipped': return t.shipped
-      case 'completed': return t.completed
-      case 'cancelled': return t.cancelled
-      default: return status
-    }
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'paid':
-      case 'completed':
-        return 'bg-green-100 text-green-800'
-      case 'processing':
-      case 'shipped':
-        return 'bg-blue-100 text-blue-800'
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800'
-      case 'cancelled':
-        return 'bg-red-100 text-red-800'
-      default:
-        return 'bg-gray-100 text-gray-800'
-    }
-  }
+  const t = copy(locale)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <Link
-            href={localizePathForLocale('/account', locale)}
-            className="inline-flex items-center gap-2 text-lumora-green-500 hover:text-lumora-green-600 font-medium transition-colors mb-4"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            {t.backToAccount}
-          </Link>
-          <h1 className="text-4xl font-display font-bold text-lumora-dark">{t.title}</h1>
-        </div>
-
+    <div className={styles.accountPage} data-account-dashboard>
+      <div className={styles.accountContainer}>
+        <Link className={styles.backLink} href={localizePathForLocale('/account', locale)}>← {t.back}</Link>
+        <header className={styles.ordersHeader}><span className={styles.eyebrow}>{t.eyebrow}</span><h1>{t.title}</h1><p>{t.intro}</p></header>
         {orders.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-soft-lg p-12 text-center">
-            <svg className="w-24 h-24 mx-auto text-lumora-dark/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <h2 className="text-2xl font-display font-semibold text-lumora-dark mb-2">{t.noOrders}</h2>
-            <Link
-              href={localizePathForLocale('/shop', locale)}
-              className="inline-block bg-lumora-green-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-lumora-green-600 transition-colors shadow-soft-md hover:shadow-soft-lg"
-            >
-              {t.startShopping}
-            </Link>
-          </div>
+          <section className={`${styles.panel} ${styles.emptyState}`}><span><OrdersIcon /></span><h2>{t.empty}</h2><p>{t.emptyCopy}</p><Link href="/lumora-premium/producten">{t.shop}</Link></section>
         ) : (
-          <div className="space-y-6">
-            {orders.map((order: any) => (
-              <div key={order._id} className="bg-white rounded-2xl shadow-soft-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-lumora-cream/30 to-lumora-cream/10 p-6 border-b border-lumora-dark/10">
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <div className="text-sm text-lumora-dark/60 mb-1">{t.orderNumber}</div>
-                      <div className="text-lg font-semibold text-lumora-dark">{order.order_number || `#${order._id.substring(0, 8)}`}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-lumora-dark/60 mb-1">{t.date}</div>
-                      <div className="text-lg font-semibold text-lumora-dark">
-                        {new Date(order.created_at).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-lumora-dark/60 mb-1">{t.status}</div>
-                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                        {getStatusLabel(order.status)}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="text-sm text-lumora-dark/60 mb-1">{t.total}</div>
-                      <div className="text-2xl font-bold text-lumora-green-500">
-                        €{order.total_amount.toFixed(2)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div className={styles.orderList}>
+            {orders.map((order) => {
+              const paid = order.payment_status === 'paid' || ['paid', 'processing', 'shipped', 'completed'].includes(order.status)
+              const deliveryLabel = typeof order.delivery_preference?.label === 'string' ? order.delivery_preference.label : undefined
+              return (
+                <article className={styles.orderCard} key={order._id}>
+                  <header className={styles.orderCardHeader}>
+                    <div><span>{t.orderNumber}</span><h2>{order.order_number || `#${String(order._id).slice(0, 8)}`}</h2></div>
+                    <div><span>{t.date}</span><strong>{new Date(order.created_at).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })}</strong></div>
+                    <div><span>{t.total}</span><strong>{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(order.total_amount)}</strong></div>
+                    <StatusPill status={order.status} locale={locale} />
+                  </header>
 
-                <div className="p-6">
-                  {(order.tracking_url || order.delivery_preference) && (
-                    <div className="mb-5 p-4 bg-lumora-cream/40 rounded-xl border border-lumora-dark/10">
-                      {order.delivery_preference?.label && (
-                        <div className="mb-3">
-                          <div className="text-xs font-mono uppercase tracking-wider text-lumora-dark/60 mb-1">{t.deliveryChoice}</div>
-                          <div className="text-sm text-lumora-dark">{order.delivery_preference.label}</div>
-                        </div>
-                      )}
-                      {order.tracking_url && (
-                        <a
-                          href={order.tracking_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-lumora-green-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-lumora-green-600 transition-colors"
-                        >
-                          {t.trackParcel} →
-                        </a>
-                      )}
+                  {(order.tracking_url || order.shipment_status || deliveryLabel) && (
+                    <div className={styles.deliveryBox}>
+                      <span className={styles.deliveryIcon}><TruckIcon /></span>
+                      <div><span>{t.delivery}</span><strong>{shipmentLabel(order.shipment_status, locale, order.status)}</strong>{order.tracking_code ? <small>Track & Trace: {order.tracking_code}</small> : deliveryLabel ? <small>{deliveryLabel}</small> : null}</div>
+                      {order.tracking_url && <a href={order.tracking_url} target="_blank" rel="noopener noreferrer">{t.track} <ArrowIcon /></a>}
                     </div>
                   )}
-                  <div className="text-sm font-semibold text-lumora-dark/60 mb-3">{t.items}</div>
-                  <div className="space-y-3">
-                    {order.items.map((item: any, index: number) => (
-                      <div key={index} className="flex items-center justify-between py-2">
-                        <div className="flex-1">
-                          <div className="font-medium text-lumora-dark">{item.product_name}</div>
-                          <div className="text-sm text-lumora-dark/60">
-                            {locale === 'de' ? 'Menge' : locale === 'en' ? 'Quantity' : 'Aantal'}: {item.quantity}
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-semibold text-lumora-dark">
-                            €{(item.price_at_purchase * item.quantity).toFixed(2)}
-                          </div>
-                          <div className="text-sm text-lumora-dark/60">
-                            €{item.price_at_purchase.toFixed(2)} {locale === 'de' ? 'pro Stück' : locale === 'en' ? 'each' : 'per stuk'}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+
+                  <div className={styles.orderItems}>{order.items.map((item) => (
+                    <div className={styles.orderItem} key={item._id}>
+                      <span className={styles.orderThumb}><OrdersIcon /></span>
+                      <div><strong>{item.product_name}</strong><small>{t.quantity}: {item.quantity} · {new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price_at_purchase)} {t.each}</small></div>
+                      <b>{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price_at_purchase * item.quantity)}</b>
+                    </div>
+                  ))}</div>
+
+                  <footer className={styles.orderActions}>
+                    <span>{paid ? t.paid : t.invoicePending}</span>
+                    {paid && <a href={`/api/account/orders/${order._id}/invoice`}><InvoiceIcon /> {t.invoice}</a>}
+                  </footer>
+                </article>
+              )
+            })}
           </div>
         )}
       </div>
+      <AccountMobileNav locale={locale} active="orders" />
     </div>
   )
 }
+
+function copy(locale: Locale) {
+  if (locale === 'de') return { back:'Zum Konto',eyebrow:'BESTELLHISTORIE',title:'Ihre Bestellungen.',intro:'Behalten Sie Status, Sendung und Rechnungen im Blick.',empty:'Noch keine Bestellungen',emptyCopy:'Ihre erste Bestellung erscheint hier automatisch.',shop:'Produkte ansehen',orderNumber:'Bestellnummer',date:'Datum',total:'Gesamt',delivery:'Lieferstatus',track:'Sendung verfolgen',quantity:'Menge',each:'pro Stück',paid:'Bezahlt und bestätigt',invoice:'Rechnung herunterladen',invoicePending:'Rechnung nach Zahlung verfügbar' }
+  if (locale === 'en') return { back:'Back to account',eyebrow:'ORDER HISTORY',title:'Your orders.',intro:'Keep track of status, delivery and invoices.',empty:'No orders yet',emptyCopy:'Your first order will appear here automatically.',shop:'View products',orderNumber:'Order number',date:'Date',total:'Total',delivery:'Delivery status',track:'Track parcel',quantity:'Quantity',each:'each',paid:'Paid and confirmed',invoice:'Download invoice',invoicePending:'Invoice available after payment' }
+  return { back:'Terug naar account',eyebrow:'BESTELGESCHIEDENIS',title:'Je bestellingen.',intro:'Volg de status, bezorging en download je facturen op één plek.',empty:'Nog geen bestellingen',emptyCopy:'Je eerste bestelling verschijnt hier automatisch.',shop:'Bekijk producten',orderNumber:'Bestelnummer',date:'Datum',total:'Totaal',delivery:'Bezorgstatus',track:'Volg je pakket',quantity:'Aantal',each:'per stuk',paid:'Betaald en bevestigd',invoice:'Factuur downloaden',invoicePending:'Factuur beschikbaar na betaling' }
+}
+
+function shipmentLabel(shipmentStatus: string | undefined, locale: Locale, orderStatus: string) {
+  const status = shipmentStatus || orderStatus
+  const labels: Record<Locale, Record<string, string>> = {
+    nl: { pending:'Wordt verwerkt',paid:'Bestelling ontvangen',processing:'Klaar voor verzending',shipped:'Overgedragen aan vervoerder',completed:'Bezorgd',delivered:'Bezorgd' },
+    en: { pending:'Being processed',paid:'Order received',processing:'Preparing shipment',shipped:'Handed to carrier',completed:'Delivered',delivered:'Delivered' },
+    de: { pending:'Wird bearbeitet',paid:'Bestellung erhalten',processing:'Versand wird vorbereitet',shipped:'An Zusteller übergeben',completed:'Zugestellt',delivered:'Zugestellt' },
+  }
+  return labels[locale][status] || status
+}
+
+function StatusPill({ status, locale }: { status: string; locale: Locale }) {
+  return <span className={`${styles.statusPill} ${styles[`status_${status}`] || ''}`}>{shipmentLabel(undefined, locale, status)}</span>
+}
+function IconBase({ children }: { children: React.ReactNode }) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg> }
+function OrdersIcon() { return <IconBase><path d="M6 3h12l2 5v13H4V8l2-5Z"/><path d="M4 8h16M9 12h6"/></IconBase> }
+function TruckIcon() { return <IconBase><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></IconBase> }
+function InvoiceIcon() { return <IconBase><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></IconBase> }
+function ArrowIcon() { return <IconBase><path d="M5 12h14m-5-5 5 5-5 5"/></IconBase> }

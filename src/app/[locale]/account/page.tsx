@@ -1,106 +1,108 @@
-import { redirect } from 'next/navigation'
-import { stackServerApp } from '@/stack/server'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '@/../convex/_generated/api'
+import { convexServerAuth } from '@/lib/convex'
 import { localizePathForLocale } from '@/lib/url-localizations'
+import { stackServerApp } from '@/stack/server'
+import AccountSignOut from './AccountSignOut'
+import AccountMobileNav from './AccountMobileNav'
+import styles from './account.module.css'
+
+type Locale = 'nl' | 'en' | 'de'
 
 export default async function AccountPage(props: { params: Promise<{ locale: string }> }) {
-  const params = await props.params;
+  const { locale: rawLocale } = await props.params
+  const locale = rawLocale as Locale
   const user = await stackServerApp.getUser()
+  if (!user) redirect('/handler/signin')
 
-  // Redirect to login if not authenticated
-  if (!user) {
-    redirect('/handler/signin')
-  }
-
-  const locale = params.locale as 'nl' | 'en' | 'de'
+  const orders = await fetchQuery(api.orders.listByAccountWithItems, {
+    ...convexServerAuth(),
+    user_id: user.id,
+    verified_email: user.primaryEmailVerified ? user.primaryEmail?.trim().toLowerCase() : undefined,
+  })
 
   const t = {
-    title: locale === 'de' ? 'Mein Konto' : locale === 'en' ? 'My Account' : 'Mijn Account',
-    welcome: locale === 'de' ? 'Willkommen zurück' : locale === 'en' ? 'Welcome back' : 'Welkom terug',
-    accountInfo: locale === 'de' ? 'Kontoinformationen' : locale === 'en' ? 'Account Information' : 'Accountgegevens',
-    email: locale === 'de' ? 'E-Mail' : locale === 'en' ? 'Email' : 'E-mail',
-    name: locale === 'de' ? 'Name' : locale === 'en' ? 'Name' : 'Naam',
-    quickLinks: locale === 'de' ? 'Schnellzugriff' : locale === 'en' ? 'Quick Links' : 'Snelkoppelingen',
-    viewOrders: locale === 'de' ? 'Meine Bestellungen' : locale === 'en' ? 'My Orders' : 'Mijn Bestellingen',
-    viewOrdersDesc: locale === 'de' ? 'Sehen Sie Ihre Bestellhistorie und verfolgen Sie Bestellungen' : locale === 'en' ? 'View your order history and track orders' : 'Bekijk je bestelgeschiedenis en volg bestellingen',
-    viewAddresses: locale === 'de' ? 'Meine Adressen' : locale === 'en' ? 'My Addresses' : 'Mijn Adressen',
-    viewAddressesDesc: locale === 'de' ? 'Verwalten Sie Ihre gespeicherten Lieferadressen' : locale === 'en' ? 'Manage your saved delivery addresses' : 'Beheer je opgeslagen bezorgadressen',
-    backToShop: locale === 'de' ? 'Zurück zum Shop' : locale === 'en' ? 'Back to Shop' : 'Terug naar Winkel',
+    eyebrow: locale === 'de' ? 'KUNDENKONTO' : locale === 'en' ? 'CUSTOMER ACCOUNT' : 'KLANTACCOUNT',
+    title: locale === 'de' ? 'Schön, Sie wiederzusehen.' : locale === 'en' ? 'Good to see you again.' : 'Fijn je weer te zien.',
+    intro: locale === 'de' ? 'Bestellungen, Rechnungen und Lieferungen an einem Ort.' : locale === 'en' ? 'Orders, invoices and deliveries together in one clear place.' : 'Bestellingen, facturen en bezorging overzichtelijk bij elkaar.',
+    orders: locale === 'de' ? 'Bestellungen' : locale === 'en' ? 'Orders' : 'Bestellingen',
+    active: locale === 'de' ? 'Unterwegs' : locale === 'en' ? 'In transit' : 'Onderweg',
+    invoices: locale === 'de' ? 'Rechnungen' : locale === 'en' ? 'Invoices' : 'Facturen',
+    recent: locale === 'de' ? 'Letzte Bestellungen' : locale === 'en' ? 'Recent orders' : 'Recente bestellingen',
+    allOrders: locale === 'de' ? 'Alle Bestellungen' : locale === 'en' ? 'All orders' : 'Alle bestellingen',
+    noOrders: locale === 'de' ? 'Noch keine Bestellungen' : locale === 'en' ? 'No orders yet' : 'Nog geen bestellingen',
+    noOrdersCopy: locale === 'de' ? 'Ihre erste Bestellung erscheint hier automatisch.' : locale === 'en' ? 'Your first order will appear here automatically.' : 'Je eerste bestelling verschijnt hier automatisch.',
+    shop: locale === 'de' ? 'Produkte ansehen' : locale === 'en' ? 'View products' : 'Bekijk producten',
+    account: locale === 'de' ? 'Kontodaten' : locale === 'en' ? 'Account details' : 'Accountgegevens',
+    email: locale === 'de' ? 'E-Mail-Adresse' : locale === 'en' ? 'Email address' : 'E-mailadres',
+    verified: locale === 'de' ? 'Verifiziert' : locale === 'en' ? 'Verified' : 'Geverifieerd',
+    addresses: locale === 'de' ? 'Adressen verwalten' : locale === 'en' ? 'Manage addresses' : 'Adressen beheren',
+    logout: locale === 'de' ? 'Abmelden' : locale === 'en' ? 'Sign out' : 'Uitloggen',
+    order: locale === 'de' ? 'Bestellung' : locale === 'en' ? 'Order' : 'Bestelling',
   }
 
+  const activeOrders = orders.filter((order) => ['paid', 'processing', 'shipped'].includes(order.status)).length
+  const invoiceCount = orders.filter((order) => order.payment_status === 'paid' || ['paid', 'processing', 'shipped', 'completed'].includes(order.status)).length
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-display font-bold text-lumora-dark mb-2">{t.title}</h1>
-          <p className="text-lg text-lumora-dark/60">{t.welcome}, {user.displayName || user.primaryEmail}</p>
-        </div>
-
-        {/* Account Information Card */}
-        <div className="bg-white rounded-2xl shadow-soft-lg p-8 mb-6">
-          <h2 className="text-2xl font-display font-semibold text-lumora-dark mb-6">{t.accountInfo}</h2>
-          <div className="space-y-4">
-            <div className="flex items-start">
-              <div className="w-32 text-lumora-dark/60 font-medium">{t.name}:</div>
-              <div className="flex-1 text-lumora-dark">{user.displayName || '-'}</div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-32 text-lumora-dark/60 font-medium">{t.email}:</div>
-              <div className="flex-1 text-lumora-dark">{user.primaryEmail}</div>
-            </div>
+    <div className={styles.accountPage} data-account-dashboard>
+      <div className={styles.accountContainer}>
+        <header className={styles.dashboardHeader}>
+          <div><span className={styles.eyebrow}>{t.eyebrow}</span><h1>{t.title}</h1><p>{t.intro}</p></div>
+          <div className={styles.identityBadge} aria-label={user.primaryEmail || ''}>
+            <span>{(user.displayName || user.primaryEmail || 'L').slice(0, 1).toUpperCase()}</span>
+            <div><strong>{user.displayName || user.primaryEmail?.split('@')[0]}</strong><small>{user.primaryEmail}</small></div>
           </div>
-        </div>
+        </header>
 
-        {/* Quick Links */}
-        <div className="bg-white rounded-2xl shadow-soft-lg p-8 mb-6">
-          <h2 className="text-2xl font-display font-semibold text-lumora-dark mb-6">{t.quickLinks}</h2>
-          <div className="grid gap-4">
-            <Link
-              href={localizePathForLocale('/account/orders', locale)}
-              className="flex items-center justify-between p-6 bg-gradient-to-r from-lumora-cream/30 to-lumora-cream/10 rounded-xl hover:shadow-soft-md transition-all duration-300 group"
-            >
-              <div>
-                <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">
-                  {t.viewOrders}
-                </h3>
-                <p className="text-sm text-lumora-dark/60 mt-1">{t.viewOrdersDesc}</p>
-              </div>
-              <svg className="w-6 h-6 text-lumora-green-500 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+        <section className={styles.statGrid} aria-label="Accountoverzicht">
+          <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><OrdersIcon /></span><div><strong>{orders.length}</strong><small>{t.orders}</small></div><ArrowIcon /></Link>
+          <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><TruckIcon /></span><div><strong>{activeOrders}</strong><small>{t.active}</small></div><ArrowIcon /></Link>
+          <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><InvoiceIcon /></span><div><strong>{invoiceCount}</strong><small>{t.invoices}</small></div><ArrowIcon /></Link>
+        </section>
 
-            <Link
-              href={localizePathForLocale('/account/addresses', locale)}
-              className="flex items-center justify-between p-6 bg-gradient-to-r from-lumora-cream/30 to-lumora-cream/10 rounded-xl hover:shadow-soft-md transition-all duration-300 group"
-            >
-              <div>
-                <h3 className="text-lg font-semibold text-lumora-dark group-hover:text-lumora-green-500 transition-colors">
-                  {t.viewAddresses}
-                </h3>
-                <p className="text-sm text-lumora-dark/60 mt-1">{t.viewAddressesDesc}</p>
-              </div>
-              <svg className="w-6 h-6 text-lumora-green-500 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-        </div>
+        <div className={styles.dashboardGrid}>
+          <section className={styles.panel}>
+            <div className={styles.panelHeading}><div><span>{t.orders}</span><h2>{t.recent}</h2></div><Link href={localizePathForLocale('/account/orders', locale)}>{t.allOrders} <ArrowIcon /></Link></div>
+            {orders.length === 0 ? (
+              <div className={styles.emptyState}><span><OrdersIcon /></span><h3>{t.noOrders}</h3><p>{t.noOrdersCopy}</p><Link href="/lumora-premium/producten">{t.shop}</Link></div>
+            ) : (
+              <div className={styles.recentOrders}>{orders.slice(0, 3).map((order) => (
+                <Link href={localizePathForLocale('/account/orders', locale)} key={order._id} className={styles.recentOrder}>
+                  <span className={styles.orderThumb}><OrdersIcon /></span>
+                  <div><strong>{order.order_number || `${t.order} ${String(order._id).slice(0, 8)}`}</strong><small>{new Date(order.created_at).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })} · {order.items.length} {productCountLabel(order.items.length, locale)}</small></div>
+                  <b>{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(order.total_amount)}</b><ArrowIcon />
+                </Link>
+              ))}</div>
+            )}
+          </section>
 
-        {/* Back to Shop */}
-        <div className="text-center">
-          <Link
-            href={localizePathForLocale('/shop', locale)}
-            className="inline-flex items-center gap-2 text-lumora-green-500 hover:text-lumora-green-600 font-medium transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            {t.backToShop}
-          </Link>
+          <aside className={`${styles.panel} ${styles.accountPanel}`}>
+            <span>{t.account}</span><h2>{user.displayName || user.primaryEmail?.split('@')[0]}</h2>
+            <div className={styles.detailRow}><span>{t.email}</span><strong>{user.primaryEmail}</strong></div>
+            {user.primaryEmailVerified && <div className={styles.verified}><CheckIcon /> {t.verified}</div>}
+            <Link className={styles.secondaryAction} href={localizePathForLocale('/account/addresses', locale)}><PinIcon /> {t.addresses}</Link>
+            <AccountSignOut label={t.logout} />
+          </aside>
         </div>
       </div>
+      <AccountMobileNav locale={locale} active="account" />
     </div>
   )
+}
+
+function IconBase({ children }: { children: React.ReactNode }) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg> }
+function OrdersIcon() { return <IconBase><path d="M6 3h12l2 5v13H4V8l2-5Z"/><path d="M4 8h16M9 12h6"/></IconBase> }
+function TruckIcon() { return <IconBase><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></IconBase> }
+function InvoiceIcon() { return <IconBase><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></IconBase> }
+function PinIcon() { return <IconBase><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></IconBase> }
+function CheckIcon() { return <IconBase><path d="m5 12 4 4L19 6"/></IconBase> }
+function ArrowIcon() { return <IconBase><path d="M5 12h14m-5-5 5 5-5 5"/></IconBase> }
+
+function productCountLabel(count: number, locale: Locale) {
+  if (locale === 'de') return count === 1 ? 'Produkt' : 'Produkte'
+  if (locale === 'en') return count === 1 ? 'product' : 'products'
+  return count === 1 ? 'product' : 'producten'
 }

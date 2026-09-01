@@ -74,14 +74,15 @@
 .desktopNav a:hover::after, .desktopNav .activeNav::after { right: 0; }
 
 .headerActions { display: flex; align-items: center; gap: 8px; }
-.languageButton, .cartButton { min-height: 44px; border: 0; background: transparent; border-radius: 12px; }
+.languageButton, .cartButton, .accountButton { min-height: 44px; border: 0; background: transparent; border-radius: 12px; }
 .languageButton { padding: 0 10px; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
 .cartButton { position: relative; display: inline-flex; align-items: center; gap: 9px; padding: 0 13px; color: var(--ink); }
-.cartButton svg { width: 21px; }
+.accountButton { display: inline-flex; align-items: center; gap: 8px; padding: 0 11px; color: var(--ink); }
+.cartButton svg, .accountButton svg { width: 21px; }
 .cartLabel { font-size: 13px; font-weight: 700; }
 .cartCount { min-width: 22px; height: 22px; display: grid; place-items: center; padding: 0 5px; color: #fff; background: var(--green); border-radius: 999px; font-size: 12px; font-weight: 800; }
-.languageButton:hover, .cartButton:hover { background: var(--soft); }
-.languageButton:focus-visible, .cartButton:focus-visible, .desktopNav a:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
+.languageButton:hover, .cartButton:hover, .accountButton:hover { background: var(--soft); }
+.languageButton:focus-visible, .cartButton:focus-visible, .accountButton:focus-visible, .desktopNav a:focus-visible { outline: 3px solid rgba(45,125,70,.28); outline-offset: 2px; }
 
 .hero { padding: 56px 0 68px; overflow: hidden; }
 .heroGrid { display: grid; grid-template-columns: .88fr 1.12fr; gap: 64px; align-items: center; }
@@ -579,7 +580,7 @@
     bottom: max(12px, env(safe-area-inset-bottom));
     min-height: 78px;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
     align-items: center;
     padding: 6px 8px 7px;
     color: var(--nav-muted);

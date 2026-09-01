@@ -67,6 +67,15 @@ export function BagIcon(props: IconProps) {
   )
 }
 
+export function UserIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.8 21a7.2 7.2 0 0 1 14.4 0" />
+    </IconBase>
+  )
+}
+
 export function ArrowRightIcon(props: IconProps) {
   return (
     <IconBase {...props}>

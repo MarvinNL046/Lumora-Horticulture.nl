@@ -11,6 +11,7 @@ import {
   HelpIcon,
   HomeIcon,
   LockIcon,
+  UserIcon,
 } from './Icons'
 
 const ROOT = '/lumora-premium'
@@ -97,6 +98,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <button className={styles.languageButton} type="button" aria-label="Taal: Nederlands">
               NL <span aria-hidden="true">⌄</span>
             </button>
+            <Link className={styles.accountButton} href="/account" aria-label="Mijn account">
+              <UserIcon />
+              <span className={styles.cartLabel}>Account</span>
+            </Link>
             <Link className={styles.cartButton} href={`${ROOT}/winkelmand`} aria-label="Winkelwagen met 2 artikelen">
               <BagIcon />
               <span className={styles.cartLabel}>Winkelwagen</span>
@@ -159,6 +164,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>Hulp</span>
           </a>
+          <Link href="/account">
+            <span className={styles.mobileNavIcon}><UserIcon /></span>
+            <span>Account</span>
+          </Link>
           <Link className={pathname === `${ROOT}/winkelmand` ? styles.mobileNavActive : ''} href={`${ROOT}/winkelmand`}>
             <span className={`${styles.mobileNavIcon} ${styles.mobileBagWrap}`}>
               <BagIcon />

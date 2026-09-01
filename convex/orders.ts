@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { query, mutation, type QueryCtx } from "./_generated/server";
+import type { Doc } from "./_generated/dataModel";
 import { requireServerSecret } from "./lib/serverSecret";
 import { accountOrderWithItemsValidator, orderValidator } from "./validators";
 
@@ -518,5 +519,73 @@ export const listByUserWithItems = query({
         return { ...order, items: itemsWithProducts };
       })
     );
+  },
+});
+
+async function hydrateOrdersWithItems(ctx: QueryCtx, orders: Doc<"orders">[]) {
+  return await Promise.all(
+    orders.map(async (order) => {
+      const items = await ctx.db
+        .query("orderItems")
+        .withIndex("by_order", (q) => q.eq("order_id", order._id))
+        .take(100);
+
+      const itemsWithProducts = await Promise.all(
+        items.map(async (item) => {
+          const product = await ctx.db.get(item.product_id);
+          return {
+            ...item,
+            product_name: product?.name || "Onbekend product",
+            product_slug: product?.slug || "",
+          };
+        }),
+      );
+
+      return { ...order, items: itemsWithProducts };
+    }),
+  );
+}
+
+/**
+ * Account order history. Orders created while signed in are matched by the
+ * immutable Stack user id. Older guest orders may additionally be matched by
+ * a verified account email; only the trusted Next.js server calls this query.
+ */
+export const listByAccountWithItems = query({
+  args: {
+    server_secret: v.string(),
+    user_id: v.string(),
+    verified_email: v.optional(v.string()),
+  },
+  returns: v.array(accountOrderWithItemsValidator),
+  handler: async (ctx, { server_secret, user_id, verified_email }) => {
+    requireServerSecret(server_secret);
+
+    const normalizedEmail = verified_email?.trim().toLowerCase();
+    const [userOrders, emailOrders] = await Promise.all([
+      ctx.db
+        .query("orders")
+        .withIndex("by_user_id", (q) => q.eq("user_id", user_id))
+        .order("desc")
+        .take(100),
+      normalizedEmail
+        ? ctx.db
+            .query("orders")
+            .withIndex("by_email", (q) => q.eq("customer_email", normalizedEmail))
+            .order("desc")
+            .take(100)
+        : Promise.resolve([]),
+    ]);
+
+    const uniqueOrders = new Map<string, Doc<"orders">>();
+    for (const order of [...userOrders, ...emailOrders]) {
+      uniqueOrders.set(String(order._id), order);
+    }
+
+    const orders = Array.from(uniqueOrders.values())
+      .sort((a, b) => b.created_at - a.created_at)
+      .slice(0, 100);
+
+    return await hydrateOrdersWithItems(ctx, orders);
   },
 });
