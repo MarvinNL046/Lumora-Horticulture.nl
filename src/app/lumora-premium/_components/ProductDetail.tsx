@@ -133,7 +133,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
 
         <div className={`${styles.productSummary} ${styles[`productSummary_${product.id}`]}`} id="koopblok">
           <span className={styles.eyebrow}>{product.eyebrow}</span>
-          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'Plantaardig olieconcentraat voor bladverzorging.'}</h1>
+          <h1>{isPaperbus ? 'Kies je stekpluggen van steenwol.' : 'NeemXPRO'}</h1>
 
           <div className={styles.priceLine}>
             <strong>{formatPrice(variant.price)}</strong>
