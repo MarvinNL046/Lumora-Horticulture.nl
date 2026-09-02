@@ -11,7 +11,7 @@ type Props = {
 }
 
 const title = 'NEEMX PRO plantaardig olieconcentraat'
-const description = 'Premium plantaardig olieconcentraat voor bladverzorging. Een zuinige botanische olieblend voor gelijkmatige bedekking, verkrijgbaar in 10, 30 en 50 ml.'
+const description = 'Premium plantaardig olieconcentraat voor bladverzorging, verkrijgbaar in 10, 30 en 50 ml. Ook leverbaar vanaf 1 liter en in grotere volumes op aanvraag.'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params

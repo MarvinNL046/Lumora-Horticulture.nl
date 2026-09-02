@@ -354,6 +354,24 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
             </section>
           )}
 
+          {!isPaperbus && (
+            <section className={styles.bulkOrder} aria-labelledby="neemx-grootverpakking">
+              <div>
+                <span>Voor professionele afname</span>
+                <h2 id="neemx-grootverpakking">Ook verkrijgbaar vanaf 1 liter</h2>
+                <p>
+                  NEEMX PRO is ook leverbaar in een 1-literverpakking en grotere volumes.
+                  Vraag naar de beschikbaarheid en ontvang een offerte op maat.
+                </p>
+              </div>
+              <a
+                href="mailto:info@lumorahorticulture.com?subject=Offerteaanvraag%20NEEMX%20PRO%201%20liter%20of%20grootverpakking"
+              >
+                Vraag een offerte aan <ArrowRightIcon />
+              </a>
+            </section>
+          )}
+
           <p className={styles.productIntro}>{isPaperbus ? variant.description : product.description}</p>
 
           <div className={styles.productAccordions}>
