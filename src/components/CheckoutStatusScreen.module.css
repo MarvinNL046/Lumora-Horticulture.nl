@@ -242,3 +242,28 @@
   .primaryAction, .secondaryAction { transition: none; }
   .progressBar { width: 100%; animation: none; opacity: .7; }
 }
+
+.retryDetails {
+  display: grid;
+  gap: 0;
+  margin-top: 26px;
+  border: 1px solid #dce5df;
+  border-radius: 14px;
+  background: #f7faf7;
+}
+
+.retryDetails > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 17px;
+  border-top: 1px solid #e4ebe6;
+}
+
+.retryDetails > div:first-child { border-top: 0; }
+.retryDetails span { color: #6b766f; font-size: 12px; font-weight: 650; }
+.retryDetails strong { color: #173d29; font-size: 13px; text-align: right; overflow-wrap: anywhere; }
+.retryDetails > div:last-child strong { font-family: var(--font-playfair), Georgia, serif; font-size: 24px; letter-spacing: -.02em; }
+.primaryAction:disabled { opacity: .55; cursor: wait; transform: none; }
+button.primaryAction { font: inherit; font-size: 13px; font-weight: 780; cursor: pointer; }

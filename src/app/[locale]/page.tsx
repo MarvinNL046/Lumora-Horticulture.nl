@@ -21,19 +21,19 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Stekpluggen Steenwol & NeemX Pro',
-      description: 'Professionele stekpluggen van steenwol voor zaaien en stekken, plus NeemX Pro voor botanische bladverzorging. Gratis verzending binnen Nederland, België en Duitsland.',
-      keywords: ['stekpluggen', 'stekpluggen steenwol', 'steenwol pluggen', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'bladverzorging']
+      title: 'Stekpluggen Steenwol & NeemXPRO',
+      description: 'Professionele stekpluggen van steenwol voor zaaien en stekken, plus NeemXPRO voor botanische bladverzorging. Gratis verzending binnen Nederland, België en Duitsland.',
+      keywords: ['stekpluggen', 'stekpluggen steenwol', 'steenwol pluggen', 'paper plug tray 84', 'paper plug tray 104', 'NeemXPRO', 'bladverzorging']
     },
     en: {
-      title: 'Paper Plug Trays & NeemX Pro',
-      description: 'Professional Paper Plug Trays 84 and 104 for sowing and cuttings, plus NeemX Pro for botanical leaf care. Free shipping within the Netherlands, Belgium and Germany.',
-      keywords: ['paper plug trays', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'botanical leaf care']
+      title: 'Paper Plug Trays & NeemXPRO',
+      description: 'Professional Paper Plug Trays 84 and 104 for sowing and cuttings, plus NeemXPRO for botanical leaf care. Free shipping within the Netherlands, Belgium and Germany.',
+      keywords: ['paper plug trays', 'paper plug tray 84', 'paper plug tray 104', 'NeemXPRO', 'botanical leaf care']
     },
     de: {
-      title: 'Paper Plug Trays & NeemX Pro',
-      description: 'Professionelle Paper Plug Trays für Aussaat und Stecklinge sowie NeemX Pro zur botanischen Blattpflege. Kostenloser Versand in die Niederlande, nach Belgien und Deutschland.',
-      keywords: ['Paper Plug Trays', 'Paper Plug Tray 84', 'Paper Plug Tray 104', 'NeemX Pro', 'botanische Blattpflege']
+      title: 'Paper Plug Trays & NeemXPRO',
+      description: 'Professionelle Paper Plug Trays für Aussaat und Stecklinge sowie NeemXPRO zur botanischen Blattpflege. Kostenloser Versand in die Niederlande, nach Belgien und Deutschland.',
+      keywords: ['Paper Plug Trays', 'Paper Plug Tray 84', 'Paper Plug Tray 104', 'NeemXPRO', 'botanische Blattpflege']
     }
   }
 

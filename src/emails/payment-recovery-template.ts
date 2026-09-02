@@ -190,10 +190,10 @@ export function getPaymentRecoveryEmailContent(props: PaymentRecoveryEmailProps)
         : '✅ Gratis verzending binnen NL, BE & DE',
     securePayment:
       emailLocale === 'de'
-        ? '🔒 Sichere Zahlung über Mollie'
+        ? '🔒 Sicher bezahlen mit iDEAL, Wero, Visa oder Mastercard'
         : emailLocale === 'en'
-        ? '🔒 Secure payment via Mollie'
-        : '🔒 Veilig betalen via Mollie',
+        ? '🔒 Pay securely with iDEAL, Wero, Visa or Mastercard'
+        : '🔒 Veilig betalen met iDEAL, Wero, Visa of Mastercard',
     payNowButton:
       emailLocale === 'de'
         ? 'Jetzt bezahlen'

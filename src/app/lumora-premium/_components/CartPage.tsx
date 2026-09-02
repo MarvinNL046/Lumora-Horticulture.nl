@@ -15,9 +15,9 @@ import { ArrowRightIcon, CheckIcon, LockIcon, MinusIcon, PlusIcon, TruckIcon } f
 import { PaymentLogos } from './PaymentLogos'
 
 const COPY = {
-  nl: { empty: 'Je winkelwagen is nog leeg.', emptyText: 'Kies Stekpluggen Steenwol of NeemX Pro om verder te gaan.', products: 'Bekijk de producten', eyebrow: 'Jouw selectie', title: 'Je winkelwagen.', continue: 'Verder winkelen', itemsAria: 'Producten in winkelwagen', neemx: 'Botanische bladverzorging', plugs: 'Professionele stekpluggen', applied: '2 + 1 gratis toegepast', choosePromo: 'Kies 2 + 1 gratis · €180 totaal', remove: 'Verwijderen', current: 'Huidige bestelling', article: 'artikel', articles: 'artikelen', totalWord: 'totaal', summary: 'Besteloverzicht', subtotal: 'Subtotaal', discounts: 'Actie en staffelkorting', shipping: 'Verzending NL, BE of DE', included: 'Inbegrepen', total: 'Totaal', promoLine: '2 + 1 gratis toegepast', boxes: 'dozen', checkout: 'Verder naar afrekenen', paymentsAria: 'Betaalmogelijkheden', paySafe: 'Veilig online betalen', freeShipping: 'Gratis verzending', region: 'Binnen Nederland, België en Duitsland', lower: 'verlagen', raise: 'verhogen', box: 'Per doos', cells: 'cellen', concentrate: 'geconcentreerde formule', fallback: 'Bekijk de productdetails voor de gekozen uitvoering' },
-  en: { empty: 'Your cart is still empty.', emptyText: 'Choose Rockwool Cutting Plugs or NeemX Pro to continue.', products: 'View the products', eyebrow: 'Your selection', title: 'Your cart.', continue: 'Continue shopping', itemsAria: 'Products in cart', neemx: 'Botanical leaf care', plugs: 'Professional cutting plugs', applied: 'Buy 2 + get 1 free applied', choosePromo: 'Choose buy 2 + get 1 free · €180 total', remove: 'Remove', current: 'Current order', article: 'item', articles: 'items', totalWord: 'total', summary: 'Order summary', subtotal: 'Subtotal', discounts: 'Offer and volume discount', shipping: 'Shipping to NL, BE or DE', included: 'Included', total: 'Total', promoLine: 'Buy 2 + get 1 free applied', boxes: 'boxes', checkout: 'Continue to checkout', paymentsAria: 'Payment options', paySafe: 'Secure online payment', freeShipping: 'Free shipping', region: 'Within the Netherlands, Belgium and Germany', lower: 'decrease', raise: 'increase', box: 'Per box', cells: 'cells', concentrate: 'concentrated formula', fallback: 'View the product details for the selected version' },
-  de: { empty: 'Ihr Warenkorb ist noch leer.', emptyText: 'Wählen Sie Steinwoll-Stecklingsplugs oder NeemX Pro, um fortzufahren.', products: 'Produkte ansehen', eyebrow: 'Ihre Auswahl', title: 'Ihr Warenkorb.', continue: 'Weiter einkaufen', itemsAria: 'Produkte im Warenkorb', neemx: 'Botanische Blattpflege', plugs: 'Professionelle Stecklingsplugs', applied: '2 kaufen + 1 gratis angewendet', choosePromo: '2 kaufen + 1 gratis wählen · €180 gesamt', remove: 'Entfernen', current: 'Aktuelle Bestellung', article: 'Artikel', articles: 'Artikel', totalWord: 'gesamt', summary: 'Bestellübersicht', subtotal: 'Zwischensumme', discounts: 'Aktion und Mengenrabatt', shipping: 'Versand nach NL, BE oder DE', included: 'Inklusive', total: 'Gesamt', promoLine: '2 kaufen + 1 gratis angewendet', boxes: 'Kartons', checkout: 'Weiter zur Kasse', paymentsAria: 'Zahlungsmöglichkeiten', paySafe: 'Sicher online bezahlen', freeShipping: 'Kostenloser Versand', region: 'Innerhalb der Niederlande, Belgiens und Deutschlands', lower: 'verringern', raise: 'erhöhen', box: 'Pro Karton', cells: 'Zellen', concentrate: 'konzentrierte Formel', fallback: 'Produktdetails der gewählten Ausführung ansehen' },
+  nl: { empty: 'Je winkelwagen is nog leeg.', emptyText: 'Kies Stekpluggen Steenwol of NeemXPRO om verder te gaan.', products: 'Bekijk de producten', eyebrow: 'Jouw selectie', title: 'Je winkelwagen.', continue: 'Verder winkelen', itemsAria: 'Producten in winkelwagen', neemx: 'Botanische bladverzorging', plugs: 'Professionele stekpluggen', applied: '2 + 1 gratis toegepast', choosePromo: 'Kies 2 + 1 gratis · €180 totaal', remove: 'Verwijderen', current: 'Huidige bestelling', article: 'artikel', articles: 'artikelen', totalWord: 'totaal', summary: 'Besteloverzicht', subtotal: 'Subtotaal', discounts: 'Actie en staffelkorting', shipping: 'Verzending NL, BE of DE', included: 'Inbegrepen', total: 'Totaal', promoLine: '2 + 1 gratis toegepast', boxes: 'dozen', checkout: 'Verder naar afrekenen', paymentsAria: 'Betaalmogelijkheden', paySafe: 'Veilig online betalen', freeShipping: 'Gratis verzending', region: 'Binnen Nederland, België en Duitsland', lower: 'verlagen', raise: 'verhogen', box: 'Per doos', cells: 'cellen', concentrate: 'geconcentreerde formule', fallback: 'Bekijk de productdetails voor de gekozen uitvoering' },
+  en: { empty: 'Your cart is still empty.', emptyText: 'Choose a Paper Plug Tray or NeemXPRO to continue.', products: 'View the products', eyebrow: 'Your selection', title: 'Your cart.', continue: 'Continue shopping', itemsAria: 'Products in cart', neemx: 'Botanical leaf care', plugs: 'Professional Paper Plug Trays', applied: 'Buy 2 + get 1 free applied', choosePromo: 'Choose buy 2 + get 1 free · €180 total', remove: 'Remove', current: 'Current order', article: 'item', articles: 'items', totalWord: 'total', summary: 'Order summary', subtotal: 'Subtotal', discounts: 'Offer and volume discount', shipping: 'Shipping to NL, BE or DE', included: 'Included', total: 'Total', promoLine: 'Buy 2 + get 1 free applied', boxes: 'boxes', checkout: 'Continue to checkout', paymentsAria: 'Payment options', paySafe: 'Secure online payment', freeShipping: 'Free shipping', region: 'Within the Netherlands, Belgium and Germany', lower: 'decrease', raise: 'increase', box: 'Per box', cells: 'cells', concentrate: 'concentrated formula', fallback: 'View the product details for the selected version' },
+  de: { empty: 'Ihr Warenkorb ist noch leer.', emptyText: 'Wählen Sie eine Paper Plug Tray oder NeemXPRO, um fortzufahren.', products: 'Produkte ansehen', eyebrow: 'Ihre Auswahl', title: 'Ihr Warenkorb.', continue: 'Weiter einkaufen', itemsAria: 'Produkte im Warenkorb', neemx: 'Botanische Blattpflege', plugs: 'Professionelle Paper Plug Trays', applied: '2 kaufen + 1 gratis angewendet', choosePromo: '2 kaufen + 1 gratis wählen · €180 gesamt', remove: 'Entfernen', current: 'Aktuelle Bestellung', article: 'Artikel', articles: 'Artikel', totalWord: 'gesamt', summary: 'Bestellübersicht', subtotal: 'Zwischensumme', discounts: 'Aktion und Mengenrabatt', shipping: 'Versand nach NL, BE oder DE', included: 'Inklusive', total: 'Gesamt', promoLine: '2 kaufen + 1 gratis angewendet', boxes: 'Kartons', checkout: 'Weiter zur Kasse', paymentsAria: 'Zahlungsmöglichkeiten', paySafe: 'Sicher online bezahlen', freeShipping: 'Kostenloser Versand', region: 'Innerhalb der Niederlande, Belgiens und Deutschlands', lower: 'verringern', raise: 'erhöhen', box: 'Pro Karton', cells: 'Zellen', concentrate: 'konzentrierte Formel', fallback: 'Produktdetails der gewählten Ausführung ansehen' },
 } as const
 
 function cartItemDetail(slug: string, locale: StorefrontLocale): string {
@@ -33,16 +33,6 @@ function cartItemDetail(slug: string, locale: StorefrontLocale): string {
 
 export function CartPage({ locale = 'nl' }: { locale?: StorefrontLocale }) {
   const copy = COPY[locale]
-  const emptyText = locale === 'en'
-    ? 'Choose a Paper Plug Tray or NeemX Pro to continue.'
-    : locale === 'de'
-      ? 'Wählen Sie eine Paper Plug Tray oder NeemX Pro, um fortzufahren.'
-      : copy.emptyText
-  const paperPlugCategory = locale === 'en'
-    ? 'Professional Paper Plug Trays'
-    : locale === 'de'
-      ? 'Professionelle Paper Plug Trays'
-      : copy.plugs
   const routes = localizeStorefrontRoutes(getStorefrontRoutes(usePathname()), locale)
   const {
     items,
@@ -64,7 +54,7 @@ export function CartPage({ locale = 'nl' }: { locale?: StorefrontLocale }) {
         <div>
           <span className={styles.emptyCartIcon}>0</span>
           <h1>{copy.empty}</h1>
-          <p>{emptyText}</p>
+          <p>{copy.emptyText}</p>
           <Link href={routes.products} className={styles.primaryButton}>{copy.products} <ArrowRightIcon /></Link>
         </div>
       </main>
@@ -96,7 +86,7 @@ export function CartPage({ locale = 'nl' }: { locale?: StorefrontLocale }) {
                     <Image src={item.image_url} alt={localizedName} fill sizes="160px" />
                   </div>
                   <div className={styles.cartItemInfo}>
-                    <span>{isNeemx ? copy.neemx : paperPlugCategory}</span>
+                    <span>{isNeemx ? copy.neemx : copy.plugs}</span>
                     <h2>{localizedName}</h2>
                     <small>{cartItemDetail(item.slug, locale)}</small>
                     {paperbusPromotion && (paperbusPromotion.eligible ? (

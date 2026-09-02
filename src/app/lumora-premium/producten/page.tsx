@@ -11,18 +11,12 @@ import type { StorefrontLocale } from '../_components/storefront-localization'
 import styles from '../storefront.module.css'
 
 export const metadata: Metadata = {
-  title: 'Stekpluggen Steenwol & NeemX Pro | Lumora Horticulture',
-  description: 'Vergelijk professionele Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
+  title: 'Stekpluggen Steenwol & NeemXPRO | Lumora Horticulture',
+  description: 'Vergelijk professionele Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemXPRO voor botanische bladverzorging.',
 }
 
 export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale = 'nl' }: { routes?: StorefrontRoutes; locale?: StorefrontLocale }) {
   const copy = productsPageCopy[locale]
-  const intro = locale === 'en'
-    ? 'Start with your goal: propagate with Paper Plug Trays or care for leaves with NeemX Pro. Then choose the right version.'
-    : locale === 'de'
-      ? 'Beginnen Sie mit Ihrem Ziel: Anzucht mit Paper Plug Trays oder Blattpflege mit NeemX Pro. Wählen Sie danach die passende Ausführung.'
-      : copy.intro
-  const choosePlugs = locale === 'en' ? 'Choose your Paper Plug Tray' : locale === 'de' ? 'Paper Plug Tray wählen' : copy.choosePlugs
   const localized = getLocalizedProducts(locale)
   const localizedProducts = [localized.paperbus, localized.neemx]
   return (
@@ -32,7 +26,7 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale
           <div>
             <span className={styles.eyebrow}>{copy.eyebrow}</span>
             <h1>{copy.title}</h1>
-            <p>{intro}</p>
+            <p>{copy.intro}</p>
             <Link className={styles.collectionHeroAction} href="#productlijnen">
               {copy.action} <ArrowRightIcon />
             </Link>
@@ -92,11 +86,11 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale
             <h2>{copy.compareTitle}</h2>
             <p>{copy.compareIntro}</p>
           </div>
-          <div className={styles.compareTable} role="table" aria-label={`${localized.paperbus.name} / NeemX Pro`}>
+          <div className={styles.compareTable} role="table" aria-label={`${localized.paperbus.name} / NeemXPRO`}>
             <div className={`${styles.compareRow} ${styles.compareHeader}`} role="row">
               <span role="columnheader">{copy.seek}</span>
               <span role="columnheader">{localized.paperbus.name}</span>
-              <span role="columnheader">NeemX Pro</span>
+              <span role="columnheader">NeemXPRO</span>
             </div>
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">{copy.application}</strong>
@@ -106,11 +100,11 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">{copy.versions}</strong>
               <span role="cell">{localized.paperbus.variants[0].label} / {localized.paperbus.variants[1].label}</span>
-              <span role="cell">10 ml, 30 ml of 50 ml</span>
+              <span role="cell">{locale === 'en' ? '10 ml, 30 ml or 50 ml' : locale === 'de' ? '10 ml, 30 ml oder 50 ml' : '10 ml, 30 ml of 50 ml'}</span>
             </div>
             <div className={styles.compareRow} role="row">
               <strong role="rowheader">{copy.next}</strong>
-              <span role="cell"><Link href={routes.stekpluggen}>{choosePlugs} <ArrowRightIcon /></Link></span>
+              <span role="cell"><Link href={routes.stekpluggen}>{copy.choosePlugs} <ArrowRightIcon /></Link></span>
               <span role="cell"><Link href={routes.neemx}>{copy.chooseSize} <ArrowRightIcon /></Link></span>
             </div>
           </div>

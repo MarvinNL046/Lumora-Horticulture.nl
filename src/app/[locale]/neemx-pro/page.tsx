@@ -12,9 +12,9 @@ type Props = {
 }
 
 const metadataCopy = {
-  nl: { title: 'NEEMX PRO plantaardig olieconcentraat', description: 'Premium plantaardig olieconcentraat voor bladverzorging, verkrijgbaar in 10, 30 en 50 ml. Ook leverbaar vanaf 1 liter en in grotere volumes op aanvraag.' },
-  en: { title: 'NEEMX PRO plant-based oil concentrate', description: 'Premium plant-based oil concentrate for leaf care, available in 10, 30 and 50 ml. Also available from 1 litre and in larger volumes on request.' },
-  de: { title: 'NEEMX PRO pflanzliches Ölkonzentrat', description: 'Hochwertiges pflanzliches Ölkonzentrat zur Blattpflege, erhältlich in 10, 30 und 50 ml. Auf Anfrage auch ab 1 Liter und in größeren Mengen lieferbar.' },
+  nl: { title: 'NeemXPRO plantaardig olieconcentraat', description: 'Premium plantaardig olieconcentraat voor bladverzorging, verkrijgbaar in 10, 30 en 50 ml. Ook leverbaar vanaf 1 liter en in grotere volumes op aanvraag.' },
+  en: { title: 'NeemXPRO plant-based oil concentrate', description: 'Premium plant-based oil concentrate for leaf care, available in 10, 30 and 50 ml. Also available from 1 litre and in larger volumes on request.' },
+  de: { title: 'NeemXPRO pflanzliches Ölkonzentrat', description: 'Hochwertiges pflanzliches Ölkonzentrat zur Blattpflege, erhältlich in 10, 30 und 50 ml. Auf Anfrage auch ab 1 Liter und in größeren Mengen lieferbar.' },
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale: resolvedLocale,
     path: '/neemx-pro',
     keywords: [
-      'NEEMX PRO',
+      'NeemXPRO',
       'plantaardig olieconcentraat',
       'botanische olieblend',
       'bladverzorging',
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const productGroupJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProductGroup',
-  name: 'NEEMX PRO',
+  name: 'NeemXPRO',
   description: metadataCopy.nl.description,
   url: 'https://lumorahorticulture.nl/neemx-pro',
   image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
@@ -55,7 +55,7 @@ const productGroupJsonLd = {
   variesBy: 'https://schema.org/size',
   hasVariant: neemx.variants.map((variant) => ({
     '@type': 'Product',
-    name: `NEEMX PRO ${variant.label}`,
+    name: `NeemXPRO ${variant.label}`,
     sku: variant.slug,
     size: variant.label,
     offers: {

@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'lumora-cream': '#FAF3C3', // Brand color - light cream
+        'lumora-cream': '#EAF2EC', // Brand color - soft sage (matches the storefront palette)
         'lumora-dark': {
-          DEFAULT: '#404F4A', // Updated brand color - dark green from logo
-          '700': '#354540',   // Darker variant
-          '800': '#2A3632',   // Even darker variant
+          DEFAULT: '#1D2A25', // Brand ink - deep green-black from the storefront palette
+          '700': '#173D29',   // Deep brand green
+          '800': '#12271C',   // Even deeper variant
         },
         'lumora-green': {
           50: '#E6F5EB',
@@ -27,13 +27,13 @@ module.exports = {
           900: '#0F3523',
         },
         'lumora-gold': {
-          DEFAULT: '#D4AF37', // Gold color from logo
+          DEFAULT: '#C69C43', // Muted brand gold (storefront accent)
           50: '#FBF6E3',
           100: '#F7E9BA',
           200: '#F2DC91',
           300: '#ECCF67',
           400: '#E6C33E',
-          500: '#D4AF37', // Primary
+          500: '#C69C43', // Primary
           600: '#B69221',
           700: '#97761C',
           800: '#785B16',

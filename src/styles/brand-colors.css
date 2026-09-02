@@ -7,19 +7,19 @@
 
 :root {
   /* Primary Brand Colors */
-  --lumora-cream: #FAF3C3;           /* Lichte crème kleur - hoofdkleur voor lichte achtergronden */
-  --lumora-dark: #404F4A;            /* Donkergroen uit het logo - hoofdkleur voor donkere elementen */
-  --lumora-dark-700: #354540;        /* Donkerder variant */
-  --lumora-dark-800: #2A3632;        /* Nog donkerder variant */
+  --lumora-cream: #EAF2EC;           /* Lichte crème kleur - hoofdkleur voor lichte achtergronden */
+  --lumora-dark: #1D2A25;            /* Donkergroen uit het logo - hoofdkleur voor donkere elementen */
+  --lumora-dark-700: #173D29;        /* Donkerder variant */
+  --lumora-dark-800: #12271C;        /* Nog donkerder variant */
   
   /* Gold/Goud Kleuren */
-  --lumora-gold: #D4AF37;            /* Goud kleur uit het logo */
+  --lumora-gold: #C69C43;            /* Goud kleur uit het logo */
   --lumora-gold-50: #FBF6E3;         /* Zeer licht goud */
   --lumora-gold-100: #F7E9BA;        /* Licht goud */
   --lumora-gold-200: #F2DC91;
   --lumora-gold-300: #ECCF67;
   --lumora-gold-400: #E6C33E;
-  --lumora-gold-500: #D4AF37;        /* Primary goud */
+  --lumora-gold-500: #C69C43;        /* Primary goud */
   --lumora-gold-600: #B69221;        /* Donker goud */
   --lumora-gold-700: #97761C;
   --lumora-gold-800: #785B16;

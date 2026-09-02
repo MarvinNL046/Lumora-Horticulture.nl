@@ -9,9 +9,11 @@ import { convexServerAuth } from '@/lib/convex'
 import AccountMobileNav from '../AccountMobileNav'
 import styles from '../account.module.css'
 
+type Locale = 'nl' | 'en' | 'de'
+
 export default async function AddressesPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  const locale = params.locale as 'nl' | 'en' | 'de'
+  const locale = params.locale as Locale
   const user = await stackServerApp.getUser()
 
   if (!user) {
@@ -24,25 +26,25 @@ export default async function AddressesPage(props: { params: Promise<{ locale: s
   })
 
   const t = {
-    title: locale === 'de' ? 'Meine Adressen' : locale === 'en' ? 'My Addresses' : 'Mijn Adressen',
-    backToAccount: locale === 'de' ? 'Zurück zum Konto' : locale === 'en' ? 'Back to Account' : 'Terug naar Account',
+    eyebrow: locale === 'de' ? 'LIEFERADRESSEN' : locale === 'en' ? 'DELIVERY ADDRESSES' : 'BEZORGADRESSEN',
+    title: locale === 'de' ? 'Ihre Adressen.' : locale === 'en' ? 'Your addresses.' : 'Je adressen.',
+    intro: locale === 'de'
+      ? 'Speichern Sie Lieferadressen, damit Sie beim Bezahlen schneller fertig sind.'
+      : locale === 'en'
+        ? 'Save delivery addresses so checkout is faster next time.'
+        : 'Bewaar bezorgadressen zodat je de volgende keer sneller afrekent.',
+    backToAccount: locale === 'de' ? 'Zum Konto' : locale === 'en' ? 'Back to account' : 'Terug naar account',
   }
 
   return (
     <div className={`${styles.accountPage} ${styles.addressesPage}`} data-account-dashboard>
       <div className={styles.accountContainer}>
-        <div className="mb-8">
-          <Link
-            href={localizePathForLocale('/account', locale)}
-            className="inline-flex items-center gap-2 text-lumora-green-500 hover:text-lumora-green-600 font-medium transition-colors mb-4"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            {t.backToAccount}
-          </Link>
-          <h1 className="text-4xl font-display font-bold text-lumora-dark">{t.title}</h1>
-        </div>
+        <Link className={styles.backLink} href={localizePathForLocale('/account', locale)}>← {t.backToAccount}</Link>
+        <header className={styles.ordersHeader}>
+          <span className={styles.eyebrow}>{t.eyebrow}</span>
+          <h1>{t.title}</h1>
+          <p>{t.intro}</p>
+        </header>
 
         <AddressesClient addresses={addresses as any} locale={locale} />
       </div>

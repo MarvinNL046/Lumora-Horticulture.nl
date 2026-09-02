@@ -109,7 +109,7 @@ const englishGuides = [
   {
     category: 'Leaf care',
     title: 'A clear routine for botanical leaf care',
-    excerpt: 'Learn how NEEMX PRO is mixed, prepared and used as a fresh spray solution for even leaf coverage.',
+    excerpt: 'Learn how NeemXPRO is mixed, prepared and used as a fresh spray solution for even leaf coverage.',
     href: '/neemx-pro',
   },
   {

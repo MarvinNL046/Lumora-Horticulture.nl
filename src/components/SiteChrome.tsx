@@ -1,23 +1,21 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import dynamic from 'next/dynamic'
-import HeaderNav from '@/components/HeaderNav'
-import Footer from '@/components/Footer'
-import CartSidebar from '@/components/CartSidebar'
 import { publicStorefrontPathSet } from '@/app/lumora-premium/_data/routes'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
-const ExitIntentPopup = dynamic(
-  () => import('@/components/ExitIntentPopup'),
-  { ssr: false }
-)
-
-// Routes that opt out of the global Lumora chrome (header / footer /
-// cart sidebar / exit intent). Used by standalone landing pages and
-// design demos that ship their own chrome.
-const STANDALONE_ROUTES = ['/lumora-premium', '/neemxpro-2-plus-1-gratis', '/handler', '/account']
-const STANDALONE_CHECKOUT_ROUTES = ['/checkout/success', '/checkout/conversion']
+// Routes that render their own chrome: the storefront pages wrap themselves in
+// StoreShell, the account/auth trees have their own layouts, and the marketing
+// landing pages and print flyers ship a standalone design.
+const STANDALONE_ROUTES = [
+  '/lumora-premium',
+  '/neemxpro-2-plus-1-gratis',
+  '/handler',
+  '/account',
+  '/marketing',
+  '/admin',
+]
+const STANDALONE_CHECKOUT_ROUTES = ['/checkout/success', '/checkout/conversion', '/checkout/retry']
 const LOCALIZED_STOREFRONT_ROUTES = new Set([
   '/', '/producten', '/products', '/produkte', '/stekpluggen-steenwol',
   '/neemx-pro', '/winkelmand', '/afrekenen',
@@ -34,26 +32,15 @@ function isStandalonePath(pathname: string | null): boolean {
   )
 }
 
+// Every remaining content page (about, contact, blog, legal, knowledge base)
+// uses the same Lumora storefront shell in all three languages, so there is
+// no legacy header or footer left anywhere on the site.
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const standalone = isStandalonePath(pathname)
-  const isInternationalContent = Boolean(pathname?.match(/^\/(?:en|de)(?:\/|$)/))
 
-  if (standalone) {
+  if (isStandalonePath(pathname)) {
     return <>{children}</>
   }
 
-  if (isInternationalContent) {
-    return <StoreShell>{children}</StoreShell>
-  }
-
-  return (
-    <>
-      <HeaderNav />
-      <main className="flex-grow pt-24">{children}</main>
-      <Footer />
-      <CartSidebar />
-      <ExitIntentPopup />
-    </>
-  )
+  return <StoreShell>{children}</StoreShell>
 }

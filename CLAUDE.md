@@ -87,10 +87,13 @@ All data lives in **Convex** (`convex/schema.ts`). Key tables:
 ### Brand Design System
 
 **Colors** (defined in `tailwind.config.js`):
-- `lumora-cream` (#FAF3C3) - Light cream background
-- `lumora-dark` (#404F4A) - Dark green from logo
+- `lumora-cream` (#EAF2EC) - Soft sage background (aligned with the storefront palette)
+- `lumora-dark` (#1D2A25) - Brand ink; `lumora-dark-700` (#173D29) is the deep brand green
 - `lumora-green-500` (#2D7D46) - Primary green for CTAs
-- `lumora-gold` (#D4AF37) - Accent color from logo
+- `lumora-gold` (#C69C43) - Muted gold accent
+
+The customer-facing storefront (`src/app/lumora-premium/_components/StoreShell.tsx` + `storefront.module.css`)
+wraps every localized page in all three languages; legacy `HeaderNav`/`Footer` are no longer rendered.
 
 **Typography**:
 - `font-sans` - Inter (body text)

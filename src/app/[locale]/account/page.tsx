@@ -85,7 +85,7 @@ export default async function AccountPage(props: { params: Promise<{ locale: str
             <div className={styles.detailRow}><span>{t.email}</span><strong>{user.primaryEmail}</strong></div>
             {user.primaryEmailVerified && <div className={styles.verified}><CheckIcon /> {t.verified}</div>}
             <Link className={styles.secondaryAction} href={localizePathForLocale('/account/addresses', locale)}><PinIcon /> {t.addresses}</Link>
-            <AccountSignOut label={t.logout} />
+            <AccountSignOut label={t.logout} locale={locale} />
           </aside>
         </div>
       </div>

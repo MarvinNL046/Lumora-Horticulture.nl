@@ -86,7 +86,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const routes = localizeStorefrontRoutes(getStorefrontRoutes(pathname), locale)
   const isCheckout = pathname === routes.checkout
   const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/)/, '')
-  const isCheckoutReturn = ['/checkout/success', '/checkout/conversion'].some((route) => localeAgnosticPath.startsWith(route))
+  const isCheckoutReturn = ['/checkout/success', '/checkout/conversion', '/checkout/retry'].some((route) => localeAgnosticPath.startsWith(route))
   const isCheckoutFlow = isCheckout || isCheckoutReturn
   const isAccount = localeAgnosticPath === '/account' || localeAgnosticPath.startsWith('/account/')
   const isAuth = localeAgnosticPath.startsWith('/handler/')
@@ -211,7 +211,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
           <div>
             <h2>{copy.products}</h2>
             <Link href={routes.stekpluggen}>{copy.cuttingPlugs}</Link>
-            <Link href={routes.neemx}>NeemX Pro</Link>
+            <Link href={routes.neemx}>NeemXPRO</Link>
           </div>
           <div>
             <h2>{copy.service}</h2>

@@ -5,22 +5,22 @@
 
 export const brandColors = {
   // Primary Brand Colors
-  cream: '#FAF3C3',
+  cream: '#EAF2EC',
   dark: {
-    DEFAULT: '#404F4A',
-    700: '#354540',
-    800: '#2A3632',
+    DEFAULT: '#1D2A25',
+    700: '#173D29',
+    800: '#12271C',
   },
   
   // Gold Colors
   gold: {
-    DEFAULT: '#D4AF37',
+    DEFAULT: '#C69C43',
     50: '#FBF6E3',
     100: '#F7E9BA',
     200: '#F2DC91',
     300: '#ECCF67',
     400: '#E6C33E',
-    500: '#D4AF37',
+    500: '#C69C43',
     600: '#B69221',
     700: '#97761C',
     800: '#785B16',

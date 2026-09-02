@@ -18,19 +18,19 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Stekpluggen Steenwol & NeemX Pro',
-      description: 'Vergelijk Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
-      keywords: ['stekpluggen', 'stekpluggen steenwol', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'botanische bladverzorging']
+      title: 'Stekpluggen Steenwol & NeemXPRO',
+      description: 'Vergelijk Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemXPRO voor botanische bladverzorging.',
+      keywords: ['stekpluggen', 'stekpluggen steenwol', 'paper plug tray 84', 'paper plug tray 104', 'NeemXPRO', 'botanische bladverzorging']
     },
     en: {
-      title: 'Paper Plug Trays & NeemX Pro',
-      description: 'Compare Paper Plug Tray 84 and 104 with exact tray and box contents, or choose NeemX Pro for botanical leaf care.',
-      keywords: ['paper plug tray 84', 'paper plug tray 104', 'rockwool cutting plugs', 'ellepot fp 12+', 'NeemX Pro', 'botanical leaf care']
+      title: 'Paper Plug Trays & NeemXPRO',
+      description: 'Compare Paper Plug Tray 84 and 104 with exact tray and box contents, or choose NeemXPRO for botanical leaf care.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'rockwool cutting plugs', 'ellepot fp 12+', 'NeemXPRO', 'botanical leaf care']
     },
     de: {
-      title: 'Paper Plug Trays & NeemX Pro',
-      description: 'Vergleichen Sie Paper Plug Tray 84 und 104 mit genauen Anzuchtplatten- und Kartoninhalten oder wählen Sie NeemX Pro zur botanischen Blattpflege.',
-      keywords: ['paper plug tray 84', 'paper plug tray 104', 'Steinwoll-Stecklingsplugs', 'Ellepot FP 12+', 'NeemX Pro', 'botanische Blattpflege']
+      title: 'Paper Plug Trays & NeemXPRO',
+      description: 'Vergleichen Sie Paper Plug Tray 84 und 104 mit genauen Anzuchtplatten- und Kartoninhalten oder wählen Sie NeemXPRO zur botanischen Blattpflege.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'Steinwoll-Stecklingsplugs', 'Ellepot FP 12+', 'NeemXPRO', 'botanische Blattpflege']
     }
   }
 

@@ -22,12 +22,12 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     },
     en: {
       title: 'Contact & Product Advice',
-      description: 'Contact Lumora for personal advice about Paper Plug Trays 84 and 104 or NeemX Pro.',
+      description: 'Contact Lumora for personal advice about Paper Plug Trays 84 and 104 or NeemXPRO.',
       keywords: ['contact lumora', 'paper plug trays quote', 'B2B quote', 'horticulture supplier contact', 'wholesale inquiry']
     },
     de: {
       title: 'Kontakt & Produktberatung',
-      description: 'Kontaktieren Sie Lumora für persönliche Beratung zu Paper Plug Trays 84 und 104 oder NeemX Pro.',
+      description: 'Kontaktieren Sie Lumora für persönliche Beratung zu Paper Plug Trays 84 und 104 oder NeemXPRO.',
       keywords: ['kontakt lumora', 'Paper Plug Trays Angebot', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Grosshandel Anfrage']
     }
   }

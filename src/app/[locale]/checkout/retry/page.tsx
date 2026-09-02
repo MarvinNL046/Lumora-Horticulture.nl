@@ -4,6 +4,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { localizePathForLocale } from '@/lib/url-localizations';
+import { StoreShell } from '@/app/lumora-premium/_components/StoreShell';
+import { ArrowRightIcon, LockIcon, MessageIcon, ShieldIcon } from '@/app/lumora-premium/_components/Icons';
+import { PaymentLogos } from '@/app/lumora-premium/_components/PaymentLogos';
+import styles from '@/components/CheckoutStatusScreen.module.css';
 
 interface OrderDetails {
   customer_name: string | null;
@@ -16,8 +20,9 @@ type SupportedLocale = 'nl' | 'en' | 'de';
 
 const COPY = {
   nl: {
-    title: 'Betaling opnieuw proberen',
-    subtitle: 'Je bestelling wacht nog op betaling',
+    eyebrow: 'Betaling afronden',
+    title: 'Rond je betaling alsnog af.',
+    subtitle: 'Je bestelling staat veilig voor je klaar en wacht nog op betaling.',
     loading: 'Beveiligde betaallink controleren…',
     orderFound: 'Bestelling gevonden',
     customer: 'Klant',
@@ -27,19 +32,22 @@ const COPY = {
     expired: 'Verlopen',
     failed: 'Mislukt',
     cancelled: 'Geannuleerd',
-    payNow: 'Veilig betalen via Mollie',
+    payNow: 'Veilig betalen',
     processing: 'Betaallink maken…',
-    securePayment: 'Je betaling wordt veilig verwerkt door Mollie',
+    securePayment: 'Betaal met een bekende betaalmethode',
     invalid: 'Deze betaallink is ongeldig of verlopen. Neem contact met ons op voor hulp.',
     alreadyPaid: 'Deze bestelling is al betaald.',
     unavailable: 'Betalen is tijdelijk niet beschikbaar. Probeer het over een moment opnieuw.',
-    needHelp: 'Hulp nodig?',
-    contactUs: 'Neem contact met ons op via',
-    backToShop: 'Terug naar de winkel',
+    sideTitle: 'Zo werkt het',
+    steps: [['Beveiligde controle', 'We controleren je betaallink en bestelling rechtstreeks.'], ['Betaal in één stap', 'Je betaalt met iDEAL, Wero, Visa of Mastercard.'], ['Bevestiging per e-mail', 'Zodra de betaling binnen is, ontvang je direct bericht.']],
+    support: 'Hulp nodig bij je betaling?',
+    contact: 'Contact opnemen',
+    backToShop: 'Terug naar de producten',
   },
   en: {
-    title: 'Retry payment',
-    subtitle: 'Your order is still waiting for payment',
+    eyebrow: 'Complete your payment',
+    title: 'Finish your payment.',
+    subtitle: 'Your order is safely reserved and is still waiting for payment.',
     loading: 'Checking your secure payment link…',
     orderFound: 'Order found',
     customer: 'Customer',
@@ -49,19 +57,22 @@ const COPY = {
     expired: 'Expired',
     failed: 'Failed',
     cancelled: 'Cancelled',
-    payNow: 'Pay securely with Mollie',
+    payNow: 'Pay securely',
     processing: 'Creating payment link…',
-    securePayment: 'Your payment is securely processed by Mollie',
-    invalid: 'This payment link is invalid or expired. Please contact us for help.',
+    securePayment: 'Pay with a familiar payment method',
+    invalid: 'This payment link is invalid or has expired. Please contact us for help.',
     alreadyPaid: 'This order has already been paid.',
     unavailable: 'Payment is temporarily unavailable. Please try again in a moment.',
-    needHelp: 'Need help?',
-    contactUs: 'Contact us at',
-    backToShop: 'Back to shop',
+    sideTitle: 'How it works',
+    steps: [['Secure check', 'We verify your payment link and order directly.'], ['Pay in one step', 'Pay with iDEAL, Wero, Visa or Mastercard.'], ['Email confirmation', 'You receive a confirmation as soon as the payment arrives.']],
+    support: 'Need help with your payment?',
+    contact: 'Contact us',
+    backToShop: 'Back to products',
   },
   de: {
-    title: 'Zahlung erneut versuchen',
-    subtitle: 'Ihre Bestellung wartet noch auf Zahlung',
+    eyebrow: 'Zahlung abschließen',
+    title: 'Schließen Sie Ihre Zahlung ab.',
+    subtitle: 'Ihre Bestellung ist sicher für Sie reserviert und wartet noch auf die Zahlung.',
     loading: 'Sicherer Zahlungslink wird geprüft…',
     orderFound: 'Bestellung gefunden',
     customer: 'Kunde',
@@ -71,15 +82,17 @@ const COPY = {
     expired: 'Abgelaufen',
     failed: 'Fehlgeschlagen',
     cancelled: 'Storniert',
-    payNow: 'Sicher mit Mollie bezahlen',
+    payNow: 'Sicher bezahlen',
     processing: 'Zahlungslink wird erstellt…',
-    securePayment: 'Ihre Zahlung wird sicher von Mollie verarbeitet',
+    securePayment: 'Bezahlen Sie mit einer bekannten Zahlungsmethode',
     invalid: 'Dieser Zahlungslink ist ungültig oder abgelaufen. Bitte kontaktieren Sie uns.',
     alreadyPaid: 'Diese Bestellung wurde bereits bezahlt.',
     unavailable: 'Die Zahlung ist vorübergehend nicht verfügbar. Bitte versuchen Sie es gleich erneut.',
-    needHelp: 'Brauchen Sie Hilfe?',
-    contactUs: 'Kontaktieren Sie uns unter',
-    backToShop: 'Zurück zum Shop',
+    sideTitle: 'So funktioniert es',
+    steps: [['Sichere Prüfung', 'Wir prüfen Ihren Zahlungslink und Ihre Bestellung direkt.'], ['In einem Schritt bezahlen', 'Sie bezahlen mit iDEAL, Wero, Visa oder Mastercard.'], ['Bestätigung per E-Mail', 'Sobald die Zahlung eingegangen ist, erhalten Sie sofort eine Nachricht.']],
+    support: 'Brauchen Sie Hilfe bei Ihrer Zahlung?',
+    contact: 'Kontakt aufnehmen',
+    backToShop: 'Zurück zu den Produkten',
   },
 } as const;
 
@@ -98,9 +111,7 @@ function RetryPaymentContent() {
   const [retryLoading, setRetryLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const backToShopHref = useMemo(() => {
-    return localizePathForLocale('/products', locale);
-  }, [locale]);
+  const backToShopHref = useMemo(() => localizePathForLocale('/products', locale), [locale]);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -111,11 +122,7 @@ function RetryPaymentContent() {
 
     url.searchParams.delete('token');
     url.hash = '';
-    window.history.replaceState(
-      window.history.state,
-      '',
-      `${url.pathname}${url.search}`,
-    );
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}`);
 
     setToken(capturedToken);
     setTokenCaptured(true);
@@ -206,106 +213,101 @@ function RetryPaymentContent() {
     return t.pending;
   };
 
-  const statusColor = (status: string | null) => {
-    if (status === 'failed') return 'bg-red-100 text-red-700';
-    if (status === 'cancelled' || status === 'canceled') return 'bg-gray-100 text-gray-700';
-    if (status === 'expired') return 'bg-orange-100 text-orange-700';
-    return 'bg-yellow-100 text-yellow-700';
-  };
+  const amount = order
+    ? new Intl.NumberFormat(locale === 'en' ? 'en-IE' : locale === 'de' ? 'de-DE' : 'nl-NL', { style: 'currency', currency: 'EUR' }).format(order.total_amount)
+    : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f4f7f4] to-white">
-      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-lumora-green-500/10">
-            <svg className="h-8 w-8 text-lumora-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
+    <main className={styles.page}>
+      <div className={styles.container}>
+        <section
+          className={styles.card}
+          aria-live={error ? 'assertive' : loading ? 'polite' : undefined}
+          aria-busy={loading || undefined}
+          role={error ? 'alert' : loading ? 'status' : undefined}
+        >
+          <div className={styles.main}>
+            <div className={`${styles.statusIcon} ${error ? styles.statusIconFailed : styles.statusIconPending}`} aria-hidden="true">
+              <LockIcon />
+            </div>
+            <p className={styles.eyebrow}>{t.eyebrow}</p>
+            <h1 className={styles.title}>{t.title}</h1>
+            <p className={styles.description}>{t.subtitle}</p>
+
+            {loading ? (
+              <>
+                <p className={styles.description}>{t.loading}</p>
+                <div className={styles.progressTrack} aria-hidden="true"><span className={styles.progressBar} /></div>
+              </>
+            ) : null}
+
+            {!loading && error ? (
+              <div className={styles.orderNumber}>
+                <strong>{error}</strong>
+              </div>
+            ) : null}
+
+            {!loading && order ? (
+              <>
+                <div className={styles.retryDetails}>
+                  {order.customer_name ? (
+                    <div><span>{t.customer}</span><strong>{order.customer_name}</strong></div>
+                  ) : null}
+                  <div><span>{t.status}</span><strong>{statusLabel(order.payment_status)}</strong></div>
+                  <div><span>{t.amount}</span><strong>{amount}</strong></div>
+                </div>
+                <div className={styles.actions}>
+                  <button
+                    type="button"
+                    className={styles.primaryAction}
+                    onClick={handleRetryPayment}
+                    disabled={retryLoading || !order.can_retry}
+                  >
+                    {retryLoading ? t.processing : `${t.payNow} · ${amount}`}
+                    {retryLoading ? null : <ArrowRightIcon />}
+                  </button>
+                  <Link className={styles.secondaryAction} href={backToShopHref}>{t.backToShop}</Link>
+                </div>
+              </>
+            ) : null}
+
+            {!loading && !order ? (
+              <div className={styles.actions}>
+                <a className={styles.primaryAction} href="mailto:info@lumorahorticulture.com"><MessageIcon /> {t.contact}</a>
+                <Link className={styles.secondaryAction} href={backToShopHref}>{t.backToShop}</Link>
+              </div>
+            ) : null}
           </div>
-          <h1 className="mb-2 font-display text-3xl font-bold text-lumora-dark sm:text-4xl">{t.title}</h1>
-          <p className="text-lg text-lumora-dark/70">{t.subtitle}</p>
-        </div>
 
-        <div className="rounded-3xl border border-lumora-dark/10 bg-white p-6 shadow-soft-lg sm:p-8">
-          {loading && (
-            <div className="flex items-center justify-center gap-3 py-10 text-lumora-dark/70" role="status">
-              <span className="h-5 w-5 animate-spin rounded-full border-2 border-lumora-green-500 border-t-transparent" />
-              {t.loading}
+          <aside className={styles.side} aria-label={t.sideTitle}>
+            <div>
+              <h2>{t.sideTitle}</h2>
+              <ul className={styles.steps}>
+                {t.steps.map(([title, text], index) => (
+                  <li key={title}>
+                    <span className={styles.stepIcon}>{index === 0 ? <ShieldIcon /> : index === 1 ? <LockIcon /> : <MessageIcon />}</span>
+                    <span><strong>{title}</strong><small>{text}</small></span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
-
-          {!loading && error && (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-4" role="alert">
-              <p className="text-sm text-red-700">{error}</p>
+            <div className={styles.paymentProof}>
+              <span>{t.securePayment}</span>
+              <PaymentLogos />
             </div>
-          )}
+          </aside>
+        </section>
 
-          {!loading && order && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 rounded-xl bg-lumora-green-500/10 p-4">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-lumora-green-600" aria-hidden="true">✓</span>
-                <p className="font-semibold text-lumora-dark">{t.orderFound}</p>
-              </div>
-
-              <div className="space-y-4 rounded-xl bg-lumora-cream/30 p-5">
-                {order.customer_name && (
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-lumora-dark/70">{t.customer}</span>
-                    <span className="text-right font-medium text-lumora-dark">{order.customer_name}</span>
-                  </div>
-                )}
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-lumora-dark/70">{t.status}</span>
-                  <span className={`rounded-full px-3 py-1 text-sm font-medium ${statusColor(order.payment_status)}`}>
-                    {statusLabel(order.payment_status)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-4 border-t border-lumora-dark/10 pt-3">
-                  <span className="text-lg font-semibold text-lumora-dark">{t.amount}</span>
-                  <span className="text-2xl font-bold text-lumora-green-500">{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(order.total_amount)}</span>
-                </div>
-              </div>
-
-              {error && (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4" role="alert">
-                  <p className="text-sm text-red-700">{error}</p>
-                </div>
-              )}
-
-              <button
-                type="button"
-                onClick={handleRetryPayment}
-                disabled={retryLoading || !order.can_retry}
-                className="flex w-full items-center justify-center gap-3 rounded-xl bg-lumora-green-500 py-4 text-xl font-semibold text-white shadow-soft-md transition-all hover:bg-lumora-green-600 hover:shadow-soft-lg disabled:cursor-not-allowed disabled:bg-gray-300"
-              >
-                {retryLoading ? t.processing : t.payNow}
-              </button>
-
-              <p className="text-center text-sm text-lumora-dark/60">🔒 {t.securePayment}</p>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-8 text-center">
-          <p className="mb-2 text-lumora-dark/70">{t.needHelp}</p>
-          <p className="text-lumora-green-500">
-            {t.contactUs}{' '}
-            <a href="mailto:info@lumorahorticulture.com" className="underline hover:text-lumora-green-600">
-              info@lumorahorticulture.com
-            </a>
-          </p>
-        </div>
-
-        <div className="mt-6 text-center">
-          <Link href={backToShopHref} className="text-lumora-dark/60 transition-colors hover:text-lumora-dark">
-            ← {t.backToShop}
-          </Link>
-        </div>
+        <p className={styles.support}>{t.support} <a href="mailto:info@lumorahorticulture.com">info@lumorahorticulture.com</a></p>
       </div>
-    </div>
+    </main>
   );
 }
 
 export default function RetryPaymentPage() {
-  return <RetryPaymentContent />;
+  return (
+    <StoreShell>
+      <RetryPaymentContent />
+    </StoreShell>
+  );
 }

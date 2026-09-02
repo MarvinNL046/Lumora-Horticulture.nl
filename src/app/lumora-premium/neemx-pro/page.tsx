@@ -3,7 +3,7 @@ import { serializeJsonLd } from '@/lib/safe-json-ld'
 import { ProductDetail } from '../_components/ProductDetail'
 import { neemx } from '../_data/products'
 
-const title = 'NEEMX PRO | Plantaardig olieconcentraat voor bladverzorging'
+const title = 'NeemXPRO | Plantaardig olieconcentraat voor bladverzorging'
 const description = 'Hooggeconcentreerde botanische olieblend voor gelijkmatige bladverzorging. Goed te verdelen in water en verkrijgbaar in 10, 30 en 50 ml.'
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [{
       url: neemx.usageImage ?? neemx.mainImage,
-      alt: 'NEEMX PRO plantaardig olieconcentraat in 10, 30 en 50 ml',
+      alt: 'NeemXPRO plantaardig olieconcentraat in 10, 30 en 50 ml',
     }],
   },
 }
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 const productJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
-  name: 'NEEMX PRO',
+  name: 'NeemXPRO',
   description,
   image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
     .filter((image): image is string => Boolean(image))
@@ -35,7 +35,7 @@ const productJsonLd = {
   category: 'Plantaardig olieconcentraat voor bladverzorging',
   offers: neemx.variants.map((variant) => ({
     '@type': 'Offer',
-    name: `NEEMX PRO ${variant.label}`,
+    name: `NeemXPRO ${variant.label}`,
     sku: variant.id,
     price: variant.price.toFixed(2),
     priceCurrency: 'EUR',

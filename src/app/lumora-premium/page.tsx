@@ -11,17 +11,6 @@ import styles from './storefront.module.css'
 
 export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = 'nl' }: { routes?: StorefrontRoutes; locale?: StorefrontLocale }) {
   const copy = homeCopy[locale]
-  const paperPlugLead = locale === 'en'
-    ? 'Paper Plug Trays for sowing and cuttings. NeemX Pro for targeted plant care. Two clear product lines, available to order directly online.'
-    : locale === 'de'
-      ? 'Paper Plug Trays für Aussaat und Stecklinge. NeemX Pro für gezielte Pflanzenpflege. Zwei klare Produktlinien, direkt online bestellbar.'
-      : copy.lead
-  const paperPlugHeroTitle = locale === 'en' ? 'Paper Plug Trays' : locale === 'de' ? 'Paper Plug Trays' : copy.heroTitle
-  const paperPlugSteps = locale === 'en'
-    ? [['Choose your application', 'Propagation with Paper Plug Trays or targeted leaf care.'], ...copy.steps.slice(1)]
-    : locale === 'de'
-      ? [['Anwendung wählen', 'Anzucht mit Paper Plug Trays oder gezielte Blattpflege.'], ...copy.steps.slice(1)]
-      : copy.steps
   const localized = getLocalizedProducts(locale)
   const localizedProducts = [localized.paperbus, localized.neemx]
   return (
@@ -34,7 +23,7 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = '
             </span>
             <h1>{copy.title}</h1>
             <p className={styles.heroLead}>
-              {paperPlugLead}
+              {copy.lead}
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href={routes.products}>
@@ -68,7 +57,7 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = '
             />
             <div className={styles.heroCaption}>
               <span className={styles.heroCaptionIcon}><LeafIcon /></span>
-              <span><small>{paperPlugHeroTitle}</small><strong>{copy.heroText}</strong></span>
+              <span><small>{copy.heroTitle}</small><strong>{copy.heroText}</strong></span>
             </div>
             <Link className={styles.heroMiniCard} href={routes.neemx}>
               <span className={styles.heroMiniImage}>
@@ -125,7 +114,7 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = '
             <h2>{copy.routeTitle}</h2>
             <p>{copy.routeText}</p>
             <ol className={styles.choiceSteps}>
-              {paperPlugSteps.map(([title, text], index) => <li key={title}><span>0{index + 1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}
+              {copy.steps.map(([title, text], index) => <li key={title}><span>0{index + 1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}
             </ol>
             <Link className={styles.textLink} href={routes.products}>{copy.compare} <ArrowRightIcon /></Link>
           </div>
