@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import type { ReactNode } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { formatPrice } from '../_data/products'
 import { getStorefrontRoutes } from '../_data/routes'
@@ -109,7 +109,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <button className={styles.languageButton} type="button" aria-label="Taal: Nederlands">
               NL <span aria-hidden="true">⌄</span>
             </button>
-            <Link className={styles.accountButton} href="/account" aria-label="Mijn account">
+            <Link className={styles.accountButton} href="/account" aria-label="Mijn account" onClick={openAccountWithFreshDocument}>
               <UserIcon />
               <span className={styles.cartLabel}>Account</span>
             </Link>
@@ -175,7 +175,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>Hulp</span>
           </a>
-          <Link href="/account">
+          <Link href="/account" onClick={openAccountWithFreshDocument}>
             <span className={styles.mobileNavIcon}><UserIcon /></span>
             <span>Account</span>
           </Link>
@@ -190,4 +190,23 @@ export function StoreShell({ children }: { children: ReactNode }) {
       )}
     </div>
   )
+}
+
+// The account lives in a separate authenticated route tree. Loading a fresh
+// document avoids reusing a storefront shell cached before a deployment.
+function openAccountWithFreshDocument(event: MouseEvent<HTMLAnchorElement>) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) return
+
+  event.preventDefault()
+  // Intentional document reload: the authenticated tree must not inherit a
+  // storefront layout cached by a tab that was open during a deployment.
+  // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+  window.location.assign('/account')
 }
