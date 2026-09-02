@@ -15,7 +15,7 @@ const ExitIntentPopup = dynamic(
 // Routes that opt out of the global Lumora chrome (header / footer /
 // cart sidebar / exit intent). Used by standalone landing pages and
 // design demos that ship their own chrome.
-const STANDALONE_ROUTES = ['/lumora-premium', '/neemxpro-2-plus-1-gratis']
+const STANDALONE_ROUTES = ['/lumora-premium', '/neemxpro-2-plus-1-gratis', '/handler', '/account']
 const STANDALONE_CHECKOUT_ROUTES = ['/checkout/success', '/checkout/conversion']
 
 function isStandalonePath(pathname: string | null): boolean {
@@ -24,7 +24,7 @@ function isStandalonePath(pathname: string | null): boolean {
   const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/)/, '')
   if (STANDALONE_CHECKOUT_ROUTES.some((route) => localeAgnosticPath.startsWith(route))) return true
   return STANDALONE_ROUTES.some(
-    (r) => pathname === r || pathname.startsWith(`${r}/`)
+    (r) => localeAgnosticPath === r || localeAgnosticPath.startsWith(`${r}/`)
   )
 }
 

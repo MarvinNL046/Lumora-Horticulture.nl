@@ -43,6 +43,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/)/, '')
   const isCheckoutReturn = ['/checkout/success', '/checkout/conversion'].some((route) => localeAgnosticPath.startsWith(route))
   const isCheckoutFlow = isCheckout || isCheckoutReturn
+  const isAccount = localeAgnosticPath === '/account' || localeAgnosticPath.startsWith('/account/')
   const isPdp = pathname === routes.stekpluggen || pathname === routes.neemx
   const isCart = pathname === routes.cart
 
@@ -152,7 +153,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
         </div>
       </footer>
 
-      {isPdp || isCart ? null : (
+      {isPdp || isCart || isAccount ? null : (
         <nav className={styles.mobileNav} aria-label="Mobiele navigatie">
           <Link
             aria-current={pathname === routes.home ? 'page' : undefined}

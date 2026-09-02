@@ -1,0 +1,80 @@
+.authPage {
+  --ink: #1d2a25;
+  --muted: #596861;
+  --green: #2d7d46;
+  --deep: #173d29;
+  --sage: #eaf2ec;
+  --line: #dce5df;
+  min-height: 720px;
+  padding: 52px 0 88px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #f6f8f6 0, #fff 420px);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+.authPage *, .authPage *::before, .authPage *::after { box-sizing: border-box; }
+.authContainer { width: min(calc(100% - 64px), 1180px); margin-inline: auto; }
+.authGrid { min-height: 660px; display: grid; grid-template-columns: .96fr 1.04fr; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 30px; box-shadow: 0 24px 70px rgba(35,66,48,.11); }
+
+.authVisual { position: relative; min-height: 660px; overflow: hidden; background: var(--deep); }
+.authVisual > img { object-fit: cover; object-position: center; }
+.visualOverlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,45,30,.08) 25%, rgba(15,45,30,.88) 100%); }
+.visualCopy { position: absolute; z-index: 2; left: 40px; right: 40px; bottom: 116px; color: #fff; }
+.visualCopy > span, .panelIntro > span { display: block; color: #a8dab5; font-size: 11px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.visualCopy h1 { max-width: 510px; margin: 12px 0 14px; font-family: var(--font-playfair), Georgia, serif; font-size: clamp(42px,4.2vw,59px); font-weight: 560; letter-spacing: -.04em; line-height: 1.02; text-wrap: balance; }
+.visualCopy p { max-width: 475px; margin: 0; color: rgba(255,255,255,.78); font-size: 14px; line-height: 1.65; }
+.visualBadge { position: absolute; z-index: 2; left: 40px; right: 40px; bottom: 32px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--deep); background: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.75); border-radius: 15px; backdrop-filter: blur(10px); }
+.visualBadge > svg { width: 34px; height: 34px; padding: 7px; color: var(--green); background: var(--sage); border-radius: 10px; }
+.visualBadge > span { display: grid; gap: 2px; }
+.visualBadge strong { font-size: 12px; }
+.visualBadge small { color: var(--muted); font-size: 11px; }
+
+.authPanel { display: flex; flex-direction: column; justify-content: center; padding: 46px 60px; }
+.panelIntro { margin-bottom: 27px; }
+.panelIntro > span { color: var(--green); }
+.panelIntro h2 { max-width: 520px; margin: 10px 0 11px; font-family: var(--font-playfair), Georgia, serif; font-size: clamp(35px,3vw,46px); font-weight: 560; letter-spacing: -.035em; line-height: 1.05; text-wrap: balance; }
+.panelIntro p { max-width: 500px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+.authForm { width: 100%; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 14px 38px rgba(24,61,42,.07); }
+.authForm :global(.stack-scope) { width: 100%; max-width: none !important; flex-basis: auto !important; font-family: var(--font-inter), Arial, sans-serif; }
+.authForm :global(button), .authForm :global(input) { min-height: 46px; }
+.authForm :global(button) { font-weight: 750; }
+
+.accountBenefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-top: 16px; }
+.accountBenefits span { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 7px; color: var(--muted); background: #f4f7f4; border-radius: 10px; font-size: 10px; font-weight: 750; }
+.accountBenefits svg { width: 16px; color: var(--green); }
+.backLink { align-self: center; min-height: 44px; display: inline-flex; align-items: center; margin-top: 11px; padding: 0 10px; color: var(--green) !important; font-size: 11px; font-weight: 750; }
+.backLink:focus-visible { outline: 3px solid rgba(45,125,70,.3); outline-offset: 2px; }
+
+@media (max-width: 900px) {
+  .authGrid { grid-template-columns: .78fr 1.22fr; }
+  .authPanel { padding-inline: 34px; }
+  .visualCopy, .visualBadge { left: 26px; right: 26px; }
+}
+
+@media (max-width: 767px) {
+  .authPage { min-height: 0; padding: 24px 0 48px; }
+  .authContainer { width: min(calc(100% - 28px), 1180px); }
+  .authGrid { min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }
+  .authVisual { min-height: 230px; }
+  .visualCopy { left: 20px; right: 20px; bottom: 22px; }
+  .visualCopy h1 { max-width: 330px; margin: 8px 0 0; font-size: 36px; }
+  .visualCopy p, .visualBadge { display: none; }
+  .authPanel { padding: 28px 18px 24px; }
+  .panelIntro { margin-bottom: 19px; }
+  .panelIntro h2 { font-size: 34px; }
+  .panelIntro p { font-size: 13px; }
+  .authForm { padding: 18px 14px; border-radius: 16px; }
+  .accountBenefits { grid-template-columns: 1fr; }
+  .accountBenefits span { justify-content: flex-start; padding-inline: 13px; }
+}
+
+@media (max-width: 380px) {
+  .authContainer { width: min(calc(100% - 20px), 1180px); }
+  .authPanel { padding-inline: 12px; }
+  .authForm { padding-inline: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .authPage *, .authPage *::before, .authPage *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
