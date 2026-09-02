@@ -46,7 +46,12 @@ export default function Handler(props: Parameters<typeof StackHandler>[0]) {
               </div>
 
               <div className={styles.authForm}>
-                <StackHandler {...props} fullPage={false} app={stackServerApp} />
+                <div className={styles.authFormSkeleton} aria-hidden="true">
+                  <span /><span /><span /><span /><span /><span /><span />
+                </div>
+                <div className={styles.authFormContent}>
+                  <StackHandler {...props} fullPage={false} app={stackServerApp} />
+                </div>
               </div>
 
               <div className={styles.accountBenefits} aria-label="Voordelen van een Lumora-account">

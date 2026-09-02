@@ -35,7 +35,16 @@
 .panelIntro h2 { max-width: 520px; margin: 10px 0 11px; font-family: var(--font-playfair), Georgia, serif; font-size: clamp(35px,3vw,46px); font-weight: 560; letter-spacing: -.035em; line-height: 1.05; text-wrap: balance; }
 .panelIntro p { max-width: 500px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
 
-.authForm { width: 100%; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 14px 38px rgba(24,61,42,.07); }
+.authForm { position: relative; width: 100%; min-height: 490px; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 14px 38px rgba(24,61,42,.07); }
+.authFormContent { opacity: 0; transition: opacity .14s ease-out; }
+.authFormSkeleton { position: absolute; inset: 24px; display: grid; align-content: start; gap: 13px; opacity: 1; pointer-events: none; transition: opacity .1s ease-out; }
+.authFormSkeleton span { display: block; height: 46px; background: linear-gradient(90deg, #f1f4f2, #f7f9f7 48%, #f1f4f2); border: 1px solid #e8ede9; border-radius: 9px; }
+.authFormSkeleton span:first-child { width: 54%; height: 27px; margin: 3px auto 2px; border: 0; }
+.authFormSkeleton span:nth-child(2) { width: 38%; height: 14px; margin: -7px auto 4px; border: 0; }
+.authFormSkeleton span:nth-child(5) { height: 1px; margin: 8px 0; border: 0; background: var(--line); }
+.authFormSkeleton span:nth-child(6) { height: 42px; background: #f3f6f3; }
+.authForm:has(.authFormContent button) .authFormSkeleton { opacity: 0; }
+.authForm:has(.authFormContent button) .authFormContent { opacity: 1; }
 .authForm :global(.stack-scope) { width: 100%; max-width: none !important; flex-basis: auto !important; font-family: var(--font-inter), Arial, sans-serif; }
 .authForm :global(button), .authForm :global(input) { min-height: 46px; }
 .authForm :global(button) { font-weight: 750; }
@@ -64,7 +73,8 @@
   .panelIntro { margin-bottom: 19px; }
   .panelIntro h2 { font-size: 34px; }
   .panelIntro p { font-size: 13px; }
-  .authForm { padding: 18px 14px; border-radius: 16px; }
+  .authForm { min-height: 515px; padding: 18px 14px; border-radius: 16px; }
+  .authFormSkeleton { inset: 18px 14px; }
   .accountBenefits { grid-template-columns: 1fr; }
   .accountBenefits span { justify-content: flex-start; padding-inline: 13px; }
 }

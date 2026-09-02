@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useUser } from '@stackframe/stack'
 import type { MouseEvent, ReactNode } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { formatPrice } from '../_data/products'
@@ -35,6 +36,7 @@ function Wordmark({ priority = false }: { priority?: boolean }) {
 
 export function StoreShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  const user = useUser({ or: 'return-null' })
   const { getTotalItems, getTotalPrice } = useCart()
   const cartCount = getTotalItems()
   const cartTotal = getTotalPrice()
@@ -46,6 +48,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const isAccount = localeAgnosticPath === '/account' || localeAgnosticPath.startsWith('/account/')
   const isPdp = pathname === routes.stekpluggen || pathname === routes.neemx
   const isCart = pathname === routes.cart
+  const accountHref = user ? '/account' : '/handler/sign-in'
 
   if (isCheckoutFlow) {
     return (
@@ -109,7 +112,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <button className={styles.languageButton} type="button" aria-label="Taal: Nederlands">
               NL <span aria-hidden="true">⌄</span>
             </button>
-            <Link className={styles.accountButton} href="/account" aria-label="Mijn account" onClick={openAccountWithFreshDocument}>
+            <Link className={styles.accountButton} href={accountHref} aria-label="Mijn account" onClick={openAccountWithFreshDocument}>
               <UserIcon />
               <span className={styles.cartLabel}>Account</span>
             </Link>
@@ -175,7 +178,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>Hulp</span>
           </a>
-          <Link href="/account" onClick={openAccountWithFreshDocument}>
+          <Link href={accountHref} onClick={openAccountWithFreshDocument}>
             <span className={styles.mobileNavIcon}><UserIcon /></span>
             <span>Account</span>
           </Link>
@@ -205,8 +208,5 @@ function openAccountWithFreshDocument(event: MouseEvent<HTMLAnchorElement>) {
   ) return
 
   event.preventDefault()
-  // Intentional document reload: the authenticated tree must not inherit a
-  // storefront layout cached by a tab that was open during a deployment.
-  // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-  window.location.assign('/account')
+  window.location.assign(event.currentTarget.href)
 }
