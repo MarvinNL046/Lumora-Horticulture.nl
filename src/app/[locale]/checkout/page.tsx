@@ -526,7 +526,7 @@ export default function CheckoutPage() {
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-lumora-dark truncate">{item.name}</div>
                 {paperbusPromotion.eligible ? (
-                  <div className="text-xs text-lumora-green-600 font-bold">✓ 3-voor-€180 actie toegepast</div>
+                  <div className="text-xs text-lumora-green-600 font-bold">✓ 2 + 1 gratis toegepast · €180 totaal</div>
                 ) : discountInfo.hasDiscount ? (
                   <div className="text-xs text-lumora-green-600 font-medium">-{discountInfo.currentDiscount}% · {formatPrice(discountedPrice)} {t.pricePerPiece}</div>
                 ) : (

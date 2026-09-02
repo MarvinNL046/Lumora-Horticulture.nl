@@ -704,8 +704,8 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                     <div className="bg-lumora-green-50 p-4">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="font-display text-2xl font-bold text-lumora-dark">3 dozen voor €180</h3>
-                          <p className="text-sm text-lumora-dark/75 mt-1">3 dozen van dezelfde maat voor <strong>€180 totaal</strong>.</p>
+                          <h3 className="font-display text-2xl font-bold text-lumora-dark">2 + 1 gratis</h3>
+                          <p className="text-sm text-lumora-dark/75 mt-1">Ontvang de derde doos gratis: 3 dozen van dezelfde maat voor <strong>€180 totaal</strong>.</p>
                           <p className="text-xs text-lumora-dark/60 mt-1">Verzending inbegrepen naar NL, BE en DE.</p>
                         </div>
                         <button
@@ -713,7 +713,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                           onClick={() => setQuantity(3)}
                           className="shrink-0 min-h-11 px-4 rounded-xl bg-white border border-lumora-green-300 text-lumora-dark text-xs font-bold hover:bg-lumora-green-500 hover:text-white transition-colors"
                         >
-                          {paperbusPromotion.eligible && quantity === 3 ? 'Gekozen' : 'Kies 3 dozen'}
+                          {paperbusPromotion.eligible && quantity === 3 ? '2 + 1 gratis gekozen' : 'Kies 2 + 1 gratis'}
                         </button>
                       </div>
                     </div>
@@ -878,7 +878,7 @@ export default function ProductPageClient({ locale, productSlug }: ProductPageCl
                       <span className="font-semibold text-lumora-dark/60 line-through">{formatPrice(basePrice * quantity)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-lumora-green-600 font-semibold">3-voor-€180 actie</span>
+                      <span className="text-lumora-green-600 font-semibold">2 + 1 gratis actie · €180 totaal</span>
                       <span className="font-bold text-lumora-green-600">−{formatPrice(paperbusPromotion.discount)}</span>
                     </div>
                   </div>

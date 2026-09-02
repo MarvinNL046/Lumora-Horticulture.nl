@@ -233,13 +233,13 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
               aria-labelledby="stekpluggen-actie"
             >
               <div className={styles.bundleOfferHeader}>
-                <span>Actiebundel</span>
+                <span>2 + 1 gratis actie</span>
                 {paperbusPromotion.eligible && <strong><CheckIcon /> Actief</strong>}
               </div>
               <div className={styles.bundleOfferBody}>
                 <div>
-                  <h2 id="stekpluggen-actie">3 dozen voor €180</h2>
-                  <p>Kies {variant.label}: drie dozen van dezelfde maat voor <strong>{formatPrice(PAPERBUS_PROMO_PRICE)}</strong> totaal.</p>
+                  <h2 id="stekpluggen-actie">2 + 1 gratis</h2>
+                  <p>Kies {variant.label}: ontvang de derde doos gratis en betaal <strong>{formatPrice(PAPERBUS_PROMO_PRICE)}</strong> totaal.</p>
                   <small>Verzending inbegrepen naar NL, BE en DE.</small>
                 </div>
                 <button
@@ -248,8 +248,8 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                   aria-pressed={paperbusPromotion.eligible && quantity === PAPERBUS_PROMO_QUANTITY}
                 >
                   {paperbusPromotion.eligible && quantity === PAPERBUS_PROMO_QUANTITY
-                    ? 'Actiebundel gekozen'
-                    : 'Kies 3 dozen'}
+                    ? '2 + 1 gratis gekozen'
+                    : 'Kies 2 + 1 gratis'}
                 </button>
               </div>
             </section>
@@ -262,7 +262,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
                   <strong>{variant.label} × {quantity}</strong>
                   <small>
                     {isPaperbus && paperbusPromotion.eligible
-                      ? `${paperbusPromotion.bundleCount === 1 ? 'Actiebundel' : `${paperbusPromotion.bundleCount} actiebundels`} actief · verzending inbegrepen`
+                      ? `${paperbusPromotion.bundleCount === 1 ? '2 + 1 gratis' : `${paperbusPromotion.bundleCount}× 2 + 1 gratis`} actief · verzending inbegrepen`
                       : !isPaperbus && discountInfo.hasDiscount
                       ? `${discountInfo.currentDiscount}% staffelkorting · ${formatPrice(discountedUnitPrice)} per fles`
                       : variant.detail}
@@ -489,7 +489,7 @@ export function ProductDetail({ product }: { product: ProductFamily }) {
           aria-busy={isAdding}
         >
           <span>
-            <small>{isPaperbus && paperbusPromotion.eligible ? '3-voor-€180 actie · verzending inbegrepen' : `${compactVariantLabel} × ${quantity}`}</small>
+            <small>{isPaperbus && paperbusPromotion.eligible ? '2 + 1 gratis · verzending inbegrepen' : `${compactVariantLabel} × ${quantity}`}</small>
             <strong>{isAdding ? 'Toevoegen…' : isPaperbus && paperbusPromotion.eligible ? `3 dozen · ${formatPrice(productTotal)}` : `In winkelwagen · ${formatPrice(productTotal)}`}</strong>
           </span>
         </button>

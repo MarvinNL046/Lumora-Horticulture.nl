@@ -5,12 +5,12 @@ import { publicStorefrontRoutes } from '../_data/routes'
 
 export function StekplugPromoBand({ href = `${publicStorefrontRoutes.stekpluggen}#koopblok` }: { href?: string }) {
   return (
-    <section className={styles.promoBand} aria-label="Stekpluggen actie">
+    <section className={styles.promoBand} aria-label="2 plus 1 gratis stekpluggenactie">
       <Link className={styles.promoBandInner} href={href}>
-        <span className={styles.promoBandBadge}>3 voor €180</span>
+        <span className={styles.promoBandBadge}>2 + 1 gratis</span>
         <span className={styles.promoBandCopy}>
-          <strong>3 dozen Stekpluggen Steenwol voor €180</strong>
-          <small><CheckIcon /> Kies 84 of 104 <i /> Verzending inbegrepen</small>
+          <strong>Koop 2 dozen Stekpluggen, ontvang 1 doos gratis</strong>
+          <small><CheckIcon /> 3 dozen voor €180 <i /> Kies 84 of 104 <i /> Verzending inbegrepen</small>
         </span>
         <span className={styles.promoBandAction}>Bekijk de actie <ArrowRightIcon /></span>
       </Link>

@@ -193,7 +193,7 @@ export default function CartSidebar() {
                         <div className="text-sm mb-2">
                           {paperbusPromotion.eligible ? (
                             <span className="inline-flex items-center rounded-full bg-lumora-green-100 px-2 py-1 text-xs font-bold text-lumora-green-700">
-                              ✓ 3 voor €180 · {formatPrice(itemTotal)}
+                              ✓ 2 + 1 gratis · {formatPrice(itemTotal)}
                             </span>
                           ) : discountInfo.hasDiscount ? (
                             <>
@@ -222,7 +222,7 @@ export default function CartSidebar() {
                             onClick={() => updateQuantity(item.product_id, 3)}
                             className="mb-2 w-full text-left text-xs bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-bold rounded-md px-2 py-1.5 transition-colors"
                           >
-                            Kies 3 dozen voor €180 inclusief verzending
+                            Kies 2 + 1 gratis voor €180 inclusief verzending
                           </button>
                         )}
 

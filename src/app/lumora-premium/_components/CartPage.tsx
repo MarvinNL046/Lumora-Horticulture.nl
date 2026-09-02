@@ -78,10 +78,10 @@ export function CartPage() {
                     <h2>{item.name}</h2>
                     <small>{cartItemDetail(item.slug)}</small>
                     {paperbusPromotion && (paperbusPromotion.eligible ? (
-                      <span className={styles.cartPromoApplied}><CheckIcon /> 3-voor-€180 actie toegepast</span>
+                      <span className={styles.cartPromoApplied}><CheckIcon /> 2 + 1 gratis toegepast</span>
                     ) : (
                       <button className={styles.cartPromoNudge} type="button" onClick={() => updateQuantity(item.product_id, 3)}>
-                        Kies 3 dozen voor €180
+                        Kies 2 + 1 gratis · €180 totaal
                       </button>
                     ))}
                     <button type="button" onClick={() => removeItem(item.product_id)}>Verwijderen</button>
@@ -120,7 +120,7 @@ export function CartPage() {
             {activeBundle?.eligible && (
               <div className={styles.summaryPromoProof}>
                 <CheckIcon />
-                <span><strong>3-voor-€180 actie toegepast</strong><small>{items[0].quantity} dozen {items[0].name}</small></span>
+                <span><strong>2 + 1 gratis toegepast</strong><small>{items[0].quantity} dozen {items[0].name} · €180 totaal</small></span>
               </div>
             )}
             <Link href={routes.checkout} className={styles.checkoutButton}>Verder naar afrekenen <ArrowRightIcon /></Link>
