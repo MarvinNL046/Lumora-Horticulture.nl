@@ -3,46 +3,117 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { StackHandler } from '@stackframe/stack'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
+import { resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { localizePathForLocale } from '@/lib/url-localizations'
 import { stackServerApp } from '@/stack/server'
+import { getLocale } from 'next-intl/server'
 import styles from './auth.module.css'
 
-export const metadata: Metadata = {
-  title: 'Inloggen | Lumora Horticulture',
-  description: 'Log in bij je Lumora-klantaccount voor bestellingen, facturen en bezorginformatie.',
-  robots: { index: false, follow: false },
+const authCopy = {
+  nl: {
+    metadataTitle: 'Inloggen | Lumora Horticulture',
+    metadataDescription: 'Log in bij je Lumora-klantaccount voor bestellingen, facturen en bezorginformatie.',
+    accountAria: 'Lumora klantaccount',
+    imageAlt: 'Stekpluggen van Lumora in een lichte kas',
+    eyebrow: 'Klantaccount',
+    visualTitle: 'Alles rond je bestelling op één plek.',
+    visualText: 'Bekijk je bestelstatus, download facturen en volg je levering zodra deze onderweg is.',
+    secureSignIn: 'Veilig inloggen',
+    protectedData: 'Je gegevens blijven beschermd',
+    welcome: 'Welkom bij Lumora',
+    title: 'Log in of maak een account aan.',
+    intro: 'Gebruik hetzelfde e-mailadres als bij je bestelling om alles overzichtelijk terug te vinden.',
+    benefitsAria: 'Voordelen van een Lumora-account',
+    orders: 'Bestellingen',
+    invoices: 'Facturen',
+    tracking: 'Track & Trace',
+    back: 'Terug naar de producten',
+  },
+  en: {
+    metadataTitle: 'Sign in | Lumora Horticulture',
+    metadataDescription: 'Sign in to your Lumora customer account for orders, invoices and delivery information.',
+    accountAria: 'Lumora customer account',
+    imageAlt: 'Lumora cutting plugs in a bright greenhouse',
+    eyebrow: 'Customer account',
+    visualTitle: 'Everything about your order in one place.',
+    visualText: 'Check your order status, download invoices and track your delivery once it is on its way.',
+    secureSignIn: 'Secure sign-in',
+    protectedData: 'Your data stays protected',
+    welcome: 'Welcome to Lumora',
+    title: 'Sign in or create an account.',
+    intro: 'Use the same email address as your order to find everything in one clear overview.',
+    benefitsAria: 'Benefits of a Lumora account',
+    orders: 'Orders',
+    invoices: 'Invoices',
+    tracking: 'Track & Trace',
+    back: 'Back to products',
+  },
+  de: {
+    metadataTitle: 'Anmelden | Lumora Horticulture',
+    metadataDescription: 'Melden Sie sich für Bestellungen, Rechnungen und Lieferinformationen bei Ihrem Lumora-Kundenkonto an.',
+    accountAria: 'Lumora Kundenkonto',
+    imageAlt: 'Lumora Steinwoll-Stecklinge in einem hellen Gewächshaus',
+    eyebrow: 'Kundenkonto',
+    visualTitle: 'Alles rund um Ihre Bestellung an einem Ort.',
+    visualText: 'Behalten Sie Ihren Bestellstatus im Blick, laden Sie Rechnungen herunter und verfolgen Sie Ihre Lieferung, sobald sie unterwegs ist.',
+    secureSignIn: 'Sicher anmelden',
+    protectedData: 'Ihre Daten bleiben geschützt',
+    welcome: 'Willkommen bei Lumora',
+    title: 'Anmelden oder Konto erstellen.',
+    intro: 'Verwenden Sie dieselbe E-Mail-Adresse wie bei Ihrer Bestellung, um alles übersichtlich wiederzufinden.',
+    benefitsAria: 'Vorteile eines Lumora-Kontos',
+    orders: 'Bestellungen',
+    invoices: 'Rechnungen',
+    tracking: 'Sendungsverfolgung',
+    back: 'Zurück zu den Produkten',
+  },
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = resolveStorefrontLocale(await getLocale())
+  const copy = authCopy[locale]
+
+  return {
+    title: copy.metadataTitle,
+    description: copy.metadataDescription,
+    robots: { index: false, follow: false },
+  }
 }
 
-export default function Handler(props: Parameters<typeof StackHandler>[0]) {
+export default async function Handler(props: Parameters<typeof StackHandler>[0]) {
+  const locale = resolveStorefrontLocale(await getLocale())
+  const copy = authCopy[locale]
+
   return (
     <StoreShell>
       <main className={styles.authPage}>
         <div className={styles.authContainer}>
-          <section className={styles.authGrid} aria-label="Lumora klantaccount">
+          <section className={styles.authGrid} aria-label={copy.accountAria}>
             <div className={styles.authVisual}>
               <Image
                 src="/productAfbeeldingen/stekpluggen/stekpluggen-greenhouse-hero-desktop.avif"
-                alt="Stekpluggen van Lumora in een lichte kas"
+                alt={copy.imageAlt}
                 fill
                 priority
                 sizes="(max-width: 767px) 100vw, 48vw"
               />
               <div className={styles.visualOverlay} />
               <div className={styles.visualCopy}>
-                <span>Klantaccount</span>
-                <h1>Alles rond je bestelling op één plek.</h1>
-                <p>Bekijk je bestelstatus, download facturen en volg je levering zodra deze onderweg is.</p>
+                <span>{copy.eyebrow}</span>
+                <h1>{copy.visualTitle}</h1>
+                <p>{copy.visualText}</p>
               </div>
               <div className={styles.visualBadge}>
                 <ShieldIcon />
-                <span><strong>Veilig inloggen</strong><small>Je gegevens blijven beschermd</small></span>
+                <span><strong>{copy.secureSignIn}</strong><small>{copy.protectedData}</small></span>
               </div>
             </div>
 
             <div className={styles.authPanel}>
               <div className={styles.panelIntro}>
-                <span>Welkom bij Lumora</span>
-                <h2>Log in of maak een account aan.</h2>
-                <p>Gebruik hetzelfde e-mailadres als bij je bestelling om alles overzichtelijk terug te vinden.</p>
+                <span>{copy.welcome}</span>
+                <h2>{copy.title}</h2>
+                <p>{copy.intro}</p>
               </div>
 
               <div className={styles.authForm}>
@@ -54,13 +125,13 @@ export default function Handler(props: Parameters<typeof StackHandler>[0]) {
                 </div>
               </div>
 
-              <div className={styles.accountBenefits} aria-label="Voordelen van een Lumora-account">
-                <span><OrdersIcon /> Bestellingen</span>
-                <span><InvoiceIcon /> Facturen</span>
-                <span><TruckIcon /> Track & Trace</span>
+              <div className={styles.accountBenefits} aria-label={copy.benefitsAria}>
+                <span><OrdersIcon /> {copy.orders}</span>
+                <span><InvoiceIcon /> {copy.invoices}</span>
+                <span><TruckIcon /> {copy.tracking}</span>
               </div>
 
-              <Link className={styles.backLink} href="/producten">← Terug naar de producten</Link>
+              <Link className={styles.backLink} href={localizePathForLocale('/products', locale)}>← {copy.back}</Link>
             </div>
           </section>
         </div>

@@ -7,6 +7,7 @@ import {
 
 const PRIMARY_HOST = 'lumorahorticulture.nl'
 const NEXT_INTL_LOCALE_HEADER = 'X-NEXT-INTL-LOCALE'
+const LOCALE_PREFERENCE_COOKIE = 'lumora_locale'
 const LEGACY_HOST_LOCALES: Record<string, AppLocale> = {
   'lumorahorticulture.com': 'en',
   'www.lumorahorticulture.com': 'en',
@@ -95,6 +96,18 @@ function isNonLocalizedPath(pathname: string): boolean {
   )
 }
 
+function isAppLocale(value: string | null | undefined): value is AppLocale {
+  return value === 'nl' || value === 'en' || value === 'de'
+}
+
+function getNonLocalizedLocale(request: NextRequest): AppLocale {
+  const requestedLocale = request.nextUrl.searchParams.get('lang')
+  if (isAppLocale(requestedLocale)) return requestedLocale
+
+  const savedLocale = request.cookies.get(LOCALE_PREFERENCE_COOKIE)?.value
+  return isAppLocale(savedLocale) ? savedLocale : routing.defaultLocale
+}
+
 export function proxy(request: NextRequest) {
   const host = getHost(request)
   const incomingPath = request.nextUrl.pathname
@@ -131,9 +144,28 @@ export function proxy(request: NextRequest) {
   }
 
   if (bypassLocalization) {
-    return host === `www.${PRIMARY_HOST}`
-      ? primaryHostPathRedirect(request, incomingPath)
-      : NextResponse.next()
+    if (host === `www.${PRIMARY_HOST}`) {
+      return primaryHostPathRedirect(request, incomingPath)
+    }
+
+    if (FILE_EXTENSION.test(incomingPath)) return NextResponse.next()
+
+    const locale = getNonLocalizedLocale(request)
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set(NEXT_INTL_LOCALE_HEADER, locale)
+    const response = NextResponse.next({request: {headers: requestHeaders}})
+    const requestedLocale = request.nextUrl.searchParams.get('lang')
+
+    if (isAppLocale(requestedLocale)) {
+      response.cookies.set(LOCALE_PREFERENCE_COOKIE, requestedLocale, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      })
+    }
+
+    return response
   }
 
   const locale = prefixed.locale || routing.defaultLocale
