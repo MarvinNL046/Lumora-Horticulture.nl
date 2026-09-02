@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   InvalidCanonicalBaseUrlError,
   parseCanonicalBaseUrl,
+  parseTrustedVercelPreviewBaseUrl,
 } from './canonical-base-url';
 
 test('accepts a trusted clean HTTPS origin', () => {
@@ -37,4 +38,27 @@ test('allows localhost only when explicitly requested', () => {
     parseCanonicalBaseUrl('http://localhost:3000', { allowLocalhost: true }),
     'http://localhost:3000',
   );
+});
+
+test('accepts only this project\'s clean Vercel Preview host', () => {
+  assert.equal(
+    parseTrustedVercelPreviewBaseUrl(
+      'lumorahorticulture-l2q5nl9f4-marvinnl046s-projects.vercel.app',
+    ),
+    'https://lumorahorticulture-l2q5nl9f4-marvinnl046s-projects.vercel.app',
+  );
+
+  for (const candidate of [
+    undefined,
+    '',
+    'https://lumorahorticulture-l2q5nl9f4-marvinnl046s-projects.vercel.app',
+    'lumorahorticulture-l2q5nl9f4-elsewhere.vercel.app',
+    'evil-lumorahorticulture-l2q5nl9f4-marvinnl046s-projects.vercel.app',
+    'lumorahorticulture-l2q5nl9f4-marvinnl046s-projects.vercel.app.evil.example',
+  ]) {
+    assert.throws(
+      () => parseTrustedVercelPreviewBaseUrl(candidate),
+      InvalidCanonicalBaseUrlError,
+    );
+  }
 });

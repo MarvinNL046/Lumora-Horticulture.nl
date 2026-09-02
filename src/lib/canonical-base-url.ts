@@ -1,4 +1,6 @@
 const CANONICAL_PRODUCTION_HOST = 'lumorahorticulture.nl';
+const TRUSTED_VERCEL_PREVIEW_HOST =
+  /^lumorahorticulture-[a-z0-9-]+-marvinnl046s-projects\.vercel\.app$/;
 
 export class InvalidCanonicalBaseUrlError extends Error {
   constructor() {
@@ -51,4 +53,30 @@ export function getCanonicalBaseUrl(): string {
   return parseCanonicalBaseUrl(process.env.NEXT_PUBLIC_BASE_URL, {
     allowLocalhost: process.env.NODE_ENV !== 'production',
   });
+}
+
+/**
+ * Payment callbacks must stay on the environment that created the payment.
+ * Vercel provides VERCEL_URL itself, so Preview can use that exact deployment
+ * origin without trusting request headers or a broadly configurable hostname.
+ */
+export function parseTrustedVercelPreviewBaseUrl(value: unknown): string {
+  if (typeof value !== 'string' || value.length === 0 || value.length > 253) {
+    throw new InvalidCanonicalBaseUrlError();
+  }
+
+  const host = value.toLowerCase();
+  if (host !== value || !TRUSTED_VERCEL_PREVIEW_HOST.test(host)) {
+    throw new InvalidCanonicalBaseUrlError();
+  }
+
+  return `https://${host}`;
+}
+
+export function getPaymentCallbackBaseUrl(): string {
+  if (process.env.VERCEL_ENV === 'preview') {
+    return parseTrustedVercelPreviewBaseUrl(process.env.VERCEL_URL);
+  }
+
+  return getCanonicalBaseUrl();
 }

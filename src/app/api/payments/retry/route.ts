@@ -13,7 +13,7 @@ import {
   verifyPaymentRetryToken,
   type PaymentRetryTokenPayload,
 } from '@/lib/payment-retry-token';
-import { getCanonicalBaseUrl } from '@/lib/canonical-base-url';
+import { getPaymentCallbackBaseUrl } from '@/lib/canonical-base-url';
 import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
@@ -203,7 +203,7 @@ export async function POST(request: NextRequest) {
   try {
     // Fail before reserving an attempt: redirect and webhook origins are part
     // of the payment's security boundary.
-    baseUrl = getCanonicalBaseUrl();
+    baseUrl = getPaymentCallbackBaseUrl();
   } catch {
     console.error('Payment retry is disabled: canonical base URL is invalid');
     return json(

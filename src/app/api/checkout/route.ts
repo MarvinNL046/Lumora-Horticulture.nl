@@ -23,7 +23,7 @@ import {
   isPromoCookieActive,
   calculateNeemxPromoDiscount,
 } from '@/lib/neemx-promo';
-import { getCanonicalBaseUrl } from '@/lib/canonical-base-url';
+import { getPaymentCallbackBaseUrl } from '@/lib/canonical-base-url';
 import { consumeDistributedRateLimit } from '@/lib/distributed-rate-limit';
 
 export const dynamic = 'force-dynamic';
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
 
     // Validate redirects/webhook origin before creating an order or reserving
     // a payment. Production must never fall back to localhost.
-    const baseUrl = getCanonicalBaseUrl();
+    const baseUrl = getPaymentCallbackBaseUrl();
 
     const body = await readLimitedJson(request, MAX_CHECKOUT_BODY_BYTES) as Record<string, unknown>;
     const customer_email =
