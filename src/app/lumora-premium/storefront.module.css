@@ -883,7 +883,7 @@
   .cartItemPrice strong { font-size: 13px; }
   .cartNote { margin: 12px; }
 
-  .checkoutSite { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
+  .checkoutDockSite { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
   .checkoutHeader { height: 66px; }
   .secureLabel { font-size: 12px; }
   .checkoutPage { min-height: calc(100vh - 66px); padding: 26px 0 58px; }

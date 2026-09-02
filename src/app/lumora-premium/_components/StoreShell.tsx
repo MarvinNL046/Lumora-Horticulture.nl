@@ -40,12 +40,15 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const cartTotal = getTotalPrice()
   const routes = getStorefrontRoutes(pathname)
   const isCheckout = pathname === routes.checkout
+  const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/)/, '')
+  const isCheckoutReturn = ['/checkout/success', '/checkout/conversion'].some((route) => localeAgnosticPath.startsWith(route))
+  const isCheckoutFlow = isCheckout || isCheckoutReturn
   const isPdp = pathname === routes.stekpluggen || pathname === routes.neemx
   const isCart = pathname === routes.cart
 
-  if (isCheckout) {
+  if (isCheckoutFlow) {
     return (
-      <div className={`${styles.site} ${styles.checkoutSite}`} data-lumora-storefront>
+      <div className={`${styles.site} ${styles.checkoutSite} ${isCheckout ? styles.checkoutDockSite : ''}`} data-lumora-storefront>
         <header className={styles.checkoutHeader}>
           <div className={styles.shellRow}>
             <Link href={routes.home} className={styles.logoLink} aria-label="Terug naar Lumora">
@@ -57,21 +60,23 @@ export function StoreShell({ children }: { children: ReactNode }) {
           </div>
         </header>
         {children}
-        <div className={styles.checkoutDock}>
-          <div className={styles.checkoutDockMain}>
-            <span>
-              <small>Totaal</small>
-              <strong>{formatPrice(cartTotal)}</strong>
-            </span>
-            <a href="#bestelling-plaatsen" className={styles.dockPrimaryAction}>
-              Naar betaling
-            </a>
+        {isCheckout ? (
+          <div className={styles.checkoutDock}>
+            <div className={styles.checkoutDockMain}>
+              <span>
+                <small>Totaal</small>
+                <strong>{formatPrice(cartTotal)}</strong>
+              </span>
+              <a href="#bestelling-plaatsen" className={styles.dockPrimaryAction}>
+                Naar betaling
+              </a>
+            </div>
+            <div className={styles.checkoutDockTrust} aria-label="Beschikbare betaalmethoden">
+              <span>Betaal met</span>
+              <PaymentLogos />
+            </div>
           </div>
-          <div className={styles.checkoutDockTrust} aria-label="Beschikbare betaalmethoden">
-            <span>Betaal met</span>
-            <PaymentLogos />
-          </div>
-        </div>
+        ) : null}
       </div>
     )
   }
