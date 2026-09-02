@@ -1,6 +1,5 @@
-export default function Loading() {
+import LumoraLoadingScreen from '@/components/LumoraLoadingScreen'
 
-  // Stack uses React Suspense, which will render this page while user data is being fetched.
-  // See: https://nextjs.org/docs/app/api-reference/file-conventions/loading
-  return <></>;
+export default function Loading() {
+  return <LumoraLoadingScreen />
 }

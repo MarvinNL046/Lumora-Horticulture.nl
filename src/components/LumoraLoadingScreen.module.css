@@ -1,0 +1,131 @@
+.screen {
+  --loader-ink: #1d2a25;
+  --loader-green: #2d7d46;
+  --loader-deep: #173d29;
+  --loader-sage: #eaf2ec;
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 32px 20px;
+  color: var(--loader-ink);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(234, 242, 236, .92), transparent 33%),
+    linear-gradient(180deg, #fff 0%, #f7faf7 100%);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+.screen::before,
+.screen::after {
+  position: absolute;
+  z-index: -1;
+  width: min(38vw, 460px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: '';
+  filter: blur(2px);
+}
+
+.screen::before {
+  top: -22%;
+  right: -8%;
+  background: rgba(23, 61, 41, .05);
+}
+
+.screen::after {
+  bottom: -28%;
+  left: -10%;
+  background: rgba(198, 156, 67, .07);
+}
+
+.content {
+  width: min(100%, 360px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logoFrame {
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  border: 1px solid rgba(45, 125, 70, .13);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 18px 50px rgba(29, 42, 37, .11);
+}
+
+.logo {
+  width: 66px;
+  height: 66px;
+  border-radius: 13px;
+  object-fit: cover;
+}
+
+.eyebrow {
+  margin: 0 0 9px;
+  color: var(--loader-green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(30px, 6vw, 38px);
+  font-weight: 560;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+
+.message {
+  margin: 12px 0 0;
+  color: #647069;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.track {
+  width: 132px;
+  height: 3px;
+  margin-top: 26px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dce5df;
+}
+
+.bar {
+  display: block;
+  width: 54%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--loader-green);
+  animation: travel 1.15s cubic-bezier(.65, 0, .35, 1) infinite;
+}
+
+@keyframes travel {
+  from { transform: translateX(-115%); }
+  to { transform: translateX(215%); }
+}
+
+@media (max-width: 640px) {
+  .screen { padding-bottom: 14vh; }
+  .logoFrame { width: 74px; height: 74px; border-radius: 18px; }
+  .logo { width: 58px; height: 58px; }
+  .message { max-width: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    width: 100%;
+    animation: none;
+    opacity: .72;
+  }
+}
