@@ -4,11 +4,26 @@ import { ArrowRightIcon, CheckIcon, LeafIcon } from './_components/Icons'
 import { ProductFamilyCard } from './_components/ProductFamilyCard'
 import { TrustStrip } from './_components/TrustStrip'
 import { StekplugPromoBand } from './_components/StekplugPromoBand'
-import { neemx, paperbus, productFamilies } from './_data/products'
+import { getLocalizedProducts, homeCopy } from './_data/storefront-content'
 import { previewStorefrontRoutes, publicStorefrontRoutes, type StorefrontRoutes } from './_data/routes'
+import type { StorefrontLocale } from './_components/storefront-localization'
 import styles from './storefront.module.css'
 
-export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes?: StorefrontRoutes }) {
+export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = 'nl' }: { routes?: StorefrontRoutes; locale?: StorefrontLocale }) {
+  const copy = homeCopy[locale]
+  const paperPlugLead = locale === 'en'
+    ? 'Paper Plug Trays for sowing and cuttings. NeemX Pro for targeted plant care. Two clear product lines, available to order directly online.'
+    : locale === 'de'
+      ? 'Paper Plug Trays für Aussaat und Stecklinge. NeemX Pro für gezielte Pflanzenpflege. Zwei klare Produktlinien, direkt online bestellbar.'
+      : copy.lead
+  const paperPlugHeroTitle = locale === 'en' ? 'Paper Plug Trays' : locale === 'de' ? 'Paper Plug Trays' : copy.heroTitle
+  const paperPlugSteps = locale === 'en'
+    ? [['Choose your application', 'Propagation with Paper Plug Trays or targeted leaf care.'], ...copy.steps.slice(1)]
+    : locale === 'de'
+      ? [['Anwendung wählen', 'Anzucht mit Paper Plug Trays oder gezielte Blattpflege.'], ...copy.steps.slice(1)]
+      : copy.steps
+  const localized = getLocalizedProducts(locale)
+  const localizedProducts = [localized.paperbus, localized.neemx]
   return (
     <main>
       <section className={styles.hero}>
@@ -17,51 +32,51 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes
             <span className={styles.eyebrow}>
               <span /> Lumora Horticulture
             </span>
-            <h1>Gerichte producten voor sterke, verzorgde planten.</h1>
+            <h1>{copy.title}</h1>
             <p className={styles.heroLead}>
-              Stekpluggen van steenwol voor zaaien en stekken. NeemX Pro voor gerichte plantverzorging. Twee heldere productlijnen, direct online te bestellen.
+              {paperPlugLead}
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href={routes.products}>
-                Bekijk de producten <ArrowRightIcon />
+                {copy.products} <ArrowRightIcon />
               </Link>
               <a className={styles.secondaryButton} href="mailto:info@lumorahorticulture.com">
-                Hulp bij kiezen
+                {copy.help}
               </a>
             </div>
             <div className={styles.heroProof}>
-              <span><CheckIcon /> Slechts twee productlijnen</span>
-              <span><CheckIcon /> iDEAL, Wero &amp; creditcard</span>
+              <span><CheckIcon /> {copy.proofOne}</span>
+              <span><CheckIcon /> {copy.proofTwo}</span>
             </div>
           </div>
 
           <div className={styles.heroVisual}>
             <Image
               className={`${styles.heroImage} ${styles.heroImageDesktop}`}
-              src={paperbus.heroImage ?? paperbus.secondaryImage}
-              alt={paperbus.heroImageAlt ?? paperbus.secondaryImageAlt}
+              src={localized.paperbus.heroImage ?? localized.paperbus.secondaryImage}
+              alt={localized.paperbus.heroImageAlt ?? localized.paperbus.secondaryImageAlt}
               fill
               priority
               sizes="(max-width: 767px) 100vw, 56vw"
             />
             <Image
               className={`${styles.heroImage} ${styles.heroImageMobile}`}
-              src={paperbus.heroMobileImage ?? paperbus.heroImage ?? paperbus.secondaryImage}
-              alt={paperbus.heroImageAlt ?? paperbus.secondaryImageAlt}
+              src={localized.paperbus.heroMobileImage ?? localized.paperbus.heroImage ?? localized.paperbus.secondaryImage}
+              alt={localized.paperbus.heroImageAlt ?? localized.paperbus.secondaryImageAlt}
               fill
               sizes="100vw"
             />
             <div className={styles.heroCaption}>
               <span className={styles.heroCaptionIcon}><LeafIcon /></span>
-              <span><small>Stekpluggen Steenwol</small><strong>Voor een overzichtelijke opkweek</strong></span>
+              <span><small>{paperPlugHeroTitle}</small><strong>{copy.heroText}</strong></span>
             </div>
             <Link className={styles.heroMiniCard} href={routes.neemx}>
               <span className={styles.heroMiniImage}>
-                <Image src={neemx.mainImage} alt="" fill sizes="132px" />
+                <Image src={localized.neemx.mainImage} alt="" fill sizes="132px" />
               </span>
               <span>
-                <small>Ook voor plantverzorging</small>
-                <strong>Ontdek NeemX Pro</strong>
+                <small>{copy.miniTop}</small>
+                <strong>{copy.miniTitle}</strong>
               </span>
               <ArrowRightIcon />
             </Link>
@@ -69,24 +84,25 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes
         </div>
       </section>
 
-      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} />
-      <TrustStrip />
+      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} locale={locale} />
+      <TrustStrip locale={locale} />
 
       <section className={styles.section} id="producten">
         <div className={styles.container}>
           <div className={styles.sectionHeading}>
             <div>
-              <span className={styles.eyebrow}>Twee specialismen</span>
-              <h2>Kies wat je plant nu nodig heeft.</h2>
+              <span className={styles.eyebrow}>{copy.specialty}</span>
+              <h2>{copy.chooseTitle}</h2>
             </div>
-            <p>Begin bij je doel. De juiste uitvoering kies je pas daarna, zonder een overvolle catalogus.</p>
+            <p>{copy.chooseText}</p>
           </div>
           <div className={styles.productGrid}>
-            {productFamilies.map((product) => (
+            {localizedProducts.map((product) => (
               <ProductFamilyCard
                 key={product.id}
                 product={product}
                 href={product.id === 'paperbus' ? routes.stekpluggen : routes.neemx}
+                locale={locale}
               />
             ))}
           </div>
@@ -97,23 +113,21 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes
         <div className={`${styles.container} ${styles.choiceGrid}`}>
           <div className={styles.choiceImage}>
             <Image
-              src={paperbus.tertiaryImage ?? paperbus.mainImage}
-              alt={paperbus.tertiaryImageAlt ?? paperbus.mainImageAlt}
+              src={localized.paperbus.tertiaryImage ?? localized.paperbus.mainImage}
+              alt={localized.paperbus.tertiaryImageAlt ?? localized.paperbus.mainImageAlt}
               fill
               sizes="(max-width: 767px) 100vw, 50vw"
             />
-            <span>Productadvies zonder omwegen</span>
+            <span>{copy.adviceImage}</span>
           </div>
           <div className={styles.choiceCopy}>
-            <span className={styles.eyebrow}>Eenvoudig kiezen</span>
-            <h2>Van teeltvraag naar het juiste product.</h2>
-            <p>Geen eindeloze productlijst. Kies eerst tussen opkweek en plantverzorging en vergelijk daarna alleen de uitvoeringen die relevant zijn.</p>
+            <span className={styles.eyebrow}>{copy.simple}</span>
+            <h2>{copy.routeTitle}</h2>
+            <p>{copy.routeText}</p>
             <ol className={styles.choiceSteps}>
-              <li><span>01</span><div><strong>Kies je toepassing</strong><small>Opkweek met stekpluggen van steenwol of verzorging met NeemX Pro.</small></div></li>
-              <li><span>02</span><div><strong>Selecteer de uitvoering</strong><small>Vergelijk tray-indeling of inhoudsmaat in één overzicht.</small></div></li>
-              <li><span>03</span><div><strong>Bestel met duidelijkheid</strong><small>Bekijk levering, totaal en voorwaarden vóór je betaalt.</small></div></li>
+              {paperPlugSteps.map(([title, text], index) => <li key={title}><span>0{index + 1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}
             </ol>
-            <Link className={styles.textLink} href={routes.products}>Vergelijk beide producten <ArrowRightIcon /></Link>
+            <Link className={styles.textLink} href={routes.products}>{copy.compare} <ArrowRightIcon /></Link>
           </div>
         </div>
       </section>
@@ -121,11 +135,11 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes }: { routes
       <section className={styles.helpBanner}>
         <div className={`${styles.container} ${styles.helpBannerInner}`}>
           <div>
-            <span className={styles.eyebrow}>Persoonlijk contact</span>
-            <h2>Niet zeker welke uitvoering past?</h2>
-            <p>Stuur je vraag rechtstreeks naar Lumora. Zo kies je met de productinformatie die voor jouw situatie relevant is.</p>
+            <span className={styles.eyebrow}>{copy.personal}</span>
+            <h2>{copy.unsure}</h2>
+            <p>{copy.helpText}</p>
           </div>
-          <a className={styles.lightButton} href="mailto:info@lumorahorticulture.com">Stel je productvraag <ArrowRightIcon /></a>
+          <a className={styles.lightButton} href="mailto:info@lumorahorticulture.com">{copy.question} <ArrowRightIcon /></a>
         </div>
       </section>
     </main>

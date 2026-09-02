@@ -11,13 +11,12 @@ import styles from '../account.module.css'
 
 export default async function AddressesPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
+  const locale = params.locale as 'nl' | 'en' | 'de'
   const user = await stackServerApp.getUser()
 
   if (!user) {
-    redirect('/handler/signin')
+    redirect(`/handler/sign-in?lang=${locale}`)
   }
-
-  const locale = params.locale as 'nl' | 'en' | 'de'
 
   const addresses = await fetchQuery(api.savedAddresses.list, {
     ...convexServerAuth(),

@@ -34,7 +34,9 @@ const PRODUCTION_STOREFRONT_REDIRECTS: Record<string, string> = {
   '/lumora-premium/winkelmand': '/winkelmand',
   '/lumora-premium/afrekenen': '/afrekenen',
 }
-const DUTCH_PRODUCT_FAMILY_REDIRECTS: Record<string, string> = {
+const LEGACY_STOREFRONT_REDIRECTS: Record<string, string> = {
+  '/shop': '/products',
+  '/checkout': '/afrekenen',
   '/shop/paper-plug-tray-84': '/stekpluggen-steenwol',
   '/shop/paper-plug-tray-104': '/stekpluggen-steenwol',
   '/shop/neemx-pro-10ml': '/neemx-pro',
@@ -130,16 +132,6 @@ export function proxy(request: NextRequest) {
     if (bypassLocalization) {
       return primaryHostPathRedirect(request, incomingPath)
     }
-    const legacyBasePath = basePathFromLocalizedPath(
-      prefixed.pathname,
-      legacyLocale,
-    )
-    if (
-      legacyLocale === 'en' &&
-      (legacyBasePath === '/blog' || legacyBasePath.startsWith('/blog/'))
-    ) {
-      return primaryHostRedirect(request, 'nl', legacyBasePath)
-    }
     return primaryHostRedirect(request, legacyLocale, prefixed.pathname)
   }
 
@@ -172,26 +164,12 @@ export function proxy(request: NextRequest) {
   const visiblePath = prefixed.pathname
   const basePath = basePathFromLocalizedPath(visiblePath, locale)
 
-  const dutchProductFamilyPath = locale === 'nl'
-    ? DUTCH_PRODUCT_FAMILY_REDIRECTS[basePath]
-    : undefined
-  if (dutchProductFamilyPath) {
-    return primaryHostPathRedirect(request, dutchProductFamilyPath)
-  }
-
-  // The redesigned NeemX page contains the approved claim-safe copy. Until
-  // equivalent translations are reviewed, consolidate EN/DE onto that page.
-  if (locale !== 'nl' && basePath === '/neemx-pro') {
-    return primaryHostRedirect(request, 'nl', basePath)
-  }
-
-  // The blog currently has verified Dutch content and optional German
-  // translations, but no English articles. Avoid an indexable soft 404.
-  if (
-    locale === 'en' &&
-    (basePath === '/blog' || basePath.startsWith('/blog/'))
-  ) {
-    return primaryHostRedirect(request, 'nl', basePath)
+  const storefrontDestination = LEGACY_STOREFRONT_REDIRECTS[basePath]
+  if (storefrontDestination) {
+    return primaryHostPathRedirect(
+      request,
+      localizePathForLocale(storefrontDestination, locale),
+    )
   }
 
   const expectedPath = canonicalPath(visiblePath, locale)

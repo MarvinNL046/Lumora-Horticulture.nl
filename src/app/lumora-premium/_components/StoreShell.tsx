@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@stackframe/stack'
 import { useLocale } from 'next-intl'
-import { useState, type MouseEvent, type ReactNode } from 'react'
+import { Suspense, useState, type MouseEvent, type ReactNode } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { localizePathForLocale } from '@/lib/url-localizations'
 import { formatPrice } from '../_data/products'
@@ -26,6 +26,7 @@ import {
   resolveStorefrontLocale,
   storefrontLanguages,
   storefrontShellCopy,
+  type StorefrontLocale,
 } from './storefront-localization'
 
 function Wordmark({ priority = false }: { priority?: boolean }) {
@@ -43,12 +44,42 @@ function Wordmark({ priority = false }: { priority?: boolean }) {
   )
 }
 
+function AccountLinkContent({
+  locale,
+  className,
+  label,
+  children,
+}: {
+  locale: StorefrontLocale
+  className?: string
+  label?: string
+  children: ReactNode
+}) {
+  const user = useUser({ or: 'return-null' })
+  const href = user ? localizePathForLocale('/account', locale) : `/handler/sign-in?lang=${locale}`
+
+  return <Link className={className} href={href} aria-label={label} onClick={openAccountWithFreshDocument}>{children}</Link>
+}
+
+function AccountLink(props: {
+  locale: StorefrontLocale
+  className?: string
+  label?: string
+  children: ReactNode
+}) {
+  const fallbackHref = `/handler/sign-in?lang=${props.locale}`
+  return (
+    <Suspense fallback={<Link className={props.className} href={fallbackHref} aria-label={props.label} onClick={openAccountWithFreshDocument}>{props.children}</Link>}>
+      <AccountLinkContent {...props} />
+    </Suspense>
+  )
+}
+
 export function StoreShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const locale = resolveStorefrontLocale(useLocale())
   const copy = storefrontShellCopy[locale]
   const [languageOpen, setLanguageOpen] = useState(false)
-  const user = useUser({ or: 'return-null' })
   const { getTotalItems, getTotalPrice } = useCart()
   const cartCount = getTotalItems()
   const cartTotal = getTotalPrice()
@@ -58,11 +89,9 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const isCheckoutReturn = ['/checkout/success', '/checkout/conversion'].some((route) => localeAgnosticPath.startsWith(route))
   const isCheckoutFlow = isCheckout || isCheckoutReturn
   const isAccount = localeAgnosticPath === '/account' || localeAgnosticPath.startsWith('/account/')
+  const isAuth = localeAgnosticPath.startsWith('/handler/')
   const isPdp = pathname === routes.stekpluggen || pathname === routes.neemx
   const isCart = pathname === routes.cart
-  const accountHref = user
-    ? localizePathForLocale('/account', locale)
-    : `/handler/sign-in?lang=${locale}`
 
   if (isCheckoutFlow) {
     return (
@@ -83,7 +112,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <div className={styles.checkoutDockMain}>
               <span>
                 <small>{copy.total}</small>
-                <strong>{formatPrice(cartTotal)}</strong>
+                <strong>{formatPrice(cartTotal, locale)}</strong>
               </span>
               <a href="#bestelling-plaatsen" className={styles.dockPrimaryAction}>
                 {copy.toPayment}
@@ -158,10 +187,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
                 </div>
               ) : null}
             </div>
-            <Link className={styles.accountButton} href={accountHref} aria-label={copy.accountLabel} onClick={openAccountWithFreshDocument}>
+            <AccountLink className={styles.accountButton} locale={locale} label={copy.accountLabel}>
               <UserIcon />
               <span className={styles.cartLabel}>{copy.account}</span>
-            </Link>
+            </AccountLink>
             <Link className={styles.cartButton} href={routes.cart} aria-label={`${copy.cart}: ${cartCount}`}>
               <BagIcon />
               <span className={styles.cartLabel}>{copy.cart}</span>
@@ -202,7 +231,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
         </div>
       </footer>
 
-      {isPdp || isCart || isAccount ? null : (
+      {isPdp || isCart || isAccount || isAuth ? null : (
         <nav className={styles.mobileNav} aria-label={copy.mobileNavigation}>
           <Link
             aria-current={pathname === routes.home ? 'page' : undefined}
@@ -224,10 +253,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>{copy.help}</span>
           </a>
-          <Link href={accountHref} onClick={openAccountWithFreshDocument}>
+          <AccountLink locale={locale}>
             <span className={styles.mobileNavIcon}><UserIcon /></span>
             <span>{copy.account}</span>
-          </Link>
+          </AccountLink>
           <Link className={pathname === routes.cart ? styles.mobileNavActive : ''} href={routes.cart}>
             <span className={`${styles.mobileNavIcon} ${styles.mobileBagWrap}`}>
               <BagIcon />

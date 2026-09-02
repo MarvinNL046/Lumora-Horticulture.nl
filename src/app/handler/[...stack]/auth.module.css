@@ -65,13 +65,13 @@
   .authPage { min-height: 0; padding: 24px 0 48px; }
   .authContainer { width: min(calc(100% - 28px), 1180px); }
   .authGrid { min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }
-  .authVisual { min-height: 230px; }
+  .authVisual { min-height: 185px; }
   .visualCopy { left: 20px; right: 20px; bottom: 22px; }
-  .visualCopy h1 { max-width: 330px; margin: 8px 0 0; font-size: 36px; }
+  .visualCopy h1 { max-width: 330px; margin: 7px 0 0; font-size: 33px; }
   .visualCopy p, .visualBadge { display: none; }
-  .authPanel { padding: 28px 18px 24px; }
-  .panelIntro { margin-bottom: 19px; }
-  .panelIntro h2 { font-size: 34px; }
+  .authPanel { padding: 20px 18px 24px; }
+  .panelIntro { margin-bottom: 15px; }
+  .panelIntro h2 { font-size: 32px; }
   .panelIntro p { font-size: 13px; }
   .authForm { min-height: 515px; padding: 18px 14px; border-radius: 16px; }
   .authFormSkeleton { inset: 18px 14px; }

@@ -5,13 +5,22 @@ import styles from './account.module.css'
 type Locale = 'nl' | 'en' | 'de'
 
 export default function AccountMobileNav({ locale, active }: { locale: Locale; active: 'account' | 'orders' }) {
+  const t = {
+    nav: locale === 'de' ? 'Kundenkonto-Navigation' : locale === 'en' ? 'Customer account navigation' : 'Klantaccount navigatie',
+    home: locale === 'de' ? 'Start' : 'Home',
+    products: locale === 'de' ? 'Produkte' : locale === 'en' ? 'Products' : 'Producten',
+    account: locale === 'de' ? 'Konto' : 'Account',
+    orders: locale === 'de' ? 'Bestellungen' : locale === 'en' ? 'Orders' : 'Bestellingen',
+    cart: locale === 'de' ? 'Warenkorb' : locale === 'en' ? 'Cart' : 'Mandje',
+  }
+
   return (
-    <nav className={styles.accountMobileNav} aria-label="Klantaccount navigatie">
-      <Link href="/lumora-premium"><HomeIcon /><span>Home</span></Link>
-      <Link href="/lumora-premium/producten"><GridIcon /><span>Producten</span></Link>
-      <Link className={active === 'account' ? styles.accountMobileActive : ''} href={localizePathForLocale('/account', locale)}><UserIcon /><span>Account</span></Link>
-      <Link className={active === 'orders' ? styles.accountMobileActive : ''} href={localizePathForLocale('/account/orders', locale)}><BoxIcon /><span>Orders</span></Link>
-      <Link href="/lumora-premium/winkelmand"><BagIcon /><span>Mandje</span></Link>
+    <nav className={styles.accountMobileNav} aria-label={t.nav}>
+      <Link href={localizePathForLocale('/', locale)}><HomeIcon /><span>{t.home}</span></Link>
+      <Link href={localizePathForLocale('/products', locale)}><GridIcon /><span>{t.products}</span></Link>
+      <Link className={active === 'account' ? styles.accountMobileActive : ''} href={localizePathForLocale('/account', locale)}><UserIcon /><span>{t.account}</span></Link>
+      <Link className={active === 'orders' ? styles.accountMobileActive : ''} href={localizePathForLocale('/account/orders', locale)}><BoxIcon /><span>{t.orders}</span></Link>
+      <Link href={localizePathForLocale('/winkelmand', locale)}><BagIcon /><span>{t.cart}</span></Link>
     </nav>
   )
 }

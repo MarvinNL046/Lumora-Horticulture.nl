@@ -6,6 +6,7 @@ import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
 import CartSidebar from '@/components/CartSidebar'
 import { publicStorefrontPathSet } from '@/app/lumora-premium/_data/routes'
+import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
 const ExitIntentPopup = dynamic(
   () => import('@/components/ExitIntentPopup'),
@@ -17,11 +18,16 @@ const ExitIntentPopup = dynamic(
 // design demos that ship their own chrome.
 const STANDALONE_ROUTES = ['/lumora-premium', '/neemxpro-2-plus-1-gratis', '/handler', '/account']
 const STANDALONE_CHECKOUT_ROUTES = ['/checkout/success', '/checkout/conversion']
+const LOCALIZED_STOREFRONT_ROUTES = new Set([
+  '/', '/producten', '/products', '/produkte', '/stekpluggen-steenwol',
+  '/neemx-pro', '/winkelmand', '/afrekenen',
+])
 
 function isStandalonePath(pathname: string | null): boolean {
   if (!pathname) return false
   if (publicStorefrontPathSet.has(pathname)) return true
-  const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/)/, '')
+  const localeAgnosticPath = pathname.replace(/^\/(?:nl|en|de)(?=\/|$)/, '') || '/'
+  if (LOCALIZED_STOREFRONT_ROUTES.has(localeAgnosticPath)) return true
   if (STANDALONE_CHECKOUT_ROUTES.some((route) => localeAgnosticPath.startsWith(route))) return true
   return STANDALONE_ROUTES.some(
     (r) => localeAgnosticPath === r || localeAgnosticPath.startsWith(`${r}/`)
@@ -31,9 +37,14 @@ function isStandalonePath(pathname: string | null): boolean {
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const standalone = isStandalonePath(pathname)
+  const isInternationalContent = Boolean(pathname?.match(/^\/(?:en|de)(?:\/|$)/))
 
   if (standalone) {
     return <>{children}</>
+  }
+
+  if (isInternationalContent) {
+    return <StoreShell>{children}</StoreShell>
   }
 
   return (

@@ -1,29 +1,32 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { ProductDetail } from '@/app/lumora-premium/_components/ProductDetail'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 import { paperbus } from '@/app/lumora-premium/_data/products'
 import { generatePageMetadata } from '@/lib/metadata'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
+import { resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { getLocalizedProducts } from '@/app/lumora-premium/_data/storefront-content'
 
 type Props = {
   params: Promise<{ locale: string }>
 }
 
-const title = 'Stekpluggen Steenwol 84 & 104'
-const description = 'Professionele stekpluggen van steenwol met Ellepot FP 12+ papertechnologie. Vergelijk 84 en 104 cellen per tray en bestel per complete doos met gratis verzending.'
+const metadataCopy = {
+  nl: { title: 'Stekpluggen Steenwol 84 & 104', description: 'Professionele stekpluggen van steenwol met Ellepot FP 12+ papertechnologie. Vergelijk 84 en 104 cellen per tray en bestel per complete doos met gratis verzending.' },
+  en: { title: 'Paper Plug Trays 84 & 104', description: 'Professional Paper Plug Trays with Ellepot FP 12+ technology. Compare 84 and 104 cells per tray and order complete boxes with free shipping.' },
+  de: { title: 'Paper Plug Trays 84 & 104', description: 'Professionelle Paper Plug Trays mit Ellepot FP 12+ Technologie. Vergleichen Sie 84 und 104 Zellen pro Anzuchtplatte und bestellen Sie komplette Kartons versandkostenfrei.' },
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
 
-  if (locale !== 'nl') {
-    return { robots: { index: false, follow: false } }
-  }
+  const resolvedLocale = resolveStorefrontLocale(locale)
+  const copy = metadataCopy[resolvedLocale]
 
   return generatePageMetadata({
-    title,
-    description,
-    locale,
+    title: copy.title,
+    description: copy.description,
+    locale: resolvedLocale,
     path: '/stekpluggen-steenwol',
     keywords: [
       'stekpluggen',
@@ -34,15 +37,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'Ellepot FP 12+',
     ],
     ogImage: paperbus.mainImage,
-    availableLocales: ['nl'],
+    availableLocales: ['nl', 'en', 'de'],
   })
 }
 
 const productGroupJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProductGroup',
-  name: title,
-  description,
+  name: metadataCopy.nl.title,
+  description: metadataCopy.nl.description,
   url: 'https://lumorahorticulture.nl/stekpluggen-steenwol',
   image: [paperbus.mainImage, paperbus.secondaryImage, paperbus.tertiaryImage]
     .filter((image): image is string => Boolean(image))
@@ -70,7 +73,8 @@ const productGroupJsonLd = {
 
 export default async function StekpluggenSteenwolPage({ params }: Props) {
   const { locale } = await params
-  if (locale !== 'nl') notFound()
+  const resolvedLocale = resolveStorefrontLocale(locale)
+  const { paperbus: localizedPaperbus } = getLocalizedProducts(resolvedLocale)
 
   return (
     <StoreShell>
@@ -78,7 +82,7 @@ export default async function StekpluggenSteenwolPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupJsonLd) }}
       />
-      <ProductDetail product={paperbus} />
+      <ProductDetail product={localizedPaperbus} locale={resolvedLocale} />
     </StoreShell>
   )
 }

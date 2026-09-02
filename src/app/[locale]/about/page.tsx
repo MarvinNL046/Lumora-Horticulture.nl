@@ -20,14 +20,14 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       keywords: ['over lumora horticulture', 'steenwol pluggen fabrikant', 'eigen productie', 'B2B tuinbouw leverancier', 'directe fabrikant']
     },
     en: {
-      title: 'About Us - Direct Manufacturer of Rockwool Plugs',
-      description: 'Lumora Horticulture: own production of rockwool plugs and growing trays. B2B specialist for professional growers. Direct from manufacturer, European quality.',
-      keywords: ['about lumora horticulture', 'rockwool plugs manufacturer', 'own production', 'B2B horticulture supplier', 'direct manufacturer']
+      title: 'About Lumora Horticulture',
+      description: 'Meet Lumora Horticulture, specialist in professional Paper Plug Trays and targeted botanical plant care for growers and plant enthusiasts.',
+      keywords: ['about lumora horticulture', 'paper plug trays', 'horticulture supplier', 'botanical plant care']
     },
     de: {
-      title: 'Über Uns - Direkter Hersteller von Steinwollsteckern',
-      description: 'Lumora Horticulture: eigene Produktion von Steinwollsteckern und Anzuchtschalen. B2B-Spezialist für professionelle Züchter. Direkt vom Hersteller, europäische Qualität.',
-      keywords: ['über lumora horticulture', 'steinwollstecker hersteller', 'eigene produktion', 'B2B gartenbau lieferant', 'direkter hersteller']
+      title: 'Über Lumora Horticulture',
+      description: 'Lernen Sie Lumora Horticulture kennen, Spezialist für professionelle Paper Plug Trays und gezielte botanische Pflanzenpflege.',
+      keywords: ['über lumora horticulture', 'Paper Plug Trays', 'Gartenbau Lieferant', 'botanische Pflanzenpflege']
     }
   }
 

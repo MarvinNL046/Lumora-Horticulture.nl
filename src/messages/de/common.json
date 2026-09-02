@@ -119,50 +119,50 @@
     "title": {
       "tag": "Über Uns",
       "main": "Ihr Partner im Professionellen Gartenbau",
-      "subtitle": "Direkter Hersteller von hochwertigen Steinwollsteckern und Anzuchtschalen"
+      "subtitle": "Spezialprodukte für Anzucht und gezielte Pflanzenpflege"
     },
     "intro": {
       "title": "Willkommen bei Lumora Horticulture",
-      "description": "Als führender Hersteller von Steinwollsteckern und Anzuchtschalen bedienen wir professionelle Züchter in ganz Europa. Mit unserer eigenen Produktionslinie garantieren wir konstante Qualität und direkte Lieferung an Großhändler und professionelle Gärtner."
+      "description": "Lumora vereint zwei klare Produktlinien: Steinwoll-Anzuchtstopfen für eine organisierte Vermehrung und NEEMX PRO für gezielte botanische Blattpflege. Im Mittelpunkt stehen klare Produktinformationen, praktische Formate und persönlicher Kontakt."
     },
     "ourStory": {
       "title": "Unsere Geschichte",
-      "description": "Lumora Horticulture wurde aus einer Leidenschaft für innovative Gartenbaulösungen gegründet. Mit jahrelanger Erfahrung im Gewächshausgartenbau haben wir uns auf die Produktion hochwertiger Steinwollstecker spezialisiert, die perfekt auf die Bedürfnisse moderner Züchter abgestimmt sind."
+      "description": "Lumora Horticulture wurde gegründet, um die Auswahl spezialisierter Anzuchtprodukte übersichtlicher zu machen. Das bewusst fokussierte Sortiment hilft professionellen Gärtnern und Pflanzenliebhabern, nur die relevanten Optionen zu vergleichen."
     },
     "production": {
-      "title": "Eigene Produktion",
-      "description": "In unserer modernen Produktionsanlage stellen wir täglich Tausende von Steinwollsteckern her. Durch die vollständige Kontrolle über den Produktionsprozess können wir flexibel auf spezifische Kundenwünsche reagieren und eine konstante Produktqualität garantieren.",
+      "title": "Ein fokussiertes Sortiment",
+      "description": "Jede Produktlinie wird mit konkreten Spezifikationen, Kartoninhalten und Anwendungshinweisen präsentiert. So wählen Sie das passende Trayformat oder die richtige Flaschengröße leichter aus.",
       "features": [
-        "Moderne Produktionslinie für Steinwollstecker",
-        "Kapazität: über 100.000 Stecker pro Tag",
-        "Strenge Qualitätskontrolle bei jeder Charge",
-        "Flexible Produktion für kundenspezifische Aufträge"
+        "Zwei professionelle Tray-Konfigurationen",
+        "Transparente Karton- und Zellmengen",
+        "Drei praktische NEEMX PRO Flaschengrößen",
+        "Persönliche Beratung für größere Abnahmemengen"
       ]
     },
     "whyUs": {
       "title": "Warum Lumora Horticulture?",
       "reasons": [
         {
-          "title": "Direkt vom Hersteller",
-          "description": "Keine Zwischenhändler, direkte Preise und persönlicher Kontakt"
+          "title": "Klare Auswahl",
+          "description": "Ein fokussiertes Sortiment mit direkt vergleichbaren Optionen"
         },
         {
           "title": "B2B-Spezialist",
           "description": "100% fokussiert auf professionelle Züchter und Großhändler"
         },
         {
-          "title": "Eigene Produktion",
-          "description": "Vollständige Kontrolle über Qualität und Lieferzeiten"
+          "title": "Praktische Informationen",
+          "description": "Spezifikationen, Kartoninhalte und Bedingungen vor dem Kauf"
         },
         {
-          "title": "Europäische Qualität",
-          "description": "Produkte erfüllen die höchsten europäischen Standards"
+          "title": "Persönlicher Kontakt",
+          "description": "Direkte Produktberatung für Ihre Anwendung und Bestellmenge"
         }
       ]
     },
     "certifications": {
       "title": "Qualität & Zertifizierungen",
-      "description": "Unsere Produkte erfüllen die strengsten Qualitätsanforderungen für den professionellen Gartenbau. Wir arbeiten nach den neuesten Umweltstandards und Nachhaltigkeitsprinzipien."
+      "description": "Wir veröffentlichen die Produktdetails, die eine fundierte Auswahl erleichtern, und beantworten Fragen zu Formaten, Anwendung und größeren Bestellmengen."
     },
     "cta": {
       "title": "Bereit zur Zusammenarbeit?",

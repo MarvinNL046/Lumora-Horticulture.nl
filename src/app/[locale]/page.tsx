@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
-import HomeClient from '@/app/[locale]/HomeClient'
 import { generatePageMetadata } from '@/lib/metadata'
 import { StorefrontHomePage } from '@/app/lumora-premium/page'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
+import { localizeStorefrontRoutes, resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { publicStorefrontRoutes } from '@/app/lumora-premium/_data/routes'
 
 const validLocales = ['nl', 'en', 'de'];
 
@@ -25,14 +26,14 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       keywords: ['stekpluggen', 'stekpluggen steenwol', 'steenwol pluggen', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'bladverzorging']
     },
     en: {
-      title: 'Rockwool Plugs & Growing Trays | Free Shipping | Lumora',
-      description: 'Professional rockwool plugs and paper plug trays for growers. ✓ Free shipping NL/BE/DE ✓ Delivered within 48 hours ✓ B2B prices ✓ 15+ years experience. Order directly from the specialist.',
-      keywords: ['rockwool plugs', 'growing trays', 'paper plug trays', 'propagation', 'greenhouse', 'B2B horticulture', 'Ellepot', 'propagation materials']
+      title: 'Paper Plug Trays & NeemX Pro',
+      description: 'Professional Paper Plug Trays 84 and 104 for sowing and cuttings, plus NeemX Pro for botanical leaf care. Free shipping within the Netherlands, Belgium and Germany.',
+      keywords: ['paper plug trays', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'botanical leaf care']
     },
     de: {
-      title: 'Steinwolle Plugs & Anzuchtschalen | Kostenloser Versand | Lumora',
-      description: 'Professionelle Steinwolle-Plugs und Paper-Plug-Trays für Züchter. ✓ Kostenloser Versand NL/BE/DE ✓ Lieferung innerhalb 48 Stunden ✓ B2B-Preise ✓ 15+ Jahre Erfahrung. Direkt beim Spezialisten bestellen.',
-      keywords: ['Steinwolle Plugs', 'Anzuchtschalen', 'Paper Plug Trays', 'Vermehrung', 'Gewächshaus', 'B2B Gartenbau', 'Ellepot', 'Vermehrungsmaterial']
+      title: 'Paper Plug Trays & NeemX Pro',
+      description: 'Professionelle Paper Plug Trays für Aussaat und Stecklinge sowie NeemX Pro zur botanischen Blattpflege. Kostenloser Versand in die Niederlande, nach Belgien und Deutschland.',
+      keywords: ['Paper Plug Trays', 'Paper Plug Tray 84', 'Paper Plug Tray 104', 'NeemX Pro', 'botanische Blattpflege']
     }
   }
 
@@ -54,49 +55,10 @@ export default async function Home(props: { params: Promise<{ locale: string }> 
     notFound();
   }
 
-  if (params.locale === 'nl') {
-    return (
-      <StoreShell>
-        <StorefrontHomePage />
-      </StoreShell>
-    )
-  }
-
-  // This is needed for internationalization to work properly
-
-  // Load messages manually for static export
-  const messages = (await import(`../../messages/${params.locale}/common.json`)).default
-
-  // Pull home translations from the messages
-  const t = messages.home || {
-    hero: {
-      subtitle: "Paperbus steenwol pluggen & professionele kweektrays voor de moderne teler",
-      viewProducts: "Bekijk onze producten",
-      contactUs: "Neem contact op"
-    },
-    contactForm: {
-      name: "Naam",
-      email: "E-mail",
-      message: "Bericht",
-      submit: "Versturen",
-      success: "Bericht verzonden!",
-      error: "Fout bij verzenden",
-      quickContact: "Snel contact"
-    },
-    products: {
-      title: "Onze Producten",
-      subtitle: "Paperbus steenwol pluggen & professionele kweektrays met Ellepot FP 12+ technologie",
-      moreInfo: "Meer informatie",
-      viewAll: "Bekijk alle producten"
-    },
-    cta: {
-      title: "Neem contact met ons op",
-      description: "Heeft u vragen over onze paperbus steenwol pluggen of andere producten? Wij helpen u graag verder met persoonlijk advies.",
-      button: "Contact opnemen"
-    }
-  }
-
+  const locale = resolveStorefrontLocale(params.locale)
   return (
-    <HomeClient locale={params.locale} t={t} />
+    <StoreShell>
+      <StorefrontHomePage locale={locale} routes={localizeStorefrontRoutes(publicStorefrontRoutes, locale)} />
+    </StoreShell>
   )
 }

@@ -1,25 +1,24 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { PremiumCheckout } from '@/app/lumora-premium/_components/PremiumCheckout'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
+import { resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
 
 type Props = {
   params: Promise<{ locale: string }>
 }
 
-export const metadata: Metadata = {
-  title: 'Veilig afrekenen',
-  description: 'Rond uw bestelling veilig af bij Lumora Horticulture.',
-  robots: { index: false, follow: false },
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = resolveStorefrontLocale((await params).locale)
+  return { title: locale === 'en' ? 'Secure checkout' : locale === 'de' ? 'Sicher bezahlen' : 'Veilig afrekenen', robots: { index: false, follow: false } }
 }
 
 export default async function AfrekenenPage({ params }: Props) {
   const { locale } = await params
-  if (locale !== 'nl') notFound()
+  const resolvedLocale = resolveStorefrontLocale(locale)
 
   return (
     <StoreShell>
-      <PremiumCheckout />
+      <PremiumCheckout locale={resolvedLocale} />
     </StoreShell>
   )
 }

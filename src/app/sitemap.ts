@@ -1,8 +1,6 @@
 import type {MetadataRoute} from 'next'
 import {fetchQuery} from 'convex/nextjs'
 import {api} from '@/../convex/_generated/api'
-import {isHiddenProductSlug} from '@/lib/hidden-products'
-import {getAvailableProductLocales} from '@/lib/product-locales'
 import {localizePathForLocale} from '@/lib/url-localizations'
 
 export const dynamic = 'force-dynamic'
@@ -10,14 +8,6 @@ export const dynamic = 'force-dynamic'
 const SITE_ORIGIN = 'https://lumorahorticulture.nl'
 const LOCALES = ['nl', 'en', 'de'] as const
 const BLOG_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-const CONSOLIDATED_PRODUCT_SLUGS = new Set([
-  'paper-plug-tray-84',
-  'paper-plug-tray-104',
-  'neemx-pro-10ml',
-  'neemx-pro-30ml',
-  'neemx-pro-50ml',
-])
-
 function absoluteUrl(basePath: string, locale: string): string {
   return `${SITE_ORIGIN}${localizePathForLocale(basePath, locale)}`
 }
@@ -66,7 +56,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/about',
     '/contact',
     '/products',
-    '/shop',
     '/applications',
     '/paperbus-pluggen',
     '/paperbus-steenwol-pluggen',
@@ -78,10 +67,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     localizedEntries(path, path === '/' ? 1 : 0.8, 'weekly'),
   )
   const returnPolicyEntries = localizedEntries('/return-policy', 0.5, 'monthly')
-  const blogEntries = localizedEntries('/blog', 0.7, 'weekly', ['nl', 'de'] as const)
+  const blogEntries = localizedEntries('/blog', 0.7, 'weekly')
   const storefrontProductEntries = [
-    ...localizedEntries('/stekpluggen-steenwol', 0.95, 'daily', ['nl'] as const),
-    ...localizedEntries('/neemx-pro', 0.95, 'daily', ['nl'] as const),
+    ...localizedEntries('/stekpluggen-steenwol', 0.95, 'daily'),
+    ...localizedEntries('/neemx-pro', 0.95, 'daily'),
   ]
 
   let blogArticleEntries: MetadataRoute.Sitemap = []
@@ -109,33 +98,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Unable to add Convex blog posts to the sitemap:', error)
   }
 
-  let productEntries: MetadataRoute.Sitemap = []
-  try {
-    const products = await fetchQuery(api.products.listInStock)
-    productEntries = products
-      .filter((product) =>
-        product.slug
-        && !isHiddenProductSlug(product.slug)
-        && !CONSOLIDATED_PRODUCT_SLUGS.has(product.slug),
-      )
-      .flatMap((product) =>
-        localizedEntries(
-          `/shop/${product.slug}`,
-          0.9,
-          'daily',
-          getAvailableProductLocales(product),
-        ),
-      )
-  } catch (error) {
-    console.error('Unable to add Convex products to the sitemap:', error)
-  }
-
   return [
     ...staticEntries,
     ...returnPolicyEntries,
     ...storefrontProductEntries,
     ...blogEntries,
     ...blogArticleEntries,
-    ...productEntries,
   ]
 }

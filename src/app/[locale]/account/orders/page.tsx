@@ -4,6 +4,7 @@ import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import { convexServerAuth } from '@/lib/convex'
 import { localizePathForLocale } from '@/lib/url-localizations'
+import { getLocalizedCartItemName } from '@/app/lumora-premium/_data/storefront-content'
 import { stackServerApp } from '@/stack/server'
 import styles from '../account.module.css'
 import AccountMobileNav from '../AccountMobileNav'
@@ -14,7 +15,7 @@ export default async function OrdersPage(props: { params: Promise<{ locale: stri
   const { locale: rawLocale } = await props.params
   const locale = rawLocale as Locale
   const user = await stackServerApp.getUser()
-  if (!user) redirect('/handler/signin')
+  if (!user) redirect(`/handler/sign-in?lang=${locale}`)
 
   const orders = await fetchQuery(api.orders.listByAccountWithItems, {
     ...convexServerAuth(), user_id: user.id,
@@ -28,7 +29,7 @@ export default async function OrdersPage(props: { params: Promise<{ locale: stri
         <Link className={styles.backLink} href={localizePathForLocale('/account', locale)}>← {t.back}</Link>
         <header className={styles.ordersHeader}><span className={styles.eyebrow}>{t.eyebrow}</span><h1>{t.title}</h1><p>{t.intro}</p></header>
         {orders.length === 0 ? (
-          <section className={`${styles.panel} ${styles.emptyState}`}><span><OrdersIcon /></span><h2>{t.empty}</h2><p>{t.emptyCopy}</p><Link href="/lumora-premium/producten">{t.shop}</Link></section>
+          <section className={`${styles.panel} ${styles.emptyState}`}><span><OrdersIcon /></span><h2>{t.empty}</h2><p>{t.emptyCopy}</p><Link href={localizePathForLocale('/products', locale)}>{t.shop}</Link></section>
         ) : (
           <div className={styles.orderList}>
             {orders.map((order) => {
@@ -54,7 +55,7 @@ export default async function OrdersPage(props: { params: Promise<{ locale: stri
                   <div className={styles.orderItems}>{order.items.map((item) => (
                     <div className={styles.orderItem} key={item._id}>
                       <span className={styles.orderThumb}><OrdersIcon /></span>
-                      <div><strong>{item.product_name}</strong><small>{t.quantity}: {item.quantity} · {new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price_at_purchase)} {t.each}</small></div>
+                      <div><strong>{getLocalizedCartItemName(locale, item.product_slug, item.product_name)}</strong><small>{t.quantity}: {item.quantity} · {new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price_at_purchase)} {t.each}</small></div>
                       <b>{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price_at_purchase * item.quantity)}</b>
                     </div>
                   ))}</div>

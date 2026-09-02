@@ -13,6 +13,13 @@ interface ContactFormProps {
     submit: string;
     success: string;
     error: string;
+    namePlaceholder?: string;
+    companyPlaceholder?: string;
+    messagePlaceholder?: string;
+    requiredError?: string;
+    submitting?: string;
+    successFollowup?: string;
+    retryError?: string;
   }
 }
 
@@ -68,7 +75,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
     
     // Validate form (basic validation)
     if (!formData.name || !formData.email || !formData.message) {
-      setErrorMessage('Please fill in all required fields')
+      setErrorMessage(t.requiredError || 'Please fill in all required fields')
       setIsSubmitting(false)
       return
     }
@@ -135,7 +142,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                   value={formData.name}
                   onChange={handleChange}
                   className="input pl-10"
-                  placeholder="John Doe"
+                  placeholder={t.namePlaceholder || 'John Doe'}
                   required
                 />
               </div>
@@ -159,7 +166,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                   value={formData.company}
                   onChange={handleChange}
                   className="input pl-10"
-                  placeholder="Company Ltd."
+                  placeholder={t.companyPlaceholder || 'Company Ltd.'}
                 />
               </div>
             </div>
@@ -225,7 +232,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                 value={formData.message}
                 onChange={handleChange}
                 className="input resize-none"
-                placeholder="How can we help you?"
+                placeholder={t.messagePlaceholder || 'How can we help you?'}
                 required
               />
             </div>
@@ -247,7 +254,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Submitting...</span>
+                    <span>{t.submitting || 'Submitting…'}</span>
                   </>
                 ) : (
                   <>
@@ -270,7 +277,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                 </svg>
                 <div>
                   <p className="font-medium">{t.success}</p>
-                  <p className="text-sm mt-1">We'll get back to you as soon as possible.</p>
+                  <p className="text-sm mt-1">{t.successFollowup || "We'll get back to you as soon as possible."}</p>
                 </div>
               </div>
             )}
@@ -282,7 +289,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
                 </svg>
                 <div>
                   <p className="font-medium">{t.error}</p>
-                  <p className="text-sm mt-1">{errorMessage || 'Please try again later.'}</p>
+                  <p className="text-sm mt-1">{errorMessage || t.retryError || 'Please try again later.'}</p>
                 </div>
               </div>
             )}

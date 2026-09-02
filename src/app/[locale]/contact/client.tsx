@@ -122,7 +122,7 @@ function ContactInfo({ t }: { t: any }) {
       animate={inView ? "visible" : "hidden"}
       className="lg:w-1/3"
     >
-      <div className="glass-dark bg-lumora-dark/90 backdrop-blur-md text-white rounded-3xl shadow-soft-lg overflow-hidden relative h-full p-8 md:p-10">
+      <div className="bg-[#173d29] border border-white/10 backdrop-blur-md text-white rounded-3xl shadow-soft-lg overflow-hidden relative h-full p-8 md:p-10">
         {/* Decorative elements */}
         <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-lumora-dark/30 mix-blend-overlay blur-xl"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-lumora-gold/10 mix-blend-overlay blur-xl"></div>

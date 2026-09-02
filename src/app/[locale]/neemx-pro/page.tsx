@@ -1,29 +1,32 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { ProductDetail } from '@/app/lumora-premium/_components/ProductDetail'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 import { neemx } from '@/app/lumora-premium/_data/products'
 import { generatePageMetadata } from '@/lib/metadata'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
+import { resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { getLocalizedProducts } from '@/app/lumora-premium/_data/storefront-content'
 
 type Props = {
   params: Promise<{ locale: string }>
 }
 
-const title = 'NEEMX PRO plantaardig olieconcentraat'
-const description = 'Premium plantaardig olieconcentraat voor bladverzorging, verkrijgbaar in 10, 30 en 50 ml. Ook leverbaar vanaf 1 liter en in grotere volumes op aanvraag.'
+const metadataCopy = {
+  nl: { title: 'NEEMX PRO plantaardig olieconcentraat', description: 'Premium plantaardig olieconcentraat voor bladverzorging, verkrijgbaar in 10, 30 en 50 ml. Ook leverbaar vanaf 1 liter en in grotere volumes op aanvraag.' },
+  en: { title: 'NEEMX PRO plant-based oil concentrate', description: 'Premium plant-based oil concentrate for leaf care, available in 10, 30 and 50 ml. Also available from 1 litre and in larger volumes on request.' },
+  de: { title: 'NEEMX PRO pflanzliches Ölkonzentrat', description: 'Hochwertiges pflanzliches Ölkonzentrat zur Blattpflege, erhältlich in 10, 30 und 50 ml. Auf Anfrage auch ab 1 Liter und in größeren Mengen lieferbar.' },
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
 
-  if (locale !== 'nl') {
-    return { robots: { index: false, follow: false } }
-  }
+  const resolvedLocale = resolveStorefrontLocale(locale)
+  const copy = metadataCopy[resolvedLocale]
 
   return generatePageMetadata({
-    title,
-    description,
-    locale,
+    title: copy.title,
+    description: copy.description,
+    locale: resolvedLocale,
     path: '/neemx-pro',
     keywords: [
       'NEEMX PRO',
@@ -33,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'plantaardige olie voor planten',
     ],
     ogImage: neemx.usageImage ?? neemx.mainImage,
-    availableLocales: ['nl'],
+    availableLocales: ['nl', 'en', 'de'],
   })
 }
 
@@ -41,7 +44,7 @@ const productGroupJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProductGroup',
   name: 'NEEMX PRO',
-  description,
+  description: metadataCopy.nl.description,
   url: 'https://lumorahorticulture.nl/neemx-pro',
   image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
     .filter((image): image is string => Boolean(image))
@@ -68,7 +71,8 @@ const productGroupJsonLd = {
 
 export default async function NeemXProPage({ params }: Props) {
   const { locale } = await params
-  if (locale !== 'nl') notFound()
+  const resolvedLocale = resolveStorefrontLocale(locale)
+  const { neemx: localizedNeemx } = getLocalizedProducts(resolvedLocale)
 
   return (
     <StoreShell>
@@ -76,7 +80,7 @@ export default async function NeemXProPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupJsonLd) }}
       />
-      <ProductDetail product={neemx} />
+      <ProductDetail product={localizedNeemx} locale={resolvedLocale} />
     </StoreShell>
   )
 }

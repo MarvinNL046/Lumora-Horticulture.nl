@@ -1,7 +1,8 @@
-import ProductsClient from './ProductsClient'
 import { generatePageMetadata } from '@/lib/metadata'
 import { StorefrontProductsPage } from '@/app/lumora-premium/producten/page'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
+import { localizeStorefrontRoutes, resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { publicStorefrontRoutes } from '@/app/lumora-premium/_data/routes'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -22,14 +23,14 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       keywords: ['stekpluggen', 'stekpluggen steenwol', 'paper plug tray 84', 'paper plug tray 104', 'NeemX Pro', 'botanische bladverzorging']
     },
     en: {
-      title: 'Products | Paper Plug Trays 84 & 104 | FP 12+ Quality',
-      description: 'View our complete B2B range: Paper Plug Tray 84/104, transport boxes and insert sheets. ✓ FP 12+ technology ✓ Free shipping ✓ B2B prices ✓ Direct from manufacturer.',
-      keywords: ['paper plug tray 84', 'paper plug tray 104', 'paper plug rockwool', 'ellepot fp 12+', 'growing trays B2B', 'transport boxes horticulture', 'professional growing trays']
+      title: 'Paper Plug Trays & NeemX Pro',
+      description: 'Compare Paper Plug Tray 84 and 104 with exact tray and box contents, or choose NeemX Pro for botanical leaf care.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'rockwool cutting plugs', 'ellepot fp 12+', 'NeemX Pro', 'botanical leaf care']
     },
     de: {
-      title: 'Produkte | Paper Plug Trays 84 & 104 | FP 12+ Qualitat',
-      description: 'Sehen Sie unser komplettes B2B-Sortiment: Paper Plug Tray 84/104, Transportboxen und Einlegeblatter. ✓ FP 12+ Technologie ✓ Kostenloser Versand ✓ B2B-Preise ✓ Direkt vom Hersteller.',
-      keywords: ['paper plug tray 84', 'paper plug tray 104', 'Papier-Plug Steinwolle', 'Ellepot FP 12+', 'Anzuchtschalen B2B', 'Transportboxen Gartenbau', 'professionelle Anzuchtschalen']
+      title: 'Paper Plug Trays & NeemX Pro',
+      description: 'Vergleichen Sie Paper Plug Tray 84 und 104 mit genauen Anzuchtplatten- und Kartoninhalten oder wählen Sie NeemX Pro zur botanischen Blattpflege.',
+      keywords: ['paper plug tray 84', 'paper plug tray 104', 'Steinwoll-Stecklingsplugs', 'Ellepot FP 12+', 'NeemX Pro', 'botanische Blattpflege']
     }
   }
 
@@ -53,23 +54,10 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 export default async function ProductsPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
 
-  if (params.locale === 'nl') {
-    return (
-      <StoreShell>
-        <StorefrontProductsPage />
-      </StoreShell>
-    )
-  }
-
-  // This is needed for internationalization to work properly
-
-  // Load messages manually for static export
-  const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-
-  // Pull products translations from the messages
-  const t = messages.products
-
+  const locale = resolveStorefrontLocale(params.locale)
   return (
-    <ProductsClient t={t} locale={params.locale} />
+    <StoreShell>
+      <StorefrontProductsPage locale={locale} routes={localizeStorefrontRoutes(publicStorefrontRoutes, locale)} />
+    </StoreShell>
   )
 }

@@ -193,8 +193,8 @@ export const neemx: ProductFamily = {
 
 export const productFamilies = [paperbus, neemx] as const
 
-export function formatPrice(value: number): string {
-  return new Intl.NumberFormat('nl-NL', {
+export function formatPrice(value: number, locale: 'nl' | 'en' | 'de' = 'nl'): string {
+  return new Intl.NumberFormat(locale === 'en' ? 'en-IE' : locale === 'de' ? 'de-DE' : 'nl-NL', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)

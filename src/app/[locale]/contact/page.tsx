@@ -21,14 +21,14 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       keywords: ['contact lumora', 'offerte steenwol pluggen', 'B2B offerte', 'tuinbouw leverancier contact', 'steenwol pluggen bestellen', 'groothandel aanvraag']
     },
     en: {
-      title: 'Contact | Free Quote Within 24h | Lumora B2B',
-      description: 'Request a free quote for rockwool plugs and growing trays. ✓ Response within 24 hours ✓ Personal advice ✓ B2B wholesale prices ✓ Direct from manufacturer.',
-      keywords: ['contact lumora', 'rockwool plugs quote', 'B2B quote', 'horticulture supplier contact', 'order rockwool plugs', 'wholesale inquiry']
+      title: 'Contact & Product Advice',
+      description: 'Contact Lumora for personal advice about Paper Plug Trays 84 and 104 or NeemX Pro.',
+      keywords: ['contact lumora', 'paper plug trays quote', 'B2B quote', 'horticulture supplier contact', 'wholesale inquiry']
     },
     de: {
-      title: 'Kontakt | Kostenloses Angebot in 24h | Lumora B2B',
-      description: 'Fordern Sie ein kostenloses Angebot fur Steinwolle-Plugs und Anzuchtschalen an. ✓ Antwort innerhalb 24 Stunden ✓ Personliche Beratung ✓ B2B-Grosshandelspreise ✓ Direkt vom Hersteller.',
-      keywords: ['kontakt lumora', 'Steinwolle Plugs Angebot', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Steinwollstecker bestellen', 'Grosshandel Anfrage']
+      title: 'Kontakt & Produktberatung',
+      description: 'Kontaktieren Sie Lumora für persönliche Beratung zu Paper Plug Trays 84 und 104 oder NeemX Pro.',
+      keywords: ['kontakt lumora', 'Paper Plug Trays Angebot', 'B2B Angebot', 'Gartenbau Lieferant Kontakt', 'Grosshandel Anfrage']
     }
   }
 
@@ -65,7 +65,14 @@ export default async function ContactPage(props: { params: Promise<{ locale: str
     message: t.form.message,
     submit: t.form.submit,
     success: t.form.success,
-    error: t.form.error
+    error: t.form.error,
+    namePlaceholder: params.locale === 'de' ? 'Max Mustermann' : params.locale === 'nl' ? 'Jan de Vries' : 'John Doe',
+    companyPlaceholder: params.locale === 'de' ? 'Unternehmen GmbH' : params.locale === 'nl' ? 'Bedrijfsnaam' : 'Company Ltd.',
+    messagePlaceholder: params.locale === 'de' ? 'Wie können wir Ihnen helfen?' : params.locale === 'nl' ? 'Waarmee kunnen we je helpen?' : 'How can we help you?',
+    requiredError: params.locale === 'de' ? 'Füllen Sie bitte alle Pflichtfelder aus.' : params.locale === 'nl' ? 'Vul alle verplichte velden in.' : 'Please fill in all required fields.',
+    submitting: params.locale === 'de' ? 'Wird gesendet…' : params.locale === 'nl' ? 'Bezig met verzenden…' : 'Submitting…',
+    successFollowup: params.locale === 'de' ? 'Wir melden uns so schnell wie möglich bei Ihnen.' : params.locale === 'nl' ? 'We nemen zo snel mogelijk contact met je op.' : "We'll get back to you as soon as possible.",
+    retryError: params.locale === 'de' ? 'Versuchen Sie es später erneut.' : params.locale === 'nl' ? 'Probeer het later opnieuw.' : 'Please try again later.'
   }
 
   return (

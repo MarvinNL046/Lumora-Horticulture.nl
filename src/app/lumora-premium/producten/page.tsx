@@ -5,8 +5,9 @@ import { ArrowRightIcon, CheckIcon } from '../_components/Icons'
 import { ProductFamilyCard } from '../_components/ProductFamilyCard'
 import { TrustStrip } from '../_components/TrustStrip'
 import { StekplugPromoBand } from '../_components/StekplugPromoBand'
-import { neemx, productFamilies } from '../_data/products'
+import { getLocalizedProducts, productsPageCopy, sharedCopy } from '../_data/storefront-content'
 import { previewStorefrontRoutes, publicStorefrontRoutes, type StorefrontRoutes } from '../_data/routes'
+import type { StorefrontLocale } from '../_components/storefront-localization'
 import styles from '../storefront.module.css'
 
 export const metadata: Metadata = {
@@ -14,24 +15,33 @@ export const metadata: Metadata = {
   description: 'Vergelijk professionele Stekpluggen Steenwol 84 en 104 met exacte tray- en doosinhoud, of kies NeemX Pro voor botanische bladverzorging.',
 }
 
-export function StorefrontProductsPage({ routes = publicStorefrontRoutes }: { routes?: StorefrontRoutes }) {
+export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale = 'nl' }: { routes?: StorefrontRoutes; locale?: StorefrontLocale }) {
+  const copy = productsPageCopy[locale]
+  const intro = locale === 'en'
+    ? 'Start with your goal: propagate with Paper Plug Trays or care for leaves with NeemX Pro. Then choose the right version.'
+    : locale === 'de'
+      ? 'Beginnen Sie mit Ihrem Ziel: Anzucht mit Paper Plug Trays oder Blattpflege mit NeemX Pro. Wählen Sie danach die passende Ausführung.'
+      : copy.intro
+  const choosePlugs = locale === 'en' ? 'Choose your Paper Plug Tray' : locale === 'de' ? 'Paper Plug Tray wählen' : copy.choosePlugs
+  const localized = getLocalizedProducts(locale)
+  const localizedProducts = [localized.paperbus, localized.neemx]
   return (
     <main>
       <section className={styles.collectionHero}>
         <div className={`${styles.container} ${styles.collectionHeroGrid}`}>
           <div>
-            <span className={styles.eyebrow}>De Lumora collectie</span>
-            <h1>Kies je productlijn.</h1>
-            <p>Begin bij wat je wilt doen: opkweken met stekpluggen van steenwol of je planten verzorgen met NeemX Pro.</p>
+            <span className={styles.eyebrow}>{copy.eyebrow}</span>
+            <h1>{copy.title}</h1>
+            <p>{intro}</p>
             <Link className={styles.collectionHeroAction} href="#productlijnen">
-              Bekijk beide productlijnen <ArrowRightIcon />
+              {copy.action} <ArrowRightIcon />
             </Link>
           </div>
           <div className={styles.collectionHeroVisual}>
             <div className={styles.collectionImageOne}>
               <Image
                 src="/productAfbeeldingen/stekpluggen/stekpluggen-steenwol-84-tray-alternate.webp"
-                alt="Stekpluggen Steenwol 84 met Paperbus-wikkel in een kweektray"
+                alt={localized.paperbus.secondaryImageAlt}
                 fill
                 priority
                 sizes="260px"
@@ -39,63 +49,69 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes }: { ro
             </div>
             <div className={styles.collectionImageTwo}>
               <Image
-                src={neemx.mainImage}
-                alt={neemx.mainImageAlt}
+                src={localized.neemx.mainImage}
+                alt={localized.neemx.mainImageAlt}
                 fill
                 priority
                 sizes="220px"
               />
             </div>
+            <Link className={styles.collectionMobileOffer} href={`${routes.stekpluggen}#koopblok`}>
+              <span>{sharedCopy[locale].promoBadge}</span>
+              <strong>{sharedCopy[locale].promoPrice}</strong>
+              <small>{sharedCopy[locale].promoShipping}</small>
+            </Link>
           </div>
         </div>
       </section>
 
-      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} />
+      <StekplugPromoBand href={`${routes.stekpluggen}#koopblok`} locale={locale} />
 
       <section className={styles.collectionProducts} id="productlijnen">
         <div className={styles.container}>
-          <div className={styles.collectionCount}><span>2 productlijnen</span><span>5 uitvoeringen</span></div>
+          <div className={styles.collectionCount}><span>{copy.lines}</span><span>{copy.variants}</span></div>
           <div className={styles.productGrid}>
-            {productFamilies.map((product) => (
+            {localizedProducts.map((product) => (
               <ProductFamilyCard
                 product={product}
                 key={product.id}
                 href={product.id === 'paperbus' ? routes.stekpluggen : routes.neemx}
+                locale={locale}
               />
             ))}
           </div>
         </div>
       </section>
 
-      <TrustStrip />
+      <TrustStrip locale={locale} />
 
       <section className={styles.compareSection}>
         <div className={styles.container}>
           <div className={styles.compareIntro}>
-            <span className={styles.eyebrow}>In één oogopslag</span>
-            <h2>Van doel naar product.</h2>
-            <p>Beide lijnen hebben een eigen toepassing. Vergelijk alleen wat je nodig hebt en kies daarna de juiste uitvoering.</p>
+            <span className={styles.eyebrow}>{copy.glance}</span>
+            <h2>{copy.compareTitle}</h2>
+            <p>{copy.compareIntro}</p>
           </div>
-          <div className={styles.compareTable} role="table" aria-label="Vergelijk Stekpluggen Steenwol en NeemX Pro">
+          <div className={styles.compareTable} role="table" aria-label={`${localized.paperbus.name} / NeemX Pro`}>
             <div className={`${styles.compareRow} ${styles.compareHeader}`} role="row">
-              <span role="columnheader">Je zoekt</span>
-              <span role="columnheader">Stekpluggen Steenwol</span>
+              <span role="columnheader">{copy.seek}</span>
+              <span role="columnheader">{localized.paperbus.name}</span>
               <span role="columnheader">NeemX Pro</span>
             </div>
             <div className={styles.compareRow} role="row">
-              <strong role="rowheader">Toepassing</strong>
-              <span role="cell"><CheckIcon /> Zaaien en stekken</span>
-              <span role="cell"><CheckIcon /> Plant- en bladverzorging</span>
+              <strong role="rowheader">{copy.application}</strong>
+              <span role="cell"><CheckIcon /> {copy.growing}</span>
+              <span role="cell"><CheckIcon /> {copy.care}</span>
             </div>
             <div className={styles.compareRow} role="row">
-              <strong role="rowheader">Uitvoeringen</strong>
-              <span role="cell">Stekpluggen Steenwol 84 of Stekpluggen Steenwol 104</span>
+              <strong role="rowheader">{copy.versions}</strong>
+              <span role="cell">{localized.paperbus.variants[0].label} / {localized.paperbus.variants[1].label}</span>
               <span role="cell">10 ml, 30 ml of 50 ml</span>
             </div>
             <div className={styles.compareRow} role="row">
-              <strong role="rowheader">Volgende stap</strong>
-              <span role="cell"><Link href={routes.stekpluggen}>Kies je stekpluggen <ArrowRightIcon /></Link></span>
-              <span role="cell"><Link href={routes.neemx}>Kies je formaat <ArrowRightIcon /></Link></span>
+              <strong role="rowheader">{copy.next}</strong>
+              <span role="cell"><Link href={routes.stekpluggen}>{choosePlugs} <ArrowRightIcon /></Link></span>
+              <span role="cell"><Link href={routes.neemx}>{copy.chooseSize} <ArrowRightIcon /></Link></span>
             </div>
           </div>
         </div>
@@ -103,9 +119,9 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes }: { ro
 
       <section className={styles.collectionHelp}>
         <div className={`${styles.container} ${styles.collectionHelpInner}`}>
-          <div><span className={styles.eyebrow}>Nog niet zeker?</span><h2>Vertel ons wat je wilt bereiken.</h2></div>
-          <p>Neem rechtstreeks contact op met Lumora voor hulp bij je product- of variantkeuze.</p>
-          <a className={styles.primaryButton} href="mailto:info@lumorahorticulture.com">Vraag productadvies <ArrowRightIcon /></a>
+          <div><span className={styles.eyebrow}>{copy.uncertain}</span><h2>{copy.tell}</h2></div>
+          <p>{copy.help}</p>
+          <a className={styles.primaryButton} href="mailto:info@lumorahorticulture.com">{copy.advice} <ArrowRightIcon /></a>
         </div>
       </section>
     </main>

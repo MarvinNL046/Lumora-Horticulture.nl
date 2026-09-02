@@ -15,7 +15,7 @@ export default async function AccountPage(props: { params: Promise<{ locale: str
   const { locale: rawLocale } = await props.params
   const locale = rawLocale as Locale
   const user = await stackServerApp.getUser()
-  if (!user) redirect('/handler/signin')
+  if (!user) redirect(`/handler/sign-in?lang=${locale}`)
 
   const orders = await fetchQuery(api.orders.listByAccountWithItems, {
     ...convexServerAuth(),
@@ -41,6 +41,7 @@ export default async function AccountPage(props: { params: Promise<{ locale: str
     addresses: locale === 'de' ? 'Adressen verwalten' : locale === 'en' ? 'Manage addresses' : 'Adressen beheren',
     logout: locale === 'de' ? 'Abmelden' : locale === 'en' ? 'Sign out' : 'Uitloggen',
     order: locale === 'de' ? 'Bestellung' : locale === 'en' ? 'Order' : 'Bestelling',
+    overview: locale === 'de' ? 'Kontoübersicht' : locale === 'en' ? 'Account overview' : 'Accountoverzicht',
   }
 
   const activeOrders = orders.filter((order) => ['paid', 'processing', 'shipped'].includes(order.status)).length
@@ -57,7 +58,7 @@ export default async function AccountPage(props: { params: Promise<{ locale: str
           </div>
         </header>
 
-        <section className={styles.statGrid} aria-label="Accountoverzicht">
+        <section className={styles.statGrid} aria-label={t.overview}>
           <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><OrdersIcon /></span><div><strong>{orders.length}</strong><small>{t.orders}</small></div><ArrowIcon /></Link>
           <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><TruckIcon /></span><div><strong>{activeOrders}</strong><small>{t.active}</small></div><ArrowIcon /></Link>
           <Link href={localizePathForLocale('/account/orders', locale)} className={styles.statCard}><span className={styles.statIcon}><InvoiceIcon /></span><div><strong>{invoiceCount}</strong><small>{t.invoices}</small></div><ArrowIcon /></Link>
@@ -67,7 +68,7 @@ export default async function AccountPage(props: { params: Promise<{ locale: str
           <section className={styles.panel}>
             <div className={styles.panelHeading}><div><span>{t.orders}</span><h2>{t.recent}</h2></div><Link href={localizePathForLocale('/account/orders', locale)}>{t.allOrders} <ArrowIcon /></Link></div>
             {orders.length === 0 ? (
-              <div className={styles.emptyState}><span><OrdersIcon /></span><h3>{t.noOrders}</h3><p>{t.noOrdersCopy}</p><Link href="/lumora-premium/producten">{t.shop}</Link></div>
+              <div className={styles.emptyState}><span><OrdersIcon /></span><h3>{t.noOrders}</h3><p>{t.noOrdersCopy}</p><Link href={localizePathForLocale('/products', locale)}>{t.shop}</Link></div>
             ) : (
               <div className={styles.recentOrders}>{orders.slice(0, 3).map((order) => (
                 <Link href={localizePathForLocale('/account/orders', locale)} key={order._id} className={styles.recentOrder}>

@@ -1,18 +1,21 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { localizePathForLocale } from '@/lib/url-localizations'
 import CheckoutStatusScreen from '@/components/CheckoutStatusScreen'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
 export default function ConversionTrackingPage() {
   const searchParams = useSearchParams()
+  const params = useParams()
+  const locale = params?.locale === 'en' || params?.locale === 'de' ? params.locale : 'nl'
   const router = useRouter()
   const orderId = searchParams.get('order_id')
 
   useEffect(() => {
     if (!orderId) {
-      router.replace('/producten')
+      router.replace(localizePathForLocale('/products', locale))
       return
     }
 
@@ -28,24 +31,24 @@ export default function ConversionTrackingPage() {
       })
       .then((data: { success?: boolean; order?: unknown }) => {
         if (!data.success || !data.order) {
-          router.replace('/producten')
+          router.replace(localizePathForLocale('/products', locale))
           return
         }
 
-        router.replace(`/checkout/success?order_id=${encodeURIComponent(orderId)}`)
+        router.replace(`${localizePathForLocale('/checkout/success', locale)}?order_id=${encodeURIComponent(orderId)}`)
       })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === 'AbortError') return
         console.error('Failed to fetch order data:', error)
-        router.replace('/producten')
+        router.replace(localizePathForLocale('/products', locale))
       })
 
     return () => controller.abort()
-  }, [orderId, router])
+  }, [locale, orderId, router])
 
   return (
     <StoreShell>
-      <CheckoutStatusScreen kind="loading" />
+      <CheckoutStatusScreen kind="loading" locale={locale} />
     </StoreShell>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import CheckoutStatusScreen from '@/components/CheckoutStatusScreen'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
@@ -13,6 +13,8 @@ type PublicOrder = {
 }
 
 export default function CheckoutSuccessPage() {
+  const params = useParams()
+  const locale = params?.locale === 'en' || params?.locale === 'de' ? params.locale : 'nl'
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order_id')
   const [orderStatus, setOrderStatus] = useState<OrderStatus>(orderId ? 'loading' : 'failed')
@@ -53,7 +55,7 @@ export default function CheckoutSuccessPage() {
 
   return (
     <StoreShell>
-      <CheckoutStatusScreen kind={orderStatus} orderNumber={orderData?.order_number} />
+      <CheckoutStatusScreen kind={orderStatus} orderNumber={orderData?.order_number} locale={locale} />
     </StoreShell>
   )
 }

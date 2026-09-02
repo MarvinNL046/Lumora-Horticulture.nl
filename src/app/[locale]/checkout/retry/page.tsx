@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { localizePathForLocale } from '@/lib/url-localizations';
-import { formatPrice } from '@/lib/volume-discount';
 
 interface OrderDetails {
   customer_name: string | null;
@@ -100,8 +99,7 @@ function RetryPaymentContent() {
   const [error, setError] = useState<string | null>(null);
 
   const backToShopHref = useMemo(() => {
-    const localizedPath = localizePathForLocale('/shop', locale);
-    return locale === 'nl' ? localizedPath : `/${locale}${localizedPath}`;
+    return localizePathForLocale('/products', locale);
   }, [locale]);
 
   useEffect(() => {
@@ -216,7 +214,7 @@ function RetryPaymentContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#f4f7f4] to-white">
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-lumora-green-500/10">
@@ -264,7 +262,7 @@ function RetryPaymentContent() {
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-lumora-dark/10 pt-3">
                   <span className="text-lg font-semibold text-lumora-dark">{t.amount}</span>
-                  <span className="text-2xl font-bold text-lumora-green-500">{formatPrice(order.total_amount)}</span>
+                  <span className="text-2xl font-bold text-lumora-green-500">{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(order.total_amount)}</span>
                 </div>
               </div>
 

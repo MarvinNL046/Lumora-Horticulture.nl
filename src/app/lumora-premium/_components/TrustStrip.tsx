@@ -1,28 +1,18 @@
 import styles from '../storefront.module.css'
 import { MessageIcon, ShieldIcon, TruckIcon } from './Icons'
 import { PaymentLogos } from './PaymentLogos'
+import { sharedCopy } from '../_data/storefront-content'
+import type { StorefrontLocale } from './storefront-localization'
 
-const items = [
-  {
-    icon: TruckIcon,
-    title: 'Gratis verzending',
-    text: 'Binnen Nederland, België en Duitsland',
-  },
-  {
-    icon: ShieldIcon,
-    title: 'Veilig afrekenen',
-    paymentLogos: true,
-  },
-  {
-    icon: MessageIcon,
-    title: 'Hulp bij je keuze',
-    text: 'Rechtstreeks contact met Lumora',
-  },
-]
-
-export function TrustStrip() {
+export function TrustStrip({ locale = 'nl' }: { locale?: StorefrontLocale }) {
+  const copy = sharedCopy[locale]
+  const items = [
+    { icon: TruckIcon, title: copy.freeShipping, text: copy.shippingRegion },
+    { icon: ShieldIcon, title: copy.secureCheckout, paymentLogos: true },
+    { icon: MessageIcon, title: copy.helpChoice, text: copy.directContact },
+  ]
   return (
-    <section className={styles.trustStrip} aria-label="Servicevoordelen">
+    <section className={styles.trustStrip} aria-label={copy.secureCheckout}>
       <div className={`${styles.container} ${styles.trustGrid}`}>
         {items.map((item) => {
           const Icon = item.icon

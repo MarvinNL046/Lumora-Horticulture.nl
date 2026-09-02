@@ -275,7 +275,7 @@ export default async function ReturnPolicyPage({
   const copy = COPY[resolveLocale(requestedLocale)]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#f4f7f4] to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-4xl md:text-5xl font-display font-bold text-lumora-dark mb-8">
           {copy.title}
