@@ -6,6 +6,8 @@ import AddressesClient from './AddressesClient'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
 import { convexServerAuth } from '@/lib/convex'
+import AccountMobileNav from '../AccountMobileNav'
+import styles from '../account.module.css'
 
 export default async function AddressesPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
@@ -28,8 +30,8 @@ export default async function AddressesPage(props: { params: Promise<{ locale: s
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-lumora-cream/30 to-white py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`${styles.accountPage} ${styles.addressesPage}`} data-account-dashboard>
+      <div className={styles.accountContainer}>
         <div className="mb-8">
           <Link
             href={localizePathForLocale('/account', locale)}
@@ -45,6 +47,7 @@ export default async function AddressesPage(props: { params: Promise<{ locale: s
 
         <AddressesClient addresses={addresses as any} locale={locale} />
       </div>
+      <AccountMobileNav locale={locale} active="account" />
     </div>
   )
 }
