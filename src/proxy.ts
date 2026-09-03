@@ -25,6 +25,12 @@ const NON_LOCALIZED_PATHS = [
 const LEGACY_BASE_PATH_ALIASES: Record<string, string> = {
   '/privacy-policy': '/privacy',
   '/terms-conditions': '/terms',
+  // Knowledge articles merged into one explainer page (September 2026).
+  '/propagatie-technologie/biologisch-afbreekbaar': '/paper-plug-trays-uitgelegd',
+  '/propagatie-technologie/fp-12-technologie': '/paper-plug-trays-uitgelegd',
+  '/propagatie-technologie/wat-zijn-paper-plug-trays': '/paper-plug-trays-uitgelegd',
+  '/troubleshooting/transplantatieschok-voorkomen': '/paper-plug-trays-uitgelegd',
+  '/troubleshooting/wortelvorming-optimaliseren': '/paper-plug-trays-uitgelegd',
 }
 const PRODUCTION_STOREFRONT_REDIRECTS: Record<string, string> = {
   '/lumora-premium': '/',

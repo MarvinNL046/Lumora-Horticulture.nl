@@ -103,6 +103,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'paperbus-steenwol-pluggen': 'paper-pot-rockwool-plugs',
     'steenwol-pluggen': 'rockwool-plugs',
     'stekpluggen': 'cutting-plugs',
+    'paper-plug-trays-uitgelegd': 'paper-plug-trays-explained',
     // FAQ pages translated to English
     'steenwol-vs-rockwool': 'rockwool-vs-stone-wool',
     'voordelen-nadelen-steenwol': 'rockwool-pros-cons',
@@ -149,6 +150,7 @@ export const localizedPaths: Record<string, Record<string, string>> = {
     'paperbus-steenwol-pluggen': 'papiertopf-steinwollstecker',
     'steenwol-pluggen': 'steinwolle-stecklinge',
     'stekpluggen': 'stecklingsplugs',
+    'paper-plug-trays-uitgelegd': 'paper-plug-trays-erklaert',
     // FAQ pages translated to German
     'steenwol-vs-rockwool': 'steinwolle-vs-rockwool',
     'voordelen-nadelen-steenwol': 'steinwolle-vor-nachteile',

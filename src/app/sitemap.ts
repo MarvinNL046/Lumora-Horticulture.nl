@@ -67,6 +67,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     localizedEntries(path, path === '/' ? 1 : 0.8, 'weekly'),
   )
   const returnPolicyEntries = localizedEntries('/return-policy', 0.5, 'monthly')
+  const knowledgePaths = [
+    '/paper-plug-trays-uitgelegd',
+    '/voordelen-nadelen-steenwol',
+    '/steenwol-vs-rockwool',
+    '/levensduur-steenwol',
+    '/steenwol-vastzetten',
+    '/steenwol-longen',
+    '/glaswol-aanraken',
+  ]
+  const knowledgeEntries = knowledgePaths.flatMap((path) => localizedEntries(path, 0.6, 'monthly'))
   const blogEntries = localizedEntries('/blog', 0.7, 'weekly')
   const storefrontProductEntries = [
     ...localizedEntries('/stekpluggen-steenwol', 0.95, 'daily'),
@@ -101,6 +111,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticEntries,
     ...returnPolicyEntries,
+    ...knowledgeEntries,
     ...storefrontProductEntries,
     ...blogEntries,
     ...blogArticleEntries,
