@@ -55,8 +55,8 @@ export function generatePageMetadata({
   // Add default B2B keywords based on locale
   const defaultKeywords = {
     nl: ['professionele tuinbouw', 'stekpluggen steenwol', 'paper plug trays', 'NeemXPRO', 'leverancier'],
-    en: ['B2B', 'wholesale', 'professional horticulture', 'supplier', 'manufacturer'],
-    de: ['B2B', 'Großhandel', 'professioneller Gartenbau', 'Lieferant', 'Hersteller']
+    en: ['professional horticulture', 'paper plug trays', 'rockwool plugs', 'NeemXPRO', 'supplier'],
+    de: ['professioneller Gartenbau', 'Paper Plug Trays', 'Steinwollstecker', 'NeemXPRO', 'Lieferant'],
   }
 
   const allKeywords = [...(defaultKeywords[locale as keyof typeof defaultKeywords] || defaultKeywords.nl), ...keywords]
