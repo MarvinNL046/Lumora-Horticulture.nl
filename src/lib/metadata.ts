@@ -54,7 +54,7 @@ export function generatePageMetadata({
 
   // Add default B2B keywords based on locale
   const defaultKeywords = {
-    nl: ['B2B', 'groothandel', 'professionele tuinbouw', 'leverancier', 'fabrikant'],
+    nl: ['professionele tuinbouw', 'stekpluggen steenwol', 'paper plug trays', 'NeemXPRO', 'leverancier'],
     en: ['B2B', 'wholesale', 'professional horticulture', 'supplier', 'manufacturer'],
     de: ['B2B', 'Großhandel', 'professioneller Gartenbau', 'Lieferant', 'Hersteller']
   }
