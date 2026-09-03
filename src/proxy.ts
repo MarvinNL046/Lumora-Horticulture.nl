@@ -90,9 +90,22 @@ function stripLocalePrefix(pathname: string): {
   }
 }
 
+function safeDecode(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
 function canonicalPath(pathname: string, locale: AppLocale): string {
   const basePath = basePathFromLocalizedPath(pathname, locale)
-  const canonicalBasePath = LEGACY_BASE_PATH_ALIASES[basePath] || basePath
+  // Incoming pathnames are percent-encoded; alias keys such as
+  // /efficiëntie-roi are written with the literal character.
+  const canonicalBasePath =
+    LEGACY_BASE_PATH_ALIASES[basePath] ||
+    LEGACY_BASE_PATH_ALIASES[safeDecode(basePath)] ||
+    basePath
   return localizePathForLocale(canonicalBasePath, locale)
 }
 
