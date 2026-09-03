@@ -22,12 +22,12 @@
   "contact": {
     "title": {
       "tag": "Contact",
-      "main": "Neem contact met ons op",
-      "subtitle": "Wij helpen u graag verder"
+      "main": "Neem contact met ons op.",
+      "subtitle": "Vragen over Paper Plug Trays, NeemXPRO of een grotere afname? We helpen je graag verder."
     },
     "info": {
       "email": {
-        "title": "Email"
+        "title": "E-mail"
       },
       "web": {
         "title": "Web"
@@ -36,8 +36,8 @@
         "title": "WhatsApp"
       },
       "collaboration": {
-        "title": "Samen werken",
-        "description": "Neem gerust contact met ons op voor vragen over onze producten. Wij geven u graag meer informatie en helpen u de juiste oplossingen te vinden voor uw tuinbouwbehoeften."
+        "title": "Samenwerken",
+        "description": "Neem gerust contact op met vragen over onze producten. We geven je graag meer informatie en helpen je de juiste uitvoering te kiezen voor jouw teelt of plantverzorging."
       }
     },
     "form": {
@@ -47,8 +47,8 @@
       "phone": "Telefoon",
       "message": "Bericht",
       "submit": "Versturen",
-      "success": "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
-      "error": "Er is een fout opgetreden bij het versturen van uw bericht. Probeer het later opnieuw."
+      "success": "Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.",
+      "error": "Er ging iets mis bij het versturen van je bericht. Probeer het later opnieuw."
     }
   },
   "products": {
@@ -82,11 +82,11 @@
     "title": {
       "tag": "Toepassingen",
       "main": "Toepassingen in de Glastuinbouw",
-      "subtitle": "Onze pluggen zijn perfect inzetbaar voor diverse toepassingsgebieden"
+      "subtitle": "Paper Plug Trays zijn inzetbaar voor uiteenlopende teelten, van groenteplanten tot vertical farming"
     },
     "section": {
       "title": "Toepassingen in de Glastuinbouw",
-      "subtitle": "Ontdek waar onze hoogwaardige pluggen voor gebruikt kunnen worden"
+      "subtitle": "Ontdek waar stekpluggen van steenwol met Ellepot FP 12+ wikkel het verschil maken"
     },
     "tabs": {
       "benefits": "Voordelen",
@@ -188,57 +188,57 @@
   },
   "about": {
     "title": {
-      "tag": "Over Ons",
-      "main": "Uw Partner in Professionele Tuinbouw",
-      "subtitle": "Directe fabrikant van hoogwaardige steenwol pluggen en kweektrays"
+      "tag": "Over ons",
+      "main": "Twee specialismen, één duidelijke aanpak.",
+      "subtitle": "Lumora Horticulture levert professionele Paper Plug Trays voor zaaien en stekken en NeemXPRO voor gerichte bladverzorging."
     },
     "intro": {
-      "title": "Welkom bij Lumora Horticulture",
-      "description": "Als toonaangevende fabrikant van steenwol pluggen en kweektrays, bedienen wij professionele kwekers in heel Europa. Met onze eigen productielijn garanderen wij constante kwaliteit en directe levering aan groothandels en professionele tuinders."
+      "title": "Welkom bij Lumora",
+      "description": "Lumora brengt twee heldere productlijnen samen: stekpluggen van steenwol met Ellepot FP 12+ wikkel voor een overzichtelijke opkweek, en NeemXPRO voor gerichte botanische bladverzorging. We kiezen voor duidelijke productinformatie, praktische formaten en persoonlijk contact."
     },
     "ourStory": {
-      "title": "Onze Geschiedenis",
-      "description": "Lumora Horticulture is opgericht vanuit een passie voor innovatieve tuinbouwoplossingen. Met jarenlange ervaring in de glastuinbouw sector, hebben we ons gespecialiseerd in het produceren van hoogwaardige steenwol pluggen die perfect zijn afgestemd op de behoeften van moderne kwekers."
+      "title": "Ons verhaal",
+      "description": "Lumora Horticulture is ontstaan om specialistische kweekproducten eenvoudiger te begrijpen en te kiezen. Ons assortiment is bewust compact gehouden, zodat professionele kwekers én plantenliefhebbers de relevante opties kunnen vergelijken zonder een overvolle catalogus."
     },
     "production": {
-      "title": "Eigen Productie",
-      "description": "In onze moderne productiefaciliteit vervaardigen we dagelijks duizenden steenwol pluggen. Door de volledige controle over het productieproces kunnen we flexibel inspelen op specifieke klantwensen en garanderen we een constante productkwaliteit.",
+      "title": "Een bewust compact assortiment",
+      "description": "Elke productlijn presenteren we met concrete specificaties, doosinhoud en gebruiksinformatie. Zo kies je sneller het juiste trayformaat of flesformaat voor jouw situatie, en weet je vóór het bestellen precies wat je ontvangt.",
       "features": [
-        "Moderne productielijn voor steenwol pluggen",
-        "Capaciteit: meer dan 100.000 pluggen per dag",
-        "Strenge kwaliteitscontrole op elke batch",
-        "Flexibele productie voor custom orders"
+        "Twee professionele tray-indelingen: 84 en 104 cellen",
+        "Transparante doos- en celaantallen per uitvoering",
+        "Drie praktische NeemXPRO flesformaten: 10, 30 en 50 ml",
+        "Persoonlijk advies en offertes voor grotere volumes"
       ]
     },
     "whyUs": {
       "title": "Waarom Lumora Horticulture?",
       "reasons": [
         {
-          "title": "Direct van de Fabrikant",
-          "description": "Geen tussenpersonen, directe prijzen en persoonlijk contact"
+          "title": "Heldere keuze",
+          "description": "Een compact assortiment met uitvoeringen die je direct met elkaar vergelijkt"
         },
         {
-          "title": "B2B Specialist",
-          "description": "100% gefocust op professionele kwekers en groothandels"
+          "title": "Voor professional en liefhebber",
+          "description": "Dezelfde professionele producten, per complete doos of per fles te bestellen"
         },
         {
-          "title": "Eigen Productie",
-          "description": "Volledige controle over kwaliteit en leveringstijden"
+          "title": "Praktische informatie",
+          "description": "Specificaties, doosinhoud en voorwaarden staan vóór aankoop op de pagina"
         },
         {
-          "title": "Europese Kwaliteit",
-          "description": "Producten voldoen aan de hoogste Europese standaarden"
+          "title": "Persoonlijk contact",
+          "description": "Rechtstreeks productadvies voor jouw toepassing en bestelgrootte"
         }
       ]
     },
     "certifications": {
-      "title": "Kwaliteit & Certificeringen",
-      "description": "Onze producten voldoen aan de strengste kwaliteitseisen voor professionele tuinbouw. We werken volgens de laatste milieunormen en duurzaamheidsprincipes."
+      "title": "Kwaliteit en transparantie",
+      "description": "We publiceren de productgegevens die je nodig hebt om een weloverwogen keuze te maken, en zijn bereikbaar voor vragen over formaten, gebruik en afname in grotere volumes. Verzending binnen Nederland, België en Duitsland is gratis."
     },
     "cta": {
-      "title": "Klaar om samen te werken?",
-      "description": "Neem contact op voor een vrijblijvende offerte of meer informatie over onze producten en mogelijkheden.",
-      "button": "Vraag een offerte aan"
+      "title": "Vragen over een product of toepassing?",
+      "description": "Stuur je vraag rechtstreeks naar Lumora. Je krijgt antwoord van iemand die de producten kent.",
+      "button": "Stel je vraag"
     }
   },
   "home": {

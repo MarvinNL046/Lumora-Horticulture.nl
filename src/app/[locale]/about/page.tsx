@@ -1,5 +1,18 @@
-import AboutClient from './AboutClient'
 import { generatePageMetadata } from '@/lib/metadata'
+import { localizePathForLocale } from '@/lib/url-localizations'
+import { serializeJsonLd } from '@/lib/safe-json-ld'
+import {
+  ContentCta,
+  ContentHero,
+  ContentPage,
+  ContentSection,
+  FeatureGrid,
+  Prose,
+  SplitPanel,
+  SplitSection,
+} from '@/app/lumora-premium/_components/ContentPage'
+import { resolveStorefrontLocale } from '@/app/lumora-premium/_components/storefront-localization'
+import { getLocalizedProducts } from '@/app/lumora-premium/_data/storefront-content'
 
 // Generate static params for locales
 export function generateStaticParams() {
@@ -10,14 +23,20 @@ export function generateStaticParams() {
   ]
 }
 
+const uiCopy = {
+  nl: { products: 'Bekijk de producten', contact: 'Neem contact op', imageLabel: 'Paper Plug Trays in de kas', ourStory: 'Ons verhaal' },
+  en: { products: 'View the products', contact: 'Contact us', imageLabel: 'Paper Plug Trays in the greenhouse', ourStory: 'Our story' },
+  de: { products: 'Produkte ansehen', contact: 'Kontakt aufnehmen', imageLabel: 'Paper Plug Trays im Gewächshaus', ourStory: 'Unsere Geschichte' },
+} as const
+
 // Generate metadata for about page
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Over Ons - Directe Fabrikant van Steenwol Pluggen',
-      description: 'Lumora Horticulture: eigen productie van steenwol pluggen en kweektrays. B2B specialist voor professionele kwekers. Direct van de fabrikant, Europese kwaliteit.',
-      keywords: ['over lumora horticulture', 'steenwol pluggen fabrikant', 'eigen productie', 'B2B tuinbouw leverancier', 'directe fabrikant']
+      title: 'Over Lumora Horticulture',
+      description: 'Maak kennis met Lumora Horticulture, specialist in professionele Paper Plug Trays en gerichte botanische bladverzorging voor kwekers en plantenliefhebbers.',
+      keywords: ['over lumora horticulture', 'paper plug trays', 'stekpluggen steenwol', 'botanische bladverzorging', 'NeemXPRO']
     },
     en: {
       title: 'About Lumora Horticulture',
@@ -49,15 +68,81 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 
 export default async function AboutPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
-  // This is needed for internationalization to work properly
+  const locale = resolveStorefrontLocale(params.locale)
+  const messages = (await import(`../../../messages/${locale}/common.json`)).default
+  const t = messages.about
+  const ui = uiCopy[locale]
+  const products = getLocalizedProducts(locale)
+  const productsHref = localizePathForLocale('/products', locale)
+  const contactHref = localizePathForLocale('/contact', locale)
 
-  // Load messages manually for static export
-  const messages = (await import(`../../../messages/${params.locale}/common.json`)).default
-
-  // Pull about translations from the messages
-  const t = messages.about || {}
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: locale === 'de' ? 'Startseite' : 'Home', item: `https://lumorahorticulture.nl${localizePathForLocale('/', locale)}` },
+      { '@type': 'ListItem', position: 2, name: t.title.tag, item: `https://lumorahorticulture.nl${localizePathForLocale('/about', locale)}` },
+    ],
+  }
 
   return (
-    <AboutClient t={t} locale={params.locale} />
+    <ContentPage>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
+
+      <ContentHero
+        locale={locale}
+        breadcrumb={t.title.tag}
+        eyebrow={t.title.tag}
+        title={t.title.main}
+        lead={t.title.subtitle}
+        actions={[
+          { href: productsHref, label: ui.products },
+          { href: contactHref, label: ui.contact, variant: 'light' },
+        ]}
+        image={products.paperbus.heroImage ?? products.paperbus.mainImage}
+        imageAlt={products.paperbus.heroImageAlt ?? products.paperbus.mainImageAlt}
+        caption={{ small: 'Lumora Horticulture', strong: ui.imageLabel }}
+      />
+
+      <ContentSection eyebrow={t.intro.title} title={t.ourStory.title} soft>
+        <Prose>
+          <p>{t.intro.description}</p>
+          <p>{t.ourStory.description}</p>
+        </Prose>
+      </ContentSection>
+
+      <SplitSection
+        eyebrow={ui.ourStory}
+        title={t.production.title}
+        image={products.paperbus.tertiaryImage ?? products.paperbus.secondaryImage}
+        imageAlt={products.paperbus.tertiaryImageAlt ?? products.paperbus.secondaryImageAlt}
+        imageLabel={products.paperbus.name}
+      >
+        <Prose><p>{t.production.description}</p></Prose>
+        <SplitPanel title={t.production.title} items={t.production.features} />
+      </SplitSection>
+
+      <ContentSection eyebrow="Lumora" title={t.whyUs.title} soft>
+        <FeatureGrid
+          columns={2}
+          numbered
+          items={t.whyUs.reasons.map((reason: { title: string; description: string }) => ({ title: reason.title, text: reason.description }))}
+        />
+      </ContentSection>
+
+      <ContentSection title={t.certifications.title}>
+        <Prose><p>{t.certifications.description}</p></Prose>
+      </ContentSection>
+
+      <ContentCta
+        eyebrow={t.title.tag}
+        title={t.cta.title}
+        text={t.cta.description}
+        actions={[
+          { href: 'mailto:info@lumorahorticulture.com', label: t.cta.button },
+          { href: productsHref, label: ui.products, variant: 'ghost' },
+        ]}
+      />
+    </ContentPage>
   )
 }
