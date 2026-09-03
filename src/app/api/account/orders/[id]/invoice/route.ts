@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { api } from '@/../convex/_generated/api'
 import type { Id } from '@/../convex/_generated/dataModel'
 import { convex, convexServerAuth } from '@/lib/convex'
-import { createInvoicePdf } from '@/lib/invoice-pdf'
+import { createInvoicePdf, invoiceCopy, resolveInvoiceLocale } from '@/lib/invoice-pdf'
+import { getLocalizedCartItemName } from '@/app/lumora-premium/_data/storefront-content'
 import { stackServerApp } from '@/stack/server'
 
 export const runtime = 'nodejs'
@@ -48,20 +49,26 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
     ...convexServerAuth(),
     order_id: order._id,
   })
+  const locale = resolveInvoiceLocale(order.locale)
+  const localizedProductName = (product: { slug?: string; name?: string; name_en?: string; name_de?: string } | null) => {
+    const fallback = (locale === 'en' && product?.name_en) || (locale === 'de' && product?.name_de) || product?.name || 'Lumora product'
+    return product?.slug ? getLocalizedCartItemName(locale, product.slug, fallback) : fallback
+  }
   const pdf = await createInvoicePdf(
     { ...order, _id: String(order._id) },
     rows.map(({ order_item, product }) => ({
       quantity: order_item.quantity,
       price_at_purchase: order_item.price_at_purchase,
-      product_name: product?.name || 'Lumora product',
+      product_name: localizedProductName(product),
     })),
   )
   const invoiceNumber = (order.order_number || String(order._id).slice(0, 10)).replace(/[^A-Za-z0-9_-]/g, '-')
+  const filePrefix = invoiceCopy[locale].filePrefix
 
   return new Response(Buffer.from(pdf), {
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="factuur-${invoiceNumber}.pdf"`,
+      'Content-Disposition': `attachment; filename="${filePrefix}-${invoiceNumber}.pdf"`,
       'Cache-Control': 'private, no-store, max-age=0',
       'X-Content-Type-Options': 'nosniff',
     },
