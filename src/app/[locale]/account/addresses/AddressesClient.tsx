@@ -18,12 +18,32 @@ interface Address {
 }
 
 interface AddressesClientProps {
-  addresses: Address[]
+  addresses: Array<Partial<Address> & { _id?: string }>
   locale: 'nl' | 'en' | 'de'
 }
 
+const ADDRESS_COUNTRIES = ['NL', 'BE', 'DE'] as const
+
+// Convex returns `_id`; the API routes return `{ address: { _id } }` on
+// create/update. The client keeps a single `id` field for both.
+function normalizeAddress(raw: Partial<Address> & { _id?: string }): Address {
+  return {
+    id: raw.id ?? raw._id ?? '',
+    user_id: raw.user_id ?? '',
+    name: raw.name ?? '',
+    street: raw.street ?? '',
+    city: raw.city ?? '',
+    postal_code: raw.postal_code ?? '',
+    country: raw.country ?? 'NL',
+    phone: raw.phone ?? null,
+    is_default: Boolean(raw.is_default),
+    created_at: raw.created_at ?? '',
+    updated_at: raw.updated_at ?? '',
+  }
+}
+
 export default function AddressesClient({ addresses: initialAddresses, locale }: AddressesClientProps) {
-  const [addresses, setAddresses] = useState<Address[]>(initialAddresses)
+  const [addresses, setAddresses] = useState<Address[]>(() => initialAddresses.map(normalizeAddress))
   const [isAdding, setIsAdding] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -90,41 +110,39 @@ export default function AddressesClient({ addresses: initialAddresses, locale }:
     setIsLoading(true)
 
     try {
-      if (editingId) {
-        // Update existing address
-        const response = await fetch(`/api/addresses/${editingId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        })
+      const payload = { ...formData, phone: formData.phone.trim() || undefined }
+      const response = await fetch(editingId ? `/api/addresses/${editingId}` : '/api/addresses', {
+        method: editingId ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
 
-        if (!response.ok) throw new Error('Failed to update address')
+      if (!response.ok) throw new Error(editingId ? 'Failed to update address' : 'Failed to create address')
 
-        const { address } = await response.json()
-        setAddresses((prev) => prev.map((a) => (a.id === editingId ? address : a)))
-      } else {
-        // Create new address
-        const response = await fetch('/api/addresses', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        })
+      const data = await response.json() as { address?: { _id?: string; id?: string } }
+      const savedId = editingId ?? data.address?._id ?? data.address?.id
+      if (!savedId) throw new Error('Address id missing in response')
 
-        if (!response.ok) throw new Error('Failed to create address')
-
-        const { address } = await response.json()
-        setAddresses((prev) => [address, ...prev])
+      const existing = editingId ? addresses.find((a) => a.id === editingId) : undefined
+      const saved: Address = {
+        ...(existing ?? normalizeAddress({})),
+        id: savedId,
+        name: formData.name.trim(),
+        street: formData.street.trim(),
+        city: formData.city.trim(),
+        postal_code: formData.postal_code.trim(),
+        country: formData.country,
+        phone: formData.phone.trim() || null,
+        is_default: formData.is_default,
       }
 
-      // If this was set as default, update other addresses
-      if (formData.is_default) {
-        setAddresses((prev) =>
-          prev.map((a) => ({
-            ...a,
-            is_default: a.id === editingId || a.id === addresses[0]?.id ? true : false,
-          }))
-        )
-      }
+      setAddresses((prev) => {
+        const next = editingId
+          ? prev.map((a) => (a.id === editingId ? saved : a))
+          : [saved, ...prev]
+        // The server unsets the previous default when a new default is saved.
+        return saved.is_default ? next.map((a) => ({ ...a, is_default: a.id === saved.id })) : next
+      })
 
       resetForm()
     } catch (error) {
@@ -218,29 +236,29 @@ export default function AddressesClient({ addresses: initialAddresses, locale }:
           <form onSubmit={handleSubmit} className={styles.addressForm}>
             <label className={styles.addressFieldFull}>
               <span>{t.labelName}</span>
-              <input type="text" required value={formData.name} placeholder={t.labelPlaceholder} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+              <input type="text" required value={formData.name} aria-label={t.labelName} placeholder={t.labelPlaceholder} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
             </label>
             <label className={styles.addressFieldFull}>
               <span>{t.street}</span>
-              <input type="text" required autoComplete="street-address" value={formData.street} onChange={(e) => setFormData({ ...formData, street: e.target.value })} />
+              <input type="text" required autoComplete="street-address" value={formData.street} aria-label={t.street} onChange={(e) => setFormData({ ...formData, street: e.target.value })} />
             </label>
             <label>
               <span>{t.postalCode}</span>
-              <input type="text" required autoComplete="postal-code" value={formData.postal_code} onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })} />
+              <input type="text" required autoComplete="postal-code" value={formData.postal_code} aria-label={t.postalCode} onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })} />
             </label>
             <label>
               <span>{t.city}</span>
-              <input type="text" required autoComplete="address-level2" value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} />
+              <input type="text" required autoComplete="address-level2" value={formData.city} aria-label={t.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} />
             </label>
             <label>
               <span>{t.country}</span>
-              <select required autoComplete="country" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })}>
-                {(['NL', 'BE', 'DE', 'FR', 'GB'] as const).map((code) => <option key={code} value={code}>{countryName(code)}</option>)}
+              <select required autoComplete="country" value={formData.country} aria-label={t.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })}>
+                {ADDRESS_COUNTRIES.map((code) => <option key={code} value={code}>{countryName(code)}</option>)}
               </select>
             </label>
             <label>
               <span>{t.phone}</span>
-              <input type="tel" autoComplete="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+              <input type="tel" autoComplete="tel" value={formData.phone} aria-label={t.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
             </label>
             <label className={`${styles.addressFieldFull} ${styles.addressCheck}`}>
               <input type="checkbox" checked={formData.is_default} onChange={(e) => setFormData({ ...formData, is_default: e.target.checked })} />

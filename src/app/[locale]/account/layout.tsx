@@ -2,8 +2,18 @@ import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 
-export const metadata: Metadata = {
-  robots: {index: false, follow: false},
+const titles = {
+  nl: 'Mijn account | Lumora Horticulture',
+  en: 'My account | Lumora Horticulture',
+  de: 'Mein Konto | Lumora Horticulture',
+} as const
+
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+  const {locale} = await params
+  return {
+    title: titles[locale === 'en' || locale === 'de' ? locale : 'nl'],
+    robots: {index: false, follow: false},
+  }
 }
 
 export default function AccountLayout({children}: {children: ReactNode}) {
