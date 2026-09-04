@@ -1,3 +1,5 @@
+import AuthProvider from '@/components/AuthProvider'
+import { getLocale } from 'next-intl/server'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
@@ -16,6 +18,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
   }
 }
 
-export default function AccountLayout({children}: {children: ReactNode}) {
-  return <StoreShell>{children}</StoreShell>
+export default async function AccountLayout({children}: {children: ReactNode}) {
+  const locale = await getLocale()
+  return <AuthProvider locale={locale}><StoreShell>{children}</StoreShell></AuthProvider>
 }

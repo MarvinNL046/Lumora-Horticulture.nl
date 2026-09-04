@@ -3,9 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useUser } from '@stackframe/stack'
 import { useLocale } from 'next-intl'
-import { Suspense, useState, type MouseEvent, type ReactNode } from 'react'
+import { useState, type MouseEvent, type ReactNode } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { localizePathForLocale } from '@/lib/url-localizations'
 import { formatPrice } from '../_data/products'
@@ -44,34 +43,19 @@ function Wordmark({ priority = false }: { priority?: boolean }) {
   )
 }
 
-function AccountLinkContent({
-  locale,
-  className,
-  label,
-  children,
-}: {
+function AccountLink({ locale, className, label, children }: {
   locale: StorefrontLocale
   className?: string
   label?: string
   children: ReactNode
 }) {
-  const user = useUser({ or: 'return-null' })
-  const href = user ? localizePathForLocale('/account', locale) : `/handler/sign-in?lang=${locale}`
-
-  return <Link className={className} href={href} aria-label={label} onClick={openAccountWithFreshDocument}>{children}</Link>
-}
-
-function AccountLink(props: {
-  locale: StorefrontLocale
-  className?: string
-  label?: string
-  children: ReactNode
-}) {
-  const fallbackHref = `/handler/sign-in?lang=${props.locale}`
+  // The account route checks the session on the server and redirects guests.
+  // Avoid downloading the auth route while shoppers browse the storefront.
   return (
-    <Suspense fallback={<Link className={props.className} href={fallbackHref} aria-label={props.label} onClick={openAccountWithFreshDocument}>{props.children}</Link>}>
-      <AccountLinkContent {...props} />
-    </Suspense>
+    <Link className={className} href={localizePathForLocale('/account', locale)}
+      prefetch={false} aria-label={label} onClick={openAccountWithFreshDocument}>
+      {children}
+    </Link>
   )
 }
 
