@@ -1,3 +1,5 @@
+import { initializeGoogleTracking, initializeMetaTracking, trackingAllowed } from './tracking-bootstrap';
+
 /**
  * Google Ads Conversion Tracking & Google Analytics 4 Utilities
  *
@@ -20,7 +22,9 @@ declare global {
 // When eventId is provided it is passed as the 4th arg so Meta can deduplicate
 // this event against the matching server-side Conversions API event.
 function fbqTrack(event: string, params?: Record<string, any>, eventId?: string) {
-  if (typeof window === 'undefined' || typeof window.fbq !== 'function') return;
+  if (!trackingAllowed()) return;
+  initializeMetaTracking();
+  if (typeof window.fbq !== 'function') return;
   try {
     if (eventId) {
       window.fbq('track', event, params ?? {}, { eventID: eventId });
@@ -55,7 +59,9 @@ export function trackPurchase(
   transactionId?: string
 ) {
   // Check of gtag beschikbaar is
-  if (typeof window === 'undefined' || !window.gtag) {
+  if (!trackingAllowed()) return;
+  initializeGoogleTracking();
+  if (!window.gtag) {
     console.warn('gtag not available for conversion tracking');
     return;
   }
@@ -107,7 +113,9 @@ export function trackPurchase(
  * @param product - Product informatie
  */
 export function trackViewItem(product: Product) {
-  if (typeof window === 'undefined' || !window.gtag) {
+  if (!trackingAllowed()) return;
+  initializeGoogleTracking();
+  if (!window.gtag) {
     return;
   }
 
@@ -147,7 +155,9 @@ export function trackViewItem(product: Product) {
  * @param totalValue - Totale waarde van checkout
  */
 export function trackBeginCheckout(products: Product[], totalValue: number) {
-  if (typeof window === 'undefined' || !window.gtag) {
+  if (!trackingAllowed()) return;
+  initializeGoogleTracking();
+  if (!window.gtag) {
     return;
   }
 
@@ -188,7 +198,9 @@ export function trackBeginCheckout(products: Product[], totalValue: number) {
  * @param product - Product informatie
  */
 export function trackAddToCart(product: Product) {
-  if (typeof window === 'undefined' || !window.gtag) {
+  if (!trackingAllowed()) return;
+  initializeGoogleTracking();
+  if (!window.gtag) {
     return;
   }
 
