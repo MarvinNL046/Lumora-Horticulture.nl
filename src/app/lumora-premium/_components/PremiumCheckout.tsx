@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { trackStorefrontCheckout } from '@/lib/storefront-analytics'
 import type { FormEvent } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { calculateCartItemTotal } from '@/lib/cart-pricing'
@@ -81,6 +82,12 @@ export function PremiumCheckout({ locale = 'nl' }: { locale?: StorefrontLocale }
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const checkoutTracked = useRef(false)
+  useEffect(() => {
+    if (!isLoaded || !items.length || checkoutTracked.current) return
+    checkoutTracked.current = true
+    trackStorefrontCheckout(items)
+  }, [isLoaded, items])
 
   const total = getTotalPrice()
   const regularTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
