@@ -7,7 +7,7 @@ export function generateStaticParams() {
 }
 
 const meta = {
-  nl: { title: 'Paper Plug Trays uitgelegd: FP 12+, afbreekbaarheid, transplantatieschok en beworteling', description: 'Wat zijn Paper Plug Trays, hoe werkt de Ellepot FP 12+ papierwikkel, waarom is de wikkel biologisch afbreekbaar en hoe voorkom je transplantatieschok en optimaliseer je de wortelvorming.', keywords: ['paper plug trays', 'wat zijn paper plug trays', 'ellepot fp 12+', 'biologisch afbreekbaar', 'transplantatieschok voorkomen', 'wortelvorming'] },
+  nl: { title: 'Steenwol Stekpluggen Gebruiken | Paper Plug Trays', description: 'Wat zijn Paper Plug Trays, hoe werkt de Ellepot FP 12+ papierwikkel, waarom is de wikkel biologisch afbreekbaar en hoe voorkom je transplantatieschok en optimaliseer je de wortelvorming.', keywords: ['paper plug trays', 'wat zijn paper plug trays', 'ellepot fp 12+', 'biologisch afbreekbaar', 'transplantatieschok voorkomen', 'wortelvorming'] },
   en: { title: 'Paper Plug Trays explained: FP 12+, biodegradability, transplant shock and rooting', description: 'What Paper Plug Trays are, how the Ellepot FP 12+ paper sleeve works, why the sleeve is biodegradable and how to prevent transplant shock and optimise root formation.', keywords: ['paper plug trays', 'what are paper plug trays', 'ellepot fp 12+', 'biodegradable', 'prevent transplant shock', 'root formation'] },
   de: { title: 'Paper Plug Trays erklärt: FP 12+, Abbaubarkeit, Transplantationsschock und Bewurzelung', description: 'Was Paper Plug Trays sind, wie die Ellepot FP 12+ Papierhülle funktioniert, warum die Hülle biologisch abbaubar ist und wie Sie Transplantationsschock vermeiden und die Wurzelbildung optimieren.', keywords: ['paper plug trays', 'was sind paper plug trays', 'ellepot fp 12+', 'biologisch abbaubar', 'transplantationsschock vermeiden', 'wurzelbildung'] },
 }
@@ -20,7 +20,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 const article: Record<StorefrontLocale, KnowledgeArticle> = {
   nl: {
     tag: 'Kennisbank',
-    title: 'Paper Plug Trays uitgelegd',
+    title: 'Steenwol stekpluggen gebruiken: van tray tot uitplanten',
     intro: 'Alles over stekpluggen van steenwol met een papierwikkel: wat het is, hoe de Ellepot FP 12+ technologie werkt en hoe je er de beste beworteling mee haalt.',
     answer: { title: 'In het kort', text: 'Een Paper Plug Tray is een kweektray met steenwol pluggen die elk in een papieren wikkel zitten. De wikkel houdt de plug bij elkaar, laat wortels erdoorheen groeien en kan met plug en al de grond in. Geen plastic potje, geen transplantatieschok.' },
     sections: [

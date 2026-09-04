@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { connection } from 'next/server'
+import { productGroupSchema } from '@/lib/storefront-product-seo'
 import { ProductDetail } from '@/app/lumora-premium/_components/ProductDetail'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 import { neemx } from '@/app/lumora-premium/_data/products'
@@ -40,36 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
-const productGroupJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProductGroup',
-  name: 'NeemXPRO',
-  description: metadataCopy.nl.description,
-  url: 'https://lumorahorticulture.nl/neemx-pro',
-  image: [neemx.mainImage, neemx.secondaryImage, neemx.tertiaryImage, neemx.usageImage]
-    .filter((image): image is string => Boolean(image))
-    .map((image) => `https://lumorahorticulture.nl${image}`),
-  brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
-  category: 'Plantaardig olieconcentraat voor bladverzorging',
-  productGroupID: 'neemx-pro',
-  variesBy: 'https://schema.org/size',
-  hasVariant: neemx.variants.map((variant) => ({
-    '@type': 'Product',
-    name: `NeemXPRO ${variant.label}`,
-    sku: variant.slug,
-    size: variant.label,
-    offers: {
-      '@type': 'Offer',
-      price: variant.price.toFixed(2),
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/NewCondition',
-      url: 'https://lumorahorticulture.nl/neemx-pro',
-    },
-  })),
-}
-
 export default async function NeemXProPage({ params }: Props) {
+  // Variant query parameters must be reflected in the server-rendered purchase block.
+  await connection()
   const { locale } = await params
   const resolvedLocale = resolveStorefrontLocale(locale)
   const { neemx: localizedNeemx } = getLocalizedProducts(resolvedLocale)
@@ -78,7 +53,7 @@ export default async function NeemXProPage({ params }: Props) {
     <StoreShell>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupSchema(localizedNeemx, resolvedLocale)) }}
       />
       <ProductDetail product={localizedNeemx} locale={resolvedLocale} />
     </StoreShell>
