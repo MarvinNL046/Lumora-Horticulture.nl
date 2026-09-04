@@ -30,18 +30,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Paperbus Steenwol Pluggen - FP 12+ Kwaliteit | Lumora Horticulture',
-      description: 'Professionele paperbus steenwol pluggen met FP 12+ technologie. Milieuvriendelijk en 12+ maanden stabiliteit. Ideaal voor glastuinbouw en kwekerijen.',
+      title: 'Paperbus Steenwol Pluggen: Maten & Samenstelling',
+      description: 'Bekijk de samenstelling en maten van paperbus steenwol pluggen: steenwol met Ellepot FP 12+ papierwikkel, in trays met 84 of 104 cellen.',
       keywords: ['paperbus steenwol pluggen', 'steenwol pluggen', 'paperbus pluggen', 'fp 12+', 'milieuvriendelijk', 'glastuinbouw', 'kwekerij', 'transplantatieschok', 'wortelontwikkeling']
     },
     en: {
-      title: 'Paper Pot Rockwool Plugs - FP 12+ Quality | Lumora Horticulture',
-      description: 'Professional paper pot rockwool plugs with FP 12+ technology. Eco-friendly and 12+ months stability. Perfect for greenhouse cultivation and nurseries.',
+      title: 'Paper Pot Rockwool Plugs: Sizes & Materials',
+      description: 'Explore the materials and sizes of paper pot rockwool plugs: rockwool with an Ellepot FP 12+ paper sleeve, supplied in trays with 84 or 104 cells.',
       keywords: ['paper pot rockwool plugs', 'rockwool plugs', 'paper pot plugs', 'fp 12+', 'eco-friendly', 'greenhouse', 'nursery', 'transplant shock', 'root development']
     },
     de: {
-      title: 'Papiertopf Steinwollstecker - FP 12+ Qualität | Lumora Horticulture',
-      description: 'Professionelle Papiertopf-Steinwollstecker mit FP 12+ Technologie. Umweltfreundlich und 12+ Monate Stabilität. Ideal für Gewächshäuser und Gärtnereien.',
+      title: 'Papiertopf-Steinwollstecker: Maße & Material',
+      description: 'Material und Maße der Papiertopf-Steinwollstecker: Steinwolle mit Ellepot FP 12+ Papierhülle, erhältlich in Anzuchtplatten mit 84 oder 104 Zellen.',
       keywords: ['papiertopf steinwollstecker', 'steinwollstecker', 'papiertopf stecker', 'fp 12+', 'umweltfreundlich', 'gewächshaus', 'gärtnerei', 'transplantationsschock', 'wurzelentwicklung']
     }
   }
@@ -61,7 +61,7 @@ const content = {
   nl: {
     tag: 'Paperbus steenwol pluggen',
     subtitle: 'Professionele kweekoplossing met Ellepot FP 12+',
-    hero: { title: 'Paperbus steenwol pluggen voor professionele teelt', description: 'Steenwol pluggen met een papieren wikkel van Ellepot FP 12+. Stabiel tijdens de hele opkweek, milieuvriendelijk en direct uitplantbaar.', cta: 'Bekijk de Paper Plug Trays' },
+    hero: { title: 'Paperbus steenwol pluggen: samenstelling en maten', description: 'Steenwol pluggen met een papieren wikkel van Ellepot FP 12+. Stabiel tijdens de hele opkweek, milieuvriendelijk en direct uitplantbaar.', cta: 'Bekijk de Paper Plug Trays' },
     benefits: {
       title: 'Waarom kiezen voor paperbus steenwol pluggen?',
       items: [
@@ -131,17 +131,10 @@ export default async function PaperbusLandingPage(props: { params: Promise<{ loc
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: c.tag,
+    '@type': 'WebPage',
+    name: c.hero.title,
     description: c.hero.description,
-    brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
-    category: 'Horticultural Supplies',
-    image: `https://lumorahorticulture.nl${products.paperbus.mainImage}`,
-    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `https://lumorahorticulture.nl${localizePathForLocale('/stekpluggen-steenwol', locale)}`, seller: { '@type': 'Organization', name: 'Lumora Horticulture' } },
-    additionalProperty: [
-      { '@type': 'PropertyValue', name: 'Technology', value: 'Ellepot FP 12+' },
-      { '@type': 'PropertyValue', name: 'Stability Period', value: '12+ months' },
-    ],
+    url: 'https://lumorahorticulture.nl' + localizePathForLocale('/paperbus-steenwol-pluggen', locale),
   }
 
   return (

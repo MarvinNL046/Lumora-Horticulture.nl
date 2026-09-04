@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { connection } from 'next/server'
+import { productGroupSchema } from '@/lib/storefront-product-seo'
+import { PlugComparison } from '@/app/lumora-premium/_components/PlugComparison'
 import { ProductDetail } from '@/app/lumora-premium/_components/ProductDetail'
 import { StoreShell } from '@/app/lumora-premium/_components/StoreShell'
 import { paperbus } from '@/app/lumora-premium/_data/products'
@@ -12,7 +15,7 @@ type Props = {
 }
 
 const metadataCopy = {
-  nl: { title: 'Stekpluggen Steenwol 84 & 104', description: 'Professionele stekpluggen van steenwol met Ellepot FP 12+ papertechnologie. Vergelijk 84 en 104 cellen per tray en bestel per complete doos met gratis verzending.' },
+  nl: { title: 'Steenwol Stekpluggen Kopen | 84 & 104', description: 'Bestel steenwol stekpluggen met Ellepot FP 12+ papierwikkel. Vergelijk 84 en 104 cellen per tray en de doosinhoud. Gratis verzending naar NL, BE en DE.' },
   en: { title: 'Paper Plug Trays 84 & 104', description: 'Professional Paper Plug Trays with Ellepot FP 12+ technology. Compare 84 and 104 cells per tray and order complete boxes with free shipping.' },
   de: { title: 'Paper Plug Trays 84 & 104', description: 'Professionelle Paper Plug Trays mit Ellepot FP 12+ Technologie. Vergleichen Sie 84 und 104 Zellen pro Anzuchtplatte und bestellen Sie komplette Kartons versandkostenfrei.' },
 }
@@ -41,37 +44,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
-const productGroupJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProductGroup',
-  name: metadataCopy.nl.title,
-  description: metadataCopy.nl.description,
-  url: 'https://lumorahorticulture.nl/stekpluggen-steenwol',
-  image: [paperbus.mainImage, paperbus.secondaryImage, paperbus.tertiaryImage]
-    .filter((image): image is string => Boolean(image))
-    .map((image) => `https://lumorahorticulture.nl${image}`),
-  brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
-  category: 'Stekpluggen van steenwol',
-  productGroupID: 'stekpluggen-steenwol',
-  variesBy: 'https://schema.org/size',
-  hasVariant: paperbus.variants.map((variant) => ({
-    '@type': 'Product',
-    name: variant.label,
-    sku: variant.slug,
-    size: `${variant.cellsPerTray} cellen`,
-    description: variant.description,
-    offers: {
-      '@type': 'Offer',
-      price: variant.price.toFixed(2),
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/NewCondition',
-      url: 'https://lumorahorticulture.nl/stekpluggen-steenwol',
-    },
-  })),
-}
-
 export default async function StekpluggenSteenwolPage({ params }: Props) {
+  // Variant query parameters must be reflected in the server-rendered purchase block.
+  await connection()
   const { locale } = await params
   const resolvedLocale = resolveStorefrontLocale(locale)
   const { paperbus: localizedPaperbus } = getLocalizedProducts(resolvedLocale)
@@ -80,9 +55,11 @@ export default async function StekpluggenSteenwolPage({ params }: Props) {
     <StoreShell>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productGroupSchema(localizedPaperbus, resolvedLocale)) }}
       />
-      <ProductDetail product={localizedPaperbus} locale={resolvedLocale} />
+      <ProductDetail product={localizedPaperbus} locale={resolvedLocale}>
+        <PlugComparison product={localizedPaperbus} locale={resolvedLocale} />
+      </ProductDetail>
     </StoreShell>
   )
 }

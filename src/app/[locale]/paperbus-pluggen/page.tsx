@@ -28,18 +28,18 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   const params = await props.params;
   const metadata = {
     nl: {
-      title: 'Paperbus Pluggen | 100% Biologisch Afbreekbaar | Gratis Verzending',
-      description: 'Duurzame paperbus pluggen met FP 12+ technologie. ✓ 100% biologisch afbreekbaar ✓ Geen transplantatieschok ✓ Gratis verzending NL/BE/DE ✓ Op voorraad. Bestel direct bij Lumora.',
+      title: 'Wat Zijn Paperbus Pluggen? Papierwikkel Uitgelegd',
+      description: 'Wat zijn paperbus pluggen? Lees hoe steenwol en de Ellepot FP 12+ papierwikkel samenwerken. Bekijk de verschillen en kies een tray met 84 of 104 cellen.',
       keywords: ['paperbus pluggen', 'paperbus pluggen kopen', 'paper plug', 'biologisch afbreekbaar', 'duurzaam', 'propagatie pluggen', 'kweekmateriaal', 'glastuinbouw', 'fp 12+']
     },
     en: {
-      title: 'Paper Pot Plugs | 100% Biodegradable | Free Shipping',
-      description: 'Sustainable paper pot plugs with FP 12+ technology. ✓ 100% biodegradable ✓ No transplant shock ✓ Free shipping NL/BE/DE ✓ In stock. Order directly from Lumora.',
+      title: 'What Are Paper Pot Plugs? The Sleeve Explained',
+      description: 'Learn how rockwool plugs and the Ellepot FP 12+ paper sleeve work together. Compare materials and choose a tray with 84 or 104 cells.',
       keywords: ['paper pot plugs', 'buy paper pot plugs', 'paper plug', 'biodegradable', 'sustainable', 'propagation plugs', 'cultivation media', 'greenhouse', 'fp 12+']
     },
     de: {
-      title: 'Papiertopf Plugs | 100% Biologisch Abbaubar | Kostenloser Versand',
-      description: 'Nachhaltige Papiertopf-Plugs mit FP 12+ Technologie. ✓ 100% biologisch abbaubar ✓ Kein Transplantationsschock ✓ Kostenloser Versand NL/BE/DE ✓ Auf Lager. Direkt bei Lumora bestellen.',
+      title: 'Was Sind Papiertopf-Stecker? Papierhülle Erklärt',
+      description: 'Wie arbeiten Steinwollstecker und die Ellepot FP 12+ Papierhülle zusammen? Erfahren Sie mehr über das Material und Anzuchtplatten mit 84 oder 104 Zellen.',
       keywords: ['papiertopf plugs', 'papiertopf plugs kaufen', 'papier plugs', 'biologisch abbaubar', 'nachhaltig', 'anzucht plugs', 'anbaumedium', 'gewachshaus', 'fp 12+']
     }
   }
@@ -63,16 +63,16 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 const content = {
   nl: {
     tag: 'Paperbus pluggen',
-    subtitle: '100% biologisch afbreekbaar en duurzaam',
+    subtitle: 'Steenwol met een papierwikkel',
     hero: {
-      title: 'Paperbus pluggen: de duurzame keuze voor professionele kwekerijen',
-      description: 'Ontdek de voordelen van paperbus pluggen met Ellepot FP 12+ technologie. Volledig biologisch afbreekbaar, duurzaam en geschikt voor elke kweektoepassing.',
+      title: 'Wat zijn paperbus pluggen?',
+      description: 'Een paperbus plug is een stekplug met een papieren wikkel. Bij Lumora bestaat de plug uit steenwol, omhuld met Ellepot FP 12+ papier. De wikkel en het substraat zijn verschillende materialen: de steenwol zelf is niet biologisch afbreekbaar.',
       cta: 'Bekijk de Paper Plug Trays',
     },
     benefits: {
       title: 'Waarom kiezen voor paperbus pluggen?',
       items: [
-        { title: '100% biologisch afbreekbaar', description: 'Paperbus pluggen zijn volledig biologisch afbreekbaar en gemaakt van hernieuwbare houtvezels, ideaal voor duurzame teelt.' },
+        { title: 'Papierwikkel en steenwol', description: 'De FP 12+ papierwikkel wordt gemaakt van houtvezels. Een eigenschap van die wikkel geldt niet automatisch voor de steenwol of de tray.' },
         { title: 'Milieuvriendelijk en duurzaam', description: 'Verklein je ecologische voetafdruk met een papieren wikkel in plaats van plastic.' },
         { title: 'Geen transplantatieschok', description: 'Wortels groeien moeiteloos door het papier heen, zodat je de complete plug direct uitplant.' },
         { title: 'Ellepot FP 12+ technologie', description: 'Het FP 12+ vlies biedt meer dan twaalf maanden stabiliteit tijdens een langere opkweekperiode.' },
@@ -80,22 +80,22 @@ const content = {
         { title: 'Bewezen in de praktijk', description: 'Hogere slagingspercentages en snellere aanslag dan bij traditionele propagatiemethoden.' },
       ],
     },
-    features: { title: 'Kenmerken', items: ['Hernieuwbare houtvezels', 'FP 12+ vlies voor langdurige stabiliteit', 'Geen plastic componenten', 'Geschikt voor biologische teelt', 'Optimale wortelontwikkeling', 'Makkelijk te verwerken', 'Verkrijgbaar als tray 84 en tray 104', 'Geleverd per complete doos'] },
+    features: { title: 'Kenmerken', items: ['Hernieuwbare houtvezels', 'FP 12+ vlies voor langdurige stabiliteit', 'Steenwol met een FP 12+ papierwikkel', 'Stem de plug af op je teeltsysteem', 'Optimale wortelontwikkeling', 'Makkelijk te verwerken', 'Verkrijgbaar als tray 84 en tray 104', 'Geleverd per complete doos'] },
     applications: { title: 'Toepassingen', items: ['Groenteteelt in kassen', 'Sierteelt en potplanten', 'Boomkwekerijen', 'Kruidenteelt', 'Biologische teelt', 'Zaailingen en jonge planten'] },
     cta: { eyebrow: 'Direct bestellen', title: 'Start met paperbus pluggen', description: 'Kies Paper Plug Tray 84 of 104 en bestel per complete doos, met gratis verzending binnen Nederland, België en Duitsland.', button: 'Download de brochure', contact: 'Vraag advies' },
   },
   en: {
     tag: 'Paper pot plugs',
-    subtitle: '100% biodegradable and sustainable',
+    subtitle: 'Rockwool with a paper sleeve',
     hero: {
-      title: 'Paper pot plugs: the sustainable choice for professional nurseries',
-      description: 'Discover the benefits of paper pot plugs with Ellepot FP 12+ technology. Fully biodegradable, sustainable and suitable for any growing application.',
+      title: 'What are paper pot plugs?',
+      description: 'A paper pot plug is a propagation plug with a paper sleeve. Lumora uses rockwool wrapped in Ellepot FP 12+ paper. The sleeve and substrate are different materials: rockwool itself is not biodegradable.',
       cta: 'View the Paper Plug Trays',
     },
     benefits: {
       title: 'Why choose paper pot plugs?',
       items: [
-        { title: '100% biodegradable', description: 'Paper pot plugs are fully biodegradable and made from renewable wood fibres, ideal for sustainable cultivation.' },
+        { title: 'Paper sleeve and rockwool', description: 'The FP 12+ paper sleeve is made from wood fibres. A property of the sleeve does not automatically apply to the rockwool or tray.' },
         { title: 'Eco-friendly and sustainable', description: 'Reduce your ecological footprint with a paper sleeve instead of plastic.' },
         { title: 'No transplant shock', description: 'Roots grow effortlessly through the paper, so you plant the complete plug directly.' },
         { title: 'Ellepot FP 12+ technology', description: 'The FP 12+ paper provides more than twelve months of stability during a longer propagation period.' },
@@ -103,22 +103,22 @@ const content = {
         { title: 'Proven in practice', description: 'Higher success rates and faster establishment than traditional propagation methods.' },
       ],
     },
-    features: { title: 'Features', items: ['Renewable wood fibres', 'FP 12+ paper for long-term stability', 'No plastic components', 'Suitable for organic cultivation', 'Optimal root development', 'Easy to handle', 'Available as tray 84 and tray 104', 'Supplied by the complete box'] },
+    features: { title: 'Features', items: ['Renewable wood fibres', 'FP 12+ paper for long-term stability', 'Rockwool with an FP 12+ paper sleeve', 'Match the plug to your growing system', 'Optimal root development', 'Easy to handle', 'Available as tray 84 and tray 104', 'Supplied by the complete box'] },
     applications: { title: 'Applications', items: ['Vegetable cultivation in greenhouses', 'Ornamental and potted plants', 'Tree nurseries', 'Herb cultivation', 'Organic cultivation', 'Seedlings and young plants'] },
     cta: { eyebrow: 'Order directly', title: 'Get started with paper pot plugs', description: 'Choose Paper Plug Tray 84 or 104 and order by the complete box, with free shipping within the Netherlands, Belgium and Germany.', button: 'Download the brochure', contact: 'Ask for advice' },
   },
   de: {
     tag: 'Papiertopf-Plugs',
-    subtitle: '100 % biologisch abbaubar und nachhaltig',
+    subtitle: 'Steinwolle mit einer Papierhülle',
     hero: {
-      title: 'Papiertopf-Plugs: die nachhaltige Wahl für professionelle Gärtnereien',
-      description: 'Entdecken Sie die Vorteile von Papiertopf-Plugs mit Ellepot FP 12+ Technologie. Vollständig biologisch abbaubar, nachhaltig und für jede Anbauanwendung geeignet.',
+      title: 'Was sind Papiertopf-Stecker?',
+      description: 'Ein Papiertopf-Stecker ist ein Anzuchtstecker mit Papierhülle. Lumora verwendet Steinwolle in Ellepot FP 12+ Papier. Hülle und Substrat sind unterschiedliche Materialien: Die Steinwolle selbst ist nicht biologisch abbaubar.',
       cta: 'Paper Plug Trays ansehen',
     },
     benefits: {
       title: 'Warum Papiertopf-Plugs wählen?',
       items: [
-        { title: '100 % biologisch abbaubar', description: 'Papiertopf-Plugs sind vollständig biologisch abbaubar und bestehen aus erneuerbaren Holzfasern, ideal für nachhaltigen Anbau.' },
+        { title: 'Papierhülle und Steinwolle', description: 'Die FP 12+ Papierhülle besteht aus Holzfasern. Eine Eigenschaft der Hülle gilt nicht automatisch für die Steinwolle oder die Anzuchtplatte.' },
         { title: 'Umweltfreundlich und nachhaltig', description: 'Verkleinern Sie Ihren ökologischen Fußabdruck mit einer Papierhülle statt Kunststoff.' },
         { title: 'Kein Transplantationsschock', description: 'Wurzeln wachsen mühelos durch das Papier, sodass Sie den kompletten Plug direkt auspflanzen.' },
         { title: 'Ellepot FP 12+ Technologie', description: 'Das FP 12+ Papier bietet mehr als zwölf Monate Stabilität während einer längeren Anzuchtphase.' },
@@ -126,7 +126,7 @@ const content = {
         { title: 'In der Praxis bewährt', description: 'Höhere Erfolgsraten und schnelleres Anwachsen als bei traditionellen Vermehrungsmethoden.' },
       ],
     },
-    features: { title: 'Merkmale', items: ['Erneuerbare Holzfasern', 'FP 12+ Papier für langfristige Stabilität', 'Keine Kunststoffkomponenten', 'Geeignet für biologischen Anbau', 'Optimale Wurzelentwicklung', 'Einfach zu verarbeiten', 'Erhältlich als Tray 84 und Tray 104', 'Lieferung im kompletten Karton'] },
+    features: { title: 'Merkmale', items: ['Erneuerbare Holzfasern', 'FP 12+ Papier für langfristige Stabilität', 'Steinwolle mit einer FP 12+ Papierhülle', 'Stecker auf das Anbausystem abstimmen', 'Optimale Wurzelentwicklung', 'Einfach zu verarbeiten', 'Erhältlich als Tray 84 und Tray 104', 'Lieferung im kompletten Karton'] },
     applications: { title: 'Anwendungen', items: ['Gemüseanbau im Gewächshaus', 'Zier- und Topfpflanzen', 'Baumschulen', 'Kräuteranbau', 'Biologischer Anbau', 'Sämlinge und Jungpflanzen'] },
     cta: { eyebrow: 'Direkt bestellen', title: 'Starten Sie mit Papiertopf-Plugs', description: 'Wählen Sie Paper Plug Tray 84 oder 104 und bestellen Sie im kompletten Karton, mit kostenlosem Versand in die Niederlande, nach Belgien und Deutschland.', button: 'Broschüre herunterladen', contact: 'Beratung anfragen' },
   },
@@ -143,17 +143,10 @@ export default async function PaperbusPluggenPage(props: { params: Promise<{ loc
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: c.tag,
+    '@type': 'WebPage',
+    name: c.hero.title,
     description: c.hero.description,
-    brand: { '@type': 'Brand', name: 'Lumora Horticulture' },
-    category: 'Horticultural Supplies',
-    image: `https://lumorahorticulture.nl${products.paperbus.mainImage}`,
-    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `https://lumorahorticulture.nl${localizePathForLocale('/stekpluggen-steenwol', locale)}` },
-    additionalProperty: [
-      { '@type': 'PropertyValue', name: 'Biodegradable', value: 'Yes' },
-      { '@type': 'PropertyValue', name: 'Technology', value: 'Ellepot FP 12+' },
-    ],
+    url: 'https://lumorahorticulture.nl' + localizePathForLocale('/paperbus-pluggen', locale),
   }
 
   return (
