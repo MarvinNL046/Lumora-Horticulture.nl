@@ -68,9 +68,10 @@ Elke spoke linkt naar Hub B en naar de PDP; PDP linkt terug naar de drie spokes 
 **Niet doen:** meer steenwol/stekpluggen-content. De 6 bestaande steenwol-FAQ's blijven staan (95% van de kennisbank-klikken in GSC) maar krijgen geen uitbreiding.
 
 ## 4. Autoriteit (blokkade)
-- DR daalde van 30 naar 6 in één maand. Vermoedelijk verlies van links door de .com/.de-consolidatie of afgevallen domeinen. Actie: Ahrefs → Backlinks → "Lost" over 30 dagen bekijken; waar het eigen domeinen zijn (lumorahorticulture.com/.de) checken dat de 308's staan (ze staan) en dat Ahrefs de redirects opnieuw crawlt.
+- DR daalde van 30 naar 6 in één maand. Onderzocht op 4 sep: alle 66 verloren verwijzende domeinen zijn spam-linkfarms (*.shop, door Ahrefs als SPAM gemarkeerd, 0 dofollow-links, verschenen juni-augustus 2026 en weer verdwenen). De DR 30 was dus nooit echt; DR 6 is de werkelijke autoriteit. Niets te herstellen, geen disavow nodig (Ahrefs telt ze al niet als dofollow; Google negeert dit soort links).
+- De domeinconsolidatie (.com/.de → .nl, ongeveer een week oud) is correct: alle paden 308'en pad-voor-pad naar /en/... en /de/..., www → kaal, http → https. Geen actie.
 - 54 van 248 gecrawlde pagina's zijn 404 in de Ahrefs-crawl: dat zijn de oude kennisbank-URL's van vóór de redirects van 3 sep. Volgende crawl lost dit op; sitemap opnieuw indienen in GSC.
-- Zonder linkopbouw blijven de DE-keywords met KD 33-45 buiten bereik; de KD 0-3 keywords zijn wél haalbaar op DR 6.
+- Zonder linkopbouw blijven de DE-keywords met KD 33-45 buiten bereik; de KD 0-3 keywords zijn wél haalbaar op DR 6. Echte links: 31 followed verwijzende domeinen, allemaal UR < 10.
 
 ## 5. Meten
 - GSC: kennisbank-clicks per pagina (baseline ≈130/16 mnd, bijna alles steenwol).
