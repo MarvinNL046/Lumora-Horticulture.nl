@@ -1,3 +1,5 @@
+import AuthProvider from '@/components/AuthProvider'
+import { getLocale } from 'next-intl/server'
 import type {Metadata} from 'next'
 import type {ReactNode} from 'react'
 
@@ -21,6 +23,7 @@ export async function generateMetadata({params}: CheckoutLayoutProps): Promise<M
   }
 }
 
-export default function CheckoutLayout({children}: CheckoutLayoutProps) {
-  return children
+export default async function CheckoutLayout({children}: CheckoutLayoutProps) {
+  const locale = await getLocale()
+  return <AuthProvider locale={locale}>{children}</AuthProvider>
 }
