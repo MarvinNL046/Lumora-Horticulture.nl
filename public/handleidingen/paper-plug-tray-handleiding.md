@@ -1,257 +1,142 @@
-# GEBRUIKSHANDLEIDING PAPER PLUG TRAY 84 & 104
-## Ellepot FP 12+ Paper Plug Technologie
+# Gebruikshandleiding Paper Plug Tray 84 en 104
 
-**Lumora Horticulture - Professionele Kweekoplossingen**
+Gevulde steenwoltrays met Ellepot FP 12+ papierwikkel · Lumora Horticulture
 
----
+Bijgewerkt: 5 september 2026
 
-## 1. ONTVANGST EN OPSLAG
+Met steenwol stekpluggen geef je zaden en stekken een eigen plek in de tray. Hier lees je hoe je de gevulde Paper Plug Trays voorbereidt, de vochtigheid volgt en jonge planten met papierwikkel uitplant.
 
-### Bij ontvangst:
-• Controleer de verpakking op beschadigingen
-• Bewaar trays in originele verpakking tot gebruik
-• Bescherm tegen vocht en direct zonlicht
-
-### Optimale opslagcondities:
-• Temperatuur: 15-25°C
-• Relatieve luchtvochtigheid: 40-60%
-• Droge, schone ruimte
-• Houdbaarheid: 12+ maanden (FP 12+ garantie)
+Bevochtig de pluggen gelijkmatig, laat overtollig water weglopen en plaats je zaad of stek. Controleer tijdens de opkweek het vocht en de wortelontwikkeling. Plant de bewortelde plug met de papierwikkel uit zodra je gewas eraan toe is. De teeltduur verschilt per plant en kweekomstandigheden.
 
----
+## Welke steenwol stekpluggen heb je?
 
-## 2. VOORBEREIDING
+De trays van Lumora zijn al gevuld met steenwol in een Ellepot FP 12+ papierwikkel. Je hoeft ze niet zelf met potgrond te vullen.
 
-### Benodigdheden:
-• Paper Plug Trays (84 of 104 cellen)
-• Kwalitatief potgrond of zaaisubstraat
-• Zaden of stekmateriaal
-• Water (bij voorkeur lauw, 18-22°C)
-• Vulstation of handmatige vulhulp (optioneel)
-
-### Substraat voorbereiding:
-1. Gebruik een luchtig, goed doorlatend zaaisubstraat
-2. pH waarde: 5,5-6,5 (afhankelijk van gewas)
-3. EC waarde: 0,5-1,5 mS/cm
-4. Vochtgehalte: licht vochtig, niet doorweekt
-
----
-
-## 3. VULLEN VAN DE TRAYS
+- 84: cellen · Ø38 × 42 mm · 8 trays per doos
+- 104: cellen · Ø32 × 40 mm · 7 trays per doos
+- 672: pluggen per doos bij tray 84
+- 728: pluggen per doos bij tray 104
 
-### Handmatige vulling:
-1. Plaats tray op vlakke, schone ondergrond
-2. Verdeel substraat gelijkmatig over alle cellen
-3. Druk substraat licht aan (niet te vast!)
-4. Verwijder overtollig substraat met rechte lat
-5. Maak zaaigatjes met aandrukstok of vinger (diepte afhankelijk van zaad)
-
-### Geautomatiseerde vulling:
-1. Gebruik standaard trayvulstation
-2. Stel drukniveau in op 'licht' tot 'medium'
-3. Controleer vulhoogte (±2mm onder rand)
-4. Verwijder overtollig substraat
+## Welke plugmaat past bij je opkweek?
 
-**TIP:** Vermijd te strak aandrukken - paper plugs werken optimaal met luchtig substraat!
+De [steenwol stekpluggen met 84 cellen](https://lumorahorticulture.nl/stekpluggen-steenwol?variant=tray-84) hebben een grotere diameter en diepte. Met de [trays met 104 steenwol stekpluggen](https://lumorahorticulture.nl/stekpluggen-steenwol?variant=tray-104) kies je voor meer kweekplaatsen per tray. Stem je keuze af op het gewas, de opkweekduur en je teeltsysteem.
 
----
-
-## 4. ZAAIEN
-
-### Zaaimethode:
-1. Maak zaaigatje:
-   - Fijn zaad: 3-5mm diep
-   - Grof zaad: 10-15mm diep
-2. Plaats 1-2 zaden per cel (afhankelijk van kiemkracht)
-3. Bedek met dun laagje substraat of vermiculiet
-4. Bevochtig met fijne nevel (niet overspoelen!)
-
-### Stekken:
-1. Steek snee in cel tot 2/3 van diepte
-2. Plaats stek tot aan bladeren
-3. Druk substraat voorzichtig aan rond stek
-4. Bevochtig direct na plaatsing
-
----
-
-## 5. WATER GEVEN & KLIMAAT
-
-### Watergift:
-• **Eerste dagen:** Houd substraat licht vochtig (niet nat!)
-• **Opkomst:** Nevel 2-3x per dag met fijne sproeier
-• **Groei:** Water geven van onderaf via eb/vloed of druppelsysteem
-• **Let op:** Paper plugs zijn goed waterdoorlatend - controleer dagelijks
-
-### Klimaat tijdens kieming:
-• Temperatuur: 18-24°C (gewasafhankelijk)
-• RV: 80-90% tijdens kieming
-• Verlaag RV naar 60-70% na opkomst
-• Goede ventilatie ter preventie van schimmelgroei
-
-### Belichting:
-• Lichtbehoefte: 10.000-15.000 lux na opkomst
-• Daglengte: 14-16 uur (gewasafhankelijk)
-• Vermijd direct zonlicht op jonge zaailingen
-
----
-
-## 6. GROEI & ONDERHOUD
-
-### Bemesting:
-• Start bemesting na 7-10 dagen (bij ontwikkeling eerste echte blaadjes)
-• EC opbouwen van 0,8 naar 1,5-2,0 mS/cm (gewasafhankelijk)
-• Gebruik vloeibare meststof via watersysteem
-• NPK verhouding: Fase afhankelijk (start met 2-1-2)
-
-### Uitdunnen:
-• Bij 2 zaden per cel: dun uit tot sterkste plant
-• Gebruik schaar (niet uittrekken!)
-• Uitdunnen bij 2-4 bladstadium
-
-### Beworteling:
-• Paper plugs bevorderen luchtsnoeïng van wortels
-• Controleer worteldoorgroei na 3-4 weken
-• Wortels mogen uit plug groeien (dit is normaal)
-• Voorkom uitdroging van doorgroeiende wortels
-
----
-
-## 7. UITPLANTEN
-
-### Wanneer uitplanten:
-• Plant heeft 4-6 echte blaadjes ontwikkeld
-• Stevig wortelsysteem zichtbaar
-• Plant is geharde (indien nodig)
-• Weersomstandigheden zijn geschikt
-
-### Uitplantmethode:
-1. **BELANGRIJK:** Plant hele paper plug direct in grond/pot
-2. Niet verwijderen uit paper plug!
-3. Graaf gat ter grootte van plug
-4. Plaats plug op juiste diepte (bovenkant gelijk met grondniveau)
-5. Druk grond rondom aan
-6. Water direct en royaal aan
-
-### Plantafstanden (indicatief):
-• **Tray 84 (38mm):** Geschikt voor grotere planten - 20-40cm afstand
-• **Tray 104 (32mm):** Geschikt voor kleinere planten - 15-30cm afstand
-
----
-
-## 8. VOORDELEN PAPER PLUG TECHNOLOGIE
-
-✅ **Geen transplantatieschok:** Wortels blijven ongemoeid
-✅ **Snellere aanslag:** Plant groeit direct verder
-✅ **Betere beworteling:** Luchtsnoeïng bevordert vertakking
-✅ **Arbeidsbesparend:** Geen verpotten nodig
-✅ **Biologisch afbreekbaar:** Lost op in grond binnen 6-8 weken
-✅ **Geen plastic afval:** 100% milieuvriendelijk
-
----
-
-## 9. PROBLEEMOPLOSSING
+## Stap 1: steenwol stekpluggen bevochtigen
 
-### Probleem: Slechte kieming
-**Oorzaken & oplossingen:**
-• Te nat substraat → Minder water, betere drainage
-• Te droog substraat → Vaker nevelen, folie aanbrengen
-• Verkeerde temperatuur → Controleer en bijstellen
-• Oud zaad → Gebruik vers zaad, verhoog aantal per cel
+1. Zet de tray op een schone ondergrond waar water kan weglopen. Ondersteun de tray wanneer je hem verplaatst.
+2. Bevochtig de pluggen rustig en gelijkmatig, zodat het water ook binnenin de steenwol komt. Alleen een natte bovenkant is niet voldoende.
+3. Laat overtollig water weglopen. Controleer ook pluggen aan de randen van de tray op een gelijkmatige bevochtiging.
 
-### Probleem: Omvallen zaailingen (wegvallen)
-**Oorzaken & oplossingen:**
-• Pythium/Fusarium → Lagere RV, betere ventilatie, schone omgeving
-• Te nat → Minder water, drainage verbeteren
-• Te weinig licht → Belichting verhogen
+De juiste voorbereiding hangt af van het gebruikte substraat en teeltrecept. Een vaste inweektijd voor iedere steenwolplug is daarom geen betrouwbaar uitgangspunt.
 
-### Probleem: Langgerekte planten
-**Oorzaken & oplossingen:**
-• Te weinig licht → Verhoog lichtintensiteit
-• Te hoge temperatuur → Verlaag temperatuur
-• Te hoge RV → Verbeter ventilatie
+## Stap 2: zaaien of stekken in steenwol
 
-### Probleem: Paper plug droogt te snel uit
-**Oorzaken & oplossingen:**
-• Te lage RV → Verhoog luchtvochtigheid
-• Te weinig water → Frequentie watergift verhogen
-• Te veel wind → Luchtsnelheid verlagen
+### Zaaien
 
----
+- Gebruik de zaaidiepte en kiemomstandigheden die bij het zaad horen. Niet ieder zaad heeft dezelfde behoefte aan licht en afdekking.
+- Plaats het zaad in het midden van de plug en label de tray met gewas en zaaidatum.
+- Controleer vocht en opkomst, en pas het klimaat aan wanneer de zaailingen verder groeien.
 
-## 10. TECHNISCHE SPECIFICATIES
+### Stekken
 
-### PAPER PLUG TRAY 84:
-• **Cellen:** 84 per tray
-• **Celafmetingen:** Ø38mm × 42mm diep
-• **Volume/cel:** ±40ml
-• **Tray afmetingen:** 540 × 280 × 42mm
-• **Verpakking:** 8 trays/doos (672 cellen)
-• **Materiaal:** Biologisch afbreekbaar papier
-• **Technologie:** Ellepot FP 12+
-• **EAN:** 9508648216735
+- Werk met schoon gereedschap en gezond stekmateriaal.
+- Plaats de stek voorzichtig in de plug, met voldoende steun en zonder de stengel te beschadigen.
+- Stem licht, temperatuur en luchtvochtigheid af op het gewas en de fase van beworteling.
 
-### PAPER PLUG TRAY 104:
-• **Cellen:** 104 per tray
-• **Celafmetingen:** Ø32mm × 40mm diep
-• **Volume/cel:** ±30ml
-• **Tray afmetingen:** 540 × 280 × 40mm
-• **Verpakking:** 7 trays/doos (728 cellen)
-• **Materiaal:** Biologisch afbreekbaar papier
-• **Technologie:** Ellepot FP 12+
-• **EAN:** 9508277144584
+## Hoe vaak moet je steenwol stekpluggen water geven?
 
----
+Controleer dagelijks hoe vochtig de pluggen zijn. De benodigde watergift verandert met plantgrootte, temperatuur, licht en ventilatie. Een vast aantal gietbeurten per dag past daarom niet bij elke opkweek.
 
-## 11. VEILIGHEID & MILIEU
+Vergelijk het gewicht van de tray met het gewicht na bevochtigen en uitlekken. Een duidelijk lichtere tray helpt je uitdroging herkennen. Beoordeel meerdere plekken: de rand kan anders uitdrogen dan het midden.
 
-### Veiligheid:
-• Niet geschikt voor consumptie
-• Buiten bereik van kinderen bewaren
-• Bij huidirritatie: spoelen met water
+Voorkom dat pluggen volledig uitdrogen of voortdurend in stilstaand water staan. Controleer de afvoer voordat je extra water geeft.
 
-### Milieu:
-• 100% biologisch afbreekbaar
-• Composteerbaar volgens EN 13432
-• Geschikt voor biologische teelt
-• Geen microplastics
-• CO2-neutraal productieproces
+## Hebben steenwol stekpluggen voeding nodig?
 
-### Afvoer:
-• Restanten zijn composteerbaar
-• Verpakking recyclen volgens lokale regelgeving
+Steenwol is een teeltsubstraat. Ga er niet van uit dat het de voedingsvoorraad van bemeste potgrond heeft. Gebruik een voedingsschema dat past bij je gewas, uitgangswater en groeifase.
 
----
+pH beschrijft de zuurgraad; EC geeft een indicatie van de hoeveelheid opgeloste zouten. Meet beide bij het aanmaken van een voedingsoplossing. Neem geen willekeurige pH of EC over als universeel recept voor alle zaden en stekken.
 
-## 12. CONTACT & SUPPORT
+Stem de start van de voeding af op de teelt. Wachten tot een vast aantal dagen na het uitplanten is geen algemene regel. Vraag bij twijfel advies met vermelding van je gewas, water en gebruikte voeding.
 
-**Lumora Horticulture**
-• Website: www.lumorahorticulture.nl
-• Email: info@lumorahorticulture.nl
-• Technische vragen: Neem contact op via bovenstaande kanalen
+## Wanneer kun je steenwol pluggen uitplanten?
 
-**Fabrikant:** Ellepot
-• FP 12+ kwaliteitsgarantie
-• Direct van de fabrikant
+Beoordeel de wortelontwikkeling en de plant samen. Alleen een kalenderdatum of het eerste zichtbare wortelpuntje is onvoldoende om voor ieder gewas het juiste moment te bepalen.
 
----
+1. Controleer of de plant voldoende beworteld en ontwikkeld is voor de volgende teeltfase.
+2. Maak de ontvangende pot, grond of het teeltsysteem klaar en zorg dat de plug vochtig is.
+3. Haal de plug voorzichtig uit de tray. Laat de papierwikkel om de plug zitten.
+4. Plaats de plug op de voor je gewas geschikte diepte en zorg voor goed contact met het ontvangende substraat.
+5. Controleer na het verplanten het vocht en pas de overgang naar andere licht- en klimaatomstandigheden geleidelijk aan.
 
-## TIPS VAN DE PROFESSIONALS
+Voorzichtig verplanten helpt wortelbeschadiging beperken. Het is geen garantie dat een plant geen transplantatieschok krijgt.
 
-💡 **TIP 1:** Gebruik lauw water (18-22°C) voor betere zaadkieming
+## Veelgemaakte fouten bij de opkweek
 
-💡 **TIP 2:** Markeer trays met zaaidatum en gewas voor optimale planning
+### Alleen de bovenkant beoordelen
 
-💡 **TIP 3:** Test altijd eerst met kleine hoeveelheid bij nieuw gewas
+Een oppervlakkig natte plug kan vanbinnen nog droog zijn. Controleer de gelijkmatigheid van de eerste bevochtiging.
 
-💡 **TIP 4:** Houd kweekdagboek bij voor optimalisatie van teeltschema
+### Water geven volgens de klok
 
-💡 **TIP 5:** Combineer verschillende tray-groottes voor diverse gewassen
+Stem de gift af op de actuele vochtigheid en het gewas. Controleer eerst of overtollig water weg kan.
 
-💡 **TIP 6:** Plan uitplanten op bewolkte dag of 's avonds voor beste aanslag
+### Te vroeg uitplanten
 
----
+Kijk naar de wortelontwikkeling en stevigheid van de jonge plant. Beworteling duurt niet bij elk gewas even lang.
 
-**Versie 1.0 - 2025**
-*Deze handleiding is indicatief. Pas teeltschema aan op basis van gewas en lokale omstandigheden.*
+## Houd je eerste opkweek bij
 
-**© 2025 Lumora Horticulture - Alle rechten voorbehouden**
+Begin bij een nieuw gewas met een kleine proef en noteer wat je doet. Zo kun je een volgende ronde vergelijken en een gerichte vraag stellen als de groei achterblijft.
+
+- Schrijf gewas, variant (84 of 104) en zaai- of stekdatum op het traylabel.
+- Noteer het traygewicht na de eerste bevochtiging en het uitlekken als eigen referentie.
+- Houd watergiften, gebruikte voeding en gemeten pH en EC bij.
+- Maak op vaste momenten een foto van de plantontwikkeling en de zichtbare wortels.
+- Vermeld bij een adviesvraag ook de temperatuur, belichting en eventuele verschillen tussen rand en midden van de tray.
+
+## Wat gebeurt er met de papierwikkel?
+
+De Ellepot FP 12+ wikkel houdt de plug bijeen en blijft zitten bij het uitplanten. Ellepot beschrijft FP 12+ als afbreekbaar papier met een afbraaktijd van 12+ maanden. Dat is geen belofte dat de wikkel binnen enkele weken verdwijnt.
+
+Wil je weten waarom de wikkel bij het uitplanten kan blijven zitten? Lees [hoe de paperbus-wikkel werkt](https://lumorahorticulture.nl/paperbus-pluggen).
+
+De papierwikkel en de steenwol zijn verschillende materialen. In de uitleg over de [samenstelling van paperbus steenwol pluggen](https://lumorahorticulture.nl/paperbus-steenwol-pluggen) lees je hoe ze samen de plug vormen. De afbreekbaarheid van het papier betekent niet dat de complete steenwolplug biologisch afbreekbaar is.
+
+## Veelgestelde vragen over steenwol stekpluggen
+
+### Moet ik de trays nog vullen met potgrond?
+
+Nee. De Paper Plug Trays van Lumora worden gevuld geleverd met steenwol pluggen in een papierwikkel. Je begint met het voorbereiden en bevochtigen van de pluggen.
+
+### Hoelang moeten steenwol stekpluggen weken?
+
+Er is geen vaste inweektijd die voor ieder product geldt. Zorg voor gelijkmatige bevochtiging tot binnenin de plug en laat overtollig water weglopen. Volg de instructies voor je substraat en teelt.
+
+### Welke pH en EC moet ik gebruiken?
+
+Kies de waarden op basis van je gewas, groeifase, uitgangswater en voedingsschema. Meet je voedingsoplossing en vraag teeltadvies als je geen passend recept hebt.
+
+### Wanneer zijn mijn stekken klaar om uit te planten?
+
+Dat hangt af van het gewas en de omstandigheden. Beoordeel de wortelontwikkeling en de jonge plant, en stem het uitplantmoment af op de volgende teeltfase.
+
+### Moet de papierwikkel eraf bij het uitplanten?
+
+Nee. Plant de complete plug met papierwikkel uit. De wikkel helpt de plug bij elkaar te houden tijdens het verplaatsen.
+
+### Zijn steenwol stekpluggen biologisch afbreekbaar?
+
+De papierwikkel is afbreekbaar; dat geldt niet voor de steenwol zelf. Beschouw de complete plug daarom niet als biologisch afbreekbaar.
+
+## Bronnen en productadvies
+
+De maten en doosinhoud volgen de productgegevens van Lumora. Voor algemene uitleg over steenwol en de papierwikkel gebruiken we onderstaande fabrikantinformatie. Een teeltrecept voor een ander product is niet automatisch geschikt voor deze trays.
+
+[Ellepot: papierprogramma en FP 12+](https://www.ellepot.com/ellepot-products/papers/paper-programme/): Fabrikantinformatie over de papiersoorten en hun opgegeven afbraaktijd.
+
+[Grodan: zaaien en eerste bevochtiging van steenwolpluggen](https://www.grodan.com/global/solutions/controlled-environment-agriculture/propagation/4-phase-model/phase-1/): Achtergrond bij gelijkmatig bevochtigen en het meten van pH en EC. De genoemde teeltwaarden horen bij de Grodan-toepassing.
+
+Productadvies: info@lumorahorticulture.com
+
+[Online gebruiksgids](https://lumorahorticulture.nl/paper-plug-trays-uitgelegd)

@@ -20,8 +20,10 @@ import { getLocalizedProducts } from '../_data/storefront-content'
 // the shared content layout and adds the product link, related articles and
 // FAQ structured data.
 
+type KnowledgeParagraph = string | Array<string | { text: string; href: string }>
+
 export type KnowledgeSection =
-  | { kind: 'prose'; title: string; paragraphs: string[] }
+  | { kind: 'prose'; title: string; paragraphs: KnowledgeParagraph[] }
   | { kind: 'list'; title: string; intro?: string; items: string[] }
   | { kind: 'steps'; title: string; intro?: string; items: string[]; note?: string }
   | { kind: 'cards'; title: string; intro?: string; items: Array<{ title: string; text: string }> }
@@ -37,6 +39,9 @@ export type KnowledgeArticle = {
   sections: KnowledgeSection[]
   cta: { title: string; text: string; button: string }
   faq?: Array<{ question: string; answer: string }>
+  faqTitle?: string
+  relatedLinks?: Array<{ href: string; label: string }>
+  references?: { title: string; intro: string; links: Array<{ href: string; label: string; description: string }> }
 }
 
 export type KnowledgeSlug =
@@ -64,12 +69,16 @@ const ui = {
   de: { knowledge: 'Wissensdatenbank', related: 'Weiterlesen', product: 'Paper Plug Trays ansehen', contact: 'Frage stellen', shortAnswer: 'Die kurze Antwort' },
 } as const
 
-function Section({ section }: { section: KnowledgeSection }) {
+function Section({ section, locale }: { section: KnowledgeSection; locale: StorefrontLocale }) {
   switch (section.kind) {
     case 'prose':
       return (
         <ContentSection title={section.title}>
-          <Prose>{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</Prose>
+          <Prose>{section.paragraphs.map((paragraph, index) => (
+            <p key={index}>{typeof paragraph === 'string' ? paragraph : paragraph.map((part, partIndex) => (
+              typeof part === 'string' ? part : <Link key={partIndex} href={localizePathForLocale(part.href, locale)} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{part.text}</Link>
+            ))}</p>
+          ))}</Prose>
         </ContentSection>
       )
     case 'list':
@@ -137,7 +146,9 @@ export function KnowledgePage({
   const copy = ui[locale]
   const products = getLocalizedProducts(locale)
   const productHref = localizePathForLocale('/stekpluggen-steenwol', locale)
-  const related = (Object.keys(knowledgeIndex) as KnowledgeSlug[]).filter((key) => key !== slug).slice(0, 4)
+  const related = article.relatedLinks ?? (Object.keys(knowledgeIndex) as KnowledgeSlug[])
+    .filter((key) => key !== slug).slice(0, 4)
+    .map((key) => ({ href: `/${key}`, label: knowledgeIndex[key][locale] }))
 
   const jsonLd = article.faq?.length
     ? {
@@ -181,13 +192,39 @@ export function KnowledgePage({
         </section>
       ) : null}
 
-      {article.sections.map((section) => <Section key={section.title} section={section} />)}
+      {article.sections.map((section) => <Section key={section.title} section={section} locale={locale} />)}
+
+      {article.faqTitle && article.faq?.length ? (
+        <ContentSection title={article.faqTitle}>
+          <Prose>
+            {article.faq.map((entry) => (
+              <div key={entry.question}>
+                <h3>{entry.question}</h3>
+                <p>{entry.answer}</p>
+              </div>
+            ))}
+          </Prose>
+        </ContentSection>
+      ) : null}
+
+      {article.references ? (
+        <ContentSection title={article.references.title} intro={article.references.intro}>
+          <Prose>
+            {article.references.links.map((source) => (
+              <p key={source.href}>
+                <a href={source.href} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{source.label}</a>
+                {' — '}{source.description}
+              </p>
+            ))}
+          </Prose>
+        </ContentSection>
+      ) : null}
 
       <ContentSection eyebrow={copy.knowledge} title={copy.related} soft>
         <div className={styles.relatedGrid}>
-          {related.map((key) => (
-            <Link key={key} className={styles.relatedLink} href={localizePathForLocale(`/${key}`, locale)}>
-              <span>{knowledgeIndex[key][locale]}</span>
+          {related.map((link) => (
+            <Link key={link.href} className={styles.relatedLink} href={localizePathForLocale(link.href, locale)}>
+              <span>{link.label}</span>
               <ArrowRightIcon />
             </Link>
           ))}
