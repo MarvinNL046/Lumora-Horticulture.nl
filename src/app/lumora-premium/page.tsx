@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { localizePathForLocale } from '@/lib/url-localizations'
 import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon, LeafIcon } from './_components/Icons'
 import { ProductFamilyCard } from './_components/ProductFamilyCard'
@@ -9,8 +10,36 @@ import { previewStorefrontRoutes, publicStorefrontRoutes, type StorefrontRoutes 
 import type { StorefrontLocale } from './_components/storefront-localization'
 import styles from './storefront.module.css'
 
+const propagationCopy = {
+  "nl": {
+    "before": "Voor zaaien en stekken vind je bij ons ",
+    "product": "steenwol stekpluggen in trays van 84 of 104 cellen",
+    "after": ". Bekijk de plugmaten en doosinhoud om de passende uitvoering te kiezen.",
+    "guideBefore": "Wil je weten hoe je de trays gebruikt? Lees de ",
+    "guide": "handleiding voor steenwol stekpluggen",
+    "guideAfter": " voor het natmaken, inzetten en uitplanten."
+  },
+  "en": {
+    "before": "For sowing and cuttings, explore our ",
+    "product": "rockwool plugs in 84- or 104-cell trays",
+    "after": ". Compare plug sizes and box contents to choose the right version.",
+    "guideBefore": "Getting started with the trays? Read our ",
+    "guide": "guide to using rockwool propagation plugs",
+    "guideAfter": " for practical information on propagation."
+  },
+  "de": {
+    "before": "Für Aussaat und Stecklinge finden Sie bei uns ",
+    "product": "Steinwollstecker in Platten mit 84 oder 104 Zellen",
+    "after": ". Vergleichen Sie Plugmaße und Kartoninhalt, um die passende Ausführung zu wählen.",
+    "guideBefore": "Sie möchten die Platten verwenden? Lesen Sie unsere ",
+    "guide": "Anleitung für Steinwollstecker",
+    "guideAfter": " mit praktischen Informationen zur Anzucht."
+  }
+} as const
+
 export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = 'nl' }: { routes?: StorefrontRoutes; locale?: StorefrontLocale }) {
   const copy = homeCopy[locale]
+  const propagation = propagationCopy[locale]
   const localized = getLocalizedProducts(locale)
   const localizedProducts = [localized.paperbus, localized.neemx]
   return (
@@ -83,7 +112,7 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = '
               <span className={styles.eyebrow}>{copy.specialty}</span>
               <h2>{copy.chooseTitle}</h2>
             </div>
-            <p>{copy.chooseText}</p>
+            <p>{propagation.before}<Link href={routes.stekpluggen} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{propagation.product}</Link>{propagation.after}</p>
           </div>
           <div className={styles.productGrid}>
             {localizedProducts.map((product) => (
@@ -113,6 +142,7 @@ export function StorefrontHomePage({ routes = publicStorefrontRoutes, locale = '
             <span className={styles.eyebrow}>{copy.simple}</span>
             <h2>{copy.routeTitle}</h2>
             <p>{copy.routeText}</p>
+            <p>{propagation.guideBefore}<Link href={localizePathForLocale('/paper-plug-trays-uitgelegd', locale)} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{propagation.guide}</Link>{propagation.guideAfter}</p>
             <ol className={styles.choiceSteps}>
               {copy.steps.map(([title, text], index) => <li key={title}><span>0{index + 1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}
             </ol>
