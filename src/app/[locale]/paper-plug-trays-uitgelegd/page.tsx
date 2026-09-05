@@ -28,6 +28,14 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
   },
   "sections": [
     {
+      "kind": "prose",
+      "title": "Van zaaien naar een jonge plant",
+      "paragraphs": [
+        ["Het zaaimoment en de opkweek verschillen per gewas. Lees de gidsen over ", { "text": "tomaten zaaien", "href": "/tomaten-zaaien" }, " en ", { "text": "paprika zaaien en opkweken", "href": "/paprika-zaaien" }, " voor de planning en de overgang naar de volgende teeltplek."],
+        ["Staan je plantjes samen in een zaaibak? Bekijk dan hoe je ", { "text": "zaailingen verspeent", "href": "/zaailingen-verspenen" }, ". Die gids legt ook het verschil uit met een bewortelde plug als geheel verplaatsen."]
+      ]
+    },
+    {
       "kind": "facts",
       "title": "Welke steenwol stekpluggen heb je?",
       "intro": "De trays van Lumora zijn al gevuld met steenwol in een Ellepot FP 12+ papierwikkel. Je hoeft ze niet zelf met potgrond te vullen.",
@@ -59,7 +67,7 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
     },
     {
       "kind": "steps",
-      "title": "Stap 1: steenwol stekpluggen bevochtigen",
+      "title": "Stap 1: steenwol stekpluggen inwateren",
       "items": [
         "Zet de tray op een schone ondergrond waar water kan weglopen. Ondersteun de tray wanneer je hem verplaatst.",
         "Bevochtig de pluggen rustig en gelijkmatig, zodat het water ook binnenin de steenwol komt. Alleen een natte bovenkant is niet voldoende.",

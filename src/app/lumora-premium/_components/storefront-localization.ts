@@ -149,5 +149,10 @@ export function getStorefrontLanguageHref(
   }
 
   const basePath = basePathFromLocalizedPath(currentPath, currentLocale)
+  // These guides are available in Dutch only. Other languages open the
+  // translated usage guide rather than linking to a missing translation.
+  if (targetLocale !== 'nl' && ['/zaailingen-verspenen', '/tomaten-zaaien', '/paprika-zaaien'].includes(basePath)) {
+    return localizePathForLocale('/paper-plug-trays-uitgelegd', targetLocale)
+  }
   return localizePathForLocale(basePath, targetLocale)
 }

@@ -32,6 +32,7 @@ export type KnowledgeSection =
   | { kind: 'note'; title: string; text: string }
 
 export type KnowledgeArticle = {
+  singleHeroAction?: boolean
   tag: string
   title: string
   intro: string
@@ -140,7 +141,7 @@ export function KnowledgePage({
   article,
 }: {
   locale: StorefrontLocale
-  slug: KnowledgeSlug
+  slug: KnowledgeSlug | 'zaailingen-verspenen' | 'tomaten-zaaien' | 'paprika-zaaien'
   article: KnowledgeArticle
 }) {
   const copy = ui[locale]
@@ -172,7 +173,7 @@ export function KnowledgePage({
         eyebrow={article.tag}
         title={article.title}
         lead={article.intro}
-        actions={[
+        actions={article.singleHeroAction ? [{ href: productHref, label: copy.product }] : [
           { href: productHref, label: copy.product },
           { href: 'mailto:info@lumorahorticulture.com', label: copy.contact, variant: 'light' },
         ]}
