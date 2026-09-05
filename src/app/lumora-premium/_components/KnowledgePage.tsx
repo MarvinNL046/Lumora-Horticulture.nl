@@ -76,7 +76,7 @@ function Section({ section, locale }: { section: KnowledgeSection; locale: Store
         <ContentSection title={section.title}>
           <Prose>{section.paragraphs.map((paragraph, index) => (
             <p key={index}>{typeof paragraph === 'string' ? paragraph : paragraph.map((part, partIndex) => (
-              typeof part === 'string' ? part : <Link key={partIndex} href={localizePathForLocale(part.href, locale)} style={{ textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{part.text}</Link>
+              typeof part === 'string' ? part : <Link key={partIndex} href={localizePathForLocale(part.href, locale)} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{part.text}</Link>
             ))}</p>
           ))}</Prose>
         </ContentSection>
@@ -212,7 +212,7 @@ export function KnowledgePage({
           <Prose>
             {article.references.links.map((source) => (
               <p key={source.href}>
-                <a href={source.href} style={{ textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{source.label}</a>
+                <a href={source.href} style={{ color: '#1d4ed8', textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{source.label}</a>
                 {' — '}{source.description}
               </p>
             ))}
