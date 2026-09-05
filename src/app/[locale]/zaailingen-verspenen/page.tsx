@@ -12,8 +12,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   if ((await params).locale !== 'nl') notFound()
   return generatePageMetadata({
-    title: article.title,
-    description: article.intro,
+    title: 'Zaailingen verspenen: wanneer en hoe?',
+    description: 'Wanneer kun je zaailingen verspenen? Bekijk het stappenplan, grondkeuze en nazorg. Lees ook wat anders werkt bij opkweek in steenwol pluggen.',
     locale: 'nl',
     path: '/zaailingen-verspenen',
     availableLocales: ['nl'],

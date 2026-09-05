@@ -12,8 +12,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   if ((await params).locale !== 'nl') notFound()
   return generatePageMetadata({
-    title: article.title,
-    description: article.intro,
+    title: 'Paprika zaaien: wanneer en hoe?',
+    description: 'Paprika zaaien en opkweken: kies je zaaimoment, lees hoe diep je zaait en wanneer je verspeent. Met praktische uitleg en teeltbronnen.',
     locale: 'nl',
     path: '/paprika-zaaien',
     availableLocales: ['nl'],

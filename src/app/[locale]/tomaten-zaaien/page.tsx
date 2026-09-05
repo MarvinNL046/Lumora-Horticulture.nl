@@ -12,8 +12,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   if ((await params).locale !== 'nl') notFound()
   return generatePageMetadata({
-    title: article.title,
-    description: article.intro,
+    title: 'Tomaten zaaien: wanneer en hoe diep?',
+    description: 'Zelf tomaten zaaien? Lees wanneer je binnen begint, hoe diep je zaait en hoe je zaailingen verder opkweekt in potjes of steenwol pluggen.',
     locale: 'nl',
     path: '/tomaten-zaaien',
     availableLocales: ['nl'],
