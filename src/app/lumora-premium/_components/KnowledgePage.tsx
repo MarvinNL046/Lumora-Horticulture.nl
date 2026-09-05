@@ -41,6 +41,7 @@ export type KnowledgeArticle = {
   faq?: Array<{ question: string; answer: string }>
   faqTitle?: string
   relatedLinks?: Array<{ href: string; label: string }>
+  references?: { title: string; intro: string; links: Array<{ href: string; label: string; description: string }> }
 }
 
 export type KnowledgeSlug =
@@ -201,6 +202,19 @@ export function KnowledgePage({
                 <h3>{entry.question}</h3>
                 <p>{entry.answer}</p>
               </div>
+            ))}
+          </Prose>
+        </ContentSection>
+      ) : null}
+
+      {article.references ? (
+        <ContentSection title={article.references.title} intro={article.references.intro}>
+          <Prose>
+            {article.references.links.map((source) => (
+              <p key={source.href}>
+                <a href={source.href} style={{ textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{source.label}</a>
+                {' — '}{source.description}
+              </p>
             ))}
           </Prose>
         </ContentSection>

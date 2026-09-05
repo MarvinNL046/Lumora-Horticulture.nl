@@ -137,6 +137,18 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
       ]
     },
     {
+      "kind": "list",
+      "title": "Houd je eerste opkweek bij",
+      "intro": "Begin bij een nieuw gewas met een kleine proef en noteer wat je doet. Zo kun je een volgende ronde vergelijken en een gerichte vraag stellen als de groei achterblijft.",
+      "items": [
+        "Schrijf gewas, variant (84 of 104) en zaai- of stekdatum op het traylabel.",
+        "Noteer het traygewicht na de eerste bevochtiging en het uitlekken als eigen referentie.",
+        "Houd watergiften, gebruikte voeding en gemeten pH en EC bij.",
+        "Maak op vaste momenten een foto van de plantontwikkeling en de zichtbare wortels.",
+        "Vermeld bij een adviesvraag ook de temperatuur, belichting en eventuele verschillen tussen rand en midden van de tray."
+      ]
+    },
+    {
       "kind": "prose",
       "title": "Wat gebeurt er met de papierwikkel?",
       "paragraphs": [
@@ -150,6 +162,15 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
     "title": "Kies 84 of 104 cellen voor je volgende opkweek",
     "text": "Tray 84 heeft grotere pluggen. Tray 104 biedt meer kweekplaatsen per tray. Bekijk de afmetingen en het aantal trays per doos om je keuze te maken.",
     "button": "Vergelijk en bestel steenwol stekpluggen"
+  },
+  "references": {
+    "title": "Bronnen en handleiding",
+    "intro": "De maten en doosinhoud volgen de productgegevens van Lumora. Voor algemene uitleg over steenwol en de papierwikkel gebruiken we onderstaande fabrikantinformatie. Een teeltrecept voor een ander product is niet automatisch geschikt voor deze trays.",
+    "links": [
+      { "href": "https://www.ellepot.com/ellepot-products/papers/paper-programme/", "label": "Ellepot: papierprogramma en FP 12+", "description": "Fabrikantinformatie over de papiersoorten en hun opgegeven afbraaktijd." },
+      { "href": "https://www.grodan.com/global/solutions/controlled-environment-agriculture/propagation/4-phase-model/phase-1/", "label": "Grodan: zaaien en eerste bevochtiging van steenwolpluggen", "description": "Achtergrond bij gelijkmatig bevochtigen en het meten van pH en EC. De genoemde teeltwaarden horen bij de Grodan-toepassing." },
+      { "href": "/handleidingen/paper-plug-tray-handleiding.html", "label": "Gebruikshandleiding voor Paper Plug Tray 84 en 104", "description": "Open de printbare handleiding voor de gevulde steenwoltrays van Lumora." }
+    ]
   },
   "faqTitle": "Veelgestelde vragen over steenwol stekpluggen",
   "faq": [
