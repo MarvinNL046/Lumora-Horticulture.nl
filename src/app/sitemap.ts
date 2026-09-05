@@ -112,6 +112,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticEntries,
     ...returnPolicyEntries,
     ...knowledgeEntries,
+    ...['/zaailingen-verspenen', '/tomaten-zaaien', '/paprika-zaaien'].flatMap((path) =>
+      localizedEntries(path, 0.6, 'monthly', ['nl']),
+    ),
     ...storefrontProductEntries,
     ...blogEntries,
     ...blogArticleEntries,
