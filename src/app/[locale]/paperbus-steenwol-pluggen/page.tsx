@@ -185,7 +185,6 @@ export default async function PaperbusLandingPage(props: { params: Promise<{ loc
   const c = content[locale]
   const products = getLocalizedProducts(locale)
   const plugsHref = `${localizePathForLocale('/stekpluggen-steenwol', locale)}#koopblok`
-  const brochure = `/downloads/Lumora-Ellepot-FP12-Folder${locale === 'de' ? '-DE' : ''}.pdf`
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -207,7 +206,6 @@ export default async function PaperbusLandingPage(props: { params: Promise<{ loc
         lead={c.hero.description}
         actions={[
           { href: plugsHref, label: c.hero.cta },
-          { href: brochure, label: c.cta.button, variant: 'light', download: brochure.split('/').pop() },
         ]}
         image={products.paperbus.heroImage ?? products.paperbus.mainImage}
         imageAlt={products.paperbus.heroImageAlt ?? products.paperbus.mainImageAlt}
