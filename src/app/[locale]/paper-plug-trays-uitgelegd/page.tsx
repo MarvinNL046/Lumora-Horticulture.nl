@@ -51,6 +51,13 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
       ]
     },
     {
+      "kind": "prose",
+      "title": "Welke plugmaat past bij je opkweek?",
+      "paragraphs": [
+        ["De ", { "text": "steenwol stekpluggen met 84 cellen", "href": "/stekpluggen-steenwol?variant=tray-84" }, " hebben een grotere diameter en diepte. Met de ", { "text": "trays met 104 steenwol stekpluggen", "href": "/stekpluggen-steenwol?variant=tray-104" }, " kies je voor meer kweekplaatsen per tray. Stem je keuze af op het gewas, de opkweekduur en je teeltsysteem."]
+      ]
+    },
+    {
       "kind": "steps",
       "title": "Stap 1: steenwol stekpluggen bevochtigen",
       "items": [
@@ -134,7 +141,8 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
       "title": "Wat gebeurt er met de papierwikkel?",
       "paragraphs": [
         "De Ellepot FP 12+ wikkel houdt de plug bijeen en blijft zitten bij het uitplanten. Ellepot beschrijft FP 12+ als afbreekbaar papier met een afbraaktijd van 12+ maanden. Dat is geen belofte dat de wikkel binnen enkele weken verdwijnt.",
-        "De papierwikkel en de steenwol zijn verschillende materialen. De afbreekbaarheid van het papier betekent niet dat de complete steenwolplug biologisch afbreekbaar is."
+        ["Wil je weten waarom de wikkel bij het uitplanten kan blijven zitten? Lees ", { "text": "hoe de paperbus-wikkel werkt", "href": "/paperbus-pluggen" }, "."],
+        ["De papierwikkel en de steenwol zijn verschillende materialen. In de uitleg over de ", { "text": "samenstelling van paperbus steenwol pluggen", "href": "/paperbus-steenwol-pluggen" }, " lees je hoe ze samen de plug vormen. De afbreekbaarheid van het papier betekent niet dat de complete steenwolplug biologisch afbreekbaar is."]
       ]
     }
   ],

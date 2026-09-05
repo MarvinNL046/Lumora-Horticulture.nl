@@ -20,8 +20,10 @@ import { getLocalizedProducts } from '../_data/storefront-content'
 // the shared content layout and adds the product link, related articles and
 // FAQ structured data.
 
+type KnowledgeParagraph = string | Array<string | { text: string; href: string }>
+
 export type KnowledgeSection =
-  | { kind: 'prose'; title: string; paragraphs: string[] }
+  | { kind: 'prose'; title: string; paragraphs: KnowledgeParagraph[] }
   | { kind: 'list'; title: string; intro?: string; items: string[] }
   | { kind: 'steps'; title: string; intro?: string; items: string[]; note?: string }
   | { kind: 'cards'; title: string; intro?: string; items: Array<{ title: string; text: string }> }
@@ -66,12 +68,16 @@ const ui = {
   de: { knowledge: 'Wissensdatenbank', related: 'Weiterlesen', product: 'Paper Plug Trays ansehen', contact: 'Frage stellen', shortAnswer: 'Die kurze Antwort' },
 } as const
 
-function Section({ section }: { section: KnowledgeSection }) {
+function Section({ section, locale }: { section: KnowledgeSection; locale: StorefrontLocale }) {
   switch (section.kind) {
     case 'prose':
       return (
         <ContentSection title={section.title}>
-          <Prose>{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</Prose>
+          <Prose>{section.paragraphs.map((paragraph, index) => (
+            <p key={index}>{typeof paragraph === 'string' ? paragraph : paragraph.map((part, partIndex) => (
+              typeof part === 'string' ? part : <Link key={partIndex} href={localizePathForLocale(part.href, locale)} style={{ textDecoration: 'underline', textUnderlineOffset: '0.18em' }}>{part.text}</Link>
+            ))}</p>
+          ))}</Prose>
         </ContentSection>
       )
     case 'list':
@@ -185,7 +191,7 @@ export function KnowledgePage({
         </section>
       ) : null}
 
-      {article.sections.map((section) => <Section key={section.title} section={section} />)}
+      {article.sections.map((section) => <Section key={section.title} section={section} locale={locale} />)}
 
       {article.faqTitle && article.faq?.length ? (
         <ContentSection title={article.faqTitle}>
