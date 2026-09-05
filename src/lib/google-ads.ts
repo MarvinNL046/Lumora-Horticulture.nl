@@ -44,6 +44,7 @@ export interface Product {
   price: number;
   quantity?: number;
   category?: string;
+  totalValue?: number;
 }
 
 /**
@@ -206,7 +207,7 @@ export function trackAddToCart(product: Product) {
 
   window.gtag('event', 'add_to_cart', {
     currency: 'EUR',
-    value: product.price * (product.quantity || 1),
+    value: product.totalValue ?? product.price * (product.quantity || 1),
     items: [
       {
         item_id: product.id,
@@ -226,7 +227,7 @@ export function trackAddToCart(product: Product) {
     content_name: product.name,
     content_category: product.category || 'Horticulture Products',
     contents: [{ id: product.id, quantity: qty, item_price: product.price }],
-    value: product.price * qty,
+    value: product.totalValue ?? product.price * qty,
     currency: 'EUR',
   };
 

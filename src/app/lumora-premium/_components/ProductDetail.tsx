@@ -3,7 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { trackViewItem } from '@/lib/google-ads'
+import { loadAnalyticsProduct, trackStorefrontCartAddition } from '@/lib/storefront-analytics'
 import { resolveProductVariant } from '@/lib/storefront-product-seo'
 import { useCart } from '@/contexts/CartContext'
 import {
@@ -87,6 +89,23 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
   const activeImageIndex = Math.min(imageIndex, gallery.length - 1)
   const activeImage = gallery[activeImageIndex]
   const isPaperbus = product.id === 'paperbus'
+  const analyticsName = isPaperbus ? variant.label : `NeemXPRO ${variant.label}`
+  const viewedVariants = useRef(new Set<string>())
+  useEffect(() => {
+    if (viewedVariants.current.has(variant.slug)) return
+    let cancelled = false
+    void loadAnalyticsProduct(variant.slug).then(catalogProduct => {
+      if (cancelled || !catalogProduct || viewedVariants.current.has(variant.slug)) return
+      // Do not report a price that differs from the visible offer.
+      if (Math.abs(catalogProduct.price - variant.price) > 0.001) return
+      viewedVariants.current.add(variant.slug)
+      try {
+        trackViewItem({ id: catalogProduct.id, name: analyticsName,
+          price: variant.price, category: isPaperbus ? 'Stekpluggen' : 'NeemXPRO' })
+      } catch { console.warn('Product analytics unavailable') }
+    })
+    return () => { cancelled = true }
+  }, [variant.slug, variant.price, analyticsName, isPaperbus])
   const paperbusSlug = variant.slug
   const compactVariantLabel = variant.shortLabel ?? variant.label
   const selectedBoxContents = isPaperbus
@@ -162,6 +181,8 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
         price: variant.price,
         image_url: gallery[0]?.src ?? product.mainImage,
       }, quantity)
+      trackStorefrontCartAddition({ product_id: productId, slug: variant.slug,
+        name: analyticsName, price: variant.price, quantity })
       router.push(routes.cart)
     } catch (error) {
       setPurchaseError(error instanceof Error && error.message === copy.priceError
