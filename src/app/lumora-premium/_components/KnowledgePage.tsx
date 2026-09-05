@@ -37,6 +37,8 @@ export type KnowledgeArticle = {
   sections: KnowledgeSection[]
   cta: { title: string; text: string; button: string }
   faq?: Array<{ question: string; answer: string }>
+  faqTitle?: string
+  relatedLinks?: Array<{ href: string; label: string }>
 }
 
 export type KnowledgeSlug =
@@ -137,7 +139,9 @@ export function KnowledgePage({
   const copy = ui[locale]
   const products = getLocalizedProducts(locale)
   const productHref = localizePathForLocale('/stekpluggen-steenwol', locale)
-  const related = (Object.keys(knowledgeIndex) as KnowledgeSlug[]).filter((key) => key !== slug).slice(0, 4)
+  const related = article.relatedLinks ?? (Object.keys(knowledgeIndex) as KnowledgeSlug[])
+    .filter((key) => key !== slug).slice(0, 4)
+    .map((key) => ({ href: `/${key}`, label: knowledgeIndex[key][locale] }))
 
   const jsonLd = article.faq?.length
     ? {
@@ -183,11 +187,24 @@ export function KnowledgePage({
 
       {article.sections.map((section) => <Section key={section.title} section={section} />)}
 
+      {article.faqTitle && article.faq?.length ? (
+        <ContentSection title={article.faqTitle}>
+          <Prose>
+            {article.faq.map((entry) => (
+              <div key={entry.question}>
+                <h3>{entry.question}</h3>
+                <p>{entry.answer}</p>
+              </div>
+            ))}
+          </Prose>
+        </ContentSection>
+      ) : null}
+
       <ContentSection eyebrow={copy.knowledge} title={copy.related} soft>
         <div className={styles.relatedGrid}>
-          {related.map((key) => (
-            <Link key={key} className={styles.relatedLink} href={localizePathForLocale(`/${key}`, locale)}>
-              <span>{knowledgeIndex[key][locale]}</span>
+          {related.map((link) => (
+            <Link key={link.href} className={styles.relatedLink} href={localizePathForLocale(link.href, locale)}>
+              <span>{link.label}</span>
               <ArrowRightIcon />
             </Link>
           ))}
