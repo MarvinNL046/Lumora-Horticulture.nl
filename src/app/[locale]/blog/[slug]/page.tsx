@@ -214,7 +214,10 @@ export default async function BlogDetailPage(
           <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-gray-500">
             {post.author && <span>{post.author}</span>}
             {post.published_at && (
-              <time>{formatDate(post.published_at, locale)}</time>
+              <time dateTime={new Date(post.published_at).toISOString()}>{formatDate(post.published_at, locale)}</time>
+            )}
+            {post.updated_at > (post.published_at || 0) && (
+              <span>{locale === 'de' ? 'Aktualisiert: ' : 'Bijgewerkt: '}<time dateTime={new Date(post.updated_at).toISOString()}>{formatDate(post.updated_at, locale)}</time></span>
             )}
           </div>
 
