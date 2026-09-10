@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { PromoDeadline } from './PromoDeadline'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
@@ -280,6 +281,7 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
               <div className={styles.bundleOfferBody}>
                 <div>
                   <h2 id="stekpluggen-actie">{copy.promoTitle}</h2>
+                  <PromoDeadline locale={locale} />
                   <p>{variant.label}: {copy.promoLead} <strong>{formatPrice(PAPERBUS_PROMO_PRICE, locale)}</strong> {copy.promoTotal}</p>
                   <small>{copy.promoShipping}</small>
                 </div>

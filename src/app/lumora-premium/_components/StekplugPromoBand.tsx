@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PromoDeadline } from './PromoDeadline'
 import styles from '../storefront.module.css'
 import { ArrowRightIcon, CheckIcon } from './Icons'
 import { publicStorefrontRoutes } from '../_data/routes'
@@ -13,6 +14,7 @@ export function StekplugPromoBand({ href = `${publicStorefrontRoutes.stekpluggen
         <span className={styles.promoBandBadge}>{copy.promoBadge}</span>
         <span className={styles.promoBandCopy}>
           <strong>{copy.promoTitle}</strong>
+          <PromoDeadline locale={locale} />
           <small><CheckIcon /> {copy.promoPrice} <i /> {copy.promoChoice} <i /> {copy.promoShipping}</small>
         </span>
         <span className={styles.promoBandAction}>{copy.promoAction} <ArrowRightIcon /></span>

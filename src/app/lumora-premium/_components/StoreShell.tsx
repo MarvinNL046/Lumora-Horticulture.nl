@@ -63,6 +63,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const locale = resolveStorefrontLocale(useLocale())
   const copy = storefrontShellCopy[locale]
+  const contactHref = localizePathForLocale('/contact', locale)
   const [languageOpen, setLanguageOpen] = useState(false)
   const { getTotalItems, getTotalPrice } = useCart()
   const cartCount = getTotalItems()
@@ -117,7 +118,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
       <div className={styles.utilityBar}>
         <div className={styles.shellRow}>
           <span>{copy.utilityLine}</span>
-          <a href="mailto:info@lumorahorticulture.com">{copy.utilityContact}</a>
+          <Link href={contactHref}>{copy.utilityContact}</Link>
         </div>
       </div>
 
@@ -132,7 +133,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
               {copy.products}
             </Link>
             <a href={`${routes.home === '/' ? '' : routes.home}/#waarom-lumora`}>{copy.whyLumora}</a>
-            <a href="mailto:info@lumorahorticulture.com">{copy.helpContact}</a>
+            <Link href={contactHref}>{copy.helpContact}</Link>
           </nav>
 
           <div className={styles.headerActions}>
@@ -199,13 +200,16 @@ export function StoreShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <h2>{copy.service}</h2>
-            <a href="mailto:info@lumorahorticulture.com">{copy.contact}</a>
+            <Link href={contactHref}>{copy.contact}</Link>
             <Link href={localizePathForLocale('/return-policy', locale)}>{copy.returnPolicy}</Link>
             <Link href={localizePathForLocale('/terms', locale)}>{copy.terms}</Link>
           </div>
           <div>
             <h2>{copy.reachable}</h2>
             <a href="mailto:info@lumorahorticulture.com">info@lumorahorticulture.com</a>
+            <a href="tel:+31638382564">+31 6 38 38 25 64</a>
+            <p>{locale === 'nl' ? 'Postadres' : locale === 'de' ? 'Postanschrift' : 'Postal address'}</p>
+            <address style={{ fontStyle: 'normal' }}>Aan De Bogen 11<br />6118 AS Nieuwstadt</address>
             <p>KvK 96669772</p>
           </div>
         </div>
@@ -233,10 +237,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
             <span className={styles.mobileNavIcon}><GridIcon /></span>
             <span>{copy.products}</span>
           </Link>
-          <a href="mailto:info@lumorahorticulture.com">
+          <Link href={contactHref} aria-current={pathname === contactHref ? 'page' : undefined}>
             <span className={styles.mobileNavIcon}><HelpIcon /></span>
             <span>{copy.help}</span>
-          </a>
+          </Link>
           <AccountLink locale={locale}>
             <span className={styles.mobileNavIcon}><UserIcon /></span>
             <span>{copy.account}</span>

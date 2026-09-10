@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PromoDeadline } from '../_components/PromoDeadline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRightIcon, CheckIcon } from '../_components/Icons'
@@ -54,6 +55,7 @@ export function StorefrontProductsPage({ routes = publicStorefrontRoutes, locale
               <span>{sharedCopy[locale].promoBadge}</span>
               <strong>{sharedCopy[locale].promoPrice}</strong>
               <small>{sharedCopy[locale].promoShipping}</small>
+              <PromoDeadline locale={locale} />
             </Link>
           </div>
         </div>

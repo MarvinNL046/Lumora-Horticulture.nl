@@ -153,6 +153,14 @@ export function proxy(request: NextRequest) {
   const host = getHost(request)
   const incomingPath = request.nextUrl.pathname
   const prefixed = stripLocalePrefix(incomingPath)
+  // Local rewrites can re-enter the proxy in next dev. Let the already
+  // localized route render instead of redirecting the preview to production.
+  if (process.env.NODE_ENV === 'development' && prefixed.locale &&
+      (host === 'localhost' || host === '127.0.0.1')) {
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set(NEXT_INTL_LOCALE_HEADER, prefixed.locale)
+    return NextResponse.next({ request: { headers: requestHeaders } })
+  }
   const legacyLocale = LEGACY_HOST_LOCALES[host]
   const bypassLocalization =
     FILE_EXTENSION.test(incomingPath) || isNonLocalizedPath(incomingPath)
