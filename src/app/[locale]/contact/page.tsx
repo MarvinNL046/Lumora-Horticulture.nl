@@ -102,6 +102,7 @@ export default async function ContactPage(props: { params: Promise<{ locale: str
       '@type': 'Organization',
       name: 'Lumora Horticulture',
       email: 'info@lumorahorticulture.com',
+      telephone: '+31638382564',
       url: 'https://lumorahorticulture.nl',
     },
   }
@@ -132,8 +133,8 @@ export default async function ContactPage(props: { params: Promise<{ locale: str
             <div className={styles.contactRow}>
               <span><MessageIcon /></span>
               <div>
-                <small>{t.info.whatsapp.title}</small>
-                <a href="https://wa.me/31638382564" target="_blank" rel="noopener noreferrer">+31 6 38 38 25 64</a>
+                <small>{locale === 'nl' ? 'Telefoon' : locale === 'de' ? 'Telefon' : 'Phone'}</small>
+                <a href="tel:+31638382564">+31 6 38 38 25 64</a>
               </div>
             </div>
             <div className={styles.contactRow}>
@@ -142,6 +143,10 @@ export default async function ContactPage(props: { params: Promise<{ locale: str
                 <small>{t.info.web.title}</small>
                 <strong>{ui.web}</strong>
               </div>
+            </div>
+            <div className={styles.contactNote}>
+              <h3>{locale === 'nl' ? 'Postadres' : locale === 'de' ? 'Postanschrift' : 'Postal address'}</h3>
+              <address style={{ fontStyle: 'normal' }}>Aan De Bogen 11<br />6118 AS Nieuwstadt<br />{locale === 'nl' ? 'Nederland' : locale === 'de' ? 'Niederlande' : 'The Netherlands'}</address>
             </div>
             <div className={styles.contactNote}>
               <h3>{t.info.collaboration.title}</h3>
