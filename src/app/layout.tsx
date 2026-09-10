@@ -23,6 +23,14 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lumorahorticulture.nl'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico?v=lumora-20260910', sizes: '16x16 32x32 48x48' },
+      { url: '/favicon-48.png', type: 'image/png', sizes: '48x48' },
+      { url: '/favicon.svg', type: 'image/svg+xml', sizes: 'any' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   title: 'Stekpluggen Steenwol & NeemXPRO | Lumora Horticulture',
   description: 'Lumora Horticulture levert Paper Plug Trays (84 en 104 cellen) met steenwol stekpluggen en NeemXPRO plantaardig olieconcentraat aan professionele kwekers en hobbytelers.',
   keywords: 'stekpluggen steenwol, paper plug trays, steenwol pluggen, NeemXPRO, neemolie planten, professionele tuinbouw, kweektrays',
