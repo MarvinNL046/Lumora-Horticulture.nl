@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { trackViewItem } from '@/lib/google-ads'
 import { loadAnalyticsProduct, trackStorefrontCartAddition } from '@/lib/storefront-analytics'
 import { resolveProductVariant } from '@/lib/storefront-product-seo'
+import { localizePathForLocale } from '@/lib/url-localizations'
 import { useCart } from '@/contexts/CartContext'
 import {
   VOLUME_DISCOUNT_TIERS,
@@ -247,6 +248,12 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
 
           <fieldset className={styles.variantFieldset}>
             <legend>{isPaperbus ? copy.choosePlugs : copy.chooseNeemx}</legend>
+            {isPaperbus && locale === 'nl' && (
+              <p className={styles.plugChoiceIntro}>
+                Gevulde trays met steenwol en een papierwikkel, per complete doos.
+                {' '}<Link href="#tray-vergelijking">Hulp bij kiezen: 84 of 104?</Link>
+              </p>
+            )}
             <div className={styles.variantGrid}>
               {product.variants.map((item) => (
                 <button
@@ -262,11 +269,20 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
                   }}
                   aria-pressed={variantId === item.id}
                 >
-                  <span><strong>{item.label}</strong><small>{item.detail}</small></span>
+                  <span>
+                    <strong>{item.label}</strong>
+                    {isPaperbus && locale === 'nl' && <small>Ø{item.cellDiameterMm} × {item.cellDepthMm} mm · {item.cellsPerTray === 84 ? 'Grotere plug' : 'Meer pluggen per tray'}</small>}
+                    <small>{item.detail}</small>
+                  </span>
                   <span>{formatPrice(item.price, locale)}</span>
                 </button>
               ))}
             </div>
+            {isPaperbus && locale === 'nl' && (
+              <p className={styles.plugOrderContents} aria-live="polite" aria-atomic="true">
+                Je ontvangt: <strong>{quantity} {quantity === 1 ? 'doos' : 'dozen'} · {quantity * (variant.traysPerBox ?? 0)} trays · {(quantity * (variant.cellsPerBox ?? 0)).toLocaleString('nl-NL')} pluggen</strong>.
+              </p>
+            )}
           </fieldset>
 
           {isPaperbus && (
@@ -343,7 +359,7 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
                 <strong>{copy.paymentMethods}</strong>
                 <PaymentLogos />
               </span>
-              <span><MessageIcon /><strong>{copy.question}</strong><small>{copy.contact}</small></span>
+              <span><MessageIcon /><strong>{copy.question}</strong><small><Link href={localizePathForLocale('/contact', locale)}>{copy.contact}</Link></small></span>
             </div>
           </div>
 
@@ -512,7 +528,7 @@ export function ProductDetail({ product, locale = 'nl', children }: { product: P
                 <div key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></div>
               ))}
             </div>
-            <a className={styles.textLink} href="mailto:info@lumorahorticulture.com">{copy.ask} <ArrowRightIcon /></a>
+            <Link className={styles.textLink} href={localizePathForLocale('/contact', locale)}>{copy.ask} <ArrowRightIcon /></Link>
           </div>
         </div>
       </section>
