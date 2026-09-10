@@ -29,6 +29,26 @@ const nextConfig = {
   },
   trailingSlash: false,
 
+  // Resolve retired content before streaming layouts can commit a 200 response.
+  async redirects() {
+    const oldBlog = '/blog/neem-olie-in-de-tuinbouw-natuurlijke-gewasbescherming-die-werkt'
+    const newBlog = '/blog/neemxpro-bladverzorging-gebruik'
+    return [
+      ...['', '/nl', '/de'].map((prefix) => ({
+        source: `${prefix}${oldBlog}`,
+        destination: `${prefix === '/nl' ? '' : prefix}${newBlog}`,
+        permanent: true,
+      })),
+      ...['', '/nl', '/en', '/de'].flatMap((prefix) =>
+        ['/neemxpro-2-plus-1-gratis', '/marketing/neemx-pro-flyer', '/marketing/neemx-pro-spuitschema'].map((path) => ({
+          source: `${prefix}${path}`,
+          destination: `${prefix === '/nl' ? '' : prefix}/neemx-pro`,
+          permanent: true,
+        })),
+      ),
+    ]
+  },
+
   outputFileTracingExcludes: {
     '/*': [
       'node_modules/@swc/core-linux-x64-gnu',
