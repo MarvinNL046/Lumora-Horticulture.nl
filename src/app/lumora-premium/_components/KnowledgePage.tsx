@@ -175,7 +175,7 @@ export function KnowledgePage({
         lead={article.intro}
         actions={article.singleHeroAction ? [{ href: productHref, label: copy.product }] : [
           { href: productHref, label: copy.product },
-          { href: 'mailto:info@lumorahorticulture.com', label: copy.contact, variant: 'light' },
+          { href: localizePathForLocale('/contact', locale), label: copy.contact, variant: 'light' },
         ]}
         image={products.paperbus.tertiaryImage ?? products.paperbus.mainImage}
         imageAlt={products.paperbus.tertiaryImageAlt ?? products.paperbus.mainImageAlt}
@@ -238,7 +238,7 @@ export function KnowledgePage({
         text={article.cta.text}
         actions={[
           { href: productHref, label: article.cta.button },
-          { href: 'mailto:info@lumorahorticulture.com', label: copy.contact, variant: 'ghost' },
+          { href: localizePathForLocale('/contact', locale), label: copy.contact, variant: 'ghost' },
         ]}
       />
     </ContentPage>

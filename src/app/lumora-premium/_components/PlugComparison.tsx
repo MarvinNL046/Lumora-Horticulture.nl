@@ -45,6 +45,21 @@ export function PlugComparison({ product, locale }: { product: ProductFamily; lo
     <section className={styles.section} aria-labelledby="tray-vergelijking">
       <h2 id="tray-vergelijking">{t.title}</h2>
       <p>{t.intro}</p>
+      {locale === 'nl' && (
+        <div className={styles.choices}>
+          {product.variants.map((variant) => (
+            <article className={styles.choice} key={variant.id}>
+              <span>{variant.cellsPerTray} cellen per tray</span>
+              <h3>{variant.cellsPerTray === 84 ? 'Meer ruimte in elke plug' : 'Meer kweekplaatsen per tray'}</h3>
+              <p>{variant.cellsPerTray === 84
+                ? 'Met Ø38 × 42 mm kies je de grotere plug. Bekijk of deze maat past bij de ruimte die je jonge plant nodig heeft en de volgende stap in je teeltsysteem.'
+                : 'Met Ø32 × 40 mm kies je de kleinere plug. Je hebt 104 kweekplaatsen per tray; controleer of de maat past bij je gewas en het moment van overzetten.'}</p>
+              <strong>{variant.traysPerBox} gevulde trays · {variant.cellsPerBox} pluggen per doos</strong>
+              <Link href={`${productVariantHref(localizePathForLocale(product.href, locale), variant.id)}#koopblok`}>Kies {variant.cellsPerTray} cellen</Link>
+            </article>
+          ))}
+        </div>
+      )}
       <div className={styles.scroll} role="region" aria-label={t.caption} tabIndex={0}>
         <table>
           <caption>{t.caption}</caption>
@@ -54,6 +69,7 @@ export function PlugComparison({ product, locale }: { product: ProductFamily; lo
         </table>
       </div>
       <p>{t.note}</p>
+      {locale === 'nl' && <p>Geef bij je adviesvraag je gewas, verwachte opkweekduur en de pot of het systeem waarin je uitplant door. <Link href="/contact">Vraag hulp bij je traykeuze</Link>.</p>}
       <ul>
         <li><Link href={localizePathForLocale('/paper-plug-trays-uitgelegd', locale)}>{t.guide}</Link></li>
         <li><Link href={localizePathForLocale('/paperbus-pluggen', locale)}>{t.material}</Link></li>

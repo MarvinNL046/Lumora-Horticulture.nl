@@ -66,6 +66,27 @@ const article: Record<StorefrontLocale, KnowledgeArticle> = {
       ]
     },
     {
+      "kind": "compare",
+      "title": "Kiezen tussen 84 en 104 cellen",
+      "intro": "Het getal is het aantal pluggen per tray. Beide uitvoeringen zijn gevuld met steenwol en een papierwikkel; het verschil zit in de plugmaat en de doosinhoud.",
+      "left": {
+        "title": "84 cellen: de grotere plug",
+        "items": [
+          "Plugmaat Ø38 × 42 mm: een grotere diameter en diepte dan de 104-uitvoering.",
+          "8 trays per doos, samen 672 pluggen.",
+          "Controleer of deze maat aansluit op de ruimte voor de jonge plant en de pot of het systeem waarin je uitplant."
+        ]
+      },
+      "right": {
+        "title": "104 cellen: meer plekken per tray",
+        "items": [
+          "Plugmaat Ø32 × 40 mm: een kleinere plug met meer kweekplaatsen per tray.",
+          "7 trays per doos, samen 728 pluggen.",
+          "Controleer of de kleinere maat past bij je gewas, de opkweekduur en het moment van overzetten."
+        ]
+      }
+    },
+    {
       "kind": "steps",
       "title": "Stap 1: steenwol stekpluggen inwateren",
       "items": [
