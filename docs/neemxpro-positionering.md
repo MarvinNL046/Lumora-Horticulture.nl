@@ -6,4 +6,8 @@ Presenteer NeemXPRO als botanische bladverzorging. Gebruik geen plaagnamen en ge
 
 Dit geldt voor productteksten, metadata, advertenties en blogs die NeemXPRO presenteren of aanbevelen. Gebruik actuele, bevestigde productgegevens en gebruiksinstructies. Leid eigenschappen van NeemXPRO niet af uit algemene informatie over neemolie.
 
-De bestaande blogs in het CMS zijn hiermee nog niet automatisch gecontroleerd of aangepast. Controleer bij een volgende contentronde ook oude titels, teksten en verwijzingen. Dit document legt de gewenste positionering vast; het is geen juridische beoordeling.
+Op 10 september zijn de elf gepubliceerde CMS-blogs op NeemXPRO- en neemolieverwijzingen gecontroleerd. De oude neemblog is herschreven naar bladverzorging; verwijzingen in vier andere blogs zijn verwijderd (de steenwol/kokos-vergelijking is volledig herzien). Ook de bewortelengids is volledig herzien. NL en DE zijn meegenomen. Dit is geen inhoudelijke goedkeuring van alle overige adviezen in de oudere blogs.
+
+De oude actie-, flyer- en spuitschemaroutes verwijzen naar de actuele productpagina. De bloggenerator en vertaler volgen bovenstaande positionering en blokkeren herkenbare conflicterende claims. Deze controle vervangt geen redactionele beoordeling. Oude, niet meer geïmporteerde clientcomponenten zijn geen actieve productpagina's.
+
+Dit document legt de gewenste positionering vast; het is geen juridische beoordeling.

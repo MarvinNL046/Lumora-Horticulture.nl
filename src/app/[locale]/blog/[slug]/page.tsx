@@ -1,11 +1,25 @@
 import { generatePageMetadata } from '@/lib/metadata'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/../convex/_generated/api'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Image from 'next/image'
-import { blogHtmlToPlainText } from '@/lib/blog-content'
+import { getBlogSections, getBlogLinks } from '@/lib/blog-content'
 import { serializeJsonLd } from '@/lib/safe-json-ld'
 import { localizePathForLocale } from '@/lib/url-localizations'
+
+const OLD_NEEM_SLUG = 'neem-olie-in-de-tuinbouw-natuurlijke-gewasbescherming-die-werkt';
+const NEW_NEEM_SLUG = 'neemxpro-bladverzorging-gebruik';
+function redirectLegacyArticle(slug: string, locale: string) {
+  if (slug === OLD_NEEM_SLUG) permanentRedirect(localizePathForLocale(`/blog/${NEW_NEEM_SLUG}`, locale));
+}
+
+// Keep the new URL available while the CMS slug and frontend are rolled out.
+async function loadPost(slug: string) {
+  const post = await fetchQuery(api.blogPosts.getBySlug, { slug });
+  if (post || slug !== NEW_NEEM_SLUG) return post;
+  const legacy = await fetchQuery(api.blogPosts.getBySlug, { slug: OLD_NEEM_SLUG });
+  return legacy ? { ...legacy, slug: NEW_NEEM_SLUG } : null;
+}
 
 const BLOG_LOCALES = ['nl', 'de'] as const
 type BlogLocale = (typeof BLOG_LOCALES)[number]
@@ -48,7 +62,8 @@ export async function generateMetadata(
     notFound()
   }
 
-  const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
+  redirectLegacyArticle(params.slug, params.locale)
+  const post = await loadPost(params.slug)
 
   if (
     !post ||
@@ -108,7 +123,8 @@ export default async function BlogDetailPage(
     notFound()
   }
 
-  const post = await fetchQuery(api.blogPosts.getBySlug, { slug: params.slug })
+  redirectLegacyArticle(params.slug, params.locale)
+  const post = await loadPost(params.slug)
 
   if (
     !post ||
@@ -122,7 +138,8 @@ export default async function BlogDetailPage(
     locale === 'de' ? post.title_de! : post.title_nl
   const content =
     locale === 'de' ? post.content_de! : post.content_nl
-  const plainContent = blogHtmlToPlainText(content)
+  const contentSections = getBlogSections(content)
+  const readingLinks = getBlogLinks(content)
   const categoryLabel =
     categoryLabels[post.category]?.[locale] || post.category
   const tags = (post.tags as string[]) || []
@@ -201,9 +218,22 @@ export default async function BlogDetailPage(
             )}
           </div>
 
-          <div className="prose prose-green max-w-none whitespace-pre-wrap prose-headings:text-gray-900 prose-a:text-green-700">
-            {plainContent}
+          <div className="space-y-5 leading-8 text-gray-700">
+            {contentSections.map((section, index) => section.kind === 'h2'
+              ? <h2 key={index} className="pt-5 text-2xl font-semibold leading-snug text-gray-900">{section.text}</h2>
+              : section.kind === 'h3'
+                ? <h3 key={index} className="pt-2 text-lg font-semibold text-gray-900">{section.text}</h3>
+                : <div key={index} className="whitespace-pre-line">{section.text}</div>)}
           </div>
+
+          {readingLinks.length > 0 && (
+            <nav aria-label={locale === 'de' ? 'Weiterlesen und Quellen' : 'Verder lezen en bronnen'} className="mt-8 rounded-xl bg-green-50 p-6">
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">{locale === 'de' ? 'Weiterlesen und Quellen' : 'Verder lezen en bronnen'}</h2>
+              <ul className="space-y-3">
+                {readingLinks.map(link => <li key={link.href}><a href={link.href} className="break-words text-green-800 underline underline-offset-4">{link.label}</a></li>)}
+              </ul>
+            </nav>
+          )}
 
           {tags.length > 0 && (
             <div className="mt-10 border-t border-gray-200 pt-6">

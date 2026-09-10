@@ -11,7 +11,8 @@ export interface QueuedTopic {
   topic: string;
   category: string;
   targetKeyword: string;
-  searchVolume: number;
+  searchVolume?: number;
+  sources?: string[];
   priority: number;
 }
 
@@ -87,7 +88,7 @@ export async function pickNextTopic(): Promise<QueuedTopic | null> {
 
   // Sort by priority (asc) then search volume (desc)
   const sorted = [...queue.topics].sort((a, b) =>
-    a.priority !== b.priority ? a.priority - b.priority : b.searchVolume - a.searchVolume
+    a.priority !== b.priority ? a.priority - b.priority : (b.searchVolume ?? 0) - (a.searchVolume ?? 0)
   );
 
   // Find first non-duplicate topic

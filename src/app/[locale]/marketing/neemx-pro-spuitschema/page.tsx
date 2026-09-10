@@ -1,17 +1,7 @@
-import NeemxProSpuitschemaClient from './NeemxProSpuitschemaClient'
+import { permanentRedirect } from 'next/navigation';
+import { localizePathForLocale } from '@/lib/url-localizations';
 
-// Generate static params for locales
-export function generateStaticParams() {
-  return [
-    { locale: 'nl' },
-    { locale: 'en' },
-    { locale: 'de' }
-  ]
-}
-
-export default async function NeemxProSpuitschemaPage(props: { params: Promise<{ locale: string }> }) {
-  const params = await props.params;
-  // This is needed for internationalization to work properly
-
-  return <NeemxProSpuitschemaClient locale={params.locale} />
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  permanentRedirect(localizePathForLocale('/neemx-pro', locale));
 }

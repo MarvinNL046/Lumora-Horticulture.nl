@@ -1,4 +1,5 @@
 import { generateContent } from './ai-provider';
+import { assertLeafCarePositioning, LEAF_CARE_INSTRUCTIONS } from './editorial-policy';
 
 interface TranslationInput {
   title_nl: string;
@@ -22,12 +23,14 @@ export async function translateToGerman(post: TranslationInput): Promise<Transla
 RULES:
 - Translate from Dutch to German professionally and accurately
 - Keep ALL HTML tags, structure, and formatting exactly as-is
-- Keep ALL URLs/links intact but change /nl/ paths to /de/ paths
+- Preserve all source URLs and internal URLs exactly; do not invent translated paths
 - Translate product CTA text but preserve the link structure
 - Use correct German horticultural terminology (Steinwolle, Stecklinge, Vermehrung, Gewächshaus, Substrat, etc.)
 - Keep brand names unchanged (Lumora, Neemx Pro, Ellepot)
 - Maintain the same professional but accessible tone
 - Do NOT add or remove content — translate only
+
+${LEAF_CARE_INSTRUCTIONS}
 
 OUTPUT FORMAT:
 Return ONLY valid JSON (no markdown fences):
@@ -59,5 +62,7 @@ ${post.content_nl}`;
   let raw = response.content.trim();
   if (raw.startsWith('```')) raw = raw.replace(/^```\w*\n?/, '').replace(/\n?```$/, '');
 
-  return JSON.parse(raw);
+  const translation: TranslationOutput = JSON.parse(raw);
+  assertLeafCarePositioning({ ...translation });
+  return translation;
 }
